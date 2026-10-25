@@ -326,14 +326,14 @@ distinguish process outcomes without parsing messages. They are not an exhaustiv
 list of rejections: cancellation, timeout, and stdin-write failures can reject
 with other errors.
 
-- `CommandExitError` — the shell started and exited non-zero. `exitCode` is the
+- `CommandExitError` - the shell started and exited non-zero. `exitCode` is the
   numeric process exit code and `output` contains a completion notice and the
   captured output (subject to the configured truncation limit).
-- `CommandTerminationError` — the process terminated without a numeric exit
+- `CommandTerminationError` - the process terminated without a numeric exit
   code. `signal` is the terminating signal, or `null` if none was reported;
   `output` contains a termination notice and the captured output. This error
   has no `exitCode` field.
-- `CommandSpawnError` — the shell process could not be started, so there is no
+- `CommandSpawnError` - the shell process could not be started, so there is no
   exit code. The message keeps the pre-existing `Failed to execute command: …`
   form. `code` is the operating system error libuv reported (`ENOENT`,
   `EACCES`, `EFTYPE` for a file that is not a valid executable). Because spawn

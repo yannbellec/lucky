@@ -1,4 +1,4 @@
-# vscode-rollout — A/B loader for the SDK extension rollout
+# vscode-rollout - A/B loader for the SDK extension rollout
 
 The VS Code Marketplace has no staged rollouts: publishing a version updates
 every user. This package lets us ship the **SDK-based extension** (main's
@@ -21,13 +21,13 @@ legacy/               ← legacy extension (dist/, webview-ui/build/, assets/, c
 
 Per window, the loader:
 
-1. Reads the cached cohort assignment from its own `globalState` keys —
+1. Reads the cached cohort assignment from its own `globalState` keys -
    synchronously, never from the network.
 2. Sets the `cline.sdkBundle` context key (gates cohort-specific menu items /
    palette entries in the union manifest).
 3. `require()`s exactly one bundle and calls its `activate()` with a
    Proxy-wrapped `ExtensionContext` whose `extensionUri` / `extensionPath` /
-   `asAbsolutePath` point into that bundle's subdirectory — so each bundle
+   `asAbsolutePath` point into that bundle's subdirectory - so each bundle
    resolves its own webview build and assets without knowing it was relocated.
    Storage properties pass through untouched: both bundles share the same
    `~/.cline/data` + VS Code storage they used as standalone extensions.
@@ -39,7 +39,7 @@ Per window, the loader:
 If the next bundle throws during activation, the loader disposes whatever it
 half-registered, pins this VSIX version back to legacy
 (`cline.rollout.nextActivationFailedVersion`), reports a `fallback` telemetry
-event, and activates legacy — a crashed rollout self-heals without a
+event, and activates legacy - a crashed rollout self-heals without a
 marketplace re-publish. A new version gets to try next again.
 
 ## Cohort rules
@@ -47,13 +47,13 @@ marketplace re-publish. A new version gets to try next again.
 - **Two-way, one knob.** `ext-sdk-bundle-rollout` (percentage flag) is the
   entire remote control surface: each background refresh caches exactly what
   the flag says for the machine's next window. Dialing the percentage up
-  promotes; dialing it down demotes on the next reload — the emergency lever
+  promotes; dialing it down demotes on the next reload - the emergency lever
   is simply "set the rollout to 0%". Known demotion costs (accepted): tasks
   created on the SDK bundle are stored as SDK sessions the legacy bundle
-  doesn't list (they reappear on re-promotion — nothing is deleted), and
+  doesn't list (they reappear on re-promotion - nothing is deleted), and
   credentials rotated on next may require a re-login on legacy.
 - **The flag must stay a boolean flag.** The loader only promotes on a
-  literal `true` from `/decide` — a multivariate variant, number, or anything
+  literal `true` from `/decide` - a multivariate variant, number, or anything
   else fails safe to legacy (see `parseRolloutAssignment` + tests). Don't
   convert it to multivariate.
 - The flag is evaluated against the same PostHog distinct id the extension's
@@ -64,8 +64,8 @@ marketplace re-publish. A new version gets to try next again.
   opt-out and VS Code's global telemetry switch.
 - **Manual overrides, in either direction.** The `cline.rollout.bundleOverride`
   user setting (`"auto" | "next" | "legacy"`, editable straight from
-  settings.json) forces a bundle for anyone — users in a pinch, or us
-  debugging — beating the remote assignment both ways. Applies on window
+  settings.json) forces a bundle for anyone - users in a pinch, or us
+  debugging - beating the remote assignment both ways. Applies on window
   reload. `CLINE_BUNDLE_OVERRIDE=next|legacy` (env var) does the same for
   local dev and e2e and beats even the setting. Both are reported as
   `override` on the loader event so overridden machines don't pollute
@@ -78,8 +78,8 @@ marketplace re-publish. A new version gets to try next again.
 
 ## The union manifest
 
-`package.json` contributions are static — VS Code reads them before any code
-runs — so the shipped manifest must serve both cohorts. `scripts/gen-manifest.mjs`
+`package.json` contributions are static - VS Code reads them before any code
+runs - so the shipped manifest must serve both cohorts. `scripts/gen-manifest.mjs`
 regenerates it at stitch time from both branches' real manifests:
 
 - Contributions declared by both bundles pass through untouched.
@@ -90,13 +90,13 @@ regenerates it at stitch time from both branches' real manifests:
 - Commands exclusive to one bundle are hidden from the other cohort's command
   palette.
 - `views` / `viewsContainers` / `configuration` / `walkthroughs`
-  **must be identical** in both manifests — they can't be safely gated at
+  **must be identical** in both manifests - they can't be safely gated at
   runtime, so divergence fails the build. Keep these static contributions in
   sync between the branches. `engines` may diverge: the union takes the newer
   requirement (which necessarily satisfies the older one).
 
 Because the manifest is regenerated from both branches on every build,
-contribution drift between the branches can't ship silently — it either merges
+contribution drift between the branches can't ship silently - it either merges
 cleanly or the stitch fails.
 
 ## Building locally
@@ -133,7 +133,7 @@ stitches, smoke-tests, uploads the `.vsix` artifact, and optionally publishes.
 The daily `ext-vscode-publish-nightly` workflow (cron + manual dispatch)
 publishes this same combined package as **`saoudrizwan.cline-nightly`**. Before
 each bundle builds, `scripts/nightlify.mjs` rewrites its manifest to the
-nightly identity — the same mutation the standalone nightly always applied
+nightly identity - the same mutation the standalone nightly always applied
 (`apps/vscode/scripts/publish-nightly.mjs` on both branches is the source of
 truth), so nightly can be installed alongside stable:
 
@@ -145,7 +145,7 @@ truth), so nightly can be installed alongside stable:
 
 The loader derives the namespace from its own `packageJSON.name` at runtime
 (`idPrefix` in `src/cohort.ts`), and gen-manifest derives it from the next
-manifest's name — no build flags involved. Nightly builds also show a
+manifest's name - no build flags involved. Nightly builds also show a
 status-bar indicator (`Cline: Next` / `Cline: Legacy`); stable builds never do.
 
 Dispatching the nightly workflow from `main` with `dry-run` builds and uploads
@@ -161,27 +161,27 @@ intentionally restricted to `main` by both the workflow and the
   actual bundle, fallback flag, error details on fallback. Every other event
   from a rollout build carries `extension_variant` as a common property.
 - **`extension.rollout.loader_decision`** (loader-owned, direct capture): the
-  loader-side metadata the bundle event can't know — override source, launch
-  cadence, loader version, `extension_name` (nightly vs stable) — and the only
+  loader-side metadata the bundle event can't know - override source, launch
+  cadence, loader version, `extension_name` (nightly vs stable) - and the only
   signal when BOTH bundles fail (`double_failure: true`).
 
 ## Rollout runbook
 
 Until the stable combined VSIX ships, the flag governs **nightly installs
-only** — dialing it is safe for production users and is the lever for moving
+only** - dialing it is safe for production users and is the lever for moving
 nightly dogfooders onto next.
 
 1. Create `ext-sdk-bundle-rollout` in PostHog **before** the first publish: a
    plain boolean release flag with a percentage rollout, starting at **0%**.
-   (There is deliberately no kill-switch flag — the assignment is two-way, so
+   (There is deliberately no kill-switch flag - the assignment is two-way, so
    0% *is* the kill switch.)
 2. Publish the combined VSIX (version above every previously published one).
    With the rollout at 0% this release is behaviorally identical to legacy for
-   everyone — it only validates the loader plumbing in the wild. Watch
+   everyone - it only validates the loader plumbing in the wild. Watch
    `extension.rollout.bundle_activated` and `extension.rollout.loader_decision`.
 3. Dial `ext-sdk-bundle-rollout` up: 1% → 5% → 25% → 100%. Assignments apply on
    each machine's next window reload after its flag refresh, so propagation
-   speed is bounded by how often people reload windows — watch the
+   speed is bounded by how often people reload windows - watch the
    `ms_since_last_activation` distribution on loader events to see real
    uptake lag before deciding the next step, and compare cohorts by the
    `bundle` property.

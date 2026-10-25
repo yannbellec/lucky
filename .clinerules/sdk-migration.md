@@ -13,7 +13,7 @@ calls. See `apps/vscode/src/dev/debug-harness/README.md` for the debug harness.
    `// Replaces classic src/core/... (see origin/main)` header and use
    `kb_search(name="cline", commit="origin/main")` or
    `git show origin/main:path` to consult the prior implementation.
-3. **Single entry point.** There is one codepath — the SDK adapter. No
+3. **Single entry point.** There is one codepath - the SDK adapter. No
    `CLINE_SDK` env flag.
 4. **Use `{appBaseUrl}`**, never hardcode `app.cline.bot`.
 5. **Avoid `as` casts.** Use explicit conversion functions with tests. The

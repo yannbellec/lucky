@@ -18,7 +18,7 @@ The root `bun.lock` is the single lockfile for the whole workspace, including
 `apps/vscode`, `webview-ui`, and `testing-platform`. There are no per-package npm
 lockfiles.
 
-## Node is the runtime — do NOT rewrite these to bun
+## Node is the runtime - do NOT rewrite these to bun
 
 The build product runs on Node: the VS Code extension host loads
 `dist/extension.js` as CommonJS under Node, and the standalone `cline-core` is a

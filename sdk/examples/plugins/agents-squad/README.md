@@ -1,6 +1,6 @@
 # Agent Squad Plugin
 
-Spin up background subagents from any Cline SDK agent. Each subagent runs as its own session with its own provider, model, and system prompt — useful for parallel recon, planning, implementation, and review.
+Spin up background subagents from any Cline SDK agent. Each subagent runs as its own session with its own provider, model, and system prompt - useful for parallel recon, planning, implementation, and review.
 
 ## Quick start
 
@@ -42,10 +42,10 @@ Pass the plugin **directory** as the path. The loader reads `package.json` and d
 
 | Agent | Model | Role |
 |---|---|---|
-| `phantom` | `google/gemini-3-flash-preview` | Fast codebase recon — maps structure, surfaces conventions, never implements. |
-| `oracle` | `anthropic/claude-opus-4.6` | Opinionated planning — challenges assumptions and produces execution-ready plans. |
-| `anvil` | `anthropic/claude-opus-4.6` | Surgical implementation — reads before writing, stays in scope, reports exact diffs. |
-| `inquisitor` | `openai/gpt-5.5` | Adversarial review — finds bugs, severity-ranks findings. |
+| `phantom` | `google/gemini-3-flash-preview` | Fast codebase recon - maps structure, surfaces conventions, never implements. |
+| `oracle` | `anthropic/claude-opus-4.6` | Opinionated planning - challenges assumptions and produces execution-ready plans. |
+| `anvil` | `anthropic/claude-opus-4.6` | Surgical implementation - reads before writing, stays in scope, reports exact diffs. |
+| `inquisitor` | `openai/gpt-5.5` | Adversarial review - finds bugs, severity-ranks findings. |
 
 ### Typical orchestration
 
@@ -99,8 +99,8 @@ Skills are reusable instructions any agent can pull in at runtime via `get_skill
 
 Subagents in the same conversation share a small file store, scoped to the conversation ID:
 
-- `save_handoff({ path, content })` — writes a file
-- `read_handoff({ path })` — reads it back
+- `save_handoff({ path, content })` - writes a file
+- `read_handoff({ path })` - reads it back
 
 Files live under `~/.cline/data/plugins/subagents/handoffs/<conversationId>/`. Paths are validated to prevent traversal.
 
@@ -119,13 +119,13 @@ All optional. Environment variables override defaults:
 
 ## How it works
 
-Each subagent is a full Cline SDK session created via `ClineCore.create(...)`. `start_subagent` resolves the preset, merges any overrides, starts a non-interactive session, and returns the session ID immediately. The first turn runs in the background; when it finishes (or fails) the result is stored and — unless `notifyParent: false` — pushed back to the parent session as a steer message. The parent can also poll with `get_subagent`.
+Each subagent is a full Cline SDK session created via `ClineCore.create(...)`. `start_subagent` resolves the preset, merges any overrides, starts a non-interactive session, and returns the session ID immediately. The first turn runs in the background; when it finishes (or fails) the result is stored and - unless `notifyParent: false` - pushed back to the parent session as a steer message. The parent can also poll with `get_subagent`.
 
 ## Observability
 
 The plugin reports through both host observability channels (feature-detected, so it works on hosts without them):
 
-- **`ctx.logger`** — structured, session-scoped logs: plugin setup, each subagent start, and queued follow-ups, tagged with the plugin name in the host's log sink.
-- **`ctx.telemetry`** — aggregated signals: a `subagents_setup` event, a `subagents.started` counter (by preset/provider), a `subagent_turn_completed` event (status, preset, finish reason), and a `subagents.turn_duration_ms` histogram. Properties are low-cardinality only — never task text or subagent output. The host namespaces everything under `plugin.` and stamps `plugin_name`.
+- **`ctx.logger`** - structured, session-scoped logs: plugin setup, each subagent start, and queued follow-ups, tagged with the plugin name in the host's log sink.
+- **`ctx.telemetry`** - aggregated signals: a `subagents_setup` event, a `subagents.started` counter (by preset/provider), a `subagent_turn_completed` event (status, preset, finish reason), and a `subagents.turn_duration_ms` histogram. Properties are low-cardinality only - never task text or subagent output. The host namespaces everything under `plugin.` and stamps `plugin_name`.
 
 See [`telemetry.ts`](../telemetry.ts) for the full `ctx.telemetry` / `ctx.logger` contract.

@@ -1,4 +1,4 @@
-# Sidecar Architecture — @cline/code
+# Sidecar Architecture - @cline/code
 
 ## Overview
 
@@ -38,7 +38,7 @@ Event:    { "type": "event", "event": { "name": string, "payload": unknown } }
 
 ## Key Design Decisions
 
-### 1. Chat Sessions — Shared Hub Client
+### 1. Chat Sessions - Shared Hub Client
 
 `ClineCore` uses Hub mode without an explicit endpoint. Core therefore reuses
 the same compatible Hub discovered by the CLI or starts the canonical detached
@@ -96,7 +96,7 @@ Core while reporting Desktop dimensions (`cline_type: "desktop"`, `platform:
 organization. The shared Hub telemetry singleton is never mutated per session,
 so concurrent CLI and Desktop tasks retain their own attribution.
 
-### 2. Tool Approval — Client-Owned Promise Resolution
+### 2. Tool Approval - Client-Owned Promise Resolution
 
 The shared Hub routes approval requests back to the client that created the
 session. Desktop approvals use in-memory promise maps while the webview is
@@ -116,21 +116,21 @@ Cloud sessions route approvals the same way, but the resolver forwards the
 response to the sandbox Hub (`approval.respond`), which is why `resolve` may
 be async.
 
-### 3. Provider Management — Direct ProviderSettingsManager
+### 3. Provider Management - Direct ProviderSettingsManager
 
 ```typescript
 import { ProviderSettingsManager, listLocalProviders, ... } from "@cline/core";
 const manager = new ProviderSettingsManager();
 ```
 
-### 4. Session Storage — Direct SqliteSessionStore
+### 4. Session Storage - Direct SqliteSessionStore
 
 ```typescript
 import { SqliteSessionStore, resolveSessionBackend } from "@cline/core";
 const store = new SqliteSessionStore();
 ```
 
-### 5. Routine Schedules — Direct Hub Commands
+### 5. Routine Schedules - Direct Hub Commands
 
 Routine operations use the same connected Hub client as chat session
 observation. They never start a second in-process Hub:
@@ -141,8 +141,8 @@ await ctx.hubClient.command("schedule.list", { limit: 200 });
 
 ### 6. Native Commands
 
-- `pick_workspace_directory` — Uses macOS `osascript` / Linux `zenity` for directory picker
-- `open_mcp_settings_file` — Uses `open` / `xdg-open` to open files
+- `pick_workspace_directory` - Uses macOS `osascript` / Linux `zenity` for directory picker
+- `open_mcp_settings_file` - Uses `open` / `xdg-open` to open files
 
 ### 7. Frontend Connection
 

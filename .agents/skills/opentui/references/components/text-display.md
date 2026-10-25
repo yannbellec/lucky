@@ -32,7 +32,7 @@ For React and Solid, use **nested modifier tags** for text styling:
 </text>
 ```
 
-> **Important**: Do NOT use `bold`, `italic`, `underline`, `dim`, `strikethrough` as props on `<text>` — they don't work. Always use nested tags like `<strong>`, `<em>`, `<u>`, or `<span>` with styling.
+> **Important**: Do NOT use `bold`, `italic`, `underline`, `dim`, `strikethrough` as props on `<text>` - they don't work. Always use nested tags like `<strong>`, `<em>`, `<u>`, or `<span>` with styling.
 
 ### Styling (Core) - Text Attributes
 

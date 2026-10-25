@@ -8,11 +8,11 @@ It plays both roles that a real remote MCP server + its OAuth provider play:
 1. **OAuth 2.0 Authorization Server** (RFC 8414 / RFC 7591 DCR / RFC 7636 PKCE):
    - `GET /.well-known/oauth-protected-resource`
    - `GET /.well-known/oauth-authorization-server`
-   - `POST /register` — Dynamic Client Registration
-   - `GET /authorize` — interactive **Approve / Deny** consent page
-   - `POST /token` — `authorization_code` + `refresh_token` grants
+   - `POST /register` - Dynamic Client Registration
+   - `GET /authorize` - interactive **Approve / Deny** consent page
+   - `POST /token` - `authorization_code` + `refresh_token` grants
 2. **MCP StreamableHTTP resource server**:
-   - `POST /mcp` — returns `401 + WWW-Authenticate: Bearer resource_metadata="..."`
+   - `POST /mcp` - returns `401 + WWW-Authenticate: Bearer resource_metadata="..."`
      until authenticated (this is what triggers Cline's OAuth flow), then a
      minimal `initialize` response.
 
@@ -22,10 +22,10 @@ The endpoint shapes match what `@modelcontextprotocol/sdk` v1.25.x discovers.
 
 Exercises MCP OAuth failure modes without a real remote server:
 
-- **State expiry** — Cline's `McpOAuthManager` enforces a state lifetime
+- **State expiry** - Cline's `McpOAuthManager` enforces a state lifetime
   (`MCP_OAUTH_STATE_EXPIRY_MS`). If the callback returns after the window, it's
   rejected. Use `--slow-authorize` to push past it.
-- **Denial** — the consent page's Deny button (or `--auto-deny`) redirects back
+- **Denial** - the consent page's Deny button (or `--auto-deny`) redirects back
   with `error=access_denied`, so you can observe how Cline handles a denial.
 
 ## Run interactively
@@ -39,7 +39,7 @@ bun src/dev/mcp-oauth-test-server/server.ts --verbose
 
 On startup the server prints a **paste-ready `mcpServers` JSON fragment** (in
 the nested `transport` shape used by `cline_mcp_settings.json`) in addition to
-the banner — merge it under `mcpServers` in
+the banner - merge it under `mcpServers` in
 `~/.cline/data/settings/cline_mcp_settings.json`. Or add an MCP server
 (StreamableHTTP) in Cline by hand, pointing at:
 
@@ -75,19 +75,19 @@ bun src/dev/mcp-oauth-test-server/server.ts --instances 3 --verbose
 ```
 
 Because OAuth state is keyed by **server name** in `cline_mcp_settings.json`,
-each Cline server entry gets its own independent tokens — even if two point at
+each Cline server entry gets its own independent tokens - even if two point at
 the same URL.
 
 ## Reproducing specific bugs
 
-**"OAuth state expired" race** — make the user take longer than Cline's
+**"OAuth state expired" race** - make the user take longer than Cline's
 10-minute state window:
 
 ```bash
 bun src/dev/mcp-oauth-test-server/server.ts --slow-authorize 605000 --verbose
 ```
 
-**Denied redirect** — always deny so every redirect carries `access_denied`:
+**Denied redirect** - always deny so every redirect carries `access_denied`:
 
 ```bash
 bun src/dev/mcp-oauth-test-server/server.ts --auto-deny --verbose

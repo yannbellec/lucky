@@ -168,8 +168,8 @@ point (`emitTaskCompletedOnTeardown(...)`) retains a fallback emission
 for sessions whose final turn finished cleanly without an explicit
 completion-tool observation (non-interactive runs not using the yolo
 preset, or hosts that disable `submit_and_exit`). It is invoked from
-every session exit path — both `shutdownSession(...)` and
-`releaseSessionRuntime(...)` — so the emission never depends on which
+every session exit path - both `shutdownSession(...)` and
+`releaseSessionRuntime(...)` - so the emission never depends on which
 teardown branch a stop routes through. Each session emits at most one
 `task.completed`. See `DOC.md` for the event payload and `source`
 field.
@@ -523,13 +523,13 @@ Design implication:
 
 Cross-package logging uses a small injected interface exported from `@cline/shared`:
 
-- **`BasicLogger`** — required `debug` and `log`; optional `error`. Hosts map these to their backend (Pino, VS Code `OutputChannel`, etc.). Many runtime options take `logger?: BasicLogger`; when omitted, components skip logging or use `noopBasicLogger` where a full object is required.
-- **`BasicLogMetadata`** — optional structured fields (`sessionId`, `runId`, `providerId`, `toolName`, `durationMs`, …) plus `severity` on `log` when a single method must represent both informational and warning-style messages (for example the CLI Pino bridge maps `severity: "warn"` to Pino `warn`).
+- **`BasicLogger`** - required `debug` and `log`; optional `error`. Hosts map these to their backend (Pino, VS Code `OutputChannel`, etc.). Many runtime options take `logger?: BasicLogger`; when omitted, components skip logging or use `noopBasicLogger` where a full object is required.
+- **`BasicLogMetadata`** - optional structured fields (`sessionId`, `runId`, `providerId`, `toolName`, `durationMs`, …) plus `severity` on `log` when a single method must represent both informational and warning-style messages (for example the CLI Pino bridge maps `severity: "warn"` to Pino `warn`).
 
 Naming clarity:
 
-- **`CliLoggerAdapter` (CLI)** — a **host bundle**: holds the raw `pino` logger (for file paths, rotation, and CLI-only concerns) and exposes `.core: BasicLogger` for anything that consumes the SDK contract. It is not an `ITelemetryAdapter`.
-- **`TelemetryLoggerSink` (`@cline/core`)** — an **`ITelemetryAdapter`** that mirrors telemetry events and metrics into a `BasicLogger`. It is a telemetry sink, not a host logging implementation.
+- **`CliLoggerAdapter` (CLI)** - a **host bundle**: holds the raw `pino` logger (for file paths, rotation, and CLI-only concerns) and exposes `.core: BasicLogger` for anything that consumes the SDK contract. It is not an `ITelemetryAdapter`.
+- **`TelemetryLoggerSink` (`@cline/core`)** - an **`ITelemetryAdapter`** that mirrors telemetry events and metrics into a `BasicLogger`. It is a telemetry sink, not a host logging implementation.
 
 The agent and other call sites route former `info` / `warn` semantics through `log` (warnings include `severity: "warn"` in metadata). Errors prefer `error` when implemented; otherwise `log` with `severity: "error"` is used as a fallback.
 
@@ -840,10 +840,10 @@ and `AgendaTaskRunRecord`; orchestration and persistence remain in
 > desktop Agenda UI are temporarily disabled while the Agenda UX is reworked
 > (`AGENDA_TODO_TOOL_ENABLED` in `hub-server-transport.ts` and
 > `AGENDA_UI_ENABLED` in the desktop webview). While the flag is off the Hub
-> also skips the agenda spec-file watchers — nothing consumes watcher-driven
+> also skips the agenda spec-file watchers - nothing consumes watcher-driven
 > task events, and `task.*` commands reconcile spec files on demand. The
-> backend described below — the manager, storage, `task.*` Hub commands, and
-> desktop plumbing — stays fully wired, and the schedule kind remains active.
+> backend described below - the manager, storage, `task.*` Hub commands, and
+> desktop plumbing - stays fully wired, and the schedule kind remains active.
 
 ### Authority and persistence
 
@@ -970,7 +970,7 @@ orchestrator used by core and hub layers.
    runnable.
 2. **Store** (`cron/store/sqlite-cron-store.ts`): owns `cron.db` at
    `resolveCronDbPath()` (default `.cline/data/db/cron.db`). Schema is
-   bootstrapped from `cron/store/cron-schema.ts` — sessions and cron live in separate
+   bootstrapped from `cron/store/cron-schema.ts` - sessions and cron live in separate
    DBs so their lifecycles stay decoupled.
 3. **Reconciler** (`cron/specs/cron-reconciler.ts`): scans the configured cron specs
    directory (global `~/.cline/cron/` by default, or workspace-scoped when
@@ -981,7 +981,7 @@ orchestrator used by core and hub layers.
    queued runs are cancelled.
 4. **Watcher** (`cron/specs/cron-watcher.ts`): `node:fs watch({ recursive: true })`
    with a ~250ms per-path debounce. Watcher events always trigger a
-   re-reconcile — the reconciler is always the source of truth, not the
+   re-reconcile - the reconciler is always the source of truth, not the
    watcher stream.
 5. **Materializer** (`cron/runner/cron-materializer.ts`): turns file-triggered specs into
    queued `cron_runs`. One-off: at most one run record per `(spec_id,
@@ -1062,50 +1062,50 @@ completed turn. Report and cleanup failures are logged separately.
 ### Starting Points by Task
 
 **I want to understand the agent loop and tool execution:**
-- Start: `packages/agents/src/agent.ts` — the stateless runtime loop
-- Then: `packages/agents/src/agent-step.ts` — individual iteration steps
-- Extensions: `packages/core/src/extensions/plugin/` — plugin discovery, the registry, and the worker/subprocess transports
+- Start: `packages/agents/src/agent.ts` - the stateless runtime loop
+- Then: `packages/agents/src/agent-step.ts` - individual iteration steps
+- Extensions: `packages/core/src/extensions/plugin/` - plugin discovery, the registry, and the worker/subprocess transports
 
 **I want to understand session persistence and state:**
-- Start: `packages/core/src/runtime/host/local-runtime-host.ts` — local session lifecycle
-- Then: `packages/core/src/runtime/orchestration/` — session orchestration
-- Settings: `packages/core/src/settings/` — settings mutation and state
+- Start: `packages/core/src/runtime/host/local-runtime-host.ts` - local session lifecycle
+- Then: `packages/core/src/runtime/orchestration/` - session orchestration
+- Settings: `packages/core/src/settings/` - settings mutation and state
 
 **I want to understand the hub system:**
-- Start: `packages/core/src/hub/server/` — WebSocket server and hub command handlers
-- Clients: `packages/core/src/hub/client/` — host-side hub clients
-- Transport: `packages/core/src/hub/runtime-host/` — hub-backed runtime hosts
+- Start: `packages/core/src/hub/server/` - WebSocket server and hub command handlers
+- Clients: `packages/core/src/hub/client/` - host-side hub clients
+- Transport: `packages/core/src/hub/runtime-host/` - hub-backed runtime hosts
 
 **I want to add a new tool:**
-- Tools registry: `packages/core/src/extensions/tools/` — built-in tool definitions
-- Tool execution: `packages/agents/src/tool-use.ts` — how tools are called
-- Plugin tools: `packages/core/src/extensions/plugin/` — plugin-registered tools
+- Tools registry: `packages/core/src/extensions/tools/` - built-in tool definitions
+- Tool execution: `packages/agents/src/tool-use.ts` - how tools are called
+- Plugin tools: `packages/core/src/extensions/plugin/` - plugin-registered tools
 
 **I want to understand settings and configuration:**
-- Watcher system: `packages/core/src/extensions/config/` — file watching and loading
-- Provider config: `packages/core/src/runtime/config/` — provider settings resolution
-- Settings services: `packages/core/src/settings/` — settings state and mutation
+- Watcher system: `packages/core/src/extensions/config/` - file watching and loading
+- Provider config: `packages/core/src/runtime/config/` - provider settings resolution
+- Settings services: `packages/core/src/settings/` - settings state and mutation
 
 **I want to add a new runtime feature (hook/extension):**
-- Hook contracts: `packages/shared/src/hooks/` — hook types and engine
-- Plugin system: `packages/core/src/extensions/plugin/` — plugin discovery and execution
-- Runtime builder: `packages/core/src/services/local-runtime-bootstrap.ts` — how runtime is composed
+- Hook contracts: `packages/shared/src/hooks/` - hook types and engine
+- Plugin system: `packages/core/src/extensions/plugin/` - plugin discovery and execution
+- Runtime builder: `packages/core/src/services/local-runtime-bootstrap.ts` - how runtime is composed
 
 ### File Naming Conventions
 
-- `*.ts` — TypeScript source
-- `*.test.ts` — unit tests (Vitest)
-- `*.e2e.test.ts` — end-to-end tests requiring full integration
-- `*.ts` in examples — runnable example files (plugins, hooks)
-- `*.md` files in `apps/examples/` — documentation and markdown-based specs (cron, events)
+- `*.ts` - TypeScript source
+- `*.test.ts` - unit tests (Vitest)
+- `*.e2e.test.ts` - end-to-end tests requiring full integration
+- `*.ts` in examples - runnable example files (plugins, hooks)
+- `*.md` files in `apps/examples/` - documentation and markdown-based specs (cron, events)
 
 ### Key Type Locations
 
-- **`ClineCore`** — `packages/core/src/index.ts` — the main SDK orchestrator
-- **`Agent`** — `packages/agents/src/agent.ts` — the agent loop
-- **`RuntimeHost`** — `packages/core/src/runtime/host/runtime-host.ts` — execution abstraction
-- **`AgentPlugin`** — `packages/shared/src/plugin/` — plugin contract
-- **`CronSpec`** — `packages/shared/src/cron/cron-spec-types.ts` — automation specs
+- **`ClineCore`** - `packages/core/src/index.ts` - the main SDK orchestrator
+- **`Agent`** - `packages/agents/src/agent.ts` - the agent loop
+- **`RuntimeHost`** - `packages/core/src/runtime/host/runtime-host.ts` - execution abstraction
+- **`AgentPlugin`** - `packages/shared/src/plugin/` - plugin contract
+- **`CronSpec`** - `packages/shared/src/cron/cron-spec-types.ts` - automation specs
 
 ## Publishability Constraint
 
@@ -1121,18 +1121,18 @@ Architectural consequence:
 
 The following packages are published to npm:
 
-- `@cline/shared` — shared types, contracts, and low-level utilities
-- `@cline/llms` — provider integrations and model manifests
-- `@cline/agents` — the agent loop and tool orchestration
-- `@cline/core` — the main SDK with session management, hub, and configuration
+- `@cline/shared` - shared types, contracts, and low-level utilities
+- `@cline/llms` - provider integrations and model manifests
+- `@cline/agents` - the agent loop and tool orchestration
+- `@cline/core` - the main SDK with session management, hub, and configuration
 
 ### Internal Apps
 
 The following workspace apps are internal and not published as SDK packages:
 
-- `apps/cli` — CLI implementation
-- `apps/webview` — VS Code webview
-- `apps/examples` — example plugins and integrations
+- `apps/cli` - CLI implementation
+- `apps/webview` - VS Code webview
+- `apps/examples` - example plugins and integrations
 
 ### Display-only session errors
 

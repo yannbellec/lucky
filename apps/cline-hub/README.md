@@ -7,7 +7,7 @@ A browser dashboard for the local Cline hub. Open it to see who's connected, wha
 - live list of connected hub clients (from `HubUIClient.subscribeUI`)
 - live list of active sessions with status, model, and titles
 - click a session to view its message history and stream new assistant output
-- start a new session from an initial prompt — workspace/provider/model are reused from the most recent session, or `CLINE_PROVIDER` / `CLINE_MODEL` env vars
+- start a new session from an initial prompt - workspace/provider/model are reused from the most recent session, or `CLINE_PROVIDER` / `CLINE_MODEL` env vars
 - send messages to the selected session and watch chunks stream back
 - **Restart Hub** button: gracefully stops the local detached hub and respawns a fresh one
 - optional LAN/tunnel exposure gated by a shared `ROOM_SECRET`

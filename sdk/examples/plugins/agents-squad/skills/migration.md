@@ -1,6 +1,6 @@
 ---
 name: migration
-description: Plan and execute data or schema migrations — database, config, and API migrations with rollback strategies.
+description: Plan and execute data or schema migrations - database, config, and API migrations with rollback strategies.
 ---
 
 # Migration Skill

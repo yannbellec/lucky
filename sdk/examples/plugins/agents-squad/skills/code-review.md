@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Structured code review — security, correctness, performance, and maintainability analysis with severity-ranked findings.
+description: Structured code review - security, correctness, performance, and maintainability analysis with severity-ranked findings.
 ---
 
 # Code Review Skill

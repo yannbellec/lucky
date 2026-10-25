@@ -1,4 +1,4 @@
-# messages.json contract — v1
+# messages.json contract - v1
 
 This document describes the persisted session messages artifact written by
 `@cline/core` at:
@@ -59,7 +59,7 @@ Each entry in `messages[]` is a normalized stored message:
 Notes:
 
 - `role` is `"user"` or `"assistant"`. There is no distinct `"tool"` role at
-  rest — tool results are embedded as `tool_result` blocks on a `user` message
+  rest - tool results are embedded as `tool_result` blocks on a `user` message
   (Anthropic-native shape).
 - `content` is always an array. No string-form content.
 

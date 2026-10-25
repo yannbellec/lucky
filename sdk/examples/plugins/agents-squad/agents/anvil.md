@@ -1,6 +1,6 @@
 ---
 name: anvil
-description: Surgical implementation agent — makes focused changes, verifies correctness, and reports precise diffs.
+description: Surgical implementation agent - makes focused changes, verifies correctness, and reports precise diffs.
 providerId: anthropic
 modelId: claude-opus-4-6
 ---

@@ -4,24 +4,24 @@ Routes Cline inference through the [VS Code Language Model API](https://code.vis
 (`vscode.lm`), letting Cline use models contributed by any extension that
 registers a language model chat provider (a `vendor`) with VS Code. GitHub
 Copilot is the most common such vendor, but the implementation is
-vendor-agnostic — it selects models via `vscode.lm.selectChatModels` and has no
-Copilot-specific logic. VS Code only — the `vscode.lm` API does not exist on
+vendor-agnostic - it selects models via `vscode.lm.selectChatModels` and has no
+Copilot-specific logic. VS Code only - the `vscode.lm` API does not exist on
 other hosts (e.g. JetBrains), so the provider is gated on the API being present.
 
 ## Files
 
-- **`vscode-lm-handler.ts`** — `VsCodeLmHandler`, a Cline SDK `ApiHandler`
+- **`vscode-lm-handler.ts`** - `VsCodeLmHandler`, a Cline SDK `ApiHandler`
   (`@cline/llms`) backed by `vscode.lm`. Selects a chat model, streams the
   response, forwards tool definitions, and surfaces tool calls and usage.
-- **`vscode-lm-format.ts`** — converts SDK `Message`s to
+- **`vscode-lm-format.ts`** - converts SDK `Message`s to
   `vscode.LanguageModelChatMessage`s and back-converts tool results.
-- **`register-vscode-lm.ts`** — registers the handler with the SDK handler
+- **`register-vscode-lm.ts`** - registers the handler with the SDK handler
   registry and exposes the `vscode.lm` availability check used for gating.
 
 ## How it plugs into the SDK
 
 The SDK's `@cline/llms` handler registry (`registerHandler`) exists for providers
-that need host-only dependencies — here, `vscode.lm` — which cannot live in the
+that need host-only dependencies - here, `vscode.lm` - which cannot live in the
 host-agnostic SDK package. `registerVsCodeLmHandler()` (called during extension
 activation) registers the factory for the `vscode-lm` provider id when the API is
 available. The SDK then resolves `vscode-lm` to this handler for both the main
@@ -30,7 +30,7 @@ task loop and standalone utility calls.
 ## Model selection
 
 `ProviderConfig` has no field for a VS Code LM selector, so the selected model
-travels as a `vendor/family[/version/id]` string in `ProviderConfig.modelId` —
+travels as a `vendor/family[/version/id]` string in `ProviderConfig.modelId` -
 the model-id channel the rest of the SDK adapter uses. The webview stores the
 structured `LanguageModelChatSelector` in
 `plan/actModeVsCodeLmModelSelector`; the session factory stringifies it into

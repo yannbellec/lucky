@@ -24,8 +24,8 @@ This directory contains example automation specs for file-based and event-driven
 
 Cline automation supports two types of specs:
 
-1. **Recurring specs** (`.cron.md`) — Run on a schedule
-2. **Event-driven specs** (`.event.md`) — Run when an event occurs
+1. **Recurring specs** (`.cron.md`) - Run on a schedule
+2. **Event-driven specs** (`.event.md`) - Run when an event occurs
 
 Both can be enabled in `.cline/cron/` to be picked up by the hub or SDK.
 
@@ -36,12 +36,12 @@ Both can be enabled in `.cline/cron/` to be picked up by the hub or SDK.
 A production-ready example that runs a code review automation on weekday mornings.
 
 **Key fields:**
-- `schedule: "0 9 * * MON-FRI"` — 9 AM on weekdays (cron format)
-- `tools: run_commands,read_files` — Restrict tools to specific actions
-- `mode: act` — Execute commands (vs. `plan` or `yolo`)
-- `timeoutSeconds: 1800` — 30-minute timeout
-- `modelSelection` — Override model/provider for this run
-- `notesDirectory` — Durable automation notes for multi-run state
+- `schedule: "0 9 * * MON-FRI"` - 9 AM on weekdays (cron format)
+- `tools: run_commands,read_files` - Restrict tools to specific actions
+- `mode: act` - Execute commands (vs. `plan` or `yolo`)
+- `timeoutSeconds: 1800` - 30-minute timeout
+- `modelSelection` - Override model/provider for this run
+- `notesDirectory` - Durable automation notes for multi-run state
 
 **Usage:**
 ```bash
@@ -137,12 +137,12 @@ Event-driven specs live in `.cline/cron/events/` and trigger when normalized eve
 Runs a pull request review whenever a new PR opens on the `main` branch.
 
 **Key fields:**
-- `event: github.pull_request.opened` — Trigger on this event type
-- `filters` — Narrow scope: match repository, branch, labels, etc.
-- `debounceSeconds: 30` — Wait 30s for more events before triggering
-- `dedupeWindowSeconds: 600` — Ignore duplicate events within 10 minutes
-- `cooldownSeconds: 120` — Wait 2 minutes after a run before next trigger
-- `maxParallel: 2` — Run at most 2 in parallel
+- `event: github.pull_request.opened` - Trigger on this event type
+- `filters` - Narrow scope: match repository, branch, labels, etc.
+- `debounceSeconds: 30` - Wait 30s for more events before triggering
+- `dedupeWindowSeconds: 600` - Ignore duplicate events within 10 minutes
+- `cooldownSeconds: 120` - Wait 2 minutes after a run before next trigger
+- `maxParallel: 2` - Run at most 2 in parallel
 
 **Usage:**
 ```bash
@@ -164,10 +164,10 @@ Events are ingested via:
 Local test spec for verifying event-driven automation without external services.
 
 **Key fields:**
-- `event: local.manual_test` — Local event type (no external dependency)
-- `filters: { topic: cron-feature-2 }` — Match on event payload fields
-- `debounceSeconds: 0` — Trigger immediately
-- `maxIterations: 5` — Quick timeout for testing
+- `event: local.manual_test` - Local event type (no external dependency)
+- `filters: { topic: cron-feature-2 }` - Match on event payload fields
+- `debounceSeconds: 0` - Trigger immediately
+- `maxIterations: 5` - Quick timeout for testing
 
 **Usage:**
 ```bash
@@ -213,8 +213,8 @@ Triggers when a PR is opened or updated. Runs test coverage against the PR branc
 **Best for:** Maintaining test coverage standards while being helpful rather than blocking. Guides authors toward better test practices.
 
 **Key fields:**
-- `event: local.plugin_event` — Custom event emitted by the plugin
-- `filters: { topic: plugin-demo }` — Match on plugin event attributes
+- `event: local.plugin_event` - Custom event emitted by the plugin
+- `filters: { topic: plugin-demo }` - Match on plugin event attributes
 - Minimal throttling for responsive testing
 
 **Usage:**
@@ -323,15 +323,15 @@ Completed and failed runs are reported to `.cline/cron/reports/<run-id>.md` with
 ## 📚 Tools Reference
 
 Available tool names:
-- `read_files` — Read file contents
-- `search_codebase` — Search across the project
-- `run_commands` — Execute shell commands
-- `fetch_web_content` — Fetch URLs
-- `apply_patch` — Apply code patches
-- `editor` — Edit files
-- `skills` — Call custom skills
-- `ask_question` — Query the user
-- `submit_and_exit` — Complete the run
+- `read_files` - Read file contents
+- `search_codebase` - Search across the project
+- `run_commands` - Execute shell commands
+- `fetch_web_content` - Fetch URLs
+- `apply_patch` - Apply code patches
+- `editor` - Edit files
+- `skills` - Call custom skills
+- `ask_question` - Query the user
+- `submit_and_exit` - Complete the run
 
 ## 💡 Practical Automation Workflows
 
@@ -359,21 +359,21 @@ This provides continuous quality monitoring without developers having to remembe
 ### Team Workflows by Role
 
 **For Team Leads:**
-- `dependency-check.cron.md` — Weekly security review
-- `dead-code-finder.cron.md` — Quarterly cleanup planning
-- `performance-baseline.cron.md` — Monitor system health
+- `dependency-check.cron.md` - Weekly security review
+- `dead-code-finder.cron.md` - Quarterly cleanup planning
+- `performance-baseline.cron.md` - Monitor system health
 
 **For QA Engineers:**
-- `test-coverage-report.cron.md` — Track trends
-- `pr-test-coverage.event.md` — PR-level feedback
+- `test-coverage-report.cron.md` - Track trends
+- `pr-test-coverage.event.md` - PR-level feedback
 
 **For Backend Teams:**
-- `performance-baseline.cron.md` — Build time, API response time
-- `type-check-strict.cron.md` — Type safety
+- `performance-baseline.cron.md` - Build time, API response time
+- `type-check-strict.cron.md` - Type safety
 
 **For Frontend Teams:**
-- `performance-baseline.cron.md` — Bundle size, cold start
-- `code-style-audit.cron.md` — Consistent styling
+- `performance-baseline.cron.md` - Bundle size, cold start
+- `code-style-audit.cron.md` - Consistent styling
 
 ## 🔍 Examples in Action
 
@@ -414,6 +414,6 @@ Summarize the changes, check for security risks, and recommend approval or chang
 
 ## 🔗 See Also
 
-- [Architecture automation overview](../../ARCHITECTURE.md#automation) — Runtime architecture and flow details
-- [`plugins/automation-events.ts`](../plugins/automation-events.ts) — Plugin event emission
-- [Cline SDK Examples](../) — Other integration examples
+- [Architecture automation overview](../../ARCHITECTURE.md#automation) - Runtime architecture and flow details
+- [`plugins/automation-events.ts`](../plugins/automation-events.ts) - Plugin event emission
+- [Cline SDK Examples](../) - Other integration examples

@@ -100,19 +100,19 @@ Once loaded, the agent can call tools like `start_subagent`, `message_subagent`,
 **Example file-based and event-driven automation specs** for global `~/.cline/cron/`:
 
 Recurring jobs for continuous quality:
-- **changelog-generator** — Auto-generate CHANGELOG from commits
-- **dependency-check** — Weekly security and update audits
-- **test-coverage-report** — Daily coverage metrics
-- **performance-baseline** — Build time and bundle size tracking
-- **type-check-strict** — TypeScript type safety audits
-- **code-style-audit** — Linting and formatting checks
-- **dead-code-finder** — Identify unused code
-- **documentation-check** — API documentation coverage
-- **weekly-metrics-summary** — Fun team metrics report 🎉
+- **changelog-generator** - Auto-generate CHANGELOG from commits
+- **dependency-check** - Weekly security and update audits
+- **test-coverage-report** - Daily coverage metrics
+- **performance-baseline** - Build time and bundle size tracking
+- **type-check-strict** - TypeScript type safety audits
+- **code-style-audit** - Linting and formatting checks
+- **dead-code-finder** - Identify unused code
+- **documentation-check** - API documentation coverage
+- **weekly-metrics-summary** - Fun team metrics report 🎉
 
 Event-driven jobs for PR workflows:
-- **pr-changelog-check** — Verify CHANGELOG is updated in PRs
-- **pr-test-coverage** — Analyze coverage impact of changes
+- **pr-changelog-check** - Verify CHANGELOG is updated in PRs
+- **pr-test-coverage** - Analyze coverage impact of changes
 
 ```bash
 mkdir -p ~/.cline/cron

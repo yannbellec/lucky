@@ -118,8 +118,8 @@ Apps launched from Finder/the Dock inherit launchd's minimal `PATH`
 (`/usr/bin:/bin:/usr/sbin:/sbin`), not the one your shell profiles build, so
 agent-run commands would miss Homebrew-installed tools like `gh` even though
 they work fine from a terminal. At startup the sidecar asks the user's login
-shell — read from the account database via `getpwuid`, falling back to
-`$SHELL` — for its `PATH` and merges it into `process.env.PATH`, which every
+shell - read from the account database via `getpwuid`, falling back to
+`$SHELL` - for its `PATH` and merges it into `process.env.PATH`, which every
 agent-spawned child (run_commands, MCP servers) inherits. Only `PATH` is
 imported, deliberately; other login-environment variables (`SSH_AUTH_SOCK`,
 API keys, `JAVA_HOME`-style tool roots) are not pulled in. Set
@@ -200,16 +200,16 @@ desktop integration notes.
 ## Releases & Auto-Updates
 
 Releases are built, signed, notarized, and published by the `desktop-publish`
-GitHub workflow as a single universal macOS DMG — one download that runs
+GitHub workflow as a single universal macOS DMG - one download that runs
 natively on both Apple Silicon and Intel (macOS picks the matching slice at
-launch, so users never choose an architecture) — plus a Windows x64 NSIS
+launch, so users never choose an architecture) - plus a Windows x64 NSIS
 installer and Linux x64 and arm64 `.deb` and `.rpm` packages. The step-by-step flow
 (version bumps, changelog, tag, repo secrets) lives in the `publish-desktop`
 skill (`.cline/skills/publish-desktop/SKILL.md`).
 
 Individual releases are not announced in-app; Settings → About lists the
 bundled release notes. Every so often a one-time "What's new" dialog catches
-users up on accumulated features — see the `desktop-whats-new` skill
+users up on accumulated features - see the `desktop-whats-new` skill
 (`.cline/skills/desktop-whats-new/SKILL.md`).
 
 Installed apps auto-update via the Tauri updater: they poll the rolling
@@ -219,7 +219,7 @@ in the background too; Windows and Linux install it when the user restarts
 (the NSIS installer on Windows, `pkexec dpkg -i` / `rpm -U` on Linux, which
 asks for the user's password). Two things must never be lost: the
 `desktop-latest` release/tag (its feed URL is baked into shipped apps) and the
-updater private key (`TAURI_SIGNING_PRIVATE_KEY` — without it, shipped apps
+updater private key (`TAURI_SIGNING_PRIVATE_KEY` - without it, shipped apps
 can't verify new updates).
 
 ### Linux
@@ -249,7 +249,7 @@ cannot use a Mac as an SSH remote host (see the changelog).
 
 There is also a beta channel ("Cline Beta", a separate app that installs
 side by side with stable) cut from the `desktop-experimental` branch and
-served by the rolling `desktop-beta` release — the same never-delete rule
+served by the rolling `desktop-beta` release - the same never-delete rule
 applies to it. The experimental-branch process and beta release flow live in
 [`EXPERIMENTAL.md`](./EXPERIMENTAL.md).
 
@@ -274,12 +274,12 @@ For local-only macOS testing, use `bun run package:desktop:mac --allow-unsigned-
 
 One-time keychain setup:
 
-1. Get the **Developer ID Application** identity from your team admin. A `.cer` alone is not enough — you need the private key. If the admin generated the CSR, have them export the identity from Keychain Access as a `.p12` and import it:
+1. Get the **Developer ID Application** identity from your team admin. A `.cer` alone is not enough - you need the private key. If the admin generated the CSR, have them export the identity from Keychain Access as a `.p12` and import it:
    `security import BeeCertificates.p12 -k ~/Library/Keychains/login.keychain-db -T /usr/bin/codesign -T /usr/bin/security`
 2. If `security find-identity -v -p codesigning` still reports `0 valid identities`, the Apple intermediate CA is missing. Install it:
    `curl -O https://www.apple.com/certificateauthority/DeveloperIDG2CA.cer && security import DeveloperIDG2CA.cer -k ~/Library/Keychains/login.keychain-db`
-3. Re-run `security find-identity -v -p codesigning` — it should now list `Developer ID Application: <Team Name> (<TEAMID>)`. That exact quoted string is your `APPLE_SIGNING_IDENTITY`.
-4. Get an **App Store Connect API key** from the admin: the `AuthKey_<KEYID>.p8` file, the Key ID, and the Issuer ID (a UUID from App Store Connect → Users and Access → Integrations). This is used for notarization only — nothing is published.
+3. Re-run `security find-identity -v -p codesigning` - it should now list `Developer ID Application: <Team Name> (<TEAMID>)`. That exact quoted string is your `APPLE_SIGNING_IDENTITY`.
+4. Get an **App Store Connect API key** from the admin: the `AuthKey_<KEYID>.p8` file, the Key ID, and the Issuer ID (a UUID from App Store Connect → Users and Access → Integrations). This is used for notarization only - nothing is published.
 
 Per-build:
 
@@ -291,7 +291,7 @@ export APPLE_API_ISSUER="<issuer UUID>"
 bun run package:desktop:mac
 ```
 
-The first signing run pops a keychain dialog — enter your macOS login password and click **Always Allow**. Notarization uploads the app to Apple's automated malware scan (typically 2–10 minutes) and staples the ticket. Artifacts land in `dist/desktop/`; share the `.dmg`. The DMG name takes its version from `src-tauri/tauri.conf.json`, the zip name from `package.json` — bump both.
+The first signing run pops a keychain dialog - enter your macOS login password and click **Always Allow**. Notarization uploads the app to Apple's automated malware scan (typically 2-10 minutes) and staples the ticket. Artifacts land in `dist/desktop/`; share the `.dmg`. The DMG name takes its version from `src-tauri/tauri.conf.json`, the zip name from `package.json` - bump both.
 
 Do not remove `src-tauri/entitlements.plist` or the `bundle.macOS.entitlements` reference in `tauri.conf.json`: notarization requires the hardened runtime, which breaks the Bun-compiled Cline CLI (`SharedArrayBuffer is not defined`, surfacing in-app as "desktop backend endpoint not ready") unless the JIT entitlements are present.
 

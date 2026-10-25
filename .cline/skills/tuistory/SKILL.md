@@ -1,7 +1,7 @@
 ---
 name: tuistory
 description: |
-  Drive and test terminal apps (especially the Cline CLI TUI in apps/cli) through tuistory — named background PTY sessions that agents can read, wait on, snapshot, screenshot, and type into. Like Playwright/tmux for terminals, with reactive waiting instead of blind `sleep`.
+  Drive and test terminal apps (especially the Cline CLI TUI in apps/cli) through tuistory - named background PTY sessions that agents can read, wait on, snapshot, screenshot, and type into. Like Playwright/tmux for terminals, with reactive waiting instead of blind `sleep`.
 
   Use this skill when you need to:
   - Manually test or reproduce bugs in the interactive Cline TUI (`bun run cli -i`) from a headless environment
@@ -12,7 +12,7 @@ description: |
 
 # tuistory
 
-[tuistory](https://github.com/remorses/tuistory) wraps any terminal command in a named background PTY session backed by a Ghostty terminal emulator. Agents interact with the session via short CLI calls that return instantly; humans can `tuistory attach` to the same session to watch or intervene. No real terminal or display (`DISPLAY`) is needed — it works fully headless, which makes it the preferred way for cloud agents to exercise the Cline TUI.
+[tuistory](https://github.com/remorses/tuistory) wraps any terminal command in a named background PTY session backed by a Ghostty terminal emulator. Agents interact with the session via short CLI calls that return instantly; humans can `tuistory attach` to the same session to watch or intervene. No real terminal or display (`DISPLAY`) is needed - it works fully headless, which makes it the preferred way for cloud agents to exercise the Cline TUI.
 
 It is installed as a devDependency of `@cline/cli`, so the pinned binary resolves when you run from `apps/cli`:
 
@@ -41,7 +41,7 @@ The dummy `-k test-key` renders the full chat UI; only an actual agent turn woul
 Then use an **observe → act → observe** loop:
 
 ```bash
-# Wait reactively for the chat view — never use sleep
+# Wait reactively for the chat view - never use sleep
 bunx tuistory -s cline wait "What can I do for you?" --timeout 30000
 
 # Act, then always observe the resulting screen state
@@ -50,7 +50,7 @@ bunx tuistory -s cline snapshot --trim
 bunx tuistory -s cline press enter
 bunx tuistory -s cline snapshot --trim
 
-# Styled PNG of the current screen (prints the file path) — good for artifacts
+# Styled PNG of the current screen (prints the file path) - good for artifacts
 bunx tuistory -s cline screenshot
 
 # Full raw output stream (snapshot shows only the visible screen)
@@ -82,7 +82,7 @@ bunx tuistory -s my-server restart                  # after code changes
 
 ## Writing e2e tests with the library API
 
-`apps/cli/src/cli.tuistory.e2e.test.ts` (run: `bun run test:e2e:tuistory`) is the reference. The programmatic API runs in-process — no daemon:
+`apps/cli/src/cli.tuistory.e2e.test.ts` (run: `bun run test:e2e:tuistory`) is the reference. The programmatic API runs in-process - no daemon:
 
 ```ts
 import { launchTerminal } from "tuistory";

@@ -72,7 +72,7 @@ cline -i "clean up the repo"  # Destructive operations will be blocked
 
 #### `PreToolUse_ClineignoreGuard.sh`
 
-Block file reads, edits, and shell commands whose paths match gitignore-style patterns in a workspace `.clineignore` file — an enforced replacement for the legacy `.clineignore` feature. Handles both the CLI and VS Code extension hook payload shapes, and protects `.clineignore` itself from modification. See the [.clineignore docs](https://docs.cline.bot/customization/clineignore) for the full walkthrough.
+Block file reads, edits, and shell commands whose paths match gitignore-style patterns in a workspace `.clineignore` file - an enforced replacement for the legacy `.clineignore` feature. Handles both the CLI and VS Code extension hook payload shapes, and protects `.clineignore` itself from modification. See the [.clineignore docs](https://docs.cline.bot/customization/clineignore) for the full walkthrough.
 
 ```bash
 mkdir -p .cline/hooks
@@ -441,9 +441,9 @@ This example uses `hooks.beforeModel` to estimate request size and replace older
 
 ## Tips
 
-- **Hooks are disabled in `--yolo` mode** — use `--act` or `--plan` to enable them
-- **Use stderr for logging** — stdout is reserved for JSON output
-- **Keep hooks fast** — they run before every tool call, so performance matters
-- **Test with `jq`** — JSON parsing is finicky; use `jq` for safe extraction
-- **Use multiple hooks** — different event files can coexist in `.cline/hooks/`
-- **Load from custom dirs** — use `--hooks-dir ./ci/hooks` to load from elsewhere
+- **Hooks are disabled in `--yolo` mode** - use `--act` or `--plan` to enable them
+- **Use stderr for logging** - stdout is reserved for JSON output
+- **Keep hooks fast** - they run before every tool call, so performance matters
+- **Test with `jq`** - JSON parsing is finicky; use `jq` for safe extraction
+- **Use multiple hooks** - different event files can coexist in `.cline/hooks/`
+- **Load from custom dirs** - use `--hooks-dir ./ci/hooks` to load from elsewhere

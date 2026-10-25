@@ -7,7 +7,7 @@ description: Use when preparing, tagging, and publishing an apps/cli npm release
 
 Use this skill when the user asks to release the CLI, publish `cline`, bump the CLI version, draft release notes, create a `cli-vX.Y.Z` tag, or trigger the CLI publish workflow.
 
-The CLI is npm-only. Do not add alternate distribution channels. Windows binaries are Authenticode-signed automatically by the publish workflow via Azure Trusted Signing (see the `.github/actions/sign-windows-cli` composite action and "Windows code signing" in `apps/cli/DISTRIBUTION.md`); if the signing secrets are not configured the workflow warns and publishes unsigned binaries. Local publishes (`bun release cli`) do not sign — prefer the GitHub Actions publish path for releases users run on Windows.
+The CLI is npm-only. Do not add alternate distribution channels. Windows binaries are Authenticode-signed automatically by the publish workflow via Azure Trusted Signing (see the `.github/actions/sign-windows-cli` composite action and "Windows code signing" in `apps/cli/DISTRIBUTION.md`); if the signing secrets are not configured the workflow warns and publishes unsigned binaries. Local publishes (`bun release cli`) do not sign - prefer the GitHub Actions publish path for releases users run on Windows.
 
 > Working directory: run every command below from the repository root. Paths and scripts (e.g. `apps/cli/package.json`, `sdk/packages/`, `bun release cli`, `bun run version`) are written relative to the repo root.
 
@@ -40,7 +40,7 @@ The CLI builds and ships against the SDK source in the monorepo (`workspace:*` f
 - Hub freshness. The hub daemon lives in `@cline/core` and stamps a `buildId` that defaults to the `@cline/core` package version (`resolveHubBuildId` in `sdk/packages/core/src/hub/discovery/index.ts`). A running hub is only retired and respawned when that `buildId` changes (`isCompatibleHubRecord` / `retireIncompatibleHub` in `sdk/packages/core/src/hub/daemon/index.ts`). So if the SDK code changed but the version did not, a user who upgrades the CLI keeps talking to their already-running hub, which is still executing the old SDK code. Bumping the SDK version makes the new CLI's `buildId` differ, so the stale hub is detected as incompatible and respawned with the fresh code.
 - Release hygiene. We want regular SDK releases; cutting one whenever we cut a CLI release keeps the published SDK in step with what the CLI ships.
 
-So when the SDK has changed, release it first (which bumps the `@cline/core` version), then cut the CLI release on top of that bump. Leave the CLI's SDK dependency as `workspace:*` — the fix is to release the SDK, not to pin the CLI.
+So when the SDK has changed, release it first (which bumps the `@cline/core` version), then cut the CLI release on top of that bump. Leave the CLI's SDK dependency as `workspace:*` - the fix is to release the SDK, not to pin the CLI.
 
 1. Check for unreleased SDK changes.
 
@@ -62,7 +62,7 @@ All SDK packages share one version, read from `sdk/packages/llms/package.json`. 
 
 3. Draft the SDK release notes and update the changelog.
 
-Draft user-facing notes from the SDK commits found in step 1, translating commit messages into user-facing language (same approach as the CLI release notes below). Prepend a new `## <version>` section with those notes to the top of `sdk/CHANGELOG.md`, using the header format `## <version>` with no date — the same flat, newest-on-top format as `apps/cli/CHANGELOG.md`. This is the SDK changelog (all SDK packages share one version) and it is maintained by hand; the `sdk-publish.yml` workflow does not read it.
+Draft user-facing notes from the SDK commits found in step 1, translating commit messages into user-facing language (same approach as the CLI release notes below). Prepend a new `## <version>` section with those notes to the top of `sdk/CHANGELOG.md`, using the header format `## <version>` with no date - the same flat, newest-on-top format as `apps/cli/CHANGELOG.md`. This is the SDK changelog (all SDK packages share one version) and it is maintained by hand; the `sdk-publish.yml` workflow does not read it.
 
 4. Bump versions and regenerate.
 

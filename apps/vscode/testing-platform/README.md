@@ -6,9 +6,9 @@ A CLI testing framework for the Cline Core extension, providing gRPC-based integ
 
 The platform enables end-to-end validation of Cline's core functionality through:
 
-- **gRPC Adapters** – clients for Cline’s gRPC services  
-- **Test Harness** – runner, utilities, and type definitions  
-- **Spec Files** – JSON instructions for automated test cases  
+- **gRPC Adapters** - clients for Cline’s gRPC services  
+- **Test Harness** - runner, utilities, and type definitions  
+- **Spec Files** - JSON instructions for automated test cases  
 
 ## Structure
 

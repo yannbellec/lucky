@@ -1,13 +1,13 @@
 # Cline Plugin Examples
 
-A plugin is a single file (or directory) that extends any Cline agent — CLI, Kanban, VS Code, JetBrains, or anything built on the Core SDK. Drop one in, get new tools, hooks, providers, or message rewriters everywhere.
+A plugin is a single file (or directory) that extends any Cline agent - CLI, Kanban, VS Code, JetBrains, or anything built on the Core SDK. Drop one in, get new tools, hooks, providers, or message rewriters everywhere.
 
 What a plugin can do:
 
-- **Register tools** — give the agent new capabilities it can call
-- **Hook into the lifecycle** — observe or steer execution at key points
-- **Rewrite provider messages** — custom compaction, redaction, context shaping
-- **Emit automation events** — push normalized events into the runtime
+- **Register tools** - give the agent new capabilities it can call
+- **Hook into the lifecycle** - observe or steer execution at key points
+- **Rewrite provider messages** - custom compaction, redaction, context shaping
+- **Emit automation events** - push normalized events into the runtime
 
 ## Examples
 
@@ -24,7 +24,7 @@ What a plugin can do:
 | [web-search.ts](./web-search.ts) | `web_search` tool backed by an Exa API key | Adds a `web_search` tool that queries Exa for current public web results, with optional result limits, domain filters, recency windows, and country localization. Requires `EXA_API_KEY`. |
 | [openrouter-provider.ts](./openrouter-provider.ts) | Custom model provider via `registerProvider` | Registers an OpenAI-compatible model provider (pointed at OpenRouter) plus its model catalog so the agent can run inference against it. Swap the base URL, API key env var, and models to add any OpenAI-compatible endpoint Cline does not bundle. Requires `OPENROUTER_API_KEY`. |
 | [typescript-lsp/](./typescript-lsp/) | `goto_definition` tool powered by the TypeScript Language Service | Adds `goto_definition(file, line)` for TypeScript/JavaScript projects. It loads the target project’s own TypeScript version, finds identifiers on a line, and resolves definitions through imports, re-exports, aliases, and other language-service semantics. |
-| [agents-squad/](./agents-squad/) | Multi-agent team — spin up subagents with their own models and personalities | Adds tools for starting, messaging, polling, and coordinating background subagents. It includes bundled agent presets, skill discovery/loading, and a shared handoff store for passing notes between subagents in the same conversation. Reports subagent lifecycle outcomes through `ctx.logger` and `ctx.telemetry` (start counters, completion events, turn-duration histograms). |
+| [agents-squad/](./agents-squad/) | Multi-agent team - spin up subagents with their own models and personalities | Adds tools for starting, messaging, polling, and coordinating background subagents. It includes bundled agent presets, skill discovery/loading, and a shared handoff store for passing notes between subagents in the same conversation. Reports subagent lifecycle outcomes through `ctx.logger` and `ctx.telemetry` (start counters, completion events, turn-duration histograms). |
 
 The runtime-hook variant of compaction lives in [../hooks/custom-compaction-hook.example.ts](../hooks/custom-compaction-hook.example.ts).
 
@@ -144,7 +144,7 @@ Declare what the plugin uses in `manifest.capabilities`. Each one unlocks one pa
 
 The setup `ctx` may include `session`, `client`, `user`, `workspaceInfo`, `automation`, `logger`, and `telemetry` depending on the host. See [`automation-events.ts`](./automation-events.ts) for an end-to-end example.
 
-`ctx.telemetry` works in both plugin execution modes: in-process plugins receive the host telemetry service directly, and sandboxed plugins receive a bridge that forwards `capture`/`captureRequired`/`recordCounter`/`recordHistogram`/`recordGauge` calls to the host over IPC (pass only JSON-serializable properties). The host namespaces every plugin event and metric under `plugin.` and stamps it with `plugin_name`, and drops them when the user has opted out of telemetry. Always feature-detect it (`ctx.telemetry?.capture(...)`) — it is undefined when the host has no telemetry service. One sandbox caveat: the bridge is stateless, so `isEnabled()` always reports `true` and opted-out events are simply dropped host-side — do not use it to gate expensive property computation, and keep telemetry properties cheap to build. Identity setters (`setDistinctId`, `setCommonProperties`, …) are host concerns and are no-ops in the sandbox. See [`weather-metrics.ts`](./weather-metrics.ts) for usage.
+`ctx.telemetry` works in both plugin execution modes: in-process plugins receive the host telemetry service directly, and sandboxed plugins receive a bridge that forwards `capture`/`captureRequired`/`recordCounter`/`recordHistogram`/`recordGauge` calls to the host over IPC (pass only JSON-serializable properties). The host namespaces every plugin event and metric under `plugin.` and stamps it with `plugin_name`, and drops them when the user has opted out of telemetry. Always feature-detect it (`ctx.telemetry?.capture(...)`) - it is undefined when the host has no telemetry service. One sandbox caveat: the bridge is stateless, so `isEnabled()` always reports `true` and opted-out events are simply dropped host-side - do not use it to gate expensive property computation, and keep telemetry properties cheap to build. Identity setters (`setDistinctId`, `setCommonProperties`, …) are host concerns and are no-ops in the sandbox. See [`weather-metrics.ts`](./weather-metrics.ts) for usage.
 
 ### Sandboxed plugin lifetime
 
@@ -173,7 +173,7 @@ Hooks are typed, in-process callbacks on the same hook layer as `@cline/agents`.
 | `afterTool`   | after each tool execution |
 | `onEvent`     | every `AgentRuntimeEvent` emitted by the runtime |
 
-`beforeRun` and `afterRun` wrap one `run()` / `continue()` invocation — in an interactive session, that's one user turn. `afterRun` is the right place for completion notifications, but it also fires on aborted and failed runs, so check `result.status === "completed"` if you only want successes.
+`beforeRun` and `afterRun` wrap one `run()` / `continue()` invocation - in an interactive session, that's one user turn. `afterRun` is the right place for completion notifications, but it also fires on aborted and failed runs, so check `result.status === "completed"` if you only want successes.
 
 ### Plugin hooks vs file hooks
 
@@ -195,7 +195,7 @@ Use **file hooks** for user- or workspace-configured scripts. Use **plugin runti
 
 ## Custom message compaction
 
-Use `registerMessageBuilder` when a plugin needs to rewrite the provider-bound message list before the model call. Builders run after runtime messages are converted into SDK message blocks and before core's built-in safety pass — so provider-safe normalization is still the final word.
+Use `registerMessageBuilder` when a plugin needs to rewrite the provider-bound message list before the model call. Builders run after runtime messages are converted into SDK message blocks and before core's built-in safety pass - so provider-safe normalization is still the final word.
 
 | Example | Extension point | Best for |
 | ------- | --------------- | -------- |
@@ -216,4 +216,4 @@ Reach for `beforeModel` only when you need the runtime snapshot or want to mutat
 | `get_background_command` | reads job status plus recent stdout/stderr tails |
 | `delete_background_command` | deletes saved job metadata, optionally deletes captured logs |
 
-When `notifyParent` is true (the default), the plugin emits a `steer_message` through the host bridge after the command exits, pushing a completion summary back into the active session — so the agent can react to long-running commands without blocking the original tool call.
+When `notifyParent` is true (the default), the plugin emits a `steer_message` through the host bridge after the command exits, pushing a completion summary back into the active session - so the agent can react to long-running commands without blocking the original tool call.

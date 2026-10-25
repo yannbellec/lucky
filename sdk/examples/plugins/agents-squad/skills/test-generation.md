@@ -1,6 +1,6 @@
 ---
 name: test-generation
-description: Generate comprehensive test suites — unit, integration, and edge-case coverage with proper mocking strategies.
+description: Generate comprehensive test suites - unit, integration, and edge-case coverage with proper mocking strategies.
 ---
 
 # Test Generation Skill
@@ -46,9 +46,9 @@ Follow these conventions:
 describe("ModuleName", () => {
   describe("functionName", () => {
     it("should [expected behavior] when [condition]", () => {
-      // Arrange — set up inputs and mocks
-      // Act — call the function
-      // Assert — verify the result
+      // Arrange - set up inputs and mocks
+      // Act - call the function
+      // Assert - verify the result
     });
   });
 });
@@ -63,7 +63,7 @@ describe("ModuleName", () => {
 ### Assertions
 - Assert on specific values, not just truthiness.
 - Check error messages and types, not just that an error was thrown.
-- Use snapshot tests sparingly — only for stable, complex output.
+- Use snapshot tests sparingly - only for stable, complex output.
 - Verify side effects (files written, events emitted, logs produced).
 
 ## 4. Quality Checks

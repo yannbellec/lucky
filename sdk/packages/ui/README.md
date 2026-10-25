@@ -245,9 +245,9 @@ smaller action, empty-state, detail, and code primitives fill out common
 transcript states.
 
 For assistant Markdown, `@cline/ui/components/markdown` exports the shared
-Streamdown configuration — `markdownCodeHighlighter` (lazy Shiki with GitHub
+Streamdown configuration - `markdownCodeHighlighter` (lazy Shiki with GitHub
 light/dark themes), `agentMarkdownControls`, and the opt-in
-`createLazyMermaidPlugin` / `agentMarkdownControlsWithMermaid` pair — and
+`createLazyMermaidPlugin` / `agentMarkdownControlsWithMermaid` pair - and
 `@cline/ui/components/markdown.css` carries the matching chat styling (quiet
 single-box code blocks with a hover copy control, chat-scale headings, table
 cards). The Mermaid plugin dynamically imports the renderer only after a
@@ -262,8 +262,8 @@ Hosts that want a native-looking diagram block register
 `<Streamdown plugins={{ renderers: [createMermaidRenderer()] }} />` instead of
 the `mermaid` diagram plugin (Streamdown consults `renderers` first, so the
 built-in block is skipped). The block shows the diagram's filename in its
-header — from the fence title (```` ```mermaid title="my-diagram" ````), the
-diagram's frontmatter `title:`, or a name derived from its contents — and
+header - from the fence title (```` ```mermaid title="my-diagram" ````), the
+diagram's frontmatter `title:`, or a name derived from its contents - and
 offers zoom, fullscreen, copy, and a Download menu with PNG and Mermaid
 source (`.mmd`) only. Diagrams use Mermaid's `base` theme with variables
 resolved from the live design tokens (`--card`, `--foreground`, `--primary`,
@@ -283,7 +283,7 @@ flex/min-height chain so its viewport can scroll.
 Diagram links need host handling. Mermaid's strict mode blocks scripts and
 dangerous URL schemes, but a `click <node> "https://…"` directive still renders
 a live anchor inside the SVG, and Streamdown injects that SVG with
-`dangerouslySetInnerHTML` — so it never passes through the `a` component a
+`dangerouslySetInnerHTML` - so it never passes through the `a` component a
 product supplies. The plugin therefore runs `neutralizeDiagramLinks` over
 rendered output: navigable `href` / `xlink:href` / `target` attributes are
 removed, and an http(s) destination is preserved on the attribute exported as

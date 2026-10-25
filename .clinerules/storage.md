@@ -39,7 +39,7 @@ Remember that your data may be read by a different client than the one that wrot
 
 On VSCode startup, a migration copies data from VSCode's `ExtensionContext` storage into the file-backed stores. This runs in `src/common.ts` before `StateManager.initialize()`.
 
-- **Sentinel**: `__vscodeMigrationVersion` key in global state and workspace state — prevents re-migration.
+- **Sentinel**: `__vscodeMigrationVersion` key in global state and workspace state - prevents re-migration.
 - **Merge strategy**: File store wins. Existing values are never overwritten.
 - **Safe downgrade**: VSCode storage is NOT cleared, so older extension versions still work.
 

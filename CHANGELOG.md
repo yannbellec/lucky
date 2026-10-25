@@ -103,16 +103,16 @@
 ### Changed
 
 - Sub-agents spawned in the same step now run their tool calls at the same time rather than one after another. Tools that must run in order still do, and the parent still waits for every result before its next turn.
-- Models that advertise a large output limit now get a bigger default output budget — 30% of the limit rather than a flat 32,000 tokens, whichever is larger. Nothing changes for models under roughly 107k output tokens; longer responses can mean higher per-turn cost and latency.
-- Refreshed the model catalog: 203 to 209 providers and 6,079 to 6,237 models. Kimi For Coding splits into separate kimi.com and kimi.ai providers, and AI21 Labs, ainetcafe, Inco, OCI Generative AI, Tempr, and Vispark are new. The resolved default model changes for 36 providers that do not pin one — most landing on DeepSeek V4.1 Flash, GLM 5.3 Flash, or MiMo V2.6 Flash. If you use one of those providers without pinning a model, expect a different default.
+- Models that advertise a large output limit now get a bigger default output budget - 30% of the limit rather than a flat 32,000 tokens, whichever is larger. Nothing changes for models under roughly 107k output tokens; longer responses can mean higher per-turn cost and latency.
+- Refreshed the model catalog: 203 to 209 providers and 6,079 to 6,237 models. Kimi For Coding splits into separate kimi.com and kimi.ai providers, and AI21 Labs, ainetcafe, Inco, OCI Generative AI, Tempr, and Vispark are new. The resolved default model changes for 36 providers that do not pin one - most landing on DeepSeek V4.1 Flash, GLM 5.3 Flash, or MiMo V2.6 Flash. If you use one of those providers without pinning a model, expect a different default.
 
 ### Fixed
 
-- UserPromptSubmit and TaskStart hooks can inject context again. What those hooks returned as `contextModification` was being dropped — only `cancel` survived — so a hook meant to add repository facts or house rules to a task silently did nothing. The context is now delivered as a `<hook_context>` block on the run's first request, the same as before the regression, and the raw block never renders in the transcript. A hook also no longer receives its own previously injected text back as the next turn's prompt.
+- UserPromptSubmit and TaskStart hooks can inject context again. What those hooks returned as `contextModification` was being dropped - only `cancel` survived - so a hook meant to add repository facts or house rules to a task silently did nothing. The context is now delivered as a `<hook_context>` block on the run's first request, the same as before the regression, and the raw block never renders in the transcript. A hook also no longer receives its own previously injected text back as the next turn's prompt.
 - Unsent text in the composer survives Retry. Retry sent no composer content but still ran the same cleanup as approval actions, deleting the only copy of anything typed while a request was in flight. Text, quote context, images, and files are now tracked as one draft that only submitting actions consume.
 - Output from background commands now streams into the command row while the command runs, instead of appearing only when it finishes.
 - The Azure API version configured for a provider is now honored in tasks and mirrored to `providers.json`.
-- Rules are found and shown consistently. The Rules panel listed only `.clinerules` and the Documents global folder, so rules loaded from `.cline/rules`, `~/.cline/rules`, or `~/Cline/Rules` were applied to the model but missing from the panel — and on Windows with a OneDrive-redirected Documents folder, global rules were not found at all.
+- Rules are found and shown consistently. The Rules panel listed only `.clinerules` and the Documents global folder, so rules loaded from `.cline/rules`, `~/.cline/rules`, or `~/Cline/Rules` were applied to the model but missing from the panel - and on Windows with a OneDrive-redirected Documents folder, global rules were not found at all.
 - Deleting a task from history now actually removes it. A task whose index entry was missing but whose file on disk survived was reported as deleted and then reappeared on the next refresh.
 - Sub-agents you configure yourself no longer ask you to approve their individual tool calls after you have already approved the delegation.
 - Compaction no longer silently falls back to truncation partway through a long task. The summarizer kept the credentials captured when the task started, so once they refreshed its request failed with an authorization error that was swallowed; it now follows the task's current credentials and model.
@@ -131,7 +131,7 @@
 
 ### Fixed
 
-- Long tasks now compact when they actually need to rather than running out of room. The trigger compared a character-based estimate of the conversation (~3 characters per token) against the model's context limit, so content that tokenizes far denser than that — disassembly, image dumps, minified sources — could fill the real context window while the estimate stayed under the threshold and compaction never fired; the turn was then squeezed down to a handful of output tokens. The trigger now also uses the token count the provider itself reports, and how much history is kept is scaled by how far off the estimate turned out to be. The summarizer's output budget also doubled, so a model that reasons before answering can no longer spend the whole budget thinking and return no summary at all.
+- Long tasks now compact when they actually need to rather than running out of room. The trigger compared a character-based estimate of the conversation (~3 characters per token) against the model's context limit, so content that tokenizes far denser than that - disassembly, image dumps, minified sources - could fill the real context window while the estimate stayed under the threshold and compaction never fired; the turn was then squeezed down to a handful of output tokens. The trigger now also uses the token count the provider itself reports, and how much history is kept is scaled by how far off the estimate turned out to be. The summarizer's output budget also doubled, so a model that reasons before answering can no longer spend the whole budget thinking and return no summary at all.
 - On Windows, opening a repository that contains a file named `rg.exe`, `git.exe`, or `powershell.exe` no longer runs that file in place of the real program. Bare program names were resolved through the workspace directory before PATH, so a planted executable ran with your privileges as soon as the workspace was indexed. Cline now sets Windows' `NoDefaultCurrentDirectoryInExePath` opt-out at startup, in both the VS Code extension and the JetBrains core. Processes Cline launches inherit it, so inside a Command Prompt shell a program in the current directory now needs `.\` as it already does in PowerShell.
 - A model turn that fails mid-stream with a transient provider error is now retried up to three times with backoff instead of ending the task. A single rate-limit response forwarded by a gateway previously surfaced as a failed task. A turn that has already streamed output is never retried, so nothing is duplicated.
 - Terminal commands that succeed without printing anything (`git add -A` on a clean tree, for example) are now reported as empty output. They were treated as a shell-integration failure, which fed the model a snapshot of unrelated terminal scrollback prefixed with a warning that the output could not be captured, so silent commands intermittently looked like failures.
@@ -156,8 +156,8 @@
 ### Changed
 
 - Web search is now enabled by default on models that support it, outside YOLO mode. It can still be turned off in settings, and a settings file that cannot be read leaves it disabled rather than silently on.
-- The `run_commands` tool description now names the PowerShell edition in use — `Windows PowerShell (powershell.exe)` versus `PowerShell (pwsh.exe)` — quotes its guidance against that executable, and tells the model to run commands directly rather than wrapping them in another shell invocation. It also no longer describes the environment as Windows when `pwsh` is the configured shell on macOS or Linux.
-- Refreshed the built-in model catalog. Adds four providers (Infer by Flow7, Melious, NaN, and Wallaby) and takes the catalog from 5,788 to 6,079 models. This is a wide refresh: the resolved default model changes for 44 providers, most of them landing on DeepSeek V4.1 Flash — among them Hugging Face, Fireworks, Requesty, Nebius, Cortecs, CrossModel, DigitalOcean, Eden AI, and OpenCode Go. Gemini and Vertex now resolve to Gemini 3.8 Flash, GitHub Copilot and Vivgrid to GPT-6 Astra, and NVIDIA to GLM 5.3 Flash. If you use a provider without pinning a model, expect a different default.
+- The `run_commands` tool description now names the PowerShell edition in use - `Windows PowerShell (powershell.exe)` versus `PowerShell (pwsh.exe)` - quotes its guidance against that executable, and tells the model to run commands directly rather than wrapping them in another shell invocation. It also no longer describes the environment as Windows when `pwsh` is the configured shell on macOS or Linux.
+- Refreshed the built-in model catalog. Adds four providers (Infer by Flow7, Melious, NaN, and Wallaby) and takes the catalog from 5,788 to 6,079 models. This is a wide refresh: the resolved default model changes for 44 providers, most of them landing on DeepSeek V4.1 Flash - among them Hugging Face, Fireworks, Requesty, Nebius, Cortecs, CrossModel, DigitalOcean, Eden AI, and OpenCode Go. Gemini and Vertex now resolve to Gemini 3.8 Flash, GitHub Copilot and Vivgrid to GPT-6 Astra, and NVIDIA to GLM 5.3 Flash. If you use a provider without pinning a model, expect a different default.
 
 ## [4.1.17]
 
@@ -209,7 +209,7 @@ Everything here lands through the SDK bundle, so it applies to windows running t
 
 ### Changed
 
-- The per-tool MCP auto-approve checkboxes are hidden. MCP auto-approval is governed solely by the global "Use MCP servers" toggle — the per-tool checkboxes were no-ops that implied granularity the approval path does not have.
+- The per-tool MCP auto-approve checkboxes are hidden. MCP auto-approval is governed solely by the global "Use MCP servers" toggle - the per-tool checkboxes were no-ops that implied granularity the approval path does not have.
 
 ## [4.1.15]
 
@@ -252,7 +252,7 @@ Everything here lands through the SDK bundle, so it applies to windows running t
 
 ## [4.1.11]
 
-Everything here lands through the SDK bundle, so it applies to windows running that bundle — except the last section, which is a legacy-bundle fix.
+Everything here lands through the SDK bundle, so it applies to windows running that bundle - except the last section, which is a legacy-bundle fix.
 
 ### Added
 
@@ -272,7 +272,7 @@ Everything here lands through the SDK bundle, so it applies to windows running t
 - Load skill slash commands through the skills tool instead of pasting their instructions into your message, which previously delivered them twice.
 - Stop offering image, voice, and other non-chat models in chat model pickers.
 - Deliver a `PreToolUse` hook's `contextModification` to the model again, and wait for `PostToolUse` hooks so their output and `cancel` control are honored.
-- Show tool activity a provider runs itself — every tool the Claude Code provider executes inside its own session — instead of dropping it from the conversation.
+- Show tool activity a provider runs itself - every tool the Claude Code provider executes inside its own session - instead of dropping it from the conversation.
 - Fix `run_commands` failing with ENOENT when a structured command carried a full command line with no arguments.
 - Run PowerShell commands fail-fast, so a pipeline erroring per item stops at the first error instead of flooding output and still reporting success.
 - Keep remote configuration in step with the SDK: coordinated refreshes, session gating, and a fail-closed opt-out.
@@ -337,7 +337,7 @@ These land through SDK v0.0.74 and therefore apply to windows running the SDK bu
 ### Changed
 
 - Show the full model catalog for every Vertex region instead of filtering the picker down to a hardcoded list of global-endpoint models, which lagged behind every model launch. Picking a model the region doesn't serve now fails at request time with recovery guidance in the error row.
-- Report Fable 5 cost on Vertex as unknown rather than applying Anthropic's list price, which understated what Vertex actually bills — its rates are region-dependent.
+- Report Fable 5 cost on Vertex as unknown rather than applying Anthropic's list price, which understated what Vertex actually bills - its rates are region-dependent.
 - Make the auto-approve menu the single source of truth for unattended runs and remove the Yolo Mode toggle, which was cosmetic: nothing in the approval path read it. Setups that had Yolo Mode (or auto-approve-all) turned on are migrated to auto-approving every action, so they keep running unattended.
 
 ### Fixed
@@ -357,7 +357,7 @@ These land through SDK v0.0.74 and therefore apply to windows running the SDK bu
 
 - Fade the "View Changes" button until changes since the last message are confirmed, and hide it entirely when there is nothing to show.
 - Centralize plugin settings and contributions, with host-aware snapshots and atomic plugin toggles.
-- Carry execution context in scheduled run reports — readable headers, schedule metadata, durations, and lifecycle error details.
+- Carry execution context in scheduled run reports - readable headers, schedule metadata, durations, and lifecycle error details.
 
 ### Fixed
 
@@ -415,7 +415,7 @@ These land through SDK v0.0.74 and therefore apply to windows running the SDK bu
 - Refresh MCP tool and resource lists when a server sends a `list_changed` notification, instead of only showing a toast.
 - Show installed plugins under their real package names instead of all appearing as "index".
 - Correct the Linux keybinding label in the Plan/Act mode tooltip.
-- Recover from running out of context instead of failing with a raw provider error — the run compacts and retries once, and the cases that genuinely cannot be recovered explain why.
+- Recover from running out of context instead of failing with a raw provider error - the run compacts and retries once, and the cases that genuinely cannot be recovered explain why.
 - Retry empty model responses on every provider rather than only Ollama, fixing hard "Model returned empty response" failures on OpenRouter, Cline, and OpenAI-compatible endpoints.
 - Stop Claude 4.6+ and 5.x models being rejected with "thinking.type.enabled is not supported" when they resolve from the offline catalog or from a hand-typed model id.
 - Restore Bedrock prompt caching, which reported zero cache reads and writes because the provider sent a cache format Bedrock discards, and route Bedrock foundation models through geo inference profiles.
@@ -430,7 +430,7 @@ These land through SDK v0.0.74 and therefore apply to windows running the SDK bu
 - Stop the two bundles of the combined rollout package from invalidating each other's Cline account session. A still-open legacy window that refreshed its token after the machine was promoted to the new extension would consume the shared refresh token, producing spurious "Unauthorized" / re-authenticate prompts and unexpected sign-outs. Promoted legacy windows now keep working on their current session and offer a one-time Reload Window prompt instead.
 - Fall back to the default Cline model when migrating a setup that references a model id the new extension doesn't recognize, instead of leaving the provider unconfigured.
 - Restore reliable checkpoints: checkpoints are created consistently, and restoring one now rewinds the whole workspace rather than a subset of files.
-- Keep settings edits that are made before the provider config finishes loading — base URLs, API keys, and the Qwen/Moonshot API line are no longer silently discarded.
+- Keep settings edits that are made before the provider config finishes loading - base URLs, API keys, and the Qwen/Moonshot API line are no longer silently discarded.
 - Stop losing keystrokes in custom base URL fields, and keep the custom URL checkbox state after a failed clear.
 - Use the AskSage custom API URL at inference time instead of ignoring it.
 - Settle a pending tool approval when an edited message replaces the session, so the task no longer hangs waiting on a prompt that is gone.
@@ -448,19 +448,19 @@ These land through SDK v0.0.74 and therefore apply to windows running the SDK bu
 
 ### Added
 
-- Show which extension variant is active — "Legacy" or "Next" — next to the version in the settings About page, in both bundles of the combined rollout package.
+- Show which extension variant is active - "Legacy" or "Next" - next to the version in the settings About page, in both bundles of the combined rollout package.
 
 ## [4.1.1]
 
 ### Changed
 
-- Remove vestigial MCP server-key machinery from McpHub — native MCP tool calls now route by server name instead of a random in-memory uid, so routing survives restarts and server list changes.
+- Remove vestigial MCP server-key machinery from McpHub - native MCP tool calls now route by server name instead of a random in-memory uid, so routing survives restarts and server list changes.
 
 ## [4.1.0]
 
 ### Changed
 
-- Convert the stable extension to a combined A/B package: one VSIX containing both the current (legacy) extension and the new SDK-based extension, plus a loader that activates exactly one per window via a staged remote rollout. For nearly all users nothing changes — the loader activates the same extension as 4.0.12; a small percentage (starting at 1%) is gradually opted into the SDK-based extension. If the new extension fails to activate, the loader falls back to the current one in the same window. Settings and credentials are shared between the two.
+- Convert the stable extension to a combined A/B package: one VSIX containing both the current (legacy) extension and the new SDK-based extension, plus a loader that activates exactly one per window via a staged remote rollout. For nearly all users nothing changes - the loader activates the same extension as 4.0.12; a small percentage (starting at 1%) is gradually opted into the SDK-based extension. If the new extension fails to activate, the loader falls back to the current one in the same window. Settings and credentials are shared between the two.
 
 ## [4.0.12]
 
@@ -544,7 +544,7 @@ These land through SDK v0.0.74 and therefore apply to windows running the SDK bu
 
 ### Changed
 
-- Fully remove the ClinePass feature flag so ClinePass is available everywhere in the UI — onboarding, settings, the welcome promo banner, and the credit-limit "Switch to ClinePass" action.
+- Fully remove the ClinePass feature flag so ClinePass is available everywhere in the UI - onboarding, settings, the welcome promo banner, and the credit-limit "Switch to ClinePass" action.
 
 ## [4.0.3]
 
@@ -579,7 +579,7 @@ These land through SDK v0.0.74 and therefore apply to windows running the SDK bu
 - Add the SDK-backed VS Code extension runtime. Cline now runs tasks through the shared Cline SDK session layer for agent turns, tools, Plan/Act mode coordination, MCP, checkpoints, telemetry, provider changes, compaction, mistake limits, and task history.
 - Add ClinePass to the VS Code extension, including onboarding, provider selection, signup and subscription handoff, live model lists, entitlement and organization error states, out-of-credit prompts, and clearer ClinePass auth/error handling.
 - Add the Customize marketplace for discovering and managing Skills, MCP servers, and Plugins from the extension, including installed/marketplace tabs, search and filtering, install/uninstall flows, enable/disable controls, and support for plugin-bundled skills.
-- Cline Plugins: Plugins let you extend Cline with custom tools, workflows, skills, and MCP-powered capabilities tailored to your team or project. Install them from the new Customize marketplace to add specialized behavior, connect external services, and package reusable automations—so Cline can do more than code: it can adapt to the way you work.
+- Cline Plugins: Plugins let you extend Cline with custom tools, workflows, skills, and MCP-powered capabilities tailored to your team or project. Install them from the new Customize marketplace to add specialized behavior, connect external services, and package reusable automations-so Cline can do more than code: it can adapt to the way you work.
 - Add queued prompts in chat. Messages submitted while Cline is already working are now queued, shown while the current turn streams, and can be cancelled before they run.
 - Add edit-and-regenerate support for previous user messages, with clearer Reset Chat and Reset Code actions.
 - Add generic SDK provider settings and model-catalog support so more providers can share the same model picker, reasoning controls, dynamic model IDs, provider config persistence, and custom model handling.
@@ -787,7 +787,7 @@ These land through SDK v0.0.74 and therefore apply to windows running the SDK bu
 
 ### Added
 
-- Wire up remote `globalSkills` from enterprise remote config with full UI, toggle support, and system prompt integration — enterprise-managed skills now appear under a dedicated "Enterprise Skills" section and support `alwaysEnabled` enforcement
+- Wire up remote `globalSkills` from enterprise remote config with full UI, toggle support, and system prompt integration - enterprise-managed skills now appear under a dedicated "Enterprise Skills" section and support `alwaysEnabled` enforcement
 - Onboarding flow now uses dynamically fetched recommended models instead of a hardcoded list, with a fallback to the welcome view on failure
 - Add dedicated "Quota Exceeded" error message in the chat error UI when Cline account spend caps are hit
 
@@ -799,7 +799,7 @@ These land through SDK v0.0.74 and therefore apply to windows running the SDK bu
 
 ### Changed
 
-- Remove foreground terminal mode — all task command execution now defaults to background mode, removing the VS Code integrated terminal dependency and related settings UI
+- Remove foreground terminal mode - all task command execution now defaults to background mode, removing the VS Code integrated terminal dependency and related settings UI
 - Remove old hardcoded announcement banners
 
 ## [3.79.0]
@@ -1348,11 +1348,11 @@ These land through SDK v0.0.74 and therefore apply to windows running the SDK bu
 
 - Polished the model picker UI with checkmarks for selected models, tooltips on Plan/Act tabs, and consistent arrow pointers across all popup modals
 - Improved WhatsNew modal responsiveness and cleaned up redundant UI elements
-- Fixed GLM models outputting garbled text in thinking tags—reasoning is now properly disabled for these models
+- Fixed GLM models outputting garbled text in thinking tags-reasoning is now properly disabled for these models
 
 ## [3.44.1]
 
-- Fixed a critical bug where local MCP servers stopped connecting after v3.42.0—all user-configured stdio-based MCP servers should now work again
+- Fixed a critical bug where local MCP servers stopped connecting after v3.42.0-all user-configured stdio-based MCP servers should now work again
 - Fixed remotely configured API keys not being extracted correctly for enterprise users
 - Added support for dynamic tool instructions that adapt based on runtime context, laying groundwork for future context-aware features
 
@@ -2884,7 +2884,7 @@ Add Opus 4.1 through Claude Code
 
 ## [1.5.27]
 
-- Claude's changes now appear in your file's Timeline, allowing you to easily view a diff of each edit. This is especially helpful if you want to revert to a previous version. No need for git—everything is tracked by VSCode's local history!
+- Claude's changes now appear in your file's Timeline, allowing you to easily view a diff of each edit. This is especially helpful if you want to revert to a previous version. No need for git-everything is tracked by VSCode's local history!
 - Updated system prompt to keep Claude from re-reading files unnecessarily
 
 ## [1.5.19]

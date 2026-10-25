@@ -8,7 +8,7 @@ HTTP-controlled debugger for the VSCode extension at `src/dev/debug-harness/serv
 # Build extension first if needed (protos + esbuild):
 bun run protos && IS_DEV=true bun esbuild.mjs
 
-# Launch (skip-build if already built). Run with node, NOT bun — Playwright's
+# Launch (skip-build if already built). Run with node, NOT bun - Playwright's
 # Electron launch times out under bun:
 node src/dev/debug-harness/server.ts --skip-build --auto-launch
 
@@ -33,10 +33,10 @@ The debugee runs with `CLINE_CAPTURE_BROWSER=1`, which intercepts `openExternal(
 
 ### OAuth API
 
-- **`oauth.captured_urls`** `{clear?}` — URLs the debugee tried to open
-- **`oauth.read_stored_token`** — Check auth token presence in secrets.json
-- **`oauth.simulate_callback`** `{path, code?, state?, provider?, token?}` — Build vscode:// callback URI
-- **`oauth.read_captured_urls_file`** — Read on-disk JSONL of captured URLs
+- **`oauth.captured_urls`** `{clear?}` - URLs the debugee tried to open
+- **`oauth.read_stored_token`** - Check auth token presence in secrets.json
+- **`oauth.simulate_callback`** `{path, code?, state?, provider?, token?}` - Build vscode:// callback URI
+- **`oauth.read_captured_urls_file`** - Read on-disk JSONL of captured URLs
 
 ### OAuth testing flow
 
@@ -45,7 +45,7 @@ is captured. To complete: open the captured URL in a real browser (it redirects 
 SDK's callback server), OR extract the callback port and `curl http://127.0.0.1:PORT/callback?code=...`.
 
 For **MCP/Provider OAuth** (vscode:// URI): The redirect goes to a vscode:// URI.
-`oauth.simulate_callback` only *builds* the URI — it does not deliver it, and the ESM
+`oauth.simulate_callback` only *builds* the URI - it does not deliver it, and the ESM
 extension host can't `require()` the handler. To actually deliver the callback, call the
 debug-only hook via `ext.evaluate` (with `awaitPromise: true`):
 `globalThis.__clineHandleUri("vscode://saoudrizwan.claude-dev/...?code=...&state=...")`.
@@ -54,7 +54,7 @@ when `CLINE_CAPTURE_BROWSER` is set (the harness always sets it; never ships in 
 For end-to-end MCP OAuth, get a real `code` from the local MCP OAuth test server
 (`bun run dev:mcp-oauth-test-server`).
 
-## Navigating Views — Use Commands, Not Clicks
+## Navigating Views - Use Commands, Not Clicks
 
 Don't try to find/click small sidebar icons. Use VSCode commands via command palette.
 Registered in `src/registry.ts`:
@@ -76,20 +76,20 @@ curl localhost:19229/api -d '{"method":"ui.command_palette","params":{"command":
 
 All via `POST localhost:19229/api` with `{"method":"...", "params":{...}}`:
 
-- **`launch`** / **`shutdown`** — lifecycle
-- **`ui.screenshot`** — screenshot to `/tmp/cline-debug/`; returns `{path}` — **use `read_file` on the path to examine, do NOT `open` the file** (Preview.app covers the VSCode window)
-- **`ui.open_sidebar`** — open the Cline sidebar
-- **`ext.set_breakpoint`** `{file, line, condition?}` — breakpoint by source file (sourcemap-resolved)
-- **`ext.evaluate`** `{expression, callFrameId?}` — eval in extension host
-- **`ext.resume`** / **`ext.step_over`** / **`ext.step_into`** — stepping
-- **`ext.call_stack`** — inspect when paused
-- **`web.evaluate`** `{expression}` — eval in webview
-- **`web.post_message`** `{message}` — send postMessage to extension host via exposed vsCodeApi
-- **`wait_for_pause`** `{timeout?}` — block until breakpoint hit
-- **`ui.locator`** `{role?, testId?, text?, frame?}` — Playwright locator (auto-retries on stale sidebar frame)
-- **`ui.react_input`** `{text, selector?, clear?, submit?}` — set React textarea value via `execCommand('insertText')`; works reliably across multiple tasks
-- **`ui.send_message`** `{text, images?, files?, responseType?}` — send chat message bypassing the textarea entirely (via gRPC postMessage)
-- **`ui.command_palette`** `{command}` — run VSCode command
+- **`launch`** / **`shutdown`** - lifecycle
+- **`ui.screenshot`** - screenshot to `/tmp/cline-debug/`; returns `{path}` - **use `read_file` on the path to examine, do NOT `open` the file** (Preview.app covers the VSCode window)
+- **`ui.open_sidebar`** - open the Cline sidebar
+- **`ext.set_breakpoint`** `{file, line, condition?}` - breakpoint by source file (sourcemap-resolved)
+- **`ext.evaluate`** `{expression, callFrameId?}` - eval in extension host
+- **`ext.resume`** / **`ext.step_over`** / **`ext.step_into`** - stepping
+- **`ext.call_stack`** - inspect when paused
+- **`web.evaluate`** `{expression}` - eval in webview
+- **`web.post_message`** `{message}` - send postMessage to extension host via exposed vsCodeApi
+- **`wait_for_pause`** `{timeout?}` - block until breakpoint hit
+- **`ui.locator`** `{role?, testId?, text?, frame?}` - Playwright locator (auto-retries on stale sidebar frame)
+- **`ui.react_input`** `{text, selector?, clear?, submit?}` - set React textarea value via `execCommand('insertText')`; works reliably across multiple tasks
+- **`ui.send_message`** `{text, images?, files?, responseType?}` - send chat message bypassing the textarea entirely (via gRPC postMessage)
+- **`ui.command_palette`** `{command}` - run VSCode command
 
 ## Typical Session
 
@@ -118,7 +118,7 @@ curl localhost:19229/api -d '{"method":"ui.screenshot"}'
   curl localhost:19229/api -d '{"method": "ui.open_sidebar"}'
   curl localhost:19229/api -d '{"method": "web.evaluate", "params": {"expression": "document.querySelectorAll(\".sr-only\").forEach(el => el.parentElement?.click())"}}'
   ```
-- **Screenshots — don't open the file**: `ui.screenshot` and `ui.sidebar_screenshot` save PNGs to `/tmp/cline-debug/` and return the `{path}`. Use `read_file` on that path to examine screenshots. Running `open <path>` launches Preview.app on macOS which covers the VSCode window.
+- **Screenshots - don't open the file**: `ui.screenshot` and `ui.sidebar_screenshot` save PNGs to `/tmp/cline-debug/` and return the `{path}`. Use `read_file` on that path to examine screenshots. Running `open <path>` launches Preview.app on macOS which covers the VSCode window.
 - **Scripts count = 0 after launch**: CDP connects after extension host starts, so scripts parsed during startup aren't tracked. Breakpoints still work via sourcemap resolution.
 - **Port 9230**: Extension host inspector. If another VSCode instance uses this port, the harness will fail to connect. Kill other debug instances first.
 - **macOS only** for now (Playwright Electron launch behavior).

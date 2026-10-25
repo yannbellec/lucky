@@ -16,7 +16,7 @@ Designed to be driven from an agentic loop via `curl` commands.
 
 ```bash
 # Terminal 1: Start the debug harness server.
-# Run with node, NOT bun — Playwright's Electron launch times out under bun.
+# Run with node, NOT bun - Playwright's Electron launch times out under bun.
 node src/dev/debug-harness/server.ts --auto-launch --skip-build
 
 # Terminal 2: Interact via curl
@@ -89,8 +89,8 @@ The Cline OAuth flow uses the SDK's local callback server. When the user
 clicks "Login", the SDK:
 
 1. Starts a local HTTP server on a random port
-2. Calls `openExternal(authorizationUrl)` — which we capture
-3. The user authenticates in the browser — which we need to simulate
+2. Calls `openExternal(authorizationUrl)` - which we capture
+3. The user authenticates in the browser - which we need to simulate
 4. The provider redirects to the local callback server with `?code=...`
 5. The SDK captures the code and exchanges it for tokens
 
@@ -143,7 +143,7 @@ curl -s -D - -o /dev/null "<captured-authorize-url>" | grep -i '^location:'
 
 # 4. DELIVER the vscode:// callback to the extension. VSCode only routes real
 #    vscode:// URIs to the registered handler, which the harness can't
-#    synthesize — and the extension host is ESM, so you can't require() the
+#    synthesize - and the extension host is ESM, so you can't require() the
 #    handler module. Instead, call the __clineHandleUri hook (see below):
 curl localhost:19229/api -d '{
   "method": "ext.evaluate",
@@ -157,12 +157,12 @@ curl localhost:19229/api -d '{
 curl localhost:19229/api -d '{"method":"oauth.read_stored_token"}'
 ```
 
-> **`globalThis.__clineHandleUri(url)` — debug-only URI delivery hook.**
+> **`globalThis.__clineHandleUri(url)` - debug-only URI delivery hook.**
 > Registered in `src/extension.ts` during activation, **only** when
 > `CLINE_CAPTURE_BROWSER` is set (which the harness always sets), so it never
 > ships in production. It calls the same `SharedUriHandler.handleUri(url)` that
 > VSCode's real `registerUriHandler` invokes, returning a `Promise<boolean>`
-> (pass `awaitPromise: true`). Use it for any `vscode://` callback — MCP,
+> (pass `awaitPromise: true`). Use it for any `vscode://` callback - MCP,
 > OpenRouter, `/auth`, etc. `oauth.simulate_callback` only *builds* the URI; this
 > hook actually *delivers* it.
 
@@ -260,9 +260,9 @@ All commands are sent as `POST /api` with JSON body `{"method": "...", "params":
 Responses: `{"result": {...}}` on success, `{"error": "..."}` on failure.
 
 Convenience endpoints:
-- `GET /health` — `{"status": "ok"}`
-- `GET /status` — Full harness status
-- `POST /captured-url` — Internal: receives captured browser URLs from debugee
+- `GET /health` - `{"status": "ok"}`
+- `GET /status` - Full harness status
+- `POST /captured-url` - Internal: receives captured browser URLs from debugee
 
 ### Lifecycle
 
@@ -439,13 +439,13 @@ curl localhost:19229/api -d '{"method":"web.evaluate","params":{"expression":"do
 ```
 
 **Screenshots**: `ui.screenshot` and `ui.sidebar_screenshot` save PNG files to `/tmp/cline-debug/`
-and return `{path}` in the response. **Do NOT `open` the file** — on macOS this launches Preview.app
+and return `{path}` in the response. **Do NOT `open` the file** - on macOS this launches Preview.app
 which covers the VSCode window. Use `read_file` on the returned path to examine the image.
 
 **OAuth with real providers**: The browser capture only intercepts the URL that the debugee tries
 to open. For Cline OAuth, the SDK's local callback server is still running and will accept
 redirects. For provider OAuth (OpenRouter, MCP), you need to simulate the `vscode://` callback
-URI — see the OAuth testing section above.
+URI - see the OAuth testing section above.
 
 **Cline OAuth with invalid codes**: If you simulate the OAuth callback with a fake code, the
 SDK's token exchange will fail (the provider won't recognize the code). You need either a real

@@ -2,9 +2,9 @@
 
 # 🍀 Lucky
 
-### The Cursor-grade coding agent for **your own local model** — free, open-source, no account.
+### The Cursor-grade coding agent for **your own local model** - free, open-source, no account.
 
-Lucky turns any local LLM served by **Ollama** into a fully agentic pair-programmer inside **Cursor** & **VS Code**: it reads your repo, edits files live with red/green diffs, runs commands, browses the web, and ships features — **100 % on your machine**.
+Lucky turns any local LLM served by **Ollama** into a fully agentic pair-programmer inside **Cursor** & **VS Code**: it reads your repo, edits files live with red/green diffs, runs commands, browses the web, and ships features - **100 % on your machine**.
 
 <br/>
 
@@ -21,7 +21,7 @@ Lucky turns any local LLM served by **Ollama** into a fully agentic pair-program
 
 <br/>
 
-### ⭐ If Lucky saves you time, **star the repo** — it genuinely helps.
+### ⭐ If Lucky saves you time, **star the repo** - it genuinely helps.
 
 [**⬇️ Install**](#-install) · [**✨ Features**](#-features) · [**🧠 Local model setup**](#-local-model-setup) · [**🛠️ Build from source**](#️-build-from-source)
 
@@ -34,8 +34,8 @@ Lucky turns any local LLM served by **Ollama** into a fully agentic pair-program
 | | |
 |---|---|
 | 🧠 **Your model, your rules** | Runs on **any Ollama model** (coder, uncensored, 70B, you name it). No sign-up, no API key, no cloud. |
-| ✍️ **Live multi-file editing** | Watch it open the right tab and apply **red/green diffs in real time** — Cursor-style, right in your editor. |
-| 🤖 **True agent mode** | It plans, edits across files, runs terminal commands, and self-corrects — with your approval at every step. |
+| ✍️ **Live multi-file editing** | Watch it open the right tab and apply **red/green diffs in real time** - Cursor-style, right in your editor. |
+| 🤖 **True agent mode** | It plans, edits across files, runs terminal commands, and self-corrects - with your approval at every step. |
 | 🌐 **Internet access** | Plug in web-search / fetch tools via **MCP** so your local model can research docs and APIs before it codes. |
 | ⚡ **Zero-config start** | Lands you **straight in the chat**, pre-wired to your local Ollama endpoint. No onboarding, no account screen. |
 | 🔒 **Private by design** | Everything stays on your machine. Your code never leaves your laptop. |
@@ -44,10 +44,10 @@ Lucky turns any local LLM served by **Ollama** into a fully agentic pair-program
 
 ## ⬇️ Install
 
-1. Download the latest **`lucky.vsix`** from the [Releases](https://github.com/yannbellec/lucky/releases) page (or build it — see below).
+1. Download the latest **`lucky.vsix`** from the [Releases](https://github.com/yannbellec/lucky/releases) page (or build it - see below).
 2. In **Cursor / VS Code**: open the Extensions panel → `···` menu → **Install from VSIX…** → pick `lucky.vsix`.
 3. **Reload the window** (`Cmd/Ctrl+Shift+P → Reload Window`).
-4. Click the **🍀 Lucky icon** in the left activity bar — you land directly in the chat. That's it.
+4. Click the **🍀 Lucky icon** in the left activity bar - you land directly in the chat. That's it.
 
 > Requires [**Ollama**](https://ollama.com) running locally. Lucky is pre-pointed at `http://localhost:11434`.
 
@@ -83,13 +83,13 @@ bunx @vscode/vsce package --no-dependencies -o lucky.vsix
 
 ## 🙏 Credits
 
-Lucky is a friendly, local-first fork of the excellent open-source **[Cline](https://github.com/cline/cline)** project, re-tuned to run entirely on your own hardware with zero onboarding. Huge thanks to the Cline authors for their work. Lucky is distributed under the same **Apache-2.0** license — see [`LICENSE`](./LICENSE).
+Lucky is a friendly, local-first fork of the excellent open-source **[Cline](https://github.com/cline/cline)** project, re-tuned to run entirely on your own hardware with zero onboarding. Huge thanks to the Cline authors for their work. Lucky is distributed under the same **Apache-2.0** license - see [`LICENSE`](./LICENSE).
 
 ---
 
 <div align="center">
 
-**Made for developers who want the full agentic experience — without renting a brain in the cloud.**
+**Made for developers who want the full agentic experience - without renting a brain in the cloud.**
 
 🍀 *Good code, good luck.*
 

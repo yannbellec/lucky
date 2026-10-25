@@ -27,7 +27,7 @@ parallel-but-independent stacks; this `.greptile/` config covers only the SDK.
 `sdk/packages/core/src/services/telemetry/core-events.ts` is the single source of truth for all
 event names. It exports:
 
-- `CORE_TELEMETRY_EVENTS` — a frozen const object grouped by family
+- `CORE_TELEMETRY_EVENTS` - a frozen const object grouped by family
   (`CLIENT`, `SESSION`, `USER`, `TASK`, `HOOKS`, `WORKSPACE`)
 - A typed `capture*()` helper for every event family
   (`captureExtensionActivated`, `captureTaskCreated`, `captureToolUsage`, etc.)
@@ -38,7 +38,7 @@ event names. It exports:
 2. Add a typed `capture*()` helper alongside it (with a typed `properties` parameter)
 3. Add a unit test in `core-events.test.ts` asserting the event flows through the
    opt-out-respecting `capture` path and never `captureRequired` (opt-out is enforced by
-   `OptedOutTelemetryService`, whose `capture` is a no-op — the test convention is
+   `OptedOutTelemetryService`, whose `capture` is a no-op - the test convention is
    "emits X as a normal opt-out-respecting event"). Events that intentionally bypass
    opt-out must use `captureRequired` and assert that explicitly.
 
@@ -119,7 +119,7 @@ forwards user context; this prevents machine IDs and stale daemon identity from 
 `user_id` / `organization_id` on task events.
 
 Flag changes that remove this wiring, construct runtime hosts inside the daemon without
-passing its telemetry handle, or add daemon exit paths that skip the flush — hub-backed
+passing its telemetry handle, or add daemon exit paths that skip the flush - hub-backed
 sessions would silently drop their lifecycle telemetry (this exact bug shipped once).
 
 ## Auth Lifecycle Completeness
@@ -141,7 +141,7 @@ canonical examples of all four phases.
 
 On VS Code, all callers go through the lazy `telemetryService` proxy in
 `apps/vscode/src/services/telemetry/index.ts`, which constructs the service once on first
-use. Do not let individual controllers construct their own `ITelemetryService` — that
+use. Do not let individual controllers construct their own `ITelemetryService` - that
 fragments distinct-id state, opt-out tracking, and flush ownership.
 
 The CLI follows the same pattern via the `getCliTelemetryService()` singleton in
@@ -153,9 +153,9 @@ The CLI follows the same pattern via the `getCliTelemetryService()` singleton in
 If Greptile flags one of the following, the rule is **not** violated:
 
 - A telemetry call that is wrapped in a host-specific helper (e.g.
-  `captureCliExtensionActivated` wrapping `captureExtensionActivated`) — the inner helper
+  `captureCliExtensionActivated` wrapping `captureExtensionActivated`) - the inner helper
   is the typed call.
-- `enterprise.*` events emitted from `apps/cli/src/utils/enterprise.ts` — these are
+- `enterprise.*` events emitted from `apps/cli/src/utils/enterprise.ts` - these are
   enterprise-side events not yet in `CORE_TELEMETRY_EVENTS`; they are tracked separately.
-- A new test file that uses raw event name strings inside `expect(...)` assertions — tests
+- A new test file that uses raw event name strings inside `expect(...)` assertions - tests
   may reference event names as strings to assert what was emitted.

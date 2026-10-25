@@ -5,7 +5,7 @@ description: Self-contained guide to designing, building, packaging, and distrib
 
 # Authoring a Cline Agent Plugin
 
-A **Cline plugin** is a TypeScript module that extends any agent built on the Cline Core SDK. The same plugin runs in the Cline CLI, the VS Code and JetBrains extensions, the Kanban host, and any custom app built on `@cline/core` — write it once, every host gets the new behavior.
+A **Cline plugin** is a TypeScript module that extends any agent built on the Cline Core SDK. The same plugin runs in the Cline CLI, the VS Code and JetBrains extensions, the Kanban host, and any custom app built on `@cline/core` - write it once, every host gets the new behavior.
 
 A plugin can:
 
@@ -16,8 +16,8 @@ A plugin can:
 
 A plugin ships in one of two shapes:
 
-1. **Single-file plugin** — one `.ts` file that exports a default plugin object. Drop it in a discovery folder and it's loaded.
-2. **Plugin package** — a directory with `package.json`, npm dependencies, and (optionally) bundled assets like markdown templates. Installable via `cline plugin install`.
+1. **Single-file plugin** - one `.ts` file that exports a default plugin object. Drop it in a discovery folder and it's loaded.
+2. **Plugin package** - a directory with `package.json`, npm dependencies, and (optionally) bundled assets like markdown templates. Installable via `cline plugin install`.
 
 Both shapes use the same plugin API. The package form just adds dependency management and asset bundling.
 
@@ -29,17 +29,17 @@ This guide is self-contained. By the end of it, you'll be able to build either k
 
 When the host starts a session, it builds a registry of plugins and runs four phases:
 
-1. **resolve** — collect the plugin objects.
-2. **validate** — check each plugin's `manifest`. Capabilities must be non-empty; declared hook stages must have matching handlers; if `hooks` is present, `"hooks"` must be in `capabilities`.
-3. **setup** — call each plugin's `setup(api, ctx)` once. This is where you `registerTool`, `registerCommand`, etc.
-4. **activate** — registry is frozen, the agent loop starts, and your hooks/tools are live.
+1. **resolve** - collect the plugin objects.
+2. **validate** - check each plugin's `manifest`. Capabilities must be non-empty; declared hook stages must have matching handlers; if `hooks` is present, `"hooks"` must be in `capabilities`.
+3. **setup** - call each plugin's `setup(api, ctx)` once. This is where you `registerTool`, `registerCommand`, etc.
+4. **activate** - registry is frozen, the agent loop starts, and your hooks/tools are live.
 
 Two invariants the registry enforces:
 
 - **Every contribution requires a matching capability.** Calling `api.registerRule(...)` without `"rules"` in `manifest.capabilities` throws.
 - **Capabilities and handlers must agree.** Declaring `"hooks"` without a `hooks` object, or vice versa, fails validation.
 
-After validation, registration is one-shot — there's no dynamic register/unregister during the session.
+After validation, registration is one-shot - there's no dynamic register/unregister during the session.
 
 ---
 
@@ -83,18 +83,18 @@ That's a complete plugin. The agent will see `say_hello` as a callable tool.
 
 ```ts
 manifest: {
-  capabilities: ["tools", "hooks"],   // required — non-empty array
-  paths?: string[],                   // optional — multi-entry packages
-  providerIds?: string[],             // optional — provider plugins
-  modelIds?: string[],                // optional — model plugins
+  capabilities: ["tools", "hooks"],   // required - non-empty array
+  paths?: string[],                   // optional - multi-entry packages
+  providerIds?: string[],             // optional - provider plugins
+  modelIds?: string[],                // optional - model plugins
 }
 ```
 
 | Field          | When to use                                                                                             |
 | -------------- | ------------------------------------------------------------------------------------------------------- |
 | `capabilities` | Always. Lists what the plugin contributes; gates the corresponding `api.register*` methods.             |
-| `paths`        | Only inside a `package.json` `cline.plugins` entry — when one package exposes multiple plugin entry points. |
-| `providerIds`  | When `capabilities` includes `"providers"` — declares which provider IDs you register.                  |
+| `paths`        | Only inside a `package.json` `cline.plugins` entry - when one package exposes multiple plugin entry points. |
+| `providerIds`  | When `capabilities` includes `"providers"` - declares which provider IDs you register.                  |
 | `modelIds`     | When you contribute models tied to specific IDs.                                                        |
 
 ### The complete capability list
@@ -109,11 +109,11 @@ manifest: {
 | `automationEvents` | `api.registerAutomationEventType()` and `ctx.automation?.ingestEvent()` |
 | `hooks`            | The runtime `hooks` object on the plugin (lifecycle callbacks)        |
 
-You declare any combination — most real plugins need 1–3 capabilities.
+You declare any combination - most real plugins need 1-3 capabilities.
 
 ---
 
-## 4. `setup(api, ctx)` — the registration phase
+## 4. `setup(api, ctx)` - the registration phase
 
 `setup()` runs **once per session** before the agent loop starts. Everything you register here is frozen for the lifetime of the session.
 
@@ -130,19 +130,19 @@ api.registerProvider({ name, description });         // requires "providers"
 api.registerAutomationEventType({ eventType, source, /* ... */ }); // requires "automationEvents"
 ```
 
-### 4.2 The `ctx` object — host-provided session context
+### 4.2 The `ctx` object - host-provided session context
 
-The second argument carries everything the host knows about the current session. **All fields are optional**, so feature-detect before using them — the same plugin must work in hosts that supply less context (unit tests, sandboxed plugin processes).
+The second argument carries everything the host knows about the current session. **All fields are optional**, so feature-detect before using them - the same plugin must work in hosts that supply less context (unit tests, sandboxed plugin processes).
 
 ```ts
-ctx.session?.sessionId       // string — stable core session id
+ctx.session?.sessionId       // string - stable core session id
 ctx.client?.name             // host: "cline-cli", "cline-vscode", etc.
 ctx.user                     // authenticated user/org info, when available
 ctx.workspaceInfo            // { rootPath, hint, latestGitBranchName,
                              //   latestGitCommitHash, associatedRemoteUrls }
 ctx.automation?.ingestEvent  // emit normalized automation events
 ctx.logger?.log              // structured logger scoped to this plugin
-ctx.telemetry                // ITelemetryService — direct service in-process;
+ctx.telemetry                // ITelemetryService - direct service in-process;
                              //   an IPC bridge in sandboxed plugins (see below)
 ```
 
@@ -189,7 +189,7 @@ setup(api, ctx) {
 
 ---
 
-## 5. Tools — `api.registerTool`
+## 5. Tools - `api.registerTool`
 
 Tools are how plugins give the agent new capabilities. Use the `createTool()` helper from `@cline/core`:
 
@@ -218,18 +218,18 @@ api.registerTool(
 
 Guidelines for good tools:
 
-- **Names are snake_case verbs** — `goto_definition`, `start_background_command`.
+- **Names are snake_case verbs** - `goto_definition`, `start_background_command`.
 - **Descriptions are written for the model**, not for humans. Include when to use the tool, what inputs mean, and what the output looks like.
 - **Inputs are JSON Schema.** Mark `required` fields explicitly. Constrain enums where possible.
-- **Return JSON-serializable values** — strings, numbers, plain objects, arrays. The host serializes results before passing them back to the model.
+- **Return JSON-serializable values** - strings, numbers, plain objects, arrays. The host serializes results before passing them back to the model.
 - **Throw on invalid input or hard failure.** The runtime turns thrown errors into tool error results the model can recover from.
 - **Keep tools focused.** A `start / get / delete` triplet of small tools beats one mega-tool with a `mode` enum.
 
 ---
 
-## 6. Runtime hooks — `hooks: { ... }`
+## 6. Runtime hooks - `hooks: { ... }`
 
-Runtime hooks are typed in-process callbacks on the same hook layer the runtime uses internally. They run inside the agent loop with full type information — no IPC, no JSON marshaling.
+Runtime hooks are typed in-process callbacks on the same hook layer the runtime uses internally. They run inside the agent loop with full type information - no IPC, no JSON marshaling.
 
 Declare `"hooks"` in `manifest.capabilities`, then add a `hooks` property:
 
@@ -279,7 +279,7 @@ Returning `undefined` (or omitting `return`) lets execution continue normally.
 
 ### 6.3 `afterRun` semantics
 
-`afterRun` fires for **every** terminal status — `completed`, `aborted`, `failed`. If you only want to act on success:
+`afterRun` fires for **every** terminal status - `completed`, `aborted`, `failed`. If you only want to act on success:
 
 ```ts
 afterRun({ result }) {
@@ -292,14 +292,14 @@ afterRun({ result }) {
 
 The runtime supports two hook systems:
 
-- **File hooks** — external scripts in `.cline/hooks/` invoked with serialized JSON. Right for user/workspace-specific scripts that don't ship with code.
-- **Plugin runtime hooks** — typed in-process callbacks. Right when the behavior belongs to a reusable extension and needs typed access to the runtime.
+- **File hooks** - external scripts in `.cline/hooks/` invoked with serialized JSON. Right for user/workspace-specific scripts that don't ship with code.
+- **Plugin runtime hooks** - typed in-process callbacks. Right when the behavior belongs to a reusable extension and needs typed access to the runtime.
 
 Core adapts file hooks onto the runtime hook layer, so you don't need both. If you're shipping a plugin, write it as runtime hooks.
 
 ---
 
-## 7. Message builders — `api.registerMessageBuilder`
+## 7. Message builders - `api.registerMessageBuilder`
 
 Message builders rewrite the **provider-bound message list** before the model call. They run after runtime messages are converted into SDK message blocks but **before** core's built-in safety builder, which always has the final say on provider-safe truncation.
 
@@ -325,9 +325,9 @@ Multiple builders run in registration order; the output of one is the input of t
 
 ---
 
-## 8. Automation events — `api.registerAutomationEventType` + `ctx.automation`
+## 8. Automation events - `api.registerAutomationEventType` + `ctx.automation`
 
-Plugins can declare normalized event types and emit them into Cline automation. Hosts that don't have automation enabled simply ignore both — your plugin should feature-detect `ctx.automation`.
+Plugins can declare normalized event types and emit them into Cline automation. Hosts that don't have automation enabled simply ignore both - your plugin should feature-detect `ctx.automation`.
 
 ```ts
 manifest: { capabilities: ["automationEvents"] },
@@ -362,9 +362,9 @@ There are three ways a plugin gets into a session:
 
 The CLI scans these directories on startup:
 
-- `<workspace>/.cline/plugins/` — project-scoped plugins (committed or gitignored).
-- `~/.cline/plugins/` — user-scoped plugins.
-- The system "Plugins" folder — host-managed installs.
+- `<workspace>/.cline/plugins/` - project-scoped plugins (committed or gitignored).
+- `~/.cline/plugins/` - user-scoped plugins.
+- The system "Plugins" folder - host-managed installs.
 
 Drop a `.ts` or `.js` file in, run `cline`, done:
 
@@ -423,7 +423,7 @@ cline plugin install --git github.com/owner/repo  # from git
 
 ---
 
-## 10. Single-file plugin — full template
+## 10. Single-file plugin - full template
 
 This is the full shape for a single-file plugin. Save as `my-plugin.ts`, drop in `.cline/plugins/`.
 
@@ -521,7 +521,7 @@ That's the entire shape. Copy it, rename the tool, swap in your logic.
 
 ---
 
-## 11. Plugin package — full walkthrough
+## 11. Plugin package - full walkthrough
 
 A **plugin package** is a directory with a `package.json`. Use it when you need any of:
 
@@ -530,7 +530,7 @@ A **plugin package** is a directory with a `package.json`. Use it when you need 
 - bundled assets (markdown templates, agent definitions, schemas, fixtures)
 - a way to ship and version the plugin via npm or git
 
-The package is still just a normal npm package — what makes it a plugin is the `cline.plugins` field in `package.json`.
+The package is still just a normal npm package - what makes it a plugin is the `cline.plugins` field in `package.json`.
 
 ### 11.1 Layout
 
@@ -539,10 +539,10 @@ A typical package looks like:
 ```
 my-cline-plugin/
 ├── package.json
-├── tsconfig.json          (optional — for local typechecking)
+├── tsconfig.json          (optional - for local typechecking)
 ├── index.ts               (the plugin entry point)
 ├── README.md              (user-facing docs)
-└── assets/                (optional — bundled content)
+└── assets/                (optional - bundled content)
     ├── templates/
     │   └── greeting.md
     └── schemas/
@@ -566,7 +566,7 @@ my-cline-plugin/
     └── ...
 ```
 
-### 11.2 `package.json` — the discovery contract
+### 11.2 `package.json` - the discovery contract
 
 ```json
 {
@@ -604,13 +604,13 @@ my-cline-plugin/
 
 Field-by-field:
 
-- **`type: "module"`** — required. Cline plugins are ES modules.
-- **`exports`** — points npm consumers at the entry. For TypeScript-source plugins loaded by Cline at runtime, you can export `./index.ts` directly; the loader handles TS.
-- **`cline.plugins`** — the discovery contract. An array of entries, each with:
-  - `paths` — entry files relative to the package root. For multiple plugin objects from one package, list all entries.
-  - `capabilities` — pre-declared capabilities, validated by the loader before importing the entry.
-- **`peerDependencies` for `@cline/core`** — the host already provides `@cline/core`. Marking it a peer dep avoids version drift; marking it optional lets users typecheck the plugin in isolation without forcing a `@cline/core` install.
-- **`dependencies`** — your own deps (parsers, schema libraries, SDKs you wrap).
+- **`type: "module"`** - required. Cline plugins are ES modules.
+- **`exports`** - points npm consumers at the entry. For TypeScript-source plugins loaded by Cline at runtime, you can export `./index.ts` directly; the loader handles TS.
+- **`cline.plugins`** - the discovery contract. An array of entries, each with:
+  - `paths` - entry files relative to the package root. For multiple plugin objects from one package, list all entries.
+  - `capabilities` - pre-declared capabilities, validated by the loader before importing the entry.
+- **`peerDependencies` for `@cline/core`** - the host already provides `@cline/core`. Marking it a peer dep avoids version drift; marking it optional lets users typecheck the plugin in isolation without forcing a `@cline/core` install.
+- **`dependencies`** - your own deps (parsers, schema libraries, SDKs you wrap).
 
 ### 11.3 `tsconfig.json` (optional)
 
@@ -639,7 +639,7 @@ If your plugin lives outside a monorepo, a minimal standalone `tsconfig.json` wo
 }
 ```
 
-### 11.4 `index.ts` — package entry
+### 11.4 `index.ts` - package entry
 
 The same plugin shape as the single-file version, just inside a package:
 
@@ -696,15 +696,15 @@ function loadTemplate(name: string): string | undefined {
 }
 ```
 
-This is the only place `import.meta.url` is appropriate in a plugin — locating files **inside the plugin package**. For workspace paths, always use `ctx.workspaceInfo?.rootPath`.
+This is the only place `import.meta.url` is appropriate in a plugin - locating files **inside the plugin package**. For workspace paths, always use `ctx.workspaceInfo?.rootPath`.
 
 ### 11.6 The override pattern (bundled / global / project)
 
 A package can ship default assets and let users override them with their own. The convention used across Cline plugins is a three-tier lookup, last write wins by `name`:
 
-1. **bundled** — files inside the plugin package (defaults shipped with the plugin).
-2. **global** — files under `~/.cline/data/settings/<kind>/` (user overrides).
-3. **project** — files under `<workspace>/.cline/<kind>/` (project overrides).
+1. **bundled** - files inside the plugin package (defaults shipped with the plugin).
+2. **global** - files under `~/.cline/data/settings/<kind>/` (user overrides).
+3. **project** - files under `<workspace>/.cline/<kind>/` (project overrides).
 
 Example: a plugin that supports user-defined "presets" via markdown files with YAML frontmatter:
 
@@ -738,7 +738,7 @@ function readPresets(workspaceRoot: string) {
       const data = match ? YAML.parse(match[1] ?? "") ?? {} : {};
       const body = (match ? match[2] : raw).trim();
       const name = data?.name ?? entry.name.replace(/\.md$/, "");
-      // Project overrides global overrides bundled — last write wins.
+      // Project overrides global overrides bundled - last write wins.
       presets.set(name, { name, body, source });
     }
   }
@@ -805,10 +805,10 @@ await plugin.setup?.(api as never, {
   workspaceInfo: { rootPath: "/tmp/fake-workspace" },
 });
 
-// Now `tools` contains the registered tools — call tool.execute(input, ctx).
+// Now `tools` contains the registered tools - call tool.execute(input, ctx).
 ```
 
-For higher fidelity, build a real registry (`new ContributionRegistry({ extensions: [plugin] })`) and call `initialize()` — that exercises validation too.
+For higher fidelity, build a real registry (`new ContributionRegistry({ extensions: [plugin] })`) and call `initialize()` - that exercises validation too.
 
 ### 12.2 End-to-end with a `runDemo()`
 
@@ -841,22 +841,22 @@ If the plugin fails validation or setup, the CLI prints a clear error and contin
 
 ## 13. Common gotchas
 
-- **"capabilities must be a non-empty array"** — you forgot `manifest.capabilities`, or it's `[]`.
-- **"registerRule requires the 'rules' capability"** — capability/handler drift. Add `"rules"` to capabilities, or stop calling `registerRule`.
-- **Tool not visible to the model** — check `enableTools: true` on the session config, and that you're declaring `"tools"` in capabilities.
-- **`ctx.workspaceInfo` is undefined in SDK tests** — the host didn't pass `extensionContext.workspace`. In SDK code, set it explicitly (see §9.2).
-- **State leaking across sessions** — module-level variables are shared across sessions in the same process. Key by `ctx.session?.sessionId` if your host runs multiple sessions concurrently.
-- **`afterRun` firing on aborts** — guard with `if (result.status !== "completed") return;`.
-- **Heavy work in `setup()`** — `setup()` blocks session start. Defer expensive work into the first tool call or `beforeRun`.
-- **Importing host internals** — only import from `@cline/core`. Reaching into host-specific packages (e.g. CLI internals) will break in non-CLI hosts.
-- **Emitting telemetry** — feature-detect `ctx.telemetry` (`ctx.telemetry?.capture(...)`); it is undefined when the host has no telemetry service. In-process plugins get the host service directly. Sandboxed plugins get a bridge: `capture` / `captureRequired` / `recordCounter|Histogram|Gauge` are forwarded to the host over JSON IPC, so properties must be plain JSON data (strings, numbers, booleans) — never live objects. The host namespaces every plugin event and metric under `plugin.`, stamps `plugin_name`, and drops events when the user opted out of telemetry.
-- **`ctx.telemetry.isEnabled()` in the sandbox always returns `true`** — the bridge is stateless and the host is the arbiter: opted-out events are dropped host-side. Do not use `isEnabled()` to gate expensive property computation in a sandboxed plugin; keep telemetry properties cheap to build. Identity/common-property setters (`setDistinctId`, `setCommonProperties`, …) are host concerns and are no-ops in the sandbox.
-- **Resolving bundled assets** — use `import.meta.url` + `fileURLToPath` to find files inside your package; never `process.cwd()`. For workspace paths, do the opposite: use `ctx.workspaceInfo?.rootPath`, never `import.meta.url`.
-- **Plugin name collisions** — `name` must be unique within a session. If two plugins share a name, validation fails. Namespace by package (`my-org-redactor`, not `redactor`).
+- **"capabilities must be a non-empty array"** - you forgot `manifest.capabilities`, or it's `[]`.
+- **"registerRule requires the 'rules' capability"** - capability/handler drift. Add `"rules"` to capabilities, or stop calling `registerRule`.
+- **Tool not visible to the model** - check `enableTools: true` on the session config, and that you're declaring `"tools"` in capabilities.
+- **`ctx.workspaceInfo` is undefined in SDK tests** - the host didn't pass `extensionContext.workspace`. In SDK code, set it explicitly (see §9.2).
+- **State leaking across sessions** - module-level variables are shared across sessions in the same process. Key by `ctx.session?.sessionId` if your host runs multiple sessions concurrently.
+- **`afterRun` firing on aborts** - guard with `if (result.status !== "completed") return;`.
+- **Heavy work in `setup()`** - `setup()` blocks session start. Defer expensive work into the first tool call or `beforeRun`.
+- **Importing host internals** - only import from `@cline/core`. Reaching into host-specific packages (e.g. CLI internals) will break in non-CLI hosts.
+- **Emitting telemetry** - feature-detect `ctx.telemetry` (`ctx.telemetry?.capture(...)`); it is undefined when the host has no telemetry service. In-process plugins get the host service directly. Sandboxed plugins get a bridge: `capture` / `captureRequired` / `recordCounter|Histogram|Gauge` are forwarded to the host over JSON IPC, so properties must be plain JSON data (strings, numbers, booleans) - never live objects. The host namespaces every plugin event and metric under `plugin.`, stamps `plugin_name`, and drops events when the user opted out of telemetry.
+- **`ctx.telemetry.isEnabled()` in the sandbox always returns `true`** - the bridge is stateless and the host is the arbiter: opted-out events are dropped host-side. Do not use `isEnabled()` to gate expensive property computation in a sandboxed plugin; keep telemetry properties cheap to build. Identity/common-property setters (`setDistinctId`, `setCommonProperties`, …) are host concerns and are no-ops in the sandbox.
+- **Resolving bundled assets** - use `import.meta.url` + `fileURLToPath` to find files inside your package; never `process.cwd()`. For workspace paths, do the opposite: use `ctx.workspaceInfo?.rootPath`, never `import.meta.url`.
+- **Plugin name collisions** - `name` must be unique within a session. If two plugins share a name, validation fails. Namespace by package (`my-org-redactor`, not `redactor`).
 
 ---
 
-## 14. Decision guide — which extension point?
+## 14. Decision guide - which extension point?
 
 | You want to…                                                | Use                                              |
 | ----------------------------------------------------------- | ------------------------------------------------ |

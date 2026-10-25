@@ -49,16 +49,16 @@ without turning `@cline/ui` into a second agent runtime.
 The boundary is about runtime coupling, not about keeping the package small.
 When more than one product needs the same presentation behavior, the goal is
 to extract it here as a shared module rather than let each app grow its own
-copy — that is the direction `@cline/ui` is headed, and more shared modules
+copy - that is the direction `@cline/ui` is headed, and more shared modules
 are expected over time. Two exist today:
 
-- `@cline/ui/components/agent-chat/tool-summary` — pure, framework-free
+- `@cline/ui/components/agent-chat/tool-summary` - pure, framework-free
   functions (`buildToolSummary`, `buildGroupedToolLabel`, and the underlying
   parsers) that turn a raw `{ toolName, input, result }` payload into the
   labels, per-item details, diff counts, and before/after texts every surface
-  should show. `unknown` in, data out — no React, no icons, no dependency on
+  should show. `unknown` in, data out - no React, no icons, no dependency on
   `@cline/core` or transport events.
-- `@cline/ui/components/agent-chat/tool-diff` — `ToolFileDiff`, a thin
+- `@cline/ui/components/agent-chat/tool-diff` - `ToolFileDiff`, a thin
   wrapper over [`@pierre/diffs`](https://github.com/pierrecomputer/pierre)
   (optional peer dependency) that renders a tool-summary file item as a
   syntax-highlighted, theme-aware diff with consistent defaults.

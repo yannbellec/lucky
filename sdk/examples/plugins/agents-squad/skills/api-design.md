@@ -1,6 +1,6 @@
 ---
 name: api-design
-description: Design clean APIs — REST, RPC, or library interfaces with consistent naming, error handling, and versioning.
+description: Design clean APIs - REST, RPC, or library interfaces with consistent naming, error handling, and versioning.
 ---
 
 # API Design Skill
@@ -49,7 +49,7 @@ When designing or reviewing an API (REST, RPC, or library), follow these princip
 
 - Version the API from day one (`/v1/`, header-based, or semver for libraries).
 - Additive changes (new fields, new endpoints) are non-breaking.
-- Removing or renaming fields is breaking — deprecate first, remove in next major version.
+- Removing or renaming fields is breaking - deprecate first, remove in next major version.
 - Document breaking changes in a changelog.
 
 ## 7. Documentation

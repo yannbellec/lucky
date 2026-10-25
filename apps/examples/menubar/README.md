@@ -26,7 +26,7 @@ Rust Tauri App (apps/examples/menubar/src-tauri/src/main.rs)
     │
     │
     ├── System Tray Icon with dynamic menu
-    │     ● Hub Connected — 3 clients, 2 sessions
+    │     ● Hub Connected - 3 clients, 2 sessions
     │     ─────────────────
     │     5 notifications
     │     ─────────────────

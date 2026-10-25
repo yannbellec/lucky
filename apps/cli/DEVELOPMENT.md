@@ -369,7 +369,7 @@ Or set `CLINE_FORCE_ONBOARDING=1` to force the onboarding view regardless of exi
 
 ### Manually testing the TUI (agents / headless environments)
 
-[tuistory](https://github.com/remorses/tuistory) is installed as a devDependency. It wraps the TUI in a named background PTY session that can be scripted from a plain shell — no real terminal or display needed. This is the preferred way for AI agents (or anyone in a headless environment) to poke at the interactive TUI:
+[tuistory](https://github.com/remorses/tuistory) is installed as a devDependency. It wraps the TUI in a named background PTY session that can be scripted from a plain shell - no real terminal or display needed. This is the preferred way for AI agents (or anyone in a headless environment) to poke at the interactive TUI:
 
 ```bash
 cd apps/cli

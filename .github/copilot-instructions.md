@@ -8,10 +8,10 @@ This is a VS Code extension. Read `.clinerules/general.md` for tribal knowledge 
 - **Communication**: Protobuf-defined gRPC-like protocol over VS Code message passing. Schemas in `proto/`.
 - **MCP**: `src/services/mcp/McpHub.ts`.
 
-## Build & Test (Critical — non-obvious commands)
-- **Build**: `bun run compile` — NOT `bun run build`.
+## Build & Test (Critical - non-obvious commands)
+- **Build**: `bun run compile` - NOT `bun run build`.
 - **Watch**: `bun run watch` (extension + webview).
-- **Protos**: `bun run protos` — run **immediately** after any `.proto` change. Generates into `src/shared/proto/`, `src/generated/`.
+- **Protos**: `bun run protos` - run **immediately** after any `.proto` change. Generates into `src/shared/proto/`, `src/generated/`.
 - **Tests**: `bun run test:unit`. After prompt/tool changes: `UPDATE_SNAPSHOTS=true bun run test:unit`.
 
 ## Protobuf RPC Workflow (4 steps)
@@ -23,7 +23,7 @@ This is a VS Code extension. Read `.clinerules/general.md` for tribal knowledge 
 
 ## Adding API Providers (silent failure risk)
 Three proto conversion updates are **required** or the provider silently resets to Anthropic:
-1. `proto/cline/models.proto` — add to `ApiProvider` enum.
+1. `proto/cline/models.proto` - add to `ApiProvider` enum.
 2. `convertApiProviderToProto()` in `src/shared/proto-conversions/models/api-configuration-conversion.ts`.
 3. `convertProtoToApiProvider()` in the same file.
 
@@ -47,9 +47,9 @@ Modular: `components/` (shared) + `variants/` (model-specific) + `templates/` (`
 Adding a key requires updating the typed storage definitions in `src/shared/storage/state-keys.ts`; runtime reads and writes should go through `StateManager`, not VS Code `ExtensionContext` storage. Persistent state is file-backed so it works across VS Code, CLI, and JetBrains hosts.
 
 ## Slash Commands (3 places)
-- `src/core/slash-commands/index.ts` — definitions.
-- `src/core/prompts/commands.ts` — system prompt integration.
-- `webview-ui/src/utils/slash-commands.ts` — webview autocomplete.
+- `src/core/slash-commands/index.ts` - definitions.
+- `src/core/prompts/commands.ts` - system prompt integration.
+- `webview-ui/src/utils/slash-commands.ts` - webview autocomplete.
 
 ## Conventions
 - **Paths**: Always use `src/utils/path` helpers (`toPosixString`) for cross-platform compatibility.

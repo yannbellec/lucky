@@ -1,6 +1,6 @@
 ---
 name: debugging
-description: Systematic debugging — reproduce, isolate, diagnose, and fix bugs with root-cause analysis.
+description: Systematic debugging - reproduce, isolate, diagnose, and fix bugs with root-cause analysis.
 ---
 
 # Debugging Skill

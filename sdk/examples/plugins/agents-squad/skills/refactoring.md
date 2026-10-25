@@ -1,6 +1,6 @@
 ---
 name: refactoring
-description: Safe, incremental refactoring — extract, rename, simplify, and restructure code without changing behavior.
+description: Safe, incremental refactoring - extract, rename, simplify, and restructure code without changing behavior.
 ---
 
 # Refactoring Skill
@@ -12,7 +12,7 @@ When refactoring code, follow this disciplined process:
 Before changing anything:
 - Confirm existing tests pass. If no tests exist, write characterization tests first.
 - Identify all callers and consumers of the code being refactored.
-- Document the current behavior as your contract — refactoring must not change it.
+- Document the current behavior as your contract - refactoring must not change it.
 
 ## 2. Plan the Refactoring
 

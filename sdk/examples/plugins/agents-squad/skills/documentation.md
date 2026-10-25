@@ -1,6 +1,6 @@
 ---
 name: documentation
-description: Write clear technical documentation — READMEs, API docs, architecture guides, and inline comments.
+description: Write clear technical documentation - READMEs, API docs, architecture guides, and inline comments.
 ---
 
 # Documentation Skill
@@ -37,15 +37,15 @@ For each endpoint, function, or method:
 Brief description of what it does.
 
 **Parameters:**
-- `param1` (string, required) — What this parameter controls.
-- `param2` (number, optional, default: 10) — What this parameter controls.
-- `options.verbose` (boolean, default: false) — Enable verbose output.
+- `param1` (string, required) - What this parameter controls.
+- `param2` (number, optional, default: 10) - What this parameter controls.
+- `options.verbose` (boolean, default: false) - Enable verbose output.
 
-**Returns:** `Promise<Result>` — Description of the return value.
+**Returns:** `Promise<Result>` - Description of the return value.
 
 **Throws:**
-- `ValidationError` — When input is invalid.
-- `NotFoundError` — When the resource doesn't exist.
+- `ValidationError` - When input is invalid.
+- `NotFoundError` - When the resource doesn't exist.
 
 **Example:**
 ```ts

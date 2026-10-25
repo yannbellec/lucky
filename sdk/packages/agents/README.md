@@ -6,9 +6,9 @@ bringing in session storage, hub transport, or host-specific default tools.
 
 ## What You Get
 
-- `Agent` / `AgentRuntime` — the same class under two names — for running and
+- `Agent` / `AgentRuntime` - the same class under two names - for running and
   continuing tool-using agent conversations
-- `createAgent` / `createAgentRuntime` — factory-function equivalents
+- `createAgent` / `createAgentRuntime` - factory-function equivalents
 - `AgentRuntimeHooks` for lifecycle interception (`beforeRun`, `afterRun`,
   `beforeModel`, `afterModel`, `beforeTool`, `afterTool`, `onEvent`)
 - Event streaming via `agent.subscribe(listener)` and the `hooks.onEvent`
@@ -68,7 +68,7 @@ console.log(result.outputText);
 
 `Agent` / `AgentRuntime` accepts two config shapes:
 
-**Provider form** — friendly entrypoint. The runtime builds an `AgentModel` for
+**Provider form** - friendly entrypoint. The runtime builds an `AgentModel` for
 you via `@cline/llms`:
 
 ```ts
@@ -81,7 +81,7 @@ new Agent({
 });
 ```
 
-**Model form** — advanced. Supply a pre-built `AgentModel` directly. Useful
+**Model form** - advanced. Supply a pre-built `AgentModel` directly. Useful
 when the host already owns gateway construction (this is what `@cline/core`
 uses internally):
 
@@ -117,8 +117,8 @@ const summarize: AgentTool<{ text: string }, { summary: string }> = {
 		required: ["text"],
 	},
 	async execute({ text }, context) {
-		// context.signal — aborts when the run is cancelled
-		// context.emitUpdate(...) — stream progress as `tool-updated` events
+		// context.signal - aborts when the run is cancelled
+		// context.emitUpdate(...) - stream progress as `tool-updated` events
 		return { summary: text.slice(0, 120) };
 	},
 };
@@ -159,15 +159,15 @@ deltas, tool lifecycle, usage updates, and run completion/failure. See
 
 ### Conversation Control
 
-- `agent.run(input)` — start a run. `input` may be a string, an `AgentMessage`,
+- `agent.run(input)` - start a run. `input` may be a string, an `AgentMessage`,
   or an array of messages. Also accepts `undefined` to continue without adding
   a new user turn.
-- `agent.continue(input?)` — convenience alias for `run(input?)`.
-- `agent.abort(reason?)` — cancel the active run. `.run()` resolves with
+- `agent.continue(input?)` - convenience alias for `run(input?)`.
+- `agent.abort(reason?)` - cancel the active run. `.run()` resolves with
   `status: "aborted"`.
-- `agent.snapshot()` — immutable view of the current
+- `agent.snapshot()` - immutable view of the current
   `AgentRuntimeStateSnapshot` (messages, usage, iteration, status, etc.).
-- `agent.restore(messages)` — replace the conversation with a persisted
+- `agent.restore(messages)` - replace the conversation with a persisted
   message array. Resets run/turn state but preserves subscribers, tools,
   hooks, plugins, and the model.
 - `initialMessages` in the constructor seeds the conversation on boot.
@@ -291,7 +291,7 @@ mailboxes, task management, and outcome convergence.
 
 ## Entry Point
 
-- `@cline/agents` — the single package entrypoint. The `package.json`
+- `@cline/agents` - the single package entrypoint. The `package.json`
   `exports` map automatically serves a browser-safe bundle when bundlers
   resolve the `browser` condition.
 
