@@ -1,0 +1,221 @@
+---
+title: "Plugins Overview"
+sidebarTitle: "Plugins"
+description: "Learn what plugins are, their benefits, and how they extend agent behavior."
+---
+
+Plugins are packages of reusable agent capabilities. They let you bundle tools, lifecycle hooks, commands, and configuration into a single module that can be shared across projects or published for others to use.
+
+## Benefits of Plugins
+
+| Benefit | Description |
+|---------|-------------|
+| **Modularity** | Encapsulate related tools and hooks in a single unit. No more scattered logic. |
+| **Reusability** | Share plugins across agents, projects, or teams. Publish to npm or distribute via git. |
+| **Packaging** | Bundle tools, hooks, commands, message builders, and providers together. |
+| **Observability** | Hook into every stage of the agent lifecycle — run start/end, model calls, tool calls, errors. |
+| **Composability** | Combine multiple plugins in a single agent. Each plugin handles its own domain. |
+
+## Extension Glossary
+
+| Extension point | What it does |
+|-----------------|--------------|
+| **Tool** | Lets the model call an action (query a DB, call an API, etc.) |
+| **Command** | Register slash commands to allow actions to be manually triggered |
+| **Hook** | Runs lifecycle logic or policy checks at specific stages |
+| **Rules** | Prompts that steer the agent and will be included in every session |
+| **Events** | Register external events that will trigger agent actions |
+| **Plugin** | Packages tools, hooks, commands, rules, and automation events together |
+
+| If you need to... | Use a... |
+|-------------------|----------|
+| Allow the model to query a database, call an API, run a domain action | **Tool** |
+| Register a user triggered action (slash command) | **Command** |
+| Log runs, collect metrics, enforce policy | **Hook** handler |
+| Block dangerous tool calls | **Hook** or approval policy |
+| Provide consistent guidance to the model via prompts | **Rule** |
+| Trigger agent action on an external event (new PR, Slack message, etc) | **Event** |
+| Bundle several tools into a reusable module | **Plugin** |
+
+## What is a Plugin?
+
+A plugin is an `AgentPlugin` — an object that implements the SDK's extension interface. It can register tools, hook into agent lifecycle events, and provide configuration defaults.
+
+```typescript
+import { type AgentPlugin } from "@cline/sdk"
+
+const myPlugin: AgentPlugin = {
+  name: "my-plugin",
+  manifest: {
+    capabilities: ["tools", "hooks"],
+  },
+  setup(api, ctx) {
+    // Register tools, commands, providers via api.registerTool(), etc.
+  },
+  hooks: {
+    beforeTool(context) {
+      // Observe or audit tool calls before they execute
+    },
+    afterRun(context) {
+      // Log metrics, cleanup, notify after a run completes
+    },
+  },
+}
+```
+
+Hooks are defined inside the `hooks` object, not directly on the extension. The available lifecycle hooks are `beforeRun`, `afterRun`, `beforeModel`, `afterModel`, `beforeTool`, `afterTool`, and `onEvent`.
+
+
+## Next Steps
+
+Register with `ClineCore`:
+
+```typescript
+await cline.start({
+  prompt: "Analyze customer records",
+  config: {
+    // ...model/runtime config
+    extensions: [databasePlugin],
+  },
+})
+```
+
+## File-Based Plugins
+
+`ClineCore` supports plugin module paths via `pluginPaths` in session config:
+
+```typescript
+await cline.start({
+  prompt: "Analyze this project",
+  config: {
+    // ...model/runtime config
+    pluginPaths: ["/absolute/path/to/plugin.ts"],
+  },
+})
+```
+
+Plugin files export an `AgentPlugin`.
+
+## How Plugins Run
+
+By default each plugin runs in its own worker thread, one per session, inside the host's runtime. Module-level state is never shared between sessions, no separate `node` or `bun` process is started (plugins work in the compiled CLI, the hub, and the desktop app without a runtime on `PATH`), and a plugin can use the host runtime's globals, such as `Bun` under the Bun-built hub.
+
+A worker contains its plugin's failures:
+
+- A plugin stuck in a loop is stopped at its timeout; the next call starts a fresh worker.
+- An uncaught error, an unhandled rejection, or `process.exit()` ends only that plugin's worker. The plugin is marked `failed` and turned off, like any other fatal plugin error, and the hub and other plugins keep running.
+- Plugin `console.log` and stdout output are discarded, so they cannot corrupt `--json` output or a JSON-RPC stream. Use `ctx.logger`.
+
+Values passed to and returned from a plugin cross a thread boundary, so they must be plain data; functions are dropped. `process.cwd()` reports the session's directory, but relative file paths resolve against the host's, so use `ctx.cwd`. Workers share the host's memory limit, environment snapshot, and native addons: this is crash isolation, not a security boundary.
+
+Plugin code never runs on the host's main thread. One other mode is available as an opt-in through `CLINE_PLUGIN_MODE` (or `mode` on `resolveAndLoadAgentPlugins`):
+
+- **`sandbox`**: the previous per-session subprocess sandbox. It needs `node` or `bun` on `PATH` when the host isn't `node` or `bun` itself, and does not apply the per-session plugin policy or report plugin status.
+
+Both modes need the worker bootstrap. The CLI, the hub, the desktop app, and the VS Code extension ship it; an SDK host that bundles `@cline/core` can copy `dist/extensions/plugin-sandbox-bootstrap.js` next to its bundle, or point `CLINE_PLUGIN_BOOTSTRAP_PATH` at it. A host that ships none (the SSH remote, which receives only the Cline CLI binary, does not yet) cannot load any plugin; each one is reported `failed` with a message naming that variable.
+
+Plugins are bound to a session when it starts. Adding, editing, or reloading a plugin affects only sessions started afterwards; running sessions keep the plugins and code they started with. Every new session imports the plugin fresh, so any change is picked up; `cline hub plugins --reload <plugin>` re-checks it and clears a failed status.
+
+## Choosing Plugins per Session
+
+Pass a `plugins` policy when you start a session. It's shaped like `toolPolicies`: `"*"` sets the default, and named entries override it for one plugin. Plugins are enabled unless a policy turns them off.
+
+```typescript
+await cline.start({
+  prompt: "Review this change",
+  config: { /* ...model/runtime config */ },
+  plugins: {
+    "*": { enabled: false },
+    "code-review": { enabled: true },
+  },
+})
+```
+
+A session only gets tools, hooks, rules, and providers from plugins it enabled. Plugin tools still go through `toolPolicies`. The policy applies in worker mode; the opt-in `sandbox` mode loads every discovered plugin.
+
+## Setup and Call Context
+
+`setup(api, ctx)` receives the session's context:
+
+| Field | Meaning |
+|-------|---------|
+| `ctx.cwd` | The session's working directory |
+| `ctx.session?.sessionId` | The session that is setting the plugin up |
+| `ctx.emitEvent(name, payload)` | Sends a plugin event, such as `steer_message`, to that session |
+| `ctx.workspaceInfo` | Workspace root and git metadata |
+| `ctx.onDispose(fn)` | Registers cleanup to run when that session ends |
+
+When a session ends, the host runs your `onDispose` callbacks. Plugins share the host process, so stop everything you start for a session there: timers, child processes, sockets, listeners on shared emitters.
+
+```typescript
+setup(api, ctx) {
+  const child = spawn("my-watcher", { cwd: ctx.cwd })
+  const timer = setInterval(poll, 5_000)
+  ctx.onDispose?.(() => { child.kill(); clearInterval(timer) })
+}
+```
+
+Plugin tools also receive `cwd` and `emitEvent` in their call context (`execute(input, context)`). `globalThis.__clinePluginHost.emitEvent` still works for plugins written for the sandbox; it routes to the session whose hook or tool is running.
+
+## Plugin Status and Errors
+
+The host wraps every plugin call and records what goes wrong, so a broken plugin never just loses its tools silently.
+
+| Call | Timeout | On failure |
+|------|---------|------------|
+| Import | 4 s (`CLINE_PLUGIN_IMPORT_TIMEOUT_MS`) | Plugin is `failed` |
+| `setup()` | 4 s | That session loses the plugin (none of its registrations are kept) and the status shows `failed`; other sessions keep working, and the next session tries again |
+| Hook | 3 s | Plugin is `degraded`; the run continues unless `hookErrorMode` is `"throw"` |
+| Tool | 60 s, or the tool's `timeoutMs` | The error goes back to the model as a tool error; plugin is `degraded` |
+| Command, rule content, message builder | 60 s | A command throws to its caller; a rule contributes no text; a message builder leaves messages unchanged; plugin is `degraded` |
+
+Five failures in a row turn a `degraded` plugin `failed`. An import failure, or five failed calls in a row, turns the plugin off for every session using it until it is reloaded or its source changes. A successful reload does not interrupt running sessions: they keep the copy they started with, and new sessions get the new code. A reload whose import fails turns the plugin off for running sessions too, and they are told why. In the hub, a stray exception or unhandled rejection whose stack points into a plugin marks that plugin `failed` instead of stopping the hub.
+
+Each plugin has a status of `loading`, `ready`, `degraded`, `failed`, or `disabled`. Its last error records the phase (`discover`, `import`, `setup`, `hook:<name>`, `tool:<name>`, `command:<name>`, or `uncaught`), the message, the stack, the plugin path, and a timestamp. The status also counts errors and timeouts.
+
+To read status:
+
+- `StartSessionResult.pluginIssues` lists the plugins the session asked for but doesn't have.
+- Plugins that fail later in the session (`setup()` and hooks run on the first turn) are reported to that session as a status notice event, with the issue in `metadata.pluginIssue`.
+- Hub clients can send `plugins.status` (or `plugins.list`) for every plugin's status, last error, and the sessions using it. `plugins.reload` with `{ plugin: "<name or path>" }` re-imports one plugin without restarting the hub. The hub broadcasts a `plugin.status_changed` event when a status changes.
+
+## Installing Plugins via CLI
+
+Plugins can also be installed from file URLs, npm, git, or local paths using `cline plugin install`. See [Plugins](/customization/plugins) for install commands, the manifest format, and directory layout.
+
+## Hooks
+
+Plugin hooks are functions in the plugin's `hooks` object. Each one receives a context with the current runtime `snapshot` (agent id, conversation id, iteration, messages, usage), and some can return a result that changes what happens next.
+
+| Hook | When it runs | It can return |
+|------|--------------|---------------|
+| `beforeRun` | Before a run starts | `stop` and `reason` to end the run; `appendContext` to add text the model sees on its first request |
+| `afterRun` | After a run ends, with its `result` | Nothing; use it for metrics, notifications, cleanup |
+| `beforeModel` | Before each model request, with the `request` | `messages`, `tools`, or `options` to change the request; `stop` and `reason` to end the run |
+| `afterModel` | After each model response, with the `assistantMessage` and `finishReason` | `stop` and `reason` |
+| `beforeTool` | Before a tool runs, with the `tool`, `toolCall`, and `input` | `skip` and `reason` to block the call (the reason goes back to the model); `input` to replace the input; `policy` (for example `{ autoApprove: false }`) to require approval; `appendContext`; `stop` |
+| `afterTool` | After a tool runs, with the `result` and timing | `result` to replace the result; `appendContext`; `stop` and `reason` |
+| `onEvent` | For runtime events | Nothing |
+
+To block dangerous tool calls, return `{ skip: true, reason }` from `beforeTool`, or require approval with `{ policy: { autoApprove: false } }`.
+
+### When a hook fails
+
+Each plugin hook call has a 3-second timeout. If a hook throws, rejects, or times out, the session's `hookErrorMode` decides what happens:
+
+| `hookErrorMode` | Effect |
+|-----------------|--------|
+| `"ignore"` (default) | The failure is recorded and reported, and the run continues as if the hook returned nothing |
+| `"throw"` | The error is rethrown and the run fails |
+
+A hook that keeps failing marks its plugin `degraded`, then `failed` after five failures in a row. See [Plugin Status and Errors](#plugin-status-and-errors).
+
+## Build a Plugin
+
+For a step-by-step plugin tutorial, see [Writing Plugins](/sdk/guides/writing-plugins).
+
+## SDK Examples
+
+The [SDK repository](https://github.com/cline/cline/tree/main/sdk) includes ready-to-run plugin examples under [`examples/plugins/`](https://github.com/cline/cline/tree/main/sdk/examples/plugins), including tool registration, lifecycle metrics, notifications, custom compaction, policy guards, web search, background jobs, TypeScript LSP tools, and multi-agent teams.
+
+See [Plugin Examples](/sdk/plugin-examples) for the full list and usage commands.

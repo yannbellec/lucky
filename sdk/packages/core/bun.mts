@@ -1,0 +1,130 @@
+/// <reference types="@types/bun" />
+import { builtinModules } from "node:module";
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import {
+	resolveRepoRootFromCorePackage,
+	resolveSdkRuntimeBuildId,
+} from "./scripts/runtime-build-id";
+
+type PackageManifest = {
+	dependencies?: Record<string, string>;
+	peerDependencies?: Record<string, string>;
+};
+
+const packageJson = (await Bun.file(
+	new URL("./package.json", import.meta.url),
+).json()) as PackageManifest;
+const corePackageRoot = dirname(fileURLToPath(import.meta.url));
+const runtimeBuildId = resolveSdkRuntimeBuildId(
+	resolveRepoRootFromCorePackage(corePackageRoot),
+);
+
+// Keep declared runtime packages external so they are not duplicated inside each
+// bundled entrypoint and installed again from package.json.
+const external = [
+	"@cline/core/hub/daemon-entry",
+	// Preserve the optional provider boundary; bundling it hoists posthog-node
+	// into every runtime entrypoint even when the local import is dynamic.
+	"@cline/core/services/feature-flags/posthog",
+	...Object.keys({
+		...(packageJson.dependencies ?? {}),
+		...(packageJson.peerDependencies ?? {}),
+	}),
+];
+
+const sourcemap = Bun.env.CLINE_SOURCEMAPS === "1" ? "linked" : "none";
+// minify: true keeps identifier mangling active even when sourcemaps are enabled.
+const minify = Bun.env.CLINE_SOURCEMAPS !== "1";
+
+const buildConfig = {
+	target: "node",
+	format: "esm",
+	minify,
+	packages: "bundle",
+	sourcemap,
+	external,
+	define: {
+		__CLINE_CORE_RUNTIME_BUILD_ID__: JSON.stringify(runtimeBuildId),
+		// Unlike the deterministic fingerprint above, the epoch orders builds in
+		// time so managed-Hub compatibility can tell a newer daemon from a stale
+		// one. Consulted only when fingerprints already differ.
+		__CLINE_CORE_RUNTIME_BUILD_EPOCH_MS__: JSON.stringify(Date.now()),
+	},
+} as const;
+
+const builds: Parameters<typeof Bun.build>[0][] = [
+	{
+		entrypoints: ["./src/cloud/index.ts"],
+		outdir: "./dist/cloud",
+		...buildConfig,
+	},
+	// Build main exports separately to avoid Bun bundler output path conflicts
+	{
+		entrypoints: ["./src/index.ts"],
+		outdir: "./dist",
+		...buildConfig,
+	},
+	{
+		entrypoints: ["./src/hub/index.ts"],
+		outdir: "./dist/hub",
+		...buildConfig,
+	},
+	{
+		entrypoints: ["./src/hub/daemon/entry.ts"],
+		outdir: "./dist/hub/daemon",
+		...buildConfig,
+	},
+	{
+		entrypoints: ["./src/services/telemetry/index.ts"],
+		outdir: "./dist/services/telemetry",
+		...buildConfig,
+	},
+	{
+		entrypoints: ["./src/services/feature-flags/posthog.ts"],
+		outdir: "./dist/services/feature-flags",
+		...buildConfig,
+	},
+	// The plugin sandbox bootstrap runs in an isolated child process
+	// (SubprocessSandbox) or worker thread (WorkerSandbox) and is emitted as a
+	// separate entrypoint. It bundles every package it uses: the CLI ships it
+	// beside the compiled binary with no node_modules to resolve from, so it
+	// may import only Node builtins.
+	{
+		entrypoints: ["./src/extensions/plugin/plugin-sandbox-bootstrap.ts"],
+		outdir: "./dist/extensions",
+		...buildConfig,
+		external: [],
+	},
+];
+
+for (const config of builds) {
+	const result = await Bun.build(config as Parameters<typeof Bun.build>[0]);
+
+	if (!result.success) {
+		console.error("Build failed for entrypoints:", config.entrypoints);
+		process.exit(1);
+	}
+
+	if (result.logs.length > 0) {
+		for (const log of result.logs) {
+			console.warn(log);
+		}
+	}
+}
+
+// Fail the build if the bootstrap still imports a package: it would load in
+// dev and tests, then fail in a published CLI install.
+const bootstrapPath = "./dist/extensions/plugin-sandbox-bootstrap.js";
+const bootstrapPackages = new Bun.Transpiler({ loader: "js" })
+	.scanImports(await Bun.file(bootstrapPath).text())
+	.map((entry) => entry.path)
+	.filter(
+		(path) => !path.startsWith("node:") && !builtinModules.includes(path),
+	);
+if (bootstrapPackages.length > 0) {
+	console.error(
+		`${bootstrapPath} must be self-contained but imports: ${[...new Set(bootstrapPackages)].join(", ")}`,
+	);
+	process.exit(1);
+}
