@@ -165,7 +165,7 @@ export function readModelsFileSync(filePath: string): StoredModelsFile {
 	} catch {
 		// The file exists but could not be read/parsed. Falling back to an
 		// empty registry is required for reads, but callers that then WRITE
-		// the empty state back would permanently destroy the user's data —
+		// the empty state back would permanently destroy the user's data -
 		// leave a trace so that is diagnosable.
 		sdkDebug(
 			`models.json at ${filePath} exists but is unreadable or invalid JSON; treating as an empty registry`,
@@ -193,7 +193,7 @@ export async function readModelsFile(
 // Stage to a pid-unique temp file and rename into place (mirrors
 // ProviderSettingsManager.write). Concurrent Cline processes (CLI, extension,
 // hub) share models.json; a bare writeFileSync lets readers catch a partial
-// file, which read paths treat as an empty registry — and the next
+// file, which read paths treat as an empty registry - and the next
 // read-modify-write would persist that loss.
 export function writeModelsFileSync(
 	filePath: string,
@@ -374,7 +374,7 @@ function toStoredModelInfo(
 	}
 	// An unspecified capability list fails open for tool calling
 	// (modelSupportsToolCalling), but any populated list is treated as
-	// authoritative — a partial one without "tools" silently revokes every
+	// authoritative - a partial one without "tools" silently revokes every
 	// tool definition (#13463). Stored entries and user-authored provider
 	// metadata cannot declare "cannot call tools" (there is no supportsTools
 	// field, and no writer intentionally omits "tools"): their lists are
@@ -693,7 +693,7 @@ export function syncStoredProviderRegistration(
 /**
  * Load models.json into the @cline/llms registry at most once per path per
  * process; subsequent calls are no-ops. It does NOT re-read the file after
- * writes — use {@link syncStoredProviderRegistration} to reflect a write in
+ * writes - use {@link syncStoredProviderRegistration} to reflect a write in
  * the live registry.
  */
 export function ensureCustomProvidersLoadedSync(

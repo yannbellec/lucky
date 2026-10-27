@@ -12,7 +12,7 @@ const CLINE_PASS_SUBSCRIPTION_PATH = "/dashboard/subscription";
 const DEFAULT_APP_BASE_URL = "https://app.cline.bot";
 
 /**
- * Persist a manually entered API key for an OAuth-capable provider — the
+ * Persist a manually entered API key for an OAuth-capable provider - the
  * escape hatch for when OAuth login isn't working. Any stored OAuth tokens
  * are cleared: the auth handler prefers auth.accessToken over apiKey, so a
  * stale token would otherwise keep winning over the manual key.

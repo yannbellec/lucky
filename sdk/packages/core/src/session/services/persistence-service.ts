@@ -548,8 +548,8 @@ export class UnifiedSessionPersistenceService {
 	/**
 	 * Lightweight, effectively unbounded listing of session ids + metadata
 	 * (no manifest reads, no dead-session reconciliation). listSessions caps
-	 * its scan at 2000 rows; callers that must see every row — e.g. import
-	 * dedup markers — use this instead.
+	 * its scan at 2000 rows; callers that must see every row - e.g. import
+	 * dedup markers - use this instead.
 	 */
 	async listSessionMetadata(
 		limit = Number.MAX_SAFE_INTEGER,

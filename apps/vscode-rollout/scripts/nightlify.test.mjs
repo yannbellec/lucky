@@ -30,7 +30,7 @@ const fixture = {
 					command: "cline.plusButtonClicked",
 					when: "view == claude-dev.SidebarProvider",
 				},
-				// Mid-string references are NOT rewritten — a known limitation
+				// Mid-string references are NOT rewritten - a known limitation
 				// shared with the standalone nightly's publish-nightly.mjs.
 				{ command: "cline.addToChat", when: "config.cline.enableExtras" },
 			],

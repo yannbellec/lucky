@@ -82,7 +82,7 @@ export interface MigrationResult {
 /**
  * Run the one-time migration from VSCode ExtensionContext storage to file-backed stores.
  *
- * Safe to call on every startup — it checks sentinels and returns immediately
+ * Safe to call on every startup - it checks sentinels and returns immediately
  * if migration has already been completed at the current version.
  *
  * Global state and secrets share one sentinel (in globalState file store).
@@ -253,7 +253,7 @@ export async function exportVSCodeStorageToSharedFiles(
 		)
 	} catch (error) {
 		Logger.error("[Migration] Fatal error during VSCode → file-backed migration:", error)
-		// Don't write sentinel on failure — migration will retry next startup
+		// Don't write sentinel on failure - migration will retry next startup
 		throw error
 	}
 
@@ -267,14 +267,14 @@ export async function exportVSCodeStorageToSharedFiles(
  * either toggle enabled gets every auto-approval action enabled instead.
  *
  * Reads consider both stores: the file store wins when it has an explicit value
- * (matching the export's merge semantics — e.g. a user who turned YOLO off in
+ * (matching the export's merge semantics - e.g. a user who turned YOLO off in
  * the SDK extension must not be re-migrated from a stale VSCode `true`), and the
  * VSCode memento covers legacy-extension users whose value was never exported
  * (the keys are no longer part of GlobalStateAndSettingKeys).
  *
  * The dead keys are intentionally left in place: current builds no longer read
  * them (the state loader only visits known keys), and the file store is shared
- * with older builds that still do — deleting the value would flip YOLO off for
+ * with older builds that still do - deleting the value would flip YOLO off for
  * a user who downgrades. Same downgrade-safety rule as the v1 export.
  *
  * @returns true when the toggles were folded into autoApprovalSettings
@@ -306,7 +306,7 @@ function migrateYoloModeToAutoApprovalSettings(vscodeContext: vscode.ExtensionCo
 			},
 		}
 		storage.globalState.update("autoApprovalSettings", migrated)
-		Logger.info("[Migration] Legacy YOLO/auto-approve-all toggle detected — enabled all auto-approval actions")
+		Logger.info("[Migration] Legacy YOLO/auto-approve-all toggle detected - enabled all auto-approval actions")
 	}
 
 	return shouldEnableAllActions

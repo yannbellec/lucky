@@ -65,7 +65,7 @@ export interface CronEventSpec extends CronSpecCommonFields {
 export type CronSpec = CronOneOffSpec | CronScheduleSpec | CronEventSpec;
 
 /**
- * Result of parsing one file. Always produces a record — even invalid specs
+ * Result of parsing one file. Always produces a record - even invalid specs
  * are surfaced so the store can durably record parse errors rather than
  * silently dropping state.
  */

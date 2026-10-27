@@ -12,8 +12,8 @@
 // Compaction always runs against an active session. When the user compacts a
 // task opened from history (a displayed, non-running task with no active
 // session, including a legacy task not yet migrated), we first resume it into
-// an isolated session — using the same resume preparation as the follow-up
-// path, which also migrates legacy tasks — then compact it through the single
+// an isolated session - using the same resume preparation as the follow-up
+// path, which also migrates legacy tasks - then compact it through the single
 // path below. The coordinator owns this session's host, so another task can
 // replace the controller's active session without compaction stopping it during
 // cleanup. Resuming and compaction both run inside the session-rebuild mutex, so
@@ -217,7 +217,7 @@ export class SdkCompactionCoordinator {
 		const config = await this.options.sessionConfigBuilder.build({ cwd, mode })
 
 		// A live divider row, updated in place (same ts) from "started" to its
-		// terminal state — the same UX as the CLI's compaction divider.
+		// terminal state - the same UX as the CLI's compaction divider.
 		const compactionTs = Date.now()
 		this.emitCompactionRow({ status: "started", mode: "manual" }, compactionTs, sessionId)
 		await this.options.postStateToWebview()
@@ -278,7 +278,7 @@ export class SdkCompactionCoordinator {
 		} catch (error) {
 			// Manual-mode counterpart of the translator's finalizeDanglingCompaction
 			// (message-translator.ts), which handles auto compaction from turn
-			// events — keep the terminal-state rules of the two in sync.
+			// events - keep the terminal-state rules of the two in sync.
 			this.emitCompactionRow({ status: "failed", mode: "manual" }, compactionTs, sessionId)
 			await this.options.postStateToWebview()
 			throw error

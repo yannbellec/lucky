@@ -5,7 +5,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { useResolvedCloudStatuses } from "@/hooks/useResolvedCloudStatuses"
 import { CloudServiceClient } from "@/services/grpc-client"
 
-/** Task-header marker for a task running in Cline Cloud; click opens the session in the dashboard. */
+/** Task-header marker for a task running in Lucky Cloud; click opens the session in the dashboard. */
 export function CloudTaskBadge({ cloudTask }: { cloudTask: CurrentCloudTaskInfo }) {
 	const resolvedStatuses = useResolvedCloudStatuses([
 		{ id: cloudTask.sessionId, executionTarget: "cloud", cloudStatus: cloudTask.status },
@@ -39,7 +39,7 @@ export function CloudTaskBadge({ cloudTask }: { cloudTask: CurrentCloudTaskInfo 
 				</button>
 			</TooltipTrigger>
 			<TooltipContent className="text-xs" side="bottom">
-				{unconfirmed ? "Cline Cloud status could not be confirmed" : "Running in Cline Cloud"}
+				{unconfirmed ? "Lucky Cloud status could not be confirmed" : "Running in Lucky Cloud"}
 				{where}.
 				{canOpenDashboard
 					? " Click to open in the dashboard."

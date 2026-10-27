@@ -103,7 +103,7 @@ const ApiOptions = ({
 	// A provider is custom/unknown when we ship neither a dedicated settings
 	// component nor a curated generic form for it. These are edited through the
 	// OpenAI-compatible form so they always get Base URL, Custom Headers, Model
-	// Configuration and Reasoning Effort sections — regardless of whether the id
+	// Configuration and Reasoning Effort sections - regardless of whether the id
 	// happens to appear in providers.json.
 	const isCustomProvider = !hasCustomProviderSettings(selectedProvider) && !isKnownGenericProvider(selectedProvider)
 	const genericProviderSettings = isCustomProvider

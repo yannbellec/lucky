@@ -50,7 +50,7 @@ const hubClientInitialization = new WeakMap<
 const approvalReadinessUpdates = new WeakMap<SidecarContext, Promise<void>>();
 
 // ---------------------------------------------------------------------------
-// Helpers — WebSocket broadcast
+// Helpers - WebSocket broadcast
 // ---------------------------------------------------------------------------
 
 // Session state belongs to a runtime environment, not to a globally unique ID.
@@ -1187,7 +1187,7 @@ export function handleHubLiveEvent(
 		case "run.completed":
 		case "run.failed":
 		case "run.aborted": {
-			// A failed run carries its reason in payload.error — surface it, or
+			// A failed run carries its reason in payload.error - surface it, or
 			// the user sees a silent no-op (e.g. "Insufficient balance").
 			const errorMessage =
 				event.event === "run.failed" && typeof event.payload?.error === "string"

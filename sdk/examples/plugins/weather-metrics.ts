@@ -4,10 +4,10 @@
  * Shows how to author a reusable plugin module for the CLI and SDK hosts.
  *
  * Demonstrates:
- *   - setup(api, ctx)      — workspace-aware tool registration via
+ *   - setup(api, ctx)      - workspace-aware tool registration via
  *                            ctx.workspaceInfo
- *   - hooks.beforeRun / beforeTool / afterTool / afterRun — lifecycle metrics
- *   - ctx.telemetry        — emitting plugin telemetry into the host's
+ *   - hooks.beforeRun / beforeTool / afterTool / afterRun - lifecycle metrics
+ *   - ctx.telemetry        - emitting plugin telemetry into the host's
  *                            telemetry service
  *
  * CLI usage:
@@ -25,7 +25,7 @@ import {
 } from "@cline/core";
 
 // ---------------------------------------------------------------------------
-// Plugin-level state — populated from setup context and available to all hook
+// Plugin-level state - populated from setup context and available to all hook
 // handlers and tool executors for the duration of the session.
 // ---------------------------------------------------------------------------
 
@@ -45,15 +45,15 @@ const plugin: AgentPlugin = {
 	// setup(api, ctx)
 	//
 	// Called once before the first run. The second argument `ctx` provides
-	// workspace context sourced directly from the session config — never from
+	// workspace context sourced directly from the session config - never from
 	// process.cwd() or import.meta.url, so it is correct even when --cwd was
 	// passed to the CLI without calling process.chdir().
 	//
-	//   ctx.workspaceInfo — structured workspace + git metadata: rootPath, hint,
+	//   ctx.workspaceInfo - structured workspace + git metadata: rootPath, hint,
 	//                       latestGitCommitHash, latestGitBranchName,
 	//                       associatedRemoteUrls
 	//
-	// Use setup() context for anything that affects tool registration itself —
+	// Use setup() context for anything that affects tool registration itself -
 	// e.g. building workspace-relative descriptions or defaulting file paths.
 	// Use setup context for session-scoped plugin state.
 	// -------------------------------------------------------------------------
@@ -96,12 +96,12 @@ const plugin: AgentPlugin = {
 
 		// ctx.telemetry routes into the host's telemetry service. Always
 		// feature-detect it: it is undefined when the host has no telemetry
-		// service. In the plugin sandbox it is a bridge — events cross the
+		// service. In the plugin sandbox it is a bridge - events cross the
 		// process boundary as JSON, so pass only plain data (strings, numbers,
 		// booleans), never live objects. The host namespaces every event under
 		// `plugin.` and stamps it with this plugin's name.
 		//
-		// Note: in the sandbox, isEnabled() always reports true — the host
+		// Note: in the sandbox, isEnabled() always reports true - the host
 		// decides whether telemetry is on and drops opted-out events on its
 		// side. So don't gate expensive property computation on isEnabled();
 		// keep properties cheap to build, like the flags below.
@@ -172,10 +172,10 @@ const plugin: AgentPlugin = {
 			const { status, iterations, usage } = result;
 			const loc = sessionWorkspaceRoot ? ` in ${sessionWorkspaceRoot}` : "";
 			console.log(
-				`[metrics] run done${loc} — ${iterations} iteration(s), status: ${status}`,
+				`[metrics] run done${loc} - ${iterations} iteration(s), status: ${status}`,
 			);
 			console.log(
-				`[metrics] tokens — in: ${usage.inputTokens}, out: ${usage.outputTokens}, cost: ${usage.totalCost?.toFixed(6)}`,
+				`[metrics] tokens - in: ${usage.inputTokens}, out: ${usage.outputTokens}, cost: ${usage.totalCost?.toFixed(6)}`,
 			);
 			telemetry?.capture({
 				event: "weather_plugin_run_completed",

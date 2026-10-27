@@ -3,15 +3,15 @@
  *
  * Owns all cross-turn state for one logical agent session:
  *
- *   - `ConversationStore`      — message transcript + session-started gate
- *   - `MistakeTracker`         — per-session consecutive-mistake counter
- *   - `LoopDetectionTracker`   — per-session repeated-tool-call detector
- *   - `MessageBuilder`         — provider-message assembly cache
- *   - `AgentRuntimeHooks`      — runtime-native hooks from config/extensions
- *   - `RuntimeEventAdapter`    — per-run stateful `AgentRuntimeEvent`
+ *   - `ConversationStore`      - message transcript + session-started gate
+ *   - `MistakeTracker`         - per-session consecutive-mistake counter
+ *   - `LoopDetectionTracker`   - per-session repeated-tool-call detector
+ *   - `MessageBuilder`         - provider-message assembly cache
+ *   - `AgentRuntimeHooks`      - runtime-native hooks from config/extensions
+ *   - `RuntimeEventAdapter`    - per-run stateful `AgentRuntimeEvent`
  *                                → legacy `AgentEvent` translator
- *   - listener registry        — host subscribers see legacy `AgentEvent`s
- *   - pending tool set, abort  — per-run lifecycle housekeeping
+ *   - listener registry        - host subscribers see legacy `AgentEvent`s
+ *   - pending tool set, abort  - per-run lifecycle housekeeping
  *
  * A fresh `AgentRuntime` is instantiated per run via
  * `createAgentRuntime(createAgentRuntimeConfig({...}))`. All
@@ -293,7 +293,7 @@ function mergeRuntimeHooks(
 
 /**
  * Listener invoked for every legacy `AgentEvent` produced by the
- * session runtime. Use `subscribeEvents(listener)` — it returns an
+ * session runtime. Use `subscribeEvents(listener)` - it returns an
  * `unsubscribe` function.
  */
 export type SessionEventListener = (event: AgentEvent) => void;
@@ -344,7 +344,7 @@ export class SessionRuntime {
 	private readonly loopTracker: LoopDetectionTracker;
 	/**
 	 * True when `execution.loopDetection === false` at construction
-	 * time. Loop inspection is skipped entirely — the tracker still
+	 * time. Loop inspection is skipped entirely - the tracker still
 	 * exists for API compatibility but is never fed.
 	 */
 	private readonly loopDetectionDisabled: boolean;
@@ -383,7 +383,7 @@ export class SessionRuntime {
 	private activeRunPromise: Promise<AgentResult> | null = null;
 	/** Per-run `Agent → AgentEvent` adapter; `reset()` each run. */
 	private readonly eventAdapter = new RuntimeEventAdapter();
-	/** Session-shutdown gate — rejects late runs. */
+	/** Session-shutdown gate - rejects late runs. */
 	private shutdownCalled = false;
 	/** Running tally of tool-call records for `AgentResult.toolCalls`. */
 	private currentRunToolCalls: ToolCallRecord[] = [];
@@ -926,7 +926,7 @@ export class SessionRuntime {
 
 		// Append the user turn (if any) to the conversation store. This
 		// must happen BEFORE we snapshot `initialMessages` below so the
-		// runtime sees the user message as part of its seed — we then
+		// runtime sees the user message as part of its seed - we then
 		// pass an empty input to `runtime.run()` so the runtime does not
 		// append the message a second time (AgentRuntime.execute treats
 		// a falsy input as "no additional messages", per
@@ -953,7 +953,7 @@ export class SessionRuntime {
 		);
 		// Merge extension-contributed tools with the config-declared
 		// tools for this turn. Extensions register tools via
-		// `api.registerTool` during `setup()` — parity with legacy
+		// `api.registerTool` during `setup()` - parity with legacy
 		// `Agent.ensureExtensionsInitialized` at pre-Step-9 `agent.ts:1140-1146`
 		// which merged `this.contributionRegistry.getRegisteredTools()`
 		// into `this.config.tools`. Dedupe by name so a config tool
@@ -1376,7 +1376,7 @@ export class SessionRuntime {
 						}`,
 					});
 				} else if (succeeded > 0) {
-					// Productive turn — reset the tracker so transient
+					// Productive turn - reset the tracker so transient
 					// failures don't accumulate across unrelated turns.
 					this.mistakeTracker.reset();
 				}
@@ -1497,7 +1497,7 @@ export class SessionRuntime {
 	/**
 	 * Enqueue a mistake-record onto the serial tracker work chain. The
 	 * runtime event stream is synchronous but `MistakeTracker.record`
-	 * is async — chaining onto a shared promise preserves ordering
+	 * is async - chaining onto a shared promise preserves ordering
 	 * (legacy parity) and lets `executeRun` await draining before
 	 * returning the `AgentResult`.
 	 *

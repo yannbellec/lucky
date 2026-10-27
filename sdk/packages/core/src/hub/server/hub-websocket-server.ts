@@ -359,7 +359,7 @@ export async function startHubWebSocketServer(
 	const authToken = createHubAuthToken();
 	// Singleton authority is an OS-backed exclusive lock scoped to the owner
 	// context, acquired before any resource is created. A process that cannot
-	// take it must connect to the running Hub or diagnose — never replace it.
+	// take it must connect to the running Hub or diagnose - never replace it.
 	// This removes kill-based build arbitration as the ownership mechanism:
 	// two live daemons for one owner are now structurally impossible.
 	const instanceLock = HubInstanceLock.acquire(
@@ -921,7 +921,7 @@ export async function ensureHubWebSocketServer(
 			// as the detached-daemon ensure path (retireDiscoveredHub): never
 			// ambush a hub that is still serving sessions, drain before the
 			// shutdown request, and clear discovery only once the hub is
-			// actually gone — clearing the record of a survivor would leave a
+			// actually gone - clearing the record of a survivor would leave a
 			// live daemon undiscoverable.
 			if (healthy?.url) {
 				const retirementRecord = {
@@ -932,7 +932,7 @@ export async function ensureHubWebSocketServer(
 				if (await hubHasLiveSessions(retirementRecord)) {
 					// Busy: attach to the older hub instead of replacing it,
 					// mirroring the daemon's deferred_busy handling. If it
-					// cannot be attached either, leave it running — starting
+					// cannot be attached either, leave it running - starting
 					// below surfaces the instance-lock conflict instead of
 					// tearing down live sessions.
 					if (

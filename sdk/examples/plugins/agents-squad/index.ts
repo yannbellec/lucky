@@ -198,7 +198,7 @@ function parseFrontmatter(md: string): {
 			body: body.trim(),
 		};
 	} catch {
-		// Malformed YAML frontmatter — treat as plain markdown with no metadata.
+		// Malformed YAML frontmatter - treat as plain markdown with no metadata.
 		return { data: {}, body: md.trim() };
 	}
 }
@@ -411,7 +411,7 @@ function steerPrompt(subagent: RunningSubagent): string {
 /**
  * Host telemetry captured in setup(). Module-level so background work like
  * runSubagentTurn can report outcomes. Always optional: feature-detect with
- * `?.` — it is undefined when the host has no telemetry service. Only pass
+ * `?.` - it is undefined when the host has no telemetry service. Only pass
  * plain JSON data as properties; in sandboxed plugins the calls are bridged
  * to the host over IPC, which namespaces them under `plugin.` and stamps
  * `plugin_name`.
@@ -442,7 +442,7 @@ async function runSubagentTurn(
 		subagent.completedAt = Date.now();
 	}
 	// Outcome telemetry: status as an event, wall-clock as a histogram. Keep
-	// properties low-cardinality (status, preset) — never task text or output.
+	// properties low-cardinality (status, preset) - never task text or output.
 	pluginTelemetry?.capture({
 		event: "subagent_turn_completed",
 		properties: {

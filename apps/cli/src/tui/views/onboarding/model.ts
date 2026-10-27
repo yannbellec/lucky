@@ -115,7 +115,7 @@ export function canContinueLocalCliSetup(
 	// The probe only looks on PATH, while the runtime also accepts an explicit
 	// pathToClaudeCodeExecutable and a bundled platform binary, and Codex falls
 	// back through `npx`. A PATH miss therefore means "not on PATH", not
-	// "unusable", so the screen reports it without blocking — a provider that
+	// "unusable", so the screen reports it without blocking - a provider that
 	// really cannot start says so on the first turn, in its own words.
 	return true;
 }

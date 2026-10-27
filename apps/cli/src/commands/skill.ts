@@ -15,7 +15,7 @@ const SKILLS_PACKAGE = "skills@latest";
 // `cline skill` command we default these to Cline unless the user picked their
 // own agent. `use` is intentionally excluded: without --agent it prints the
 // generated prompt to stdout, whereas adding --agent would launch that agent
-// interactively instead — not what someone scoping to Cline would expect.
+// interactively instead - not what someone scoping to Cline would expect.
 const CLINE_SCOPED_SUBCOMMANDS = new Set([
 	"add",
 	"install",

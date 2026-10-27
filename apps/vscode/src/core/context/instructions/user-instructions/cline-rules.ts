@@ -51,8 +51,8 @@ export async function refreshClineRulesToggles(
 	const updatedGlobalToggles = await synchronizeRuleTogglesAcrossDirectories(globalRuleDirectories, globalClineRulesToggles)
 	controller.stateManager.setGlobalState("globalClineRulesToggles", updatedGlobalToggles)
 
-	// Local toggles: both supported workspace layouts — the legacy
-	// `.clinerules` directory (or single file) and `.cline/rules` — via the
+	// Local toggles: both supported workspace layouts - the legacy
+	// `.clinerules` directory (or single file) and `.cline/rules` - via the
 	// same shared resolver the SDK runtime loads rules with (cline/cline#14186).
 	const localClineRulesToggles = controller.stateManager.getWorkspaceStateKey("localClineRulesToggles")
 	const updatedLocalToggles = await synchronizeRuleTogglesAcrossDirectories(

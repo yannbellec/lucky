@@ -248,7 +248,7 @@ export class OpenTelemetryClientProvider {
 		}
 
 		// Every processor here wraps an OTLP exporter, so this provider IS the
-		// collector relay — downstream trace decisions key off this marker.
+		// collector relay - downstream trace decisions key off this marker.
 		markOtlpTraceRelayProvider(tracerProvider)
 
 		// register() sets the global tracer provider plus the async context

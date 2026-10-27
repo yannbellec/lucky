@@ -288,7 +288,7 @@ const extensionInventoryInvalidationListeners = new Set<() => void>();
 /**
  * Drops the module-level inventory cache and notifies mounted inventory views
  * so they refetch immediately. Used by the Marketplace page after
- * installs/uninstalls that happen outside these views — including ones that
+ * installs/uninstalls that happen outside these views - including ones that
  * complete after the user has already navigated back to the Plugins hub.
  */
 export function invalidateExtensionInventoryCache() {

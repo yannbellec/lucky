@@ -683,8 +683,8 @@ export function AgentSidebar({
 			size="icon"
 			title={
 				sortMode === "time"
-					? "Sorted by time — click to group by project"
-					: "Grouped by project — click to sort by time"
+					? "Sorted by time - click to group by project"
+					: "Grouped by project - click to sort by time"
 			}
 			variant="ghost"
 		>
@@ -854,7 +854,7 @@ export function AgentSidebar({
 								align="start"
 								className="w-64 p-3"
 								// Clicking the trigger counts as a pointer-down outside the
-								// card, which dismisses it — and the button's focus event
+								// card, which dismisses it - and the button's focus event
 								// then reopens it, so the card flashes on every click.
 								// Suppress the dismissal; the card still closes on pointer
 								// leave like any hover card.
@@ -893,7 +893,7 @@ export function AgentSidebar({
 						{!isCollapsed && isBetaVersion(appVersion) ? (
 							<Badge
 								className="ml-0.5 px-1.5 py-0 text-[10px] uppercase tracking-wide"
-								title={`${BETA_PRODUCT_NAME} — beta builds install side by side with the stable app and update from the beta channel`}
+								title={`${BETA_PRODUCT_NAME} - beta builds install side by side with the stable app and update from the beta channel`}
 								variant="secondary"
 							>
 								Beta

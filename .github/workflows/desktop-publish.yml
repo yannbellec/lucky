@@ -56,7 +56,7 @@ jobs:
     steps:
       # Companion to the presence check in `build`, and the half that actually
       # establishes scope. This job declares no environment, so a signing secret
-      # that resolves here can only be a repository or organization secret —
+      # that resolves here can only be a repository or organization secret -
       # meaning it is still readable by every workflow in the repo, which is the
       # thing the PublishDesktop environment exists to prevent. Neither check
       # proves provenance alone (an environment-gated job resolves repository
@@ -110,7 +110,7 @@ jobs:
         run: |
           # Fail-closed channel mapping: every channel defines its tag shape,
           # its ancestry source, its feed, and its product name, and an unknown
-          # channel dies here. The feed assignment is the load-bearing one —
+          # channel dies here. The feed assignment is the load-bearing one -
           # the updater comparator is a plain semver "newer than", so a beta
           # manifest landing on desktop-latest would auto-update every stable
           # install onto the beta. The stable regex rejects prerelease
@@ -200,7 +200,7 @@ jobs:
     #
     # Beta releases do not weaken this: a beta publish is ALSO dispatched from
     # main (so this gate, the branch policy, and the workflow file executed all
-    # stay main's) — only the checked-out tag points into desktop-experimental,
+    # stay main's) - only the checked-out tag points into desktop-experimental,
     # which validate pins via the ancestry check. A workflow copy edited on
     # desktop-experimental can therefore never reach the signing secrets.
     #
@@ -208,7 +208,7 @@ jobs:
     # build scripts (bun install hooks, build:sdk, Tauri's beforeBuildCommand,
     # build.rs) run inside this job with the signing secrets in scope, for
     # stable and beta alike. The control for that is this environment's
-    # required-reviewer approval — the approver is vouching for the code the
+    # required-reviewer approval - the approver is vouching for the code the
     # tag points at, not just for "a release happening". Two consequences:
     # desktop-experimental must keep main-grade merge controls (branch
     # protection, maintainer-only pushes), and an approval should only follow
@@ -453,7 +453,7 @@ jobs:
       # Guardrail: assert the telemetry config actually made it into the
       # bundled desktop backend. Missing env on the build step (or a regression in
       # the --define inlining) would otherwise ship a release with telemetry
-      # silently disabled — exactly what happened for every release before
+      # silently disabled - exactly what happened for every release before
       # this check existed. Being enabled is not enough on its own: an empty,
       # malformed, or non-http(s) OTLP endpoint would still drop every event
       # at runtime (the SDK exporters speak OTLP http/json only), so the
@@ -484,9 +484,9 @@ jobs:
             fi
           done
 
-      # Boot the Cline CLI and desktop backend that will actually ship — built
+      # Boot the Cline CLI and desktop backend that will actually ship - built
       # with the production --target, --minify and telemetry defines, on the
-      # OS they will run on — against an isolated Hub started by
+      # OS they will run on - against an isolated Hub started by
       # `cline hub ensure`, and require the backend's ready line plus a
       # healthy /health. Desktop 0.0.31 shipped a backend whose Hub daemon loaded a
       # second copy of @cline/core with a different build id, so the app
@@ -1372,7 +1372,7 @@ jobs:
               - type: "context"
                 elements:
                   - type: "mrkdwn"
-                    text: "<https://github.com/${{ github.repository }}/releases/tag/${{ needs.validate.outputs.tag }}|Download installers> — ${{ needs.validate.outputs.channel == 'beta' && 'beta channel: installs side by side with the stable app and only beta installs auto-update; stable users are unaffected' || 'installed apps auto-update on next launch' }}${{ steps.prev_tag.outputs.prev_tag != '' && format(' | Full Changelog: https://github.com/{0}/compare/{1}...{2}', github.repository, steps.prev_tag.outputs.prev_tag, needs.validate.outputs.tag) || '' }}"
+                    text: "<https://github.com/${{ github.repository }}/releases/tag/${{ needs.validate.outputs.tag }}|Download installers> - ${{ needs.validate.outputs.channel == 'beta' && 'beta channel: installs side by side with the stable app and only beta installs auto-update; stable users are unaffected' || 'installed apps auto-update on next launch' }}${{ steps.prev_tag.outputs.prev_tag != '' && format(' | Full Changelog: https://github.com/{0}/compare/{1}...{2}', github.repository, steps.prev_tag.outputs.prev_tag, needs.validate.outputs.tag) || '' }}"
 
   announce-nightly:
     name: Tag and announce nightly
@@ -1468,4 +1468,4 @@ jobs:
               - type: "context"
                 elements:
                   - type: "mrkdwn"
-                    text: "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Download installers> (Actions artifacts, 30-day retention) — installs side by side as Cline Nightly and never auto-updates | tagged `${{ steps.changes.outputs.tag }}`"
+                    text: "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Download installers> (Actions artifacts, 30-day retention) - installs side by side as Cline Nightly and never auto-updates | tagged `${{ steps.changes.outputs.tag }}`"

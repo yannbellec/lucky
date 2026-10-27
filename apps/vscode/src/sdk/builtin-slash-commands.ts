@@ -7,9 +7,9 @@
  *
  * `/deep-planning` is a trimmed port of the legacy extension's prompt
  * (core/prompts/commands/deep-planning): the shell-specific research-command
- * examples are dropped, and legacy's final step — which created an
+ * examples are dropped, and legacy's final step - which created an
  * implementation task via the `new_task` tool, unavailable on the SDK
- * runtime — instead has the agent present the plan and wait for explicit
+ * runtime - instead has the agent present the plan and wait for explicit
  * user confirmation.
  */
 

@@ -58,7 +58,7 @@ export const ReadFilesInputSchema = z.object({
 	files: z
 		.array(ReadFileRequestSchema)
 		.describe(
-			"Array of file read requests; each element is one file and must include path. Omit start_line/end_line or set them to null to read from the start; provide integers on the same object as the path to return only that inclusive one-based line range — never emit a range as its own array element. Reads are capped, so page through long files with start_line/end_line. Prefer this tool over running terminal command to get file content for better performance and reliability.",
+			"Array of file read requests; each element is one file and must include path. Omit start_line/end_line or set them to null to read from the start; provide integers on the same object as the path to return only that inclusive one-based line range - never emit a range as its own array element. Reads are capped, so page through long files with start_line/end_line. Prefer this tool over running terminal command to get file content for better performance and reliability.",
 		),
 });
 
@@ -284,7 +284,7 @@ export const SubmitInputSchema = z.object({
 		.string()
 		.min(10)
 		.describe(
-			"Summarization of the investigation, steps taken, and resolution status to submit at the end of the session. Before submitting, re-read the task requirements together with any provided tests or assertions, and confirm from your own tool output — not from assumption — that your solution produces the expected results at the expected file locations.",
+			"Summarization of the investigation, steps taken, and resolution status to submit at the end of the session. Before submitting, re-read the task requirements together with any provided tests or assertions, and confirm from your own tool output - not from assumption - that your solution produces the expected results at the expected file locations.",
 		),
 	verified: z
 		.boolean()

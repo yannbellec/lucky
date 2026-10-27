@@ -1491,7 +1491,7 @@ describe("useChatSession", () => {
 				if (command === "get_discovered_session") {
 					expect(args?.environmentId).toBe(environmentId);
 					recordReads += 1;
-					// Still running on the first poll — the snapshot already
+					// Still running on the first poll - the snapshot already
 					// ends on assistant narration, which must NOT read as
 					// finished while the record says running.
 					return {
@@ -1539,7 +1539,7 @@ describe("useChatSession", () => {
 
 			// No chat_event chunks arrive. The first poll surfaces the
 			// narration mid-run; the record still says running, and the
-			// record — not transcript shape — decides the status.
+			// record - not transcript shape - decides the status.
 			await act(async () => {
 				await vi.advanceTimersByTimeAsync(3_100);
 			});
@@ -5018,7 +5018,7 @@ describe("useChatSession", () => {
 			});
 		});
 		expect(current.status).toBe("failed");
-		// The failure must be visible in the transcript — queued turns never
+		// The failure must be visible in the transcript - queued turns never
 		// resolve through the send RPC, so chat_done is the only error signal.
 		const errorMessages = current.messages.filter(
 			(message) => message.role === "error",
@@ -5444,7 +5444,7 @@ describe("useChatSession", () => {
 	])("keeps one failure after hydration (persisted: %s)", async (persistedError) => {
 		// Real race: the runtime queues the first prompt of a fresh session, the
 		// turn fails fast (chat_done error appends the failure bubble), and only
-		// then the send RPC resolves — whose canonical-history hydration used to
+		// then the send RPC resolves - whose canonical-history hydration used to
 		// replace the transcript wholesale, wiping the UI-only error bubble.
 		let resolveSend: ((value: unknown) => void) | undefined;
 		invokeMock.mockImplementation(
@@ -5524,7 +5524,7 @@ describe("useChatSession", () => {
 		});
 
 		// Canonical hydration replaced the transcript with persisted messages,
-		// which may already contain the saved error — the failure explanation
+		// which may already contain the saved error - the failure explanation
 		// must survive.
 		const userMessages = current.messages.filter(
 			(message) => message.role === "user",

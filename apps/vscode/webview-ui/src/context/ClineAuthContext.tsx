@@ -143,7 +143,7 @@ export const ClineAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
 				// Refresh organizations on every auth status update, not just user
 				// changes. Switching organizations doesn't change the uid, so gating
-				// this on uid changes leaves stale `active` flags — which reset the
+				// this on uid changes leaves stale `active` flags - which reset the
 				// account view's org dropdown on remount. The deepEqual guard in
 				// getUserOrganizations prevents no-op re-renders.
 				getUserOrganizations()

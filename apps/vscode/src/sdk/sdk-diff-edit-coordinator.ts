@@ -25,7 +25,7 @@ const AUTO_APPROVE_PREVIEW_LINGER_MS = 1_500
 /**
  * Upper bound on opening a diff preview. `vscode.diff` can stall on a busy or wedged
  * workbench; the preview is purely cosmetic, so a stall must never block the approval
- * ask or eat into the edit tool's own execution timeout — the edit proceeds without it.
+ * ask or eat into the edit tool's own execution timeout - the edit proceeds without it.
  */
 const PREVIEW_OPEN_TIMEOUT_MS = 5_000
 
@@ -59,8 +59,8 @@ interface DiffEditSession {
 /**
  * Shows a read-only diff preview of SDK edit-tool changes (editor / apply_patch).
  *
- * The preview is a virtual-document diff — both sides are virtual, the real file is
- * never opened or modified by the preview — so opening it has no side effects,
+ * The preview is a virtual-document diff - both sides are virtual, the real file is
+ * never opened or modified by the preview - so opening it has no side effects,
  * rejecting an edit only closes a tab, and multiple previews (even of the same file)
  * can't interfere with each other. The actual write is always the SDK's default
  * disk-writing executor, which the overridden executors delegate to after closing
@@ -72,7 +72,7 @@ interface DiffEditSession {
  * a brief preview during execution instead.
  *
  * After a successful write, the edited file is opened in a regular editor tab just
- * before the preview closes, so the user is left looking at the file — the same
+ * before the preview closes, so the user is left looking at the file - the same
  * show-file-then-close-diff order the legacy DiffViewProvider used.
  */
 export class SdkDiffEditCoordinator {
@@ -121,7 +121,7 @@ export class SdkDiffEditCoordinator {
 		try {
 			if (!hadPreApprovalPreview && !this.options.isBackgroundEditEnabled()) {
 				// Auto-approved (or hook-approved) edit: no preview was opened at approval
-				// time, so show one now. Best-effort — never blocks the edit.
+				// time, so show one now. Best-effort - never blocks the edit.
 				try {
 					await this.openEditorPreview(toolCallId, input)
 				} catch (error) {
@@ -190,12 +190,12 @@ export class SdkDiffEditCoordinator {
 
 	/**
 	 * Opens the edited file in a regular editor tab after a successful write, so it
-	 * stays visible once the preview diff tab closes — matching the legacy
+	 * stays visible once the preview diff tab closes - matching the legacy
 	 * DiffViewProvider.saveChanges() flow (show the file, then close the diff).
 	 * preserveFocus keeps the user's focus (e.g. the chat input) where it was.
 	 * Callers skip the reveal when no live preview accompanied the edit (background
 	 * edit, failed preview open, superseded by a newer same-file preview) and when
-	 * the task was aborted mid-edit — the reveal accompanies the diff, not the write.
+	 * the task was aborted mid-edit - the reveal accompanies the diff, not the write.
 	 * Best-effort: a failure only loses the reveal, never the edit result.
 	 */
 	private async showEditedFile(absolutePath: string | undefined): Promise<void> {
@@ -309,7 +309,7 @@ export class SdkDiffEditCoordinator {
 		},
 	): Promise<void> {
 		// A newer preview for the same file supersedes an older pending one (approvals
-		// resolve sequentially, so the older edit is already decided — its executor only
+		// resolve sequentially, so the older edit is already decided - its executor only
 		// needs the session entry, not the tab).
 		for (const [id, session] of this.sessions) {
 			if (session.preview && session.absolutePath === content.absolutePath) {
@@ -349,8 +349,8 @@ export class SdkDiffEditCoordinator {
 			),
 		])
 		if (failure) {
-			// Whenever the open settles — a failed open may have partially opened a tab, a
-			// stalled one may open late — close it so no orphaned tab lingers. (The session
+			// Whenever the open settles - a failed open may have partially opened a tab, a
+			// stalled one may open late - close it so no orphaned tab lingers. (The session
 			// is never registered on failure, so discardPreview couldn't reach it.)
 			void opened.catch(() => {}).finally(() => preview.close().catch(() => {}))
 			throw failure
@@ -385,7 +385,7 @@ function normalizeLineEndings(text: string, eol: "\r\n" | "\n"): string {
  * Like the executor, old/new text are normalized to the file's own line endings
  * before matching: reads strip "\r", so models emit LF-only text even for CRLF
  * files, and an exact match would fail on every multi-line old_text in a CRLF
- * file — silently skipping the preview while the executor applies the edit
+ * file - silently skipping the preview while the executor applies the edit
  * (github.com/cline/cline/issues/13296).
  */
 export function computeNewEditorContent(

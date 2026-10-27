@@ -343,7 +343,7 @@ export class BrowserWebSocketHubAdapter {
 						}
 						// Replay-then-live: subscribe first and buffer live events while
 						// durable pages stream out, then flush the buffer past the last
-						// replayed sequence — no gap, no duplicates, resumable by cursor.
+						// replayed sequence - no gap, no duplicates, resumable by cursor.
 						let replayDone = false;
 						let lastDelivered = sinceSequence;
 						const buffered: HubEventEnvelope[] = [];
@@ -354,7 +354,7 @@ export class BrowserWebSocketHubAdapter {
 						// mutating the original) share the same eventId. The sequence
 						// cursor alone can't catch that: dedupe by eventId too, or the
 						// buffer flush below re-delivers it after replay already did.
-						// The set exists only for that replay/flush window — it is
+						// The set exists only for that replay/flush window - it is
 						// dropped once the flush completes so it cannot grow for the
 						// lifetime of the socket.
 						let deliveredEventIds: Set<string> | undefined = new Set<string>();

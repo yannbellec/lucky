@@ -174,7 +174,7 @@ const RequestyModelPicker: React.FC<RequestyModelPickerProps> = ({ isPopup, base
 
 	// Reasoning support comes from the SDK catalog (models.dev), not model-id
 	// heuristics: any reasoning-capable model gets the effort selector. Gate on
-	// the live catalog entry — the committed legacy snapshot can be cleared by
+	// the live catalog entry - the committed legacy snapshot can be cleared by
 	// provider-config writes, and the safe-default fallback would over-report.
 	const showReasoningEffort = requestyModels[selectedModelId]?.supportsReasoning === true
 	const handleReasoningEffortChange = (effort: string) => {

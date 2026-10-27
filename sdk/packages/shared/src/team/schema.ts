@@ -128,7 +128,7 @@ export const TeamRunTaskInputSchema = z.object({
 	task: z.string().min(1).describe("Task instructions for the teammate"),
 	taskId: nullableOptional(z.string()).describe("Optional shared task list ID"),
 	runMode: nullableOptional(z.enum(["sync", "async"])).describe(
-		"Execution mode: 'sync' blocks until the teammate finishes and returns the result (default if omitted); 'async' queues the run and returns a runId immediately — use team_await_runs to collect results later.",
+		"Execution mode: 'sync' blocks until the teammate finishes and returns the result (default if omitted); 'async' queues the run and returns a runId immediately - use team_await_runs to collect results later.",
 	),
 	continueConversation: nullableOptional(z.boolean()).describe(
 		"If true, continue the teammate conversation; otherwise start fresh",

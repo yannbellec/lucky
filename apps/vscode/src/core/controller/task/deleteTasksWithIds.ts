@@ -51,7 +51,7 @@ async function deleteTaskWithId(controller: Controller, id: string): Promise<voi
 		Logger.debug("cleared task")
 	}
 
-	// Remove task from state FIRST — this updates the in-memory cache
+	// Remove task from state FIRST - this updates the in-memory cache
 	// immediately so the next postStateToWebview() sends the updated list.
 	await controller.deleteTaskFromState(id)
 

@@ -160,7 +160,7 @@ export async function createClaudeCodeProviderModule(
 	) {
 		defaultSettings.cwd = workspaceCwd;
 	}
-	// The provider defaults settingSources to [] — the session would read
+	// The provider defaults settingSources to [] - the session would read
 	// neither ~/.claude/settings.json nor project .claude/settings.json, so
 	// user-configured permission rules silently never apply.
 	if (defaultSettings.settingSources === undefined) {

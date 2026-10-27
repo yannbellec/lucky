@@ -785,7 +785,7 @@ export async function refreshClineToken(
  * Resolve valid Cline credentials, refreshing when needed.
  *
  * Contract: returns refreshed/current credentials when usable; returns `null`
- * ONLY when the refresh token was rejected (invalid grant — re-auth required);
+ * ONLY when the refresh token was rejected (invalid grant - re-auth required);
  * THROWS on transient failures (network, timeout, 5xx) so callers can leave
  * stored credentials untouched and retry later.
  */
@@ -839,7 +839,7 @@ export async function getValidClineCredentials(
 				`cline.getCredentials outcome=invalid_grant status=${error.status} errorCode=${error.errorCode ?? "none"}`,
 			);
 			// This is the single owner of the involuntary-logout event for the
-			// Cline provider — callers observing the `null` return must NOT
+			// Cline provider - callers observing the `null` return must NOT
 			// emit their own user.auth_logged_out. `token_invalid` matches the
 			// legacy extension's LogoutReason vocabulary so warehouse queries
 			// cover both bundles; the raw OAuth code stays in `errorCode`.
@@ -871,13 +871,13 @@ export async function getValidClineCredentials(
 		// Transient failure with an already-expired token: rethrow instead of
 		// returning null. A null from this function means the refresh token was
 		// REJECTED (re-auth required); a network blip that happens to land after
-		// expiry must not be mistaken for that — callers were wiping stored
+		// expiry must not be mistaken for that - callers were wiping stored
 		// credentials over it, logging out every Cline process on the machine.
 		sdkDebug(
 			`cline.getCredentials outcome=transient_failure_rethrown error=${error instanceof Error ? error.message : String(error)}`,
 		);
 		// Every one of these events was a hard logout before the
-		// transient-vs-invalid_grant fix — the "prevented logout" counter.
+		// transient-vs-invalid_grant fix - the "prevented logout" counter.
 		captureAuthRefreshSoftFailure(
 			providerOptions.telemetry,
 			providerOptions.provider ?? "cline",

@@ -6,8 +6,8 @@ import { DecorationController } from "./DecorationController"
 export const EDIT_PREVIEW_URI_SCHEME = "cline-edit-preview"
 
 /**
- * Hold at the top of the file — whole doc under the faded overlay, cursor parked on
- * line 0 — before the sweep starts, so the animation unambiguously reads as starting
+ * Hold at the top of the file - whole doc under the faded overlay, cursor parked on
+ * line 0 - before the sweep starts, so the animation unambiguously reads as starting
  * from the top rather than appearing mid-file.
  */
 const ANIMATION_START_BEAT_MS = 400
@@ -62,7 +62,7 @@ function firstDifferingLine(leftContent: string, rightContent: string): number {
  * VS Code implementation of the read-only edit preview: a `vscode.diff` tab whose
  * BOTH sides are virtual documents. The real file is never opened or modified, so
  * previews of the same file can't interfere with each other, and closing is a
- * precise tab match — never the actual file.
+ * precise tab match - never the actual file.
  *
  * The right side plays a simulated streaming animation (the legacy yellow
  * faded-overlay/active-line sweep): it opens showing the original content, then the
@@ -126,8 +126,8 @@ export class VscodeEditPreview extends EditPreview {
 			return
 		}
 
-		// Legacy sweep: park at the top of the file — whole doc under the faded overlay,
-		// cursor highlight on line 0 — and hold there before the sweep starts, so the
+		// Legacy sweep: park at the top of the file - whole doc under the faded overlay,
+		// cursor highlight on line 0 - and hold there before the sweep starts, so the
 		// animation clearly begins from the top. Then the frame pacing zips through
 		// unchanged spans and slows through changes.
 		const fadedOverlay = new DecorationController("fadedOverlay", editor)

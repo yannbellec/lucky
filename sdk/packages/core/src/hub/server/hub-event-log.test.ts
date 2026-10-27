@@ -103,7 +103,7 @@ describe("HubEventLogStore", () => {
 		log.prune();
 		const rows = log.listAfter(0, {}, 10);
 		expect(rows.map((event) => event.sequence)).toEqual([2, 3]);
-		// Sequences stay monotonic after pruning — cursors never rewind.
+		// Sequences stay monotonic after pruning - cursors never rewind.
 		expect(log.append(envelope("run.started", "s2")).sequence).toBe(4);
 		log.close();
 	});

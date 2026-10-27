@@ -489,7 +489,7 @@ function CloudBranchPicker({
 								onClick={() => void loadMore()}
 								variant="ghost"
 							>
-								Could not load more branches — Retry
+								Could not load more branches - Retry
 							</Button>
 						) : null}
 					</div>
@@ -730,7 +730,7 @@ function WorkspacePicker({
 								<div className="px-2 py-2 text-xs text-muted-foreground">
 									{looksLikeFolderPath(search)
 										? "Press the option above to open this folder"
-										: "No workspaces found — type a full folder path to add one"}
+										: "No workspaces found - type a full folder path to add one"}
 								</div>
 							) : (
 								filteredWorkspaces.map((path) => {

@@ -271,7 +271,7 @@ describe("inferHydratedChatStatus", () => {
 		// The stale-record heuristic: a "running" record whose transcript
 		// ends on an assistant answer is read as a session that died without
 		// a status flip. (The stale-stream poll deliberately bypasses this
-		// via mapSessionRecordStatus — see use-chat-session.)
+		// via mapSessionRecordStatus - see use-chat-session.)
 		expect(
 			inferHydratedChatStatus("running", [
 				{

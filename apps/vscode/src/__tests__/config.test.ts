@@ -8,7 +8,7 @@ import sinon from "sinon"
 // The SUT does `import * as os from "os"; os.homedir()`. Under bun, sinon's
 // `stub(os, "homedir")` on the test's own `os` binding does NOT propagate to the
 // SUT's namespace import, so inject a module-level homedir stub via mock.module
-// (the rest of `os` — tmpdir() etc. — keeps its real behavior).
+// (the rest of `os` - tmpdir() etc. - keeps its real behavior).
 const homedirStub = sinon.stub()
 const osMockNamespace = { ...actualOs, homedir: homedirStub }
 const osMock = () => ({ ...osMockNamespace, default: osMockNamespace })

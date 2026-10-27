@@ -4,7 +4,7 @@
  *
  * Why: the union manifest's version (what the Marketplace and auto-update
  * see) is supplied at stitch time, but each bundle's runtime reads its OWN
- * package.json — the About tab and every telemetry event's extension_version
+ * package.json - the About tab and every telemetry event's extension_version
  * come from there. Without this stamp the stable combined VSIX would report
  * three different versions (union input, main's base version, legacy's base
  * version) depending on where you look, which turns user bug reports into

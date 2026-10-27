@@ -46,7 +46,7 @@ export interface HubWebSocketServerOptions {
 	 * Used by the AI gateway providers for every session that runs inside
 	 * this hub process.
 	 *
-	 * Ignored when `sessionHost` is supplied — in that case the caller owns
+	 * Ignored when `sessionHost` is supplied - in that case the caller owns
 	 * runtime construction and is responsible for wiring its own fetch.
 	 */
 	fetch?: typeof fetch;

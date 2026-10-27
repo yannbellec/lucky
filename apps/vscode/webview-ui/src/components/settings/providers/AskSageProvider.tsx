@@ -43,8 +43,8 @@ export const AskSageProvider = ({ showModelOptions, isPopup, currentMode }: AskS
 	// Write through the SDK provider-config store so providers.json stays in
 	// sync for CLI/desktop hosts. The store mirrors `baseUrl` back to the
 	// legacy `asksageApiUrl` state key (even when providers.json validation
-	// rejects a partially-typed URL), so the legacy readers — including the
-	// /get-models fetch keyed on apiConfiguration.asksageApiUrl — keep working.
+	// rejects a partially-typed URL), so the legacy readers - including the
+	// /get-models fetch keyed on apiConfiguration.asksageApiUrl - keep working.
 	const handleApiUrlChange = (value: string) => {
 		void write({ baseUrl: value }).catch((err) => console.error("Failed to update AskSage API URL:", err))
 	}

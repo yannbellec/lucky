@@ -7,8 +7,8 @@
  * finds tools across those toolkits, COMPOSIO_MANAGE_CONNECTIONS returns a
  * hosted Connect Link the agent surfaces in chat, COMPOSIO_WAIT_FOR_CONNECTIONS
  * blocks until the user finishes, and COMPOSIO_MULTI_EXECUTE_TOOL runs the
- * tools search found — no new session needed after connecting.
- * Credentials never pass through Cline or the model — only the link does.
+ * tools search found - no new session needed after connecting.
+ * Credentials never pass through Cline or the model - only the link does.
  * Executions go back through the proxy with the session id
  * (`POST /api/v1/connectors/meta-tools/{slug}/execute`), which checks that the
  * session belongs to the caller.

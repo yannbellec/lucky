@@ -20,11 +20,11 @@ export function normalizeNewFileLineEndings(content: string): string {
 export type LineEnding = "\r\n" | "\n";
 
 /**
- * Returns "\r\n" if "\r\n" appears anywhere in the content, otherwise "\n" —
+ * Returns "\r\n" if "\r\n" appears anywhere in the content, otherwise "\n" -
  * including for content with no line breaks at all. Files are uniformly CRLF
  * or uniformly LF in practice; the mixed case that matters is a CRLF file
  * with LF-only lines inserted by earlier releases of these tools, and any
- * surviving "\r\n" — wherever it sits — should pull such a file back to
+ * surviving "\r\n" - wherever it sits - should pull such a file back to
  * CRLF, which is why this checks for "\r\n" anywhere rather than looking at
  * the first line break.
  */

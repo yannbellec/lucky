@@ -213,9 +213,9 @@ export function VoiceInputContent({
 					</p>
 					<p className="text-sm text-muted-foreground">
 						{voiceCapableProviderNames.length > 0
-							? `Connect a provider with streaming transcription models — for example ${voiceCapableProviderNames
+							? `Connect a provider with streaming transcription models - for example ${voiceCapableProviderNames
 									.slice(0, 4)
-									.join(", ")} — and this page unlocks automatically.`
+									.join(", ")} - and this page unlocks automatically.`
 							: "Connect a provider with streaming transcription models and this page unlocks automatically."}
 					</p>
 					<Button onClick={onOpenModelProviders} size="sm" type="button">
@@ -239,7 +239,7 @@ export function VoiceInputContent({
 						</p>
 						<p className="text-sm text-muted-foreground">
 							Turns on the microphone button in chat. A default model is
-							preselected — adjust it below.
+							preselected - adjust it below.
 						</p>
 					</div>
 					<Switch

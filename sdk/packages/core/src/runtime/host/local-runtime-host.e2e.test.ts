@@ -814,7 +814,7 @@ describe("LocalRuntimeHost e2e", () => {
 				?.title,
 		).toBe("explain the auth flow");
 
-		// The first prompt after the seed retitles the row — pre-eager-
+		// The first prompt after the seed retitles the row - pre-eager-
 		// persistence parity, where a fork was named after what the user did
 		// with it rather than the conversation it inherited.
 		await secondHost.runTurn({

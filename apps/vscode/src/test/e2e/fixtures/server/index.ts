@@ -449,7 +449,7 @@ export class ClineApiServerMock {
 
 					// Budget limit increase request endpoint
 					if (endpoint === "/users/me/budget/request" && method === "POST") {
-						log("Spend limit increase request received — recording and notifying admin")
+						log("Spend limit increase request received - recording and notifying admin")
 						res.writeHead(204)
 						res.end()
 						return
@@ -457,7 +457,7 @@ export class ClineApiServerMock {
 
 					// Chat completions endpoint
 					if (endpoint === "/chat/completions" && method === "POST") {
-						// Spend limit check takes priority — org-enforced budget cap (429)
+						// Spend limit check takes priority - org-enforced budget cap (429)
 						if (controller.spendLimitExceeded) {
 							log("Returning SPEND_LIMIT_EXCEEDED (429)")
 							return sendJson(
@@ -493,7 +493,7 @@ export class ClineApiServerMock {
 
 						// The SDK runtime executes structured tool calls and then sends a
 						// follow-up /chat/completions request containing the tool result as
-						// a `role: "tool"` message. Detect that follow-up first — the
+						// a `role: "tool"` message. Detect that follow-up first - the
 						// original "edit_request" user prompt is still present in the
 						// conversation history of the follow-up request, so order matters.
 						// Scope tool-result routing to the mock scenarios that issued a tool
@@ -557,7 +557,7 @@ export class ClineApiServerMock {
 								: E2E_MOCK_API_RESPONSES.EDIT_REQUEST_COMPLETE
 						} else if (body.includes("edit_request")) {
 							// Stream lead-in text followed by a structured `editor` tool
-							// call (OpenAI tool_calls deltas) — the only tool-call syntax
+							// call (OpenAI tool_calls deltas) - the only tool-call syntax
 							// the SDK runtime executes.
 							responseText = E2E_MOCK_API_RESPONSES.EDIT_REQUEST_LEAD_IN
 							toolCall = E2E_MOCK_EDITOR_TOOL_CALL

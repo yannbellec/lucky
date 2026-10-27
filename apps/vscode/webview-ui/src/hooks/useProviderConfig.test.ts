@@ -177,7 +177,7 @@ describe("useProviderConfig", () => {
 	it("drops a stale read response that resolves after a newer write was issued", async () => {
 		// Repro: settings mounts (slow read in flight), the user immediately
 		// edits a field (write issued). The stale pre-write read must not
-		// apply — it would roll the UI back while the write is pending.
+		// apply - it would roll the UI back while the write is pending.
 		let resolveRead: (value: ProviderConfigResponse) => void = () => {}
 		vi.mocked(ModelsServiceClient.readProviderConfig).mockReturnValue(
 			new Promise<ProviderConfigResponse>((resolve) => {
@@ -214,7 +214,7 @@ describe("useProviderConfig", () => {
 	it("re-reads after a failed write so config converges instead of staying stale", async () => {
 		// Writes can fail host-side (e.g. base URL rejected by schema
 		// validation while a partial URL is typed). The failed write is the
-		// latest request, so no response will ever apply for it — the hook
+		// latest request, so no response will ever apply for it - the hook
 		// must re-read or config could remain stale (or undefined) forever.
 		vi.mocked(ModelsServiceClient.readProviderConfig).mockResolvedValue(config("deepseek", "https://saved.example/v1"))
 		vi.mocked(ModelsServiceClient.writeProviderConfig).mockRejectedValue(new Error("invalid url"))

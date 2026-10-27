@@ -390,7 +390,7 @@ describe("executeForeground", () => {
 	})
 
 	it("caps buffered output lines instead of accumulating without bound", async () => {
-		// One more line than the cap — the earliest line must be dropped rather
+		// One more line than the cap - the earliest line must be dropped rather
 		// than growing the buffer indefinitely.
 		const manyLines = Array.from({ length: 10_001 }, (_, i) => `line-${i}`)
 		const terminalManager = createFakeTerminalManager(createFakeTerminalProcess({ lines: manyLines }))
@@ -535,7 +535,7 @@ describe("executeForeground", () => {
 	})
 })
 
-describe("executeForeground — Proceed While Running", () => {
+describe("executeForeground - Proceed While Running", () => {
 	it("automatically proceeds after 300 seconds instead of blocking the agent turn", async () => {
 		vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] })
 		const coordinator = new SdkForegroundCommandCoordinator()
@@ -804,7 +804,7 @@ describe("executeForeground — Proceed While Running", () => {
 	it("registers with the coordinator before terminal acquisition", async () => {
 		const coordinator = new SdkForegroundCommandCoordinator()
 		const { process, complete } = createControllableTerminalProcess()
-		// A terminal acquisition that never settles until released — the
+		// A terminal acquisition that never settles until released - the
 		// registration must not wait for it.
 		let releaseTerminal!: () => void
 		const terminalGate = new Promise<void>((resolve) => {
@@ -1069,7 +1069,7 @@ describe("executeForeground — Proceed While Running", () => {
 
 		// The user clicks Proceed While Running while the second command is
 		// still waiting for a terminal; both must be counted and both must
-		// resolve detached — the late one must not keep the turn blocked.
+		// resolve detached - the late one must not keep the turn blocked.
 		expect(coordinator.proceedWhileRunning()).toBe(2)
 		const [firstResult, secondResult] = await Promise.all([firstPromise, secondPromise])
 		expect(firstResult).toContain("still running")
@@ -1114,7 +1114,7 @@ describe("executeForeground — Proceed While Running", () => {
 		const logFilePath = /redirected to this file[^:]*: (.+)$/m.exec(result)?.[1]?.trim()
 		expect(logFilePath).toBeTruthy()
 
-		// A single line larger than the whole cap must not be written at all —
+		// A single line larger than the whole cap must not be written at all -
 		// the cap is checked before writing, so one huge line (e.g. a dumped
 		// blob) cannot blow the log far past PROCEED_LOG_MAX_BYTES.
 		emitLine("small line before the blob")

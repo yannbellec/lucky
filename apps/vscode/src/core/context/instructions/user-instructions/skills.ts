@@ -281,7 +281,7 @@ export async function getSkillContent(
 	const skill = availableSkills.find((s) => s.name === skillName)
 	if (!skill) return null
 
-	// Remote skills have no file on disk — retrieve content from the provided entries.
+	// Remote skills have no file on disk - retrieve content from the provided entries.
 	// Try entry.name first (fast path when dashboard is in sync), fall back to frontmatter match.
 	if (skill.path.startsWith("remote:")) {
 		let entry = (remoteSkillEntries || []).find((e) => e.name === skillName)

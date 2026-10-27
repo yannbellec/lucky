@@ -42,7 +42,7 @@ export function combineApiRequests(messages: ClineMessage[]): ClineMessage[] {
 					try {
 						finishedRequest = JSON.parse(messages[j].text || "{}")
 					} catch {
-						// Unparseable finish payload — nothing to merge, keep the
+						// Unparseable finish payload - nothing to merge, keep the
 						// started row as-is but still consume the pair.
 						finishedRequest = {}
 					}

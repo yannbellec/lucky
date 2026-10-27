@@ -5,7 +5,7 @@
 # open/edit, keeping only the agent-authored content between the markers.
 #
 # Uses pull_request_target so the token has write access on PRs from forks. That
-# trigger is only unsafe when a job checks out and executes PR code — this one
+# trigger is only unsafe when a job checks out and executes PR code - this one
 # never checks out the repository, it only calls the REST API.
 name: repo-strip-agent-badges
 on:

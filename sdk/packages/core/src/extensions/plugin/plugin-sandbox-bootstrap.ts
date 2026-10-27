@@ -27,7 +27,7 @@ import {
 } from "./plugin-targeting";
 
 // ---------------------------------------------------------------------------
-// Types (intentionally minimal – mirrors only what the RPC protocol needs)
+// Types (intentionally minimal - mirrors only what the RPC protocol needs)
 // ---------------------------------------------------------------------------
 
 interface PluginTool {
@@ -480,7 +480,7 @@ function withTimeout<T>(
 (globalThis as Record<string, unknown>).__clinePluginHost = { emitEvent };
 
 /**
- * Session workspace env — populated by `initialize()` and available to any
+ * Session workspace env - populated by `initialize()` and available to any
  * plugin code that executes before the setup hook, or cannot use hook context.
  * Prefer using PluginSetupCtx from the setup function when possible.
  */
@@ -585,7 +585,7 @@ function createPluginTelemetry(pluginName: string): PluginTelemetryBridge {
 		recordGauge: record("gauge"),
 		// The bridge is stateless: the host is the arbiter of whether
 		// telemetry is enabled and drops forwarded events when the user has
-		// opted out. Reporting true keeps plugins emitting unconditionally —
+		// opted out. Reporting true keeps plugins emitting unconditionally -
 		// which also means isEnabled() cannot be used to skip expensive
 		// property computation in sandboxed plugins; keep properties cheap.
 		isEnabled: () => true,
@@ -892,7 +892,7 @@ async function initialize(args: {
 		try {
 			process.chdir(args.cwd);
 		} catch {
-			// Ignore — best-effort; path may not exist in unusual environments.
+			// Ignore - best-effort; path may not exist in unusual environments.
 		}
 	}
 

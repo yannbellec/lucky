@@ -47,8 +47,8 @@ function toolResultTextParts(content: ContentBlock & { type: "tool_result" }): v
 	}
 
 	// SDK tool executors (run_commands, search_codebase, read_files, MCP, ...)
-	// put rich, untyped result objects in `content` — e.g. an array of
-	// ToolOperationResult `{ query, result, success, error? }` — rather than typed
+	// put rich, untyped result objects in `content` - e.g. an array of
+	// ToolOperationResult `{ query, result, success, error? }` - rather than typed
 	// text/image/file content blocks. Such items have no `.type`/`.text`, so they
 	// can only be read via extractToolOutputText (which pulls `.result`/`.error`
 	// out of ToolOperationResult[], else falls back to JSON.stringify). When no
@@ -71,7 +71,7 @@ function toolResultTextParts(content: ContentBlock & { type: "tool_result" }): v
 			case "file":
 				return new vscode.LanguageModelTextPart(part.content ?? "")
 			default:
-				// Untyped item interleaved with typed blocks — serialize just this item.
+				// Untyped item interleaved with typed blocks - serialize just this item.
 				return new vscode.LanguageModelTextPart(extractToolOutputText(part))
 		}
 	})
@@ -141,7 +141,7 @@ export function convertToVsCodeLmMessages(messages: Message[]): vscode.LanguageM
 	}
 
 	// Copilot (and other VS Code LM) models require that the prompt does NOT end
-	// on a tool-result message — the final message must be a non-tool-result
+	// on a tool-result message - the final message must be a non-tool-result
 	// UserMessage. If we end on tool results, the model can't "see" the output and
 	// tends to re-run tools or call random ones. Mirror the official VS Code chat
 	// sample (chat-sample/src/toolsPrompt.tsx), which appends a trailing user

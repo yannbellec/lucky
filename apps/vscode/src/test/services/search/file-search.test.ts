@@ -14,13 +14,13 @@ import { setVscodeHostProviderMock } from "@/test/host-provider-test-utils"
 // bun loads real ESM, so sinon cannot stub the `@services/search/file-search`
 // namespace exports ("ES Modules cannot be stubbed"). Two seams are needed:
 //
-//  1. child_process.spawn — the SUT's real `executeRipgrepForFiles` calls its
+//  1. child_process.spawn - the SUT's real `executeRipgrepForFiles` calls its
 //     own `getSpawnFunction()` (which returns `childProcess.spawn`) via an
 //     internal binding that mock.module on the file-search module CANNOT
 //     intercept. Mocking `child_process.spawn` itself reaches it. `spawnImpl` is
 //     swapped per-test (replacing the old `sandbox.stub(fileSearch,
 //     "getSpawnFunction")`).
-//  2. file-search self-exports — the tests that stub `executeRipgrepForFiles` /
+//  2. file-search self-exports - the tests that stub `executeRipgrepForFiles` /
 //     `searchWorkspaceFiles` call them through the `fileSearch` namespace, so a
 //     mock.module with mutable delegates intercepts those direct calls. Real
 //     implementations are captured before mock.module to avoid recursion.
@@ -380,7 +380,7 @@ describe("File Search", () => {
 
 		it.skipIf(process.platform === "win32")("keeps literal backslashes in POSIX filenames", async () => {
 			// A backslash is a legal filename character outside Windows, so only the
-			// platform separator may be rewritten — otherwise `foo\bar.txt` would be
+			// platform separator may be rewritten - otherwise `foo\bar.txt` would be
 			// offered as the nonexistent `foo/bar.txt`.
 			const hostResponse = SearchWorkspaceItemsResponse.create({
 				items: [{ path: "foo\\bar.txt", type: SearchWorkspaceItemsRequest_SearchItemType.FILE, label: "foo\\bar.txt" }],

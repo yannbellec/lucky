@@ -160,7 +160,7 @@ export async function migrateWelcomeViewCompleted(context: vscode.ExtensionConte
 
 			// ENG-2346: The live 4.x extension persists provider config in the shared
 			// file-backed stores (~/.cline/data/globalState.json + secrets.json), not in
-			// VS Code storage — so for users upgrading from it, every value above is
+			// VS Code storage - so for users upgrading from it, every value above is
 			// undefined. Also consider the file-backed stores (same signals: the
 			// completed flag itself, any provider secret, or the keyless provider
 			// configs), otherwise fully configured users are sent back through onboarding.

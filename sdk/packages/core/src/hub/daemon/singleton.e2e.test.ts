@@ -2,7 +2,7 @@
  * Real-process proof of lock-enforced singleton ownership:
  *
  * - A second daemon for the same owner context exits with code 3 and the
- *   incumbent keeps serving, untouched — no kill, no port fight, no loop.
+ *   incumbent keeps serving, untouched - no kill, no port fight, no loop.
  * - A crashed holder leaks nothing: the kernel releases the lock with the
  *   process, and a successor acquires it immediately.
  */

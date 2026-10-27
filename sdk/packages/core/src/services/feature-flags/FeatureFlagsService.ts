@@ -158,7 +158,7 @@ export class FeatureFlagsService {
 		}
 		// A persisted snapshot from a DIFFERENT known identity must not seed
 		// this identity's flags. When either side is unresolved the fallback
-		// stays — starting before the account id is known is the documented,
+		// stays - starting before the account id is known is the documented,
 		// deliberate case (setContext resolves it and clears on mismatch).
 		if (
 			snapshot.userId &&

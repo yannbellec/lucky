@@ -547,7 +547,7 @@ export function ComposioConnectorsView({
 				) : null}
 				{!appendOnScroll && hiddenCount > 0 ? (
 					<p className="text-xs text-muted-foreground">
-						Showing the {CATALOG_PREVIEW_COUNT} most-used connectors — search to
+						Showing the {CATALOG_PREVIEW_COUNT} most-used connectors - search to
 						find {hiddenCount} more.
 					</p>
 				) : null}

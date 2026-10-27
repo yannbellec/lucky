@@ -1776,7 +1776,7 @@ export function useSessionHistory({
 			try {
 				const loaded = await refreshSessions();
 				// Roll back to what was last fetched so a retry asks for this batch
-				// again instead of skipping past it — but only when no overlapping
+				// again instead of skipping past it - but only when no overlapping
 				// call has raised the limit further in the meantime, since lowering
 				// it would make that call fetch a smaller batch than it asked for
 				// and still report success.

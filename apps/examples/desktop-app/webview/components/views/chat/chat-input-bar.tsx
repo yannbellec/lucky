@@ -272,7 +272,7 @@ function getActiveSlash(input: string, cursor: number): ActiveSlash | null {
 		return null;
 	}
 	const query = left.slice(slashIndex + 1);
-	// No whitespace allowed inside the query — once the user typed a space
+	// No whitespace allowed inside the query - once the user typed a space
 	// the slash command has been committed.
 	if (/\s/.test(query)) {
 		return null;
@@ -650,7 +650,7 @@ function ChatInputBarImpl({
 		? `${activeSlash.slashIndex}:${activeSlash.query}`
 		: null;
 	// Slash commands resolve against locally installed skills/workflows, which
-	// the cloud sandbox cannot run — gate them like @-mentions.
+	// the cloud sandbox cannot run - gate them like @-mentions.
 	const slashOpen =
 		executionTarget === "local" &&
 		slashKey !== null &&
@@ -1904,7 +1904,7 @@ const ModelSelector = memo(function ModelSelector({
 	]);
 	// The picker can intentionally hide catalog models (the ClinePass offer
 	// is exactly its subscribed/free tiers), but the active model must stay
-	// visible and selectable — e.g. a hydrated session configured with a
+	// visible and selectable - e.g. a hydrated session configured with a
 	// model outside the current offer or missing from the catalog. Surface it
 	// under its own section so the selected value always exists in the list.
 	const visibleModelPicker = useMemo((): ModelPickerData => {
@@ -2021,8 +2021,8 @@ const ModelSelector = memo(function ModelSelector({
 
 	// The remembered selection (what new sessions default to) is only written
 	// from the explicit picker handlers below. Mirroring every provider/model
-	// prop change here would also capture passive changes — most notably
-	// opening an existing session, whose config drives these props — silently
+	// prop change here would also capture passive changes - most notably
+	// opening an existing session, whose config drives these props - silently
 	// replacing the user's chosen default with whatever model that session
 	// happened to use.
 	const rememberSelection = useCallback(

@@ -83,7 +83,7 @@ export async function readGlobalStateFromStorage(store: ClineMemento): Promise<G
 	}
 }
 
-// ─── Legacy readers (for VSCode migration — reads from ExtensionContext) ────
+// ─── Legacy readers (for VSCode migration - reads from ExtensionContext) ────
 
 /**
  * Handle properties that require computed logic

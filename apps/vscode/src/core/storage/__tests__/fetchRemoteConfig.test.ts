@@ -154,7 +154,7 @@ describe("fetchRemoteConfig", () => {
 		assert.ok(applyRemoteConfigStub.calledOnce)
 		// writeRemoteConfigToCache is called with the parsed config, proving inline parse succeeded.
 		// If it had fallen through to fetchRemoteConfigForOrganization, it would need getAuthToken
-		// and make an HTTP call — but no axios stub is set up, so the test would fail.
+		// and make an HTTP call - but no axios stub is set up, so the test would fail.
 		assert.ok(writeRemoteConfigToCacheStub.calledOnce)
 	})
 
@@ -214,7 +214,7 @@ describe("fetchRemoteConfig", () => {
 
 		await remoteConfigFetch.fetchRemoteConfig(controller as any)
 
-		// Config resolution failed — user should stay in their current org
+		// Config resolution failed - user should stay in their current org
 		assert.strictEqual(controller.accountService.switchAccount.callCount, 0)
 		assert.ok(clearRemoteConfigStub.called)
 		assert.strictEqual(applyRemoteConfigStub.callCount, 0)

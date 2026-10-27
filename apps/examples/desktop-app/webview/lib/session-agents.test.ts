@@ -221,7 +221,7 @@ describe("buildSessionAgentActivity", () => {
 
 	it("counts a sync teammate run as completed when its call returns", () => {
 		// Sync team_run_task reports status "running" even on success, so the
-		// dispatch mode — not the reported status — has to decide the bucket.
+		// dispatch mode - not the reported status - has to decide the bucket.
 		const activity = buildSessionAgentActivity(
 			[
 				toolMessage({

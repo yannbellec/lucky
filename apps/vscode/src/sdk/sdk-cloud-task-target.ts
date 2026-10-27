@@ -1,10 +1,10 @@
-// SdkCloudTaskTarget — the one writer and the one reader of "where does the
+// SdkCloudTaskTarget - the one writer and the one reader of "where does the
 // next task run".
 //
 // The user makes three kinds of choice (Local/Cloud, a repository, a branch)
 // and each is stored as itself. Everything else the panel shows and the
-// composer submits — which repository the account can actually reach, which
-// branch to start on — is resolved here from the stored choice, the active
+// composer submits - which repository the account can actually reach, which
+// branch to start on - is resolved here from the stored choice, the active
 // account's repositories and the workspace's git remote, on every state post.
 // Nothing derived is ever written back, so no background lookup can overwrite
 // a choice the user made while it was in flight.

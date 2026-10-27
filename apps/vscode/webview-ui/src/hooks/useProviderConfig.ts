@@ -91,7 +91,7 @@ export function useProviderConfig(providerId: ProviderId) {
 				return response
 			} catch (error) {
 				// A failed write may still have partially applied host-side, and
-				// its failure means no response will ever apply for this seq —
+				// its failure means no response will ever apply for this seq -
 				// without a re-read, older dropped responses could leave config
 				// stale (or undefined) forever. Re-read to converge on the
 				// backend's actual state, but only if this write is still the

@@ -269,7 +269,7 @@ describe("AgendaTaskManager", () => {
 
 		// With watchers off, nothing has reconciled the on-disk edit yet. The
 		// update must fold it in on its own and surface a retryable
-		// stale-revision conflict — not dead-end on the signature check until
+		// stale-revision conflict - not dead-end on the signature check until
 		// an unrelated read reconciles the scope.
 		await expect(
 			manager.updateTask({

@@ -13,7 +13,7 @@ export function DesktopErrorTelemetry() {
 				handled: false,
 				// For script-load failures (e.g. a chunk URL answered with HTML)
 				// the ErrorEvent's filename is the only pointer to the failing
-				// resource — the error object has no stack in that case.
+				// resource - the error object has no stack in that case.
 				sourceUrl: event.filename || undefined,
 				lineno: event.lineno || undefined,
 				colno: event.colno || undefined,

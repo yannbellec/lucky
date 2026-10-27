@@ -635,7 +635,7 @@ export const ExtensionStateContextProvider: React.FC<{
 						const before = replicaRef.current
 						replicaRef.current = reducerApplyMessage(before, partialMessage)
 						if (replicaRef.current === before) {
-							// Stale/ignored — no change.
+							// Stale/ignored - no change.
 							return prevState
 						}
 						return { ...prevState, clineMessages: replicaRef.current.messages }

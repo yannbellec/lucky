@@ -1,7 +1,7 @@
 /**
  * Wire types for the sidecar's session-import commands
  * (list_importable_sessions / import_sessions). Mirrors
- * sdk/packages/core/src/services/session-import/types.ts — kept as a local
+ * sdk/packages/core/src/services/session-import/types.ts - kept as a local
  * copy so the client bundle never imports node-only core code.
  */
 

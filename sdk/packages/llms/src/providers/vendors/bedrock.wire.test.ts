@@ -10,7 +10,7 @@
 //      for any id they did not recognise (cline/cline#14451, vercel/ai#19403);
 //   2. models the adapter cannot classify get no reasoning fields at all,
 //      instead of a `reasoningConfig` Bedrock rejects for models without
-//      reasoning support — adapters before 5.0.96 sent it for every
+//      reasoning support - adapters before 5.0.96 sent it for every
 //      non-Anthropic id (cline/cline#14095, vercel/ai#21487);
 //   3. the families the adapter does classify keep their native shapes from
 //      the id alone even when the catalog does not list the model, so a

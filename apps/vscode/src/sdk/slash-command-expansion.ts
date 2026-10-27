@@ -29,7 +29,7 @@ function canonicalWorkflowName(value: string): string {
 /**
  * Verbatim port of @cline/shared's private `sanitizeSegment`
  * (src/remote-config/materializer.ts), which names the files that remote
- * workflows materialize to — lower-cased, disallowed character runs collapsed
+ * workflows materialize to - lower-cased, disallowed character runs collapsed
  * to `-`, capped at 80 characters. Keep in sync with the original.
  */
 function sanitizeRemoteSegment(value: string): string {
@@ -109,8 +109,8 @@ export interface ExpandSlashCommandsOptions {
  *
  * The SDK names workflows by frontmatter `name` or file basename *without* the
  * extension, but the webview autocomplete (and legacy Cline versions) surface
- * workflow files as `/my-workflow.md`. Accept both spellings — and resolve a
- * typed file name to its frontmatter-renamed command — so workflows created
+ * workflow files as `/my-workflow.md`. Accept both spellings - and resolve a
+ * typed file name to its frontmatter-renamed command - so workflows created
  * under the legacy extension keep working after an upgrade.
  */
 function findRuntimeCommand(
@@ -159,7 +159,7 @@ function findRuntimeCommand(
  * workflow/skill into its instruction body.
  *
  * Unlike the SDK's `resolveRuntimeSlashCommand` (leading `/command` only), this
- * matches commands anywhere in the message — the webview lets users insert a
+ * matches commands anywhere in the message - the webview lets users insert a
  * slash command after whitespace mid-message, and the legacy extension expanded
  * those too. Only the first matching command is expanded, mirroring legacy
  * behavior and the webview menu (which only offers suggestions for the first
@@ -193,7 +193,7 @@ export function expandSlashCommands(
 		// invoke it when the user references a slash command, so the
 		// instructions arrive as a tool result and the transcript keeps the
 		// typed command. Builtins (e.g. /deep-planning) are declared as kind
-		// "skill" but are not served by that tool, so they keep expanding —
+		// "skill" but are not served by that tool, so they keep expanding -
 		// as do workflows.
 		if (command.kind === "skill" && !command.id.startsWith("builtin:")) {
 			continue
@@ -208,11 +208,11 @@ export function expandSlashCommands(
 export interface BuildDisabledWorkflowNamesOptions {
 	/** Discovered workflow records from `listRecords("workflow")`. */
 	records: ReadonlyArray<WorkflowRecordRef>
-	/** `globalWorkflowToggles` (global settings) — keyed by absolute file path. */
+	/** `globalWorkflowToggles` (global settings) - keyed by absolute file path. */
 	globalToggles?: Record<string, boolean>
-	/** Workspace `workflowToggles` — keyed by absolute file path. */
+	/** Workspace `workflowToggles` - keyed by absolute file path. */
 	workspaceToggles?: Record<string, boolean>
-	/** `remoteWorkflowToggles` (global state) — keyed by remote workflow name. */
+	/** `remoteWorkflowToggles` (global state) - keyed by remote workflow name. */
 	remoteToggles?: Record<string, boolean>
 	/** Names of remote workflows the organization locks on (`alwaysEnabled`). */
 	remoteAlwaysEnabledNames?: Iterable<string>
@@ -222,8 +222,8 @@ export interface BuildDisabledWorkflowNamesOptions {
  * Build the set of exact command names whose workflows the user disabled via
  * the Workflows toggles (local, global, and enterprise/remote scopes).
  *
- * Each command is governed by the toggle state of its own record — the file
- * whose body would actually expand — so a disabled workflow in one scope can
+ * Each command is governed by the toggle state of its own record - the file
+ * whose body would actually expand - so a disabled workflow in one scope can
  * neither suppress nor unlock a *different* command that happens to share a
  * similar name in another scope. (The SDK keeps one record per command name,
  * so per-record evaluation is per-command evaluation.)
@@ -266,7 +266,7 @@ export function buildDisabledWorkflowNames(options: BuildDisabledWorkflowNamesOp
 		}
 		let enabled: boolean
 		if (REMOTE_CONFIG_PATH_REGEX.test(record.filePath)) {
-			// Key off the materialized file basename — the materializer derives it
+			// Key off the materialized file basename - the materializer derives it
 			// from the remote config name, so it stays correct even when the file's
 			// frontmatter aliases the command name to something else.
 			const remoteKey = remoteWorkflowNameKey(fileBasename(record.filePath))

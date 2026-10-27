@@ -52,7 +52,7 @@ function sanitizeHeaders(
  * Numbers, booleans, and null are preserved as-is because they cannot
  * carry secret material and their identity matters for fingerprint
  * differentiation. Arrays preserve order. Object key ordering is not
- * preserved here — `canonicalStringify` re-sorts keys at the final step.
+ * preserved here - `canonicalStringify` re-sorts keys at the final step.
  * Undefined object fields are dropped to match canonicalization behavior.
  */
 function sanitizeExtrasValue(value: unknown): unknown {
@@ -80,7 +80,7 @@ function sanitizeExtrasValue(value: unknown): unknown {
 		}
 		return sanitized
 	}
-	// `undefined`, `bigint`, `symbol`, `function` — collapse to null. These
+	// `undefined`, `bigint`, `symbol`, `function` - collapse to null. These
 	// should never reach this function via a well-typed EffectiveProviderConfig
 	// but we handle them defensively so the fingerprint stays total.
 	return null

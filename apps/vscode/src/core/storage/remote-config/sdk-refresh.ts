@@ -40,7 +40,7 @@ async function withPublicationLock<T>(controller: object, operation: () => Promi
 /**
  * File cleanup is best-effort: a filesystem error (e.g. EACCES on the
  * remote-config workspace) must not reject the refresh, or every session
- * start — including for personal users with no org — fails with a raw fs
+ * start - including for personal users with no org - fails with a raw fs
  * error. State and integration clearing still proceed.
  */
 async function clearMaterializedRuntimeBestEffort(workspacePath: string): Promise<void> {

@@ -21,12 +21,12 @@ function createMockStream(lines: string[] = ["test-command", "line1", "line2", "
 }
 
 // OSC 633 shell integration markers, as raw escape sequences (what read() yields).
-const OSC633_C = "\x1b]633;C\x07" // CommandExecuted — output begins
+const OSC633_C = "\x1b]633;C\x07" // CommandExecuted - output begins
 const OSC633_D = "\x1b]633;D;0\x07" // CommandFinished, exit code 0
 
 // Create a mock stream that yields the given chunks and then never ends,
 // simulating shell integration that is attached but not emitting OSC 633
-// markers — e.g. commands typed into an ssh session, where the remote shell
+// markers - e.g. commands typed into an ssh session, where the remote shell
 // produces output but VS Code never sees command start/end sequences and so
 // never terminates the read() stream.
 function createHangingStream(chunks: string[]) {
@@ -294,7 +294,7 @@ describe("TerminalProcess (Integration Tests)", () => {
 			createdTerminals.push(terminal)
 
 			// D marker reports success (0), but the authoritative end event
-			// reports failure (1) — the event must win.
+			// reports failure (1) - the event must win.
 			const mockExecution = { read: () => createMockStreamWithMarkers(["test output"], "echo test") }
 			const mockExecuteCommand = sandbox.stub().returns(mockExecution)
 			sandbox.stub(terminal, "shellIntegration").get(() => ({ executeCommand: mockExecuteCommand }))
@@ -307,7 +307,7 @@ describe("TerminalProcess (Integration Tests)", () => {
 
 			const runPromise = process.run(terminal, "echo test")
 			// Fire the end event with a conflicting exit code before the stream
-			// finishes draining — the process must still prefer it over the D
+			// finishes draining - the process must still prefer it over the D
 			// marker's exitCode: 0 once the stream completes.
 			endListener?.({ terminal, execution: mockExecution, exitCode: 1 } as unknown as vscode.TerminalShellExecutionEndEvent)
 			await sandbox.clock.tickAsync(3000)
@@ -610,7 +610,7 @@ describe("TerminalProcess (Integration Tests)", () => {
 			createdTerminals.push(terminal)
 
 			// C marker arrives, then output, then a long silence before the
-			// command finishes — a long-running command with working shell
+			// command finishes - a long-running command with working shell
 			// integration. The idle fallback must NOT fire during the silence.
 			const mockExecuteCommand = sandbox.stub().returns({
 				read: () => ({
@@ -631,14 +631,14 @@ describe("TerminalProcess (Integration Tests)", () => {
 			const runPromise = process.run(terminal, "slow-build")
 
 			// 120s internal sleep, plus the exit-code race (EXIT_CODE_EVENT_TIMEOUT_MS)
-			// after the stream ends — this test's mock never fires
+			// after the stream ends - this test's mock never fires
 			// onDidEndTerminalShellExecution, so the race always times out.
 			await sandbox.clock.tickAsync(120_000 + EXIT_CODE_EVENT_TIMEOUT_MS + 1_000)
 			await runPromise
 			;(emitSpy as sinon.SinonSpy).calledWith("line", "build started").should.be.true()
 			;(emitSpy as sinon.SinonSpy).calledWith("line", "build finished").should.be.true()
 			;(emitSpy as sinon.SinonSpy).calledWith("completed").should.be.true()
-			// Shell integration worked — the terminal stays reusable
+			// Shell integration worked - the terminal stays reusable
 			;(emitSpy as sinon.SinonSpy).calledWith("unobserved_command").should.be.false()
 		})
 
@@ -646,7 +646,7 @@ describe("TerminalProcess (Integration Tests)", () => {
 			const terminal = TerminalRegistry.createTerminal().terminal
 			createdTerminals.push(terminal)
 
-			// A command that completes with exit 0 and no output — $null,
+			// A command that completes with exit 0 and no output - $null,
 			// git add -A on a clean tree. The C marker proves the read() stream
 			// worked, so the emptiness is genuine (GitHub #13272).
 			const mockExecuteCommand = sandbox.stub().returns({
@@ -670,7 +670,7 @@ describe("TerminalProcess (Integration Tests)", () => {
 			;(emitSpy as sinon.SinonSpy).calledWith("completed").should.be.true()
 			;(emitSpy as sinon.SinonSpy).calledWith("continue").should.be.true()
 			// The only permitted "line" event is the empty start-of-output
-			// notification the UI spinner relies on — no content, and critically
+			// notification the UI spinner relies on - no content, and critically
 			// no "could not be captured" fallback message, may be emitted.
 			const lineEvents = (emitSpy as sinon.SinonSpy).args
 				.filter(([event]) => event === "line")
@@ -685,7 +685,7 @@ describe("TerminalProcess (Integration Tests)", () => {
 			createdTerminals.push(terminal)
 
 			// No C marker ever arrives, so an empty output cannot be trusted as
-			// a silent success — the capture-failure fallback must still fire.
+			// a silent success - the capture-failure fallback must still fire.
 			stubHangingShellIntegration(terminal, [])
 
 			const snapshotStub = sandbox
@@ -716,7 +716,7 @@ describe("TerminalProcess (Integration Tests)", () => {
 			stubHangingShellIntegration(terminal, ["partial output\n"])
 
 			// onDidCloseTerminal is driven by real pty shutdown IO, which fake
-			// timers cannot advance — use real timers for this test.
+			// timers cannot advance - use real timers for this test.
 			sandbox.clock.restore()
 
 			const emitSpy = sandbox.spy(process, "emit")
@@ -730,7 +730,7 @@ describe("TerminalProcess (Integration Tests)", () => {
 			;(emitSpy as sinon.SinonSpy).calledWith("completed").should.be.true()
 			;(emitSpy as sinon.SinonSpy).calledWith("continue").should.be.true()
 			// A terminal closed mid-command must be distinguishable from a normal
-			// completion — callers must not treat this as command success.
+			// completion - callers must not treat this as command success.
 			process.getCompletionDetails().terminalClosed?.should.be.true()
 
 			// Restore fake timers for other tests

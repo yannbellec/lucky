@@ -10,7 +10,7 @@ const CLINE_DATA_DIRECTORY_NAME = "data";
 /**
  * Browser-safe structural check for the shared chat workspace that hosts
  * sessions started without a project: `.cline/data/workspaces/chat`. Matches
- * the directory itself only — project folders created inside it are regular
+ * the directory itself only - project folders created inside it are regular
  * workspaces. Matches the default data-dir layout; explicit `CLINE_DATA_DIR`
  * overrides are not detectable from a bare path string.
  */

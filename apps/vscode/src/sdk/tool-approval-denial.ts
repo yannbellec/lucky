@@ -12,7 +12,7 @@ export const EDIT_TOOL_APPROVAL_DENIAL_REASON =
  * For edit tools it must state explicitly that the file was NOT modified: a denial
  * that carries only the user's feedback (e.g. "make them bigger") reads like
  * iteration feedback on an applied change, and the model then builds its next
- * old_text against content that never landed on disk — drifting further out of
+ * old_text against content that never landed on disk - drifting further out of
  * sync with the file on every retry.
  */
 export function buildToolApprovalDenialReason(toolName: string | undefined, feedback: string | undefined): string {

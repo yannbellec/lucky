@@ -4,7 +4,7 @@
 // controller.task.abortTask(), etc., this proxy delegates to the SdkController's
 // session methods. This allows existing gRPC handlers to work without modification.
 //
-// Not all classic Task methods are implemented here — only those called by
+// Not all classic Task methods are implemented here - only those called by
 // the gRPC handler modules in src/core/controller/. Missing methods log a warning
 // and return safe defaults.
 
@@ -14,7 +14,7 @@ import { Logger } from "@shared/services/Logger"
 import type { ClineAskResponse } from "@shared/WebviewMessage"
 
 /**
- * Interface for the task proxy — mirrors the subset of classic Task
+ * Interface for the task proxy - mirrors the subset of classic Task
  * properties and methods that gRPC handlers actually call.
  */
 export interface TaskProxy {
@@ -25,16 +25,16 @@ export interface TaskProxy {
 	handleWebviewAskResponse: (askResponse: ClineAskResponse, text?: string, images?: string[], files?: string[]) => Promise<void>
 	/** Abort the running task */
 	abortTask: () => Promise<void>
-	/** API handler — settable for model switching via updateSettings */
+	/** API handler - settable for model switching via updateSettings */
 	api: TaskProxyApi
-	/** Browser session — stubbed (browser automation removed in this migration) */
+	/** Browser session - stubbed (browser automation removed in this migration) */
 	// biome-ignore lint/suspicious/noExplicitAny: typed as any for handler compatibility; browser automation removed
 	browserSession: any
-	/** Terminal manager — stub that safely no-ops for settings compatibility */
+	/** Terminal manager - stub that safely no-ops for settings compatibility */
 	terminalManager: TaskProxyTerminalManager
 	/** Task state for tracking */
 	taskState: TaskProxyState
-	/** Message state handler — accumulates messages for state building */
+	/** Message state handler - accumulates messages for state building */
 	messageStateHandler: MessageStateHandler
 }
 
@@ -117,7 +117,7 @@ export class MessageStateHandler extends EventEmitter<MessageStateHandlerEvents>
 /**
  * Minimal API handler interface for model info access.
  * The classic Task had a full API handler; we expose just what handlers need.
- * The `api` property is settable — updateSettings() replaces it when the
+ * The `api` property is settable - updateSettings() replaces it when the
  * user switches models/providers.
  */
 interface TaskProxyApi {
@@ -136,7 +136,7 @@ interface TaskProxyTerminalManager {
 }
 
 /**
- * Task state tracking — mirrors the subset of classic TaskState
+ * Task state tracking - mirrors the subset of classic TaskState
  * that handlers reference.
  */
 interface TaskProxyState {
@@ -171,15 +171,15 @@ export function createTaskProxy(
 	const state: TaskProxyState = {}
 	const messageStateHandler = new MessageStateHandler()
 
-	// Mutable session ID — updated when the session is restarted (e.g., MCP tool reload)
+	// Mutable session ID - updated when the session is restarted (e.g., MCP tool reload)
 	let currentSessionId = sessionId
 
-	// Mutable API handler — updateSettings() replaces it when switching models
+	// Mutable API handler - updateSettings() replaces it when switching models
 	let currentApi: TaskProxyApi = {
 		getModel: () => ({ id: "unknown" }),
 	}
 
-	// Terminal manager stub — safely no-ops for settings compatibility
+	// Terminal manager stub - safely no-ops for settings compatibility
 	const terminalManagerStub: TaskProxyTerminalManager = {
 		setDefaultTerminalProfile: () => ({ closedCount: 0, busyTerminals: [] }),
 		setShellIntegrationTimeout: () => {},

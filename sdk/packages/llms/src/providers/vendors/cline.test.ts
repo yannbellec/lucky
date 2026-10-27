@@ -203,7 +203,7 @@ describe("createCline", () => {
 				? sseCompletionResponse(modelId)
 				: jsonCompletionResponse(modelId),
 		);
-		// The headers a caller puts on the ProviderConfig — for Cline billing
+		// The headers a caller puts on the ProviderConfig - for Cline billing
 		// providers these are the surface identity headers produced by
 		// `resolveProviderRequestHeaders`, and the gateway rejects free models
 		// without them.

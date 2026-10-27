@@ -35,7 +35,7 @@ export function isPickerCommandMissing(error: unknown): boolean {
 // zenity, kdialog, and osascript all exit with status 1 when the user
 // dismisses the dialog, which execFile reports as an error with a numeric
 // `code` and no `signal`. Launch failures (EACCES, EMFILE, ENOMEM, ...)
-// carry a string code instead, and crashes carry a `signal` — neither of
+// carry a string code instead, and crashes carry a `signal` - neither of
 // those means the user cancelled, so they must not be swallowed.
 export function isPickerCancellation(error: unknown): boolean {
 	const { code, signal } = execErrorShape(error);
@@ -69,8 +69,8 @@ export function normalizePickedDirectory(stdout: string): string | null {
 // (chat streams, history, settings) for however long the dialog stays open.
 //
 // Contract: resolves to a path, resolves to null only when the user cancels,
-// and throws when no picker backend could be opened — whether the binaries
-// are missing or they failed to launch — so the UI can surface a manual
+// and throws when no picker backend could be opened - whether the binaries
+// are missing or they failed to launch - so the UI can surface a manual
 // path-entry fallback instead of a silent no-op.
 export async function pickWorkspaceDirectory(
 	exec: PickerExec = defaultExec,
@@ -93,7 +93,7 @@ export async function pickWorkspaceDirectory(
 			);
 		}
 	}
-	// Linux — try zenity, then kdialog. A backend that is missing or fails to
+	// Linux - try zenity, then kdialog. A backend that is missing or fails to
 	// launch falls through to the next candidate; only a clean cancel exit
 	// from a dialog that actually opened is treated as user cancellation.
 	const backends: { name: string; args: string[] }[] = [

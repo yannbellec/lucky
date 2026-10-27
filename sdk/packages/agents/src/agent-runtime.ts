@@ -66,7 +66,7 @@ const MAX_TOKENS_INCOMPLETE_TURN_MESSAGE =
  * usable tool call is retried before the run fails. Each retry nudges the model
  * to be more concise (see MAX_TOKENS_RECOVERY_NUDGE). The counter resets on any
  * turn that makes progress (produces a tool call), so this bounds only a *run*
- * of consecutive cut-off turns — a single over-long response recovers, while a
+ * of consecutive cut-off turns - a single over-long response recovers, while a
  * model that keeps overflowing still ends rather than looping forever.
  */
 const MAX_TOKENS_RECOVERY_LIMIT = 3;
@@ -79,8 +79,8 @@ const MAX_TOKENS_RECOVERY_NUDGE =
  * provider-side error (rate limits, 5xx, network hiccups, OpenRouter's
  * generic "Provider returned error"). The initial attempt is not counted, so
  * a value of 3 means up to 4 total requests for one turn. Retrying only
- * transient errors — and never auth, context-overflow, or other client errors
- * (see {@link isRetryableProviderError}) — keeps well-behaved providers on
+ * transient errors - and never auth, context-overflow, or other client errors
+ * (see {@link isRetryableProviderError}) - keeps well-behaved providers on
  * their existing single-request path, so this does not change behavior for
  * models whose endpoints do not throw transient errors.
  */
@@ -96,15 +96,15 @@ const PROVIDER_ERROR_RETRY_MAX_DELAY_MS = 15_000;
  * an empty response is worth retrying, a filtered one reproduces every time.
  */
 const CONTENT_FILTER_EMPTY_TURN_MESSAGE =
-	"Model returned no content because the response was blocked by a content filter. Retrying is unlikely to help — try rephrasing the request.";
+	"Model returned no content because the response was blocked by a content filter. Retrying is unlikely to help - try rephrasing the request.";
 
 /**
  * Terminal message when a context-window overflow cannot be recovered because
- * there is no conversation history to compact — the system prompt, tools, and
+ * there is no conversation history to compact - the system prompt, tools, and
  * current input alone exceed the window.
  */
 export const CONTEXT_WINDOW_OVERFLOW_NOTHING_TO_COMPACT_MESSAGE =
-	"The request exceeds the model's context window and there is no conversation history to compact — the system prompt, tools, and current input alone are too large. Reduce attached content or switch to a model with a larger context window.";
+	"The request exceeds the model's context window and there is no conversation history to compact - the system prompt, tools, and current input alone are too large. Reduce attached content or switch to a model with a larger context window.";
 
 /**
  * Terminal message when a context-window overflow persists after the runtime
@@ -582,7 +582,7 @@ export class AgentRuntime {
 		/**
 		 * Finish reason carried into the run-failed `sdk.error` event. Set
 		 * only at the throw sites where a finish reason IS the failure's
-		 * cause (empty turn, max-tokens, provider error) — never recorded
+		 * cause (empty turn, max-tokens, provider error) - never recorded
 		 * ambiently on finish events, so a failure elsewhere in the loop
 		 * (hooks, listeners, transport, setup) can never inherit a reason
 		 * from a request that did not cause it. Undefined means the
@@ -878,7 +878,7 @@ export class AgentRuntime {
 					// content (projecting it into content would replay tool_use blocks
 					// the model never gets results for). A turn that is only such
 					// activity is not empty: keep the message so the transcript and
-					// display projection retain it. Replay stays safe — the codec
+					// display projection retain it. Replay stays safe - the codec
 					// renders empty content as its placeholder text block.
 					const hasModelToolActivity = this.hasModelToolActivity(message);
 					// A turn that produced no content because it hit the output-token
@@ -1113,7 +1113,7 @@ export class AgentRuntime {
 		// Never insert between an assistant tool_use and its tool_result: a
 		// resumed session can be seeded with a trailing unresolved tool call,
 		// and a user message in that gap breaks providers' pairing rules. The
-		// context goes in ahead of that call instead — deferring it would only
+		// context goes in ahead of that call instead - deferring it would only
 		// deliver if the model happened to call a tool next, and the buffer
 		// reset at the following run start would otherwise drop it.
 		const lastMessage = this.state.messages.at(-1);
@@ -1168,7 +1168,7 @@ export class AgentRuntime {
 		await this.emit({
 			type: "status-notice",
 			snapshot: this.snapshot(),
-			message: `output-token limit reached before a tool call — nudging for a more concise response (attempt ${this.maxTokensRecoveryCount}/${MAX_TOKENS_RECOVERY_LIMIT})`,
+			message: `output-token limit reached before a tool call - nudging for a more concise response (attempt ${this.maxTokensRecoveryCount}/${MAX_TOKENS_RECOVERY_LIMIT})`,
 			metadata: {
 				kind: "max_tokens_recovery",
 				reason: "max_tokens_recovery",
@@ -1263,7 +1263,7 @@ export class AgentRuntime {
 			await this.emit({
 				type: "status-notice",
 				snapshot: this.snapshot(),
-				message: `provider error — retrying (attempt ${attempt}/${PROVIDER_ERROR_MAX_RETRIES})`,
+				message: `provider error - retrying (attempt ${attempt}/${PROVIDER_ERROR_MAX_RETRIES})`,
 				metadata: {
 					kind: "provider_error_retry",
 					reason: "provider_error_retry",
@@ -1383,7 +1383,7 @@ export class AgentRuntime {
 		await this.emit({
 			type: "status-notice",
 			snapshot: this.snapshot(),
-			message: "context window exceeded — compacting and retrying",
+			message: "context window exceeded - compacting and retrying",
 			metadata: {
 				kind: "context_overflow_recovery",
 				reason: "context_overflow_recovery",
@@ -1442,7 +1442,7 @@ export class AgentRuntime {
 			return false;
 		}
 		// Provider-executed tool activity lives in metadata, not content, and has
-		// already happened — replaying the turn would repeat its side effects.
+		// already happened - replaying the turn would repeat its side effects.
 		return !this.hasModelToolActivity(turn.message);
 	}
 
@@ -1463,19 +1463,19 @@ export class AgentRuntime {
 	 *
 	 * The truncated turn is not yet persisted while this runs (the loop records
 	 * a turn only after it returns), so whenever the attempt ends without a
-	 * replacement turn — compaction threw, the retry was aborted, or it errored
-	 * with nothing for the loop to execute — the truncated turn is recorded
+	 * replacement turn - compaction threw, the retry was aborted, or it errored
+	 * with nothing for the loop to execute - the truncated turn is recorded
 	 * first and the failure surfaces afterwards; the partial answer is never
 	 * lost to the recovery attempt.
 	 *
 	 * A retry that does come back is handed to the loop unjudged: the run loop
 	 * remains the only place that decides whether a turn is acceptable. When
-	 * compaction cannot help — nothing to remove, the retry truncated again, or
-	 * the turn was never eligible — the loop's own nudge-and-retry recovery
+	 * compaction cannot help - nothing to remove, the retry truncated again, or
+	 * the turn was never eligible - the loop's own nudge-and-retry recovery
 	 * takes over, so this runs first and at most once per run.
 	 * Telemetry here is purely
-	 * observational — `started`, then `retried` with the retry's finish reason
-	 * when the attempt ran, or `failed` when it could not — so it never claims
+	 * observational - `started`, then `retried` with the retry's finish reason
+	 * when the attempt ran, or `failed` when it could not - so it never claims
 	 * anything about the run outcome and cannot contradict it.
 	 */
 	private async retryTruncatedTurnWithCompaction(first: {
@@ -1504,12 +1504,12 @@ export class AgentRuntime {
 				type: "status-notice",
 				snapshot: this.snapshot(),
 				message:
-					"response hit the output token limit — compacting and retrying",
+					"response hit the output token limit - compacting and retrying",
 				metadata: { ...noticeMetadata, phase: "started" },
 			});
 			// Prepare (compact) once; a transient provider error on the compacted
 			// request gets the same bounded retry policy as any other request, but
-			// re-issues the *same* prepared request — the transcript has not
+			// re-issues the *same* prepared request - the transcript has not
 			// changed between a 429 and its retry, so recompacting would only repeat
 			// the compaction's notices, telemetry, and any summarizer call.
 			const prepared = await this.prepareModelRequest({
@@ -1520,7 +1520,7 @@ export class AgentRuntime {
 			);
 		} catch (error) {
 			if (error instanceof ContextWindowOverflowError) {
-				// Nothing to compact — keep the truncated turn so the loop
+				// Nothing to compact - keep the truncated turn so the loop
 				// surfaces the max-tokens error rather than an overflow error.
 				this.captureTaskLifecycle(TASK_MAX_TOKENS_RECOVERY_EVENT, {
 					phase: "failed",
@@ -1548,7 +1548,7 @@ export class AgentRuntime {
 			await this.recordAssistantMessage(first.message, first.finishReason);
 			throw error;
 		}
-		// `retried` states only that the compaction and retry ran — it makes no
+		// `retried` states only that the compaction and retry ran - it makes no
 		// claim about the run, which may still reject this turn. The retry's
 		// finish reason rides along as an observed fact; pair it with the run
 		// outcome to see what became of the turn.
@@ -1567,8 +1567,8 @@ export class AgentRuntime {
 			!retry.message.content.some((part) => part.type === "tool-call")
 		) {
 			await this.recordAssistantMessage(first.message, first.finishReason);
-			// An errored retry that still produced output — text, or a
-			// provider-executed tool that has already run — is observable work,
+			// An errored retry that still produced output - text, or a
+			// provider-executed tool that has already run - is observable work,
 			// not a discardable draft: keep it alongside the truncated turn so the
 			// transcript shows what happened (the loop records such a turn before
 			// failing, too). Only a retry that produced nothing is dropped.
@@ -1582,7 +1582,7 @@ export class AgentRuntime {
 		}
 		// A retry that came back with nothing is no replacement either: handing it
 		// on would trip the loop's empty-response guard, which throws before
-		// recording anything — discarding the truncated answer and reporting a
+		// recording anything - discarding the truncated answer and reporting a
 		// misleading error. Keep the truncated turn, exactly as when there was
 		// nothing to compact, and let the loop surface the max-tokens error.
 		if (
@@ -1991,9 +1991,9 @@ export class AgentRuntime {
 					if (event.error) {
 						this.state.lastError = event.error;
 						// Models that classify at their own error boundary (where the
-						// raw provider error is still structured) win. Anything else —
+						// raw provider error is still structured) win. Anything else -
 						// custom `AgentModel` implementations, adapters that carry only
-						// a flattened message — is classified from the message so it
+						// a flattened message - is classified from the message so it
 						// stays eligible for overflow recovery.
 						this.state.lastErrorClass =
 							event.errorClass ?? classifyProviderError(event.error);
@@ -2262,7 +2262,7 @@ export class AgentRuntime {
 		});
 		if (overflowRecovery) {
 			// Only retry a provider-rejected overflow with a request that is
-			// actually smaller — anything else is guaranteed to fail again.
+			// actually smaller - anything else is guaranteed to fail again.
 			//
 			// Serialized length is a coarse proxy for tokens, which is all this
 			// backstop needs: it answers "did anything get removed at all" for
@@ -2723,7 +2723,7 @@ export class AgentRuntime {
 				// Failures the model layer already recorded at its own error
 				// boundary (`provider.stream`, carried across the stream's
 				// string-flattening boundary as `finish.errorReported`) must not
-				// be re-reported here — that exactly doubled `sdk.error` volume.
+				// be re-reported here - that exactly doubled `sdk.error` volume.
 				// Everything else still reports: loop-originated failures, and
 				// failures from model implementations that do not record their
 				// own telemetry.

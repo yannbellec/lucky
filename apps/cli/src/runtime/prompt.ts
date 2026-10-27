@@ -86,7 +86,7 @@ function resolveMentionPath(filePath: string): string {
  * prompt. When the session registers the runtime's `skills` tool (its
  * description requires the model to invoke it on slash-command references),
  * the typed command passes through and the instructions arrive as a tool
- * result — keeping the persisted transcript as what the user typed. When the
+ * result - keeping the persisted transcript as what the user typed. When the
  * tool is unavailable (yolo preset, user toggle), expansion is the only
  * delivery path.
  */

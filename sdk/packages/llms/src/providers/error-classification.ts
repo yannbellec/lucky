@@ -10,7 +10,7 @@ const CONTEXT_WINDOW_CODES = new Set(["context_length_exceeded"]);
 /**
  * Message shapes providers use for context-window overflow. Sourced from the
  * legacy extension's per-provider detectors (OpenAI, OpenRouter, Anthropic,
- * Cerebras, Bedrock, Vercel gateway / Alibaba Qwen) — the wire messages are
+ * Cerebras, Bedrock, Vercel gateway / Alibaba Qwen) - the wire messages are
  * provider-authored and identical on the SDK arch; only the surrounding
  * error-object structure changed (handled by the signal walk below).
  */
@@ -46,7 +46,7 @@ const AUTH_STATUSES = new Set([401, 403]);
 const MAX_WALK_DEPTH = 8;
 
 /**
- * Object keys whose values carry further error detail — human-readable text
+ * Object keys whose values carry further error detail - human-readable text
  * (message/detail/error_message; strings are recorded by the string branch)
  * or nested error structures the providers and gateways wrap around them.
  */
@@ -106,7 +106,7 @@ function collectSignals(
 		if (parsed !== undefined && typeof parsed === "object") {
 			collectSignals(parsed, signals, visited, depth + 1);
 		} else {
-			// Not full JSON — still mine embedded `"code": 400` / `"status": 400`.
+			// Not full JSON - still mine embedded `"code": 400` / `"status": 400`.
 			const embedded = text.match(/"(?:code|status)"\s*:\s*"?(\d{3})"?/);
 			if (embedded) {
 				recordStatus(signals, embedded[1]);
@@ -155,8 +155,8 @@ function collectSignals(
  * Apply the detection rules to collected signals. Shared between the typed
  * AI SDK pre-pass and the structural walk so both paths classify identically:
  * a context-window verdict requires an overflow message pattern (or explicit
- * provider code), no rate-limit signal, and — when any HTTP status is
- * visible — an invalid-request-family status.
+ * provider code), no rate-limit signal, and - when any HTTP status is
+ * visible - an invalid-request-family status.
  */
 function verdictFromSignals(signals: ErrorSignals): ProviderErrorClass {
 	if ([...signals.codes].some((code) => CONTEXT_WINDOW_CODES.has(code))) {
@@ -213,7 +213,7 @@ function collectSignalsFrom(values: readonly unknown[]): ErrorSignals {
  * falls back to the structural walk.
  *
  * `isInstance()` is the AI SDK's symbol-based guard, so it holds across
- * duplicated package copies — but it can never match gateway-forwarded plain
+ * duplicated package copies - but it can never match gateway-forwarded plain
  * JSON payloads that merely *name* an AI SDK error (ENG-2394); those stay the
  * structural walk's job.
  */
@@ -224,12 +224,12 @@ function classifyTypedError(
 	if (depth > MAX_WALK_DEPTH) {
 		return undefined;
 	}
-	// Specific classes before the generic guard — every AI SDK error
+	// Specific classes before the generic guard - every AI SDK error
 	// subclasses AISDKError, so the generic check would swallow them.
 	if (RetryError.isInstance(error)) {
 		// Only the final attempt decides the verdict: earlier attempts were
 		// retried away (typically rate limits) and must neither veto nor fake
-		// its classification — so an untyped final error is walked alone
+		// its classification - so an untyped final error is walked alone
 		// rather than falling back to the whole wrapper's `errors` array.
 		const last = error.lastError ?? error.errors[error.errors.length - 1];
 		if (last == null) {
@@ -242,8 +242,8 @@ function classifyTypedError(
 	}
 	if (APICallError.isInstance(error)) {
 		// The typed statusCode is the sole authoritative status and gates the
-		// whole verdict: nothing in the payload — not even an explicit
-		// overflow code echoed inside a rate-limit or server-failure body —
+		// whole verdict: nothing in the payload - not even an explicit
+		// overflow code echoed inside a rate-limit or server-failure body -
 		// out-votes the HTTP layer. Absent a statusCode, the payload decides.
 		const status =
 			typeof error.statusCode === "number" ? error.statusCode : undefined;
@@ -262,7 +262,7 @@ function classifyTypedError(
 		return verdictFromSignals(signals);
 	}
 	if (TypeValidationError.isInstance(error)) {
-		// `value` holds the payload that failed validation — for gateway
+		// `value` holds the payload that failed validation - for gateway
 		// streams, the upstream provider rejection. Only a definitive verdict
 		// counts; "unknown" defers to the caller's structural walk.
 		const verdict = verdictFromSignals(collectSignalsFrom([error.value]));
@@ -278,12 +278,12 @@ function classifyTypedError(
 /**
  * Classify a raw provider error (or an already-flattened error message) into
  * a {@link ProviderErrorClass}. Call this where the structured error object
- * is still available — `extractErrorMessage` discards the structure this
+ * is still available - `extractErrorMessage` discards the structure this
  * classification relies on.
  *
  * Typed AI SDK error instances are classified first via their typed fields;
- * everything else — including plain JSON payloads that only *look* like AI
- * SDK errors — goes through the conservative structural walk.
+ * everything else - including plain JSON payloads that only *look* like AI
+ * SDK errors - goes through the conservative structural walk.
  */
 export function classifyProviderError(error: unknown): ProviderErrorClass {
 	try {
@@ -324,14 +324,14 @@ const RETRYABLE_STATUSES = new Set([
  * The sole message fallback. OpenRouter forwards an upstream failure mid-stream
  * as a bare "Provider returned error" string with no HTTP status and no typed
  * error to inspect, so there is nothing else to key on. Every other decision
- * comes from the AI SDK's typed `isRetryable` flag or the HTTP status — not
+ * comes from the AI SDK's typed `isRetryable` flag or the HTTP status - not
  * from matching free-form message text.
  */
 const PROVIDER_RETURNED_ERROR_PATTERN = /provider returned error/i;
 
 /**
  * Retryability taken from a real AI SDK error instance via its own typed
- * `isRetryable` flag, rather than re-deriving it — the maintainable path that
+ * `isRetryable` flag, rather than re-deriving it - the maintainable path that
  * stays correct as the SDK evolves. Returns `undefined` when the error is not
  * a recognized instance, so {@link isRetryableProviderError} falls back to the
  * structural walk.

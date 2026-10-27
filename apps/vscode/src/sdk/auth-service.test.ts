@@ -155,7 +155,7 @@ vi.mock("./provider-migration", () => ({
 }))
 
 // ---------------------------------------------------------------------------
-// Test helpers — typed access to private members for testing
+// Test helpers - typed access to private members for testing
 // ---------------------------------------------------------------------------
 
 /** Type that exposes private members for test access */
@@ -257,7 +257,7 @@ describe("AuthService", () => {
 		})
 	})
 
-	describe("getInfo() — auth state for webview", () => {
+	describe("getInfo() - auth state for webview", () => {
 		it("returns unauthenticated state when not logged in", () => {
 			const info = authService.getInfo()
 			// Unset proto message fields are `undefined`, not `null`.
@@ -394,7 +394,7 @@ describe("AuthService", () => {
 			testAccess(authService)._authenticated = true
 			// null models an invalid-grant rejection; transient failures throw.
 			// The SDK resolver owns the user.auth_logged_out (token_invalid)
-			// event for this case — the adapter must stay silent or the event
+			// event for this case - the adapter must stay silent or the event
 			// double-counts (see the boundary test below with the real resolver).
 			vi.mocked(getValidClineCredentials).mockResolvedValue(null)
 
@@ -478,7 +478,7 @@ describe("AuthService", () => {
 			await authService.createAuthRequest()
 			expect(mockGlobalState.get("welcomeViewCompleted")).toBeUndefined()
 
-			// Complete the OAuth exchange — now the flag must flip.
+			// Complete the OAuth exchange - now the flag must flip.
 			resolveLogin(createTestOAuthCredentials())
 			await waitForCondition(() => mockGlobalState.get("welcomeViewCompleted") === true)
 		})
@@ -501,7 +501,7 @@ describe("AuthService", () => {
 		})
 	})
 
-	describe("handleDeauth() — logout", () => {
+	describe("handleDeauth() - logout", () => {
 		it("clears auth state and pushes unauthenticated state", async () => {
 			const authInfo = createTestAuthInfo()
 			testAccess(authService)._clineAuthInfo = authInfo
@@ -666,7 +666,7 @@ describe("AuthService", () => {
 			expect(testAccess(authService)._authenticated).toBe(false)
 			expect(testAccess(authService)._clineAuthInfo).toBeNull()
 			expect(mockProviderSettings.get("cline")?.auth).toBeUndefined()
-			// The SDK resolver owns the token_invalid event — no adapter emission.
+			// The SDK resolver owns the token_invalid event - no adapter emission.
 			expect(mockCaptureAuthLoggedOut).not.toHaveBeenCalled()
 		})
 	})
@@ -695,7 +695,7 @@ describe("AuthService", () => {
 
 			expect(testAccess(authService)._authenticated).toBe(false)
 			expect(testAccess(authService)._clineAuthInfo).toBeNull()
-			// Startup with nothing stored is not a logout — no event.
+			// Startup with nothing stored is not a logout - no event.
 			expect(mockCaptureAuthLoggedOut).not.toHaveBeenCalled()
 		})
 
@@ -732,7 +732,7 @@ describe("AuthService", () => {
 			expect(mockCaptureAuthLoggedOut).toHaveBeenCalledWith("cline", LogoutReason.RESTORE_ERROR)
 		})
 
-		it("emits exactly one auth_logged_out — from the SDK resolver — when the stored refresh token is rejected", async () => {
+		it("emits exactly one auth_logged_out - from the SDK resolver - when the stored refresh token is rejected", async () => {
 			// Boundary test: run the REAL getValidClineCredentials (the module
 			// mock normally hides its telemetry) so a reintroduced adapter-side
 			// emission would surface as a second event here. The specifier is a

@@ -32,7 +32,7 @@ export const QwenProvider = ({ showModelOptions, isPopup, currentMode }: QwenPro
 
 	// Catalog and default come from the SDK via gRPC. The SDK consumes
 	// `apiLine` from the effective provider config so regional selection
-	// (china vs international) happens upstream — the webview sees a
+	// (china vs international) happens upstream - the webview sees a
 	// single catalog per render.
 	const { models, selectedModelId, selectedModelInfo, hideUsageCost } = useStaticProviderSelection(
 		"qwen",

@@ -254,7 +254,7 @@ export class AgentEventBridge {
 		fallbackTelemetry?: CoreSessionConfig["telemetry"],
 	): void {
 		// Plugin setup() runs during session bootstrap, before the session is
-		// registered in the sessions map — the fallback keeps setup-time
+		// registered in the sessions map - the fallback keeps setup-time
 		// telemetry (and any other pre-registration events) from being
 		// silently dropped, mirroring handlePluginLog's fallback logger.
 		const session = this.deps.getSession(rootSessionId);

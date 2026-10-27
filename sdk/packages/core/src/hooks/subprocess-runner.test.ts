@@ -92,7 +92,7 @@ describe("runSubprocessEvent", () => {
 	it("censors a hook whose stdin write is still pending", async () => {
 		const observed: Array<{ durationMs: number; exited: boolean }> = [];
 		// A payload past the pipe buffer sent to a hook that never reads stdin
-		// leaves the write pending for the hook's whole life — the shape that
+		// leaves the write pending for the hook's whole life - the shape that
 		// made the observation window arm too late on Windows. (The call below
 		// only returns once that write settles; the run itself never awaits a
 		// detached hook, so this costs the agent nothing.)
@@ -116,7 +116,7 @@ describe("runSubprocessEvent", () => {
 
 	it("settles after exit even when a spawned child keeps the stdio pipes open", async () => {
 		// The hook exits immediately, but its detached-and-inheriting child
-		// holds the stdout pipe open well past it — "close" alone would keep
+		// holds the stdout pipe open well past it - "close" alone would keep
 		// the caller waiting on the grandchild.
 		const script = [
 			`const { spawn } = require("child_process");`,
@@ -139,7 +139,7 @@ describe("runSubprocessEvent", () => {
 
 	it("releases the stdio pipes once the exit fallback settles", async () => {
 		// Same shape as above: the grandchild inherits the hook's stdout and
-		// outlives it. Settling is not enough on its own — the pipe handles
+		// outlives it. Settling is not enough on its own - the pipe handles
 		// the host still holds are what keep it alive (and keep collecting
 		// output) until the grandchild goes away, so they have to be dropped
 		// along with the result.

@@ -138,7 +138,7 @@ function parseLinkParts(value: string): LinkParts | null {
 
 /**
  * A link is deceptive when its visible text reads as a URL that does not
- * match the real destination — the one shape where a click genuinely
+ * match the real destination - the one shape where a click genuinely
  * surprises the user. Only those links get the confirmation dialog;
  * ordinary external links open directly. The label and destination must
  * agree on hostname and port, and on scheme when the label states one.
@@ -321,7 +321,7 @@ const markdownComponents = {
  * those anchors and leaves the destination on
  * {@link DIAGRAM_LINK_HREF_ATTRIBUTE}, so they cannot navigate the webview on
  * their own. Re-attach them here to the same confirmation the deceptive-link
- * path uses — a diagram label is authored independently of its destination, so
+ * path uses - a diagram label is authored independently of its destination, so
  * every diagram link warrants confirmation rather than a direct open.
  */
 const DIAGRAM_LINK_MAX_DRAG_PX = 5;

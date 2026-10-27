@@ -1,7 +1,7 @@
 import { safeJsonParse, safeJsonStringify } from "@cline/shared";
 
 export function extractErrorMessage(error: unknown): string {
-	// Generic SDK wrappers carry no signal of their own — when present we prefer
+	// Generic SDK wrappers carry no signal of their own - when present we prefer
 	// the underlying cause/detail (e.g. AI SDK's AI_NoOutputGeneratedError).
 	const GENERIC_WRAPPER_MESSAGES = new Set([
 		"no output generated. check the stream for errors.",
@@ -73,7 +73,7 @@ export function extractErrorMessage(error: unknown): string {
 		}
 		if (typeof value === "string") {
 			// JSON.parse never yields undefined, so undefined here means the
-			// string wasn't JSON — fall back to the trimmed string itself.
+			// string wasn't JSON - fall back to the trimmed string itself.
 			const parsed = safeJsonParse<unknown>(value);
 			if (parsed !== undefined) {
 				return extractStructuredMessage(parsed);
@@ -90,7 +90,7 @@ export function extractErrorMessage(error: unknown): string {
 			const causeMessage = extractStructuredMessage(cause);
 
 			// Generic wrappers (e.g. "No output generated...") only matter as a
-			// fallback — surface the underlying detail/cause instead.
+			// fallback - surface the underlying detail/cause instead.
 			if (message && isGenericWrapperMessage(message)) {
 				return detailMessage ?? causeMessage ?? undefined;
 			}
@@ -144,7 +144,7 @@ export function extractErrorMessage(error: unknown): string {
 		return structuredMessage;
 	}
 
-	// String() on a plain object yields "[object Object]" — JSON is at least
+	// String() on a plain object yields "[object Object]" - JSON is at least
 	// actionable for the user and for error-classification downstream.
 	if (typeof error === "object" && error !== null) {
 		const json = safeJsonStringify(error);

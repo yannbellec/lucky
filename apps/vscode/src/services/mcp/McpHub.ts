@@ -141,7 +141,7 @@ export class McpHub {
 	private listChangedRefreshInFlight: Map<string, Promise<void>> = new Map()
 	// Generation counter per key: every (re)schedule starts a new generation,
 	// and a refresh whose generation is no longer current when it would
-	// publish has been superseded by a newer notification — it drops its
+	// publish has been superseded by a newer notification - it drops its
 	// result instead of briefly publishing an obsolete list.
 	private listChangedRefreshGeneration: Map<string, number> = new Map()
 	// Deadline per key that caps how long re-debouncing can defer a refresh:
@@ -240,7 +240,7 @@ export class McpHub {
 			const result = McpSettingsSchema.safeParse(config)
 			if (!result.success) {
 				// Build a human-readable summary of what failed.
-				// Zod paths look like ["mcpServers", "linear", "transport", "url"] — we want to surface
+				// Zod paths look like ["mcpServers", "linear", "transport", "url"] - we want to surface
 				// the server name (index 1) and the field path so users know exactly what to fix.
 				const issuesByServer = new Map<string, string[]>()
 				for (const issue of result.error.issues) {
@@ -261,7 +261,7 @@ export class McpHub {
 				HostProvider.window
 					.showMessage({
 						type: ShowMessageType.ERROR,
-						message: `MCP settings schema error — no servers were loaded.`,
+						message: `MCP settings schema error - no servers were loaded.`,
 						options: {
 							detail: `${settingsPath}\n\n${serverSummaries}`,
 							modal: false,
@@ -631,7 +631,7 @@ export class McpHub {
 						isStillWanted: async () => {
 							const settings = await this.readAndValidateMcpSettingsFile()
 							if (!settings) {
-								// Can't read settings — don't kill the reconnect
+								// Can't read settings - don't kill the reconnect
 								// chain over a transient read failure
 								return true
 							}
@@ -642,7 +642,7 @@ export class McpHub {
 							// A retry reconnects with the config captured when this
 							// connection was created. If settings now define a
 							// different connection-relevant config, the settings
-							// watcher owns reconnection — retrying here would
+							// watcher owns reconnection - retrying here would
 							// resurrect the obsolete config (and displace the
 							// watcher's failed attempt at the new one).
 							return !this.configsRequireRestart(config, serverConfig)
@@ -843,7 +843,7 @@ export class McpHub {
 
 	/**
 	 * A server that never declared a capability has an authoritatively empty
-	 * list for it — not a transient failure worth retrying. Undefined
+	 * list for it - not a transient failure worth retrying. Undefined
 	 * capabilities (not yet negotiated) are treated as supported.
 	 */
 	private static serverSupports(connection: McpConnection, capability: "tools" | "resources" | "prompts"): boolean {
@@ -1087,7 +1087,7 @@ export class McpHub {
 		// Look the connection up fresh: it may have been deleted (or replaced
 		// by a reconnect) while the debounce timer was pending. A superseded
 		// run (a newer notification re-scheduled this key) skips the fetch
-		// outright — the newer refresh will fetch fresher data.
+		// outright - the newer refresh will fetch fresher data.
 		const connection = this.connections.find((conn) => conn.server.name === serverName)
 		if (!connection || connection.server.disabled || !connection.client || superseded()) {
 			return "skipped"
@@ -1097,7 +1097,7 @@ export class McpHub {
 		// replacement fetched fresh lists at connect time, after the change
 		// that produced this notification) or a newer notification superseded
 		// it (that refresh will fetch fresher data). A stale run must neither
-		// publish its (older) result nor retry — hence "skipped", including
+		// publish its (older) result nor retry - hence "skipped", including
 		// for fetch failures, which staleness explains (e.g. the transport
 		// was torn down mid-flight by a reconnect).
 		const stale = () => superseded() || this.connections.find((conn) => conn.server.name === serverName) !== connection
@@ -1190,7 +1190,7 @@ export class McpHub {
 			// Remove from published state BEFORE awaiting the close handshake:
 			// concurrent publishers (list refreshes finishing their fetch,
 			// notifyWebviewOfServerChanges callers) read this.connections after
-			// their own suspension points, and must not see — or re-publish —
+			// their own suspension points, and must not see - or re-publish -
 			// a connection that is being torn down.
 			this.connections = this.connections.filter((conn) => conn.server.name !== name)
 			try {
@@ -1426,7 +1426,7 @@ export class McpHub {
 
 	/**
 	 * True when an unauthenticated server's settings entry now carries an access
-	 * token — e.g. the CLI or another window completed OAuth for it. The settings
+	 * token - e.g. the CLI or another window completed OAuth for it. The settings
 	 * watcher uses this to reconnect the server so it picks up the credentials.
 	 */
 	private serverGainedOAuthTokens(connection: McpConnection, newConfig: McpServerConfig): boolean {
@@ -2090,7 +2090,7 @@ export class McpHub {
 			return
 		}
 
-		// Fingerprint changed — debounce to coalesce rapid-fire changes
+		// Fingerprint changed - debounce to coalesce rapid-fire changes
 		if (this.toolListChangeDebounceTimer) {
 			clearTimeout(this.toolListChangeDebounceTimer)
 		}

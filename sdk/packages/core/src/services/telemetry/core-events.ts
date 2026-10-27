@@ -354,7 +354,7 @@ export function captureAuthLoggedOut(
  * Fires when a token refresh fails for a reason that does NOT invalidate the
  * session (network error, timeout, 5xx) and stored credentials were kept.
  * Before the transient-vs-invalid_grant fix, `tokenExpired: true` instances
- * were misclassified as invalid grants and wiped stored credentials — this
+ * were misclassified as invalid grants and wiped stored credentials - this
  * event is the "prevented logout" counter for tracking that fix in
  * production.
  */
@@ -380,7 +380,7 @@ export function captureAuthRefreshSoftFailure(
 /**
  * Fires when a run failed with an auth-like error, credentials were
  * refreshed, and the run was retried once. `recovered: true` means the retry
- * completed — a run that would previously have surfaced a raw provider 401
+ * completed - a run that would previously have surfaced a raw provider 401
  * (e.g. a teammate stranded on a spawn-time token snapshot past its TTL).
  */
 export function captureAuthRunRetry(
@@ -400,7 +400,7 @@ export function captureAuthRunRetry(
  *
  * Unlike the OAuth/device-code `captureAuth*` events, the configure step is a
  * synchronous local credential save with no network roundtrip, so there is no
- * start/fail counterpart — the credential is validated lazily on the first
+ * start/fail counterpart - the credential is validated lazily on the first
  * subsequent API call. Mirrors the `{ provider }` payload shape of
  * {@link captureAuthSucceeded} for funnel consistency.
  */
@@ -539,9 +539,9 @@ export function captureTokenUsage(
 	telemetry: ITelemetryService | undefined,
 	properties: {
 		ulid: string;
-		/** Uncached input tokens only — disjoint from the cache buckets. */
+		/** Uncached input tokens only - disjoint from the cache buckets. */
 		tokensIn: number;
-		/** Non-reasoning output tokens only — reasoningTokenCount is disjoint from this. */
+		/** Non-reasoning output tokens only - reasoningTokenCount is disjoint from this. */
 		tokensOut: number;
 		cacheWriteTokens?: number;
 		cacheReadTokens?: number;
@@ -810,7 +810,7 @@ export function captureSubagentExecution(
 
 /**
  * Records how long a fire-and-forget hook ran. Detached hooks are never
- * awaited, so their runtime is otherwise invisible — this is the evidence for
+ * awaited, so their runtime is otherwise invisible - this is the evidence for
  * whether any of them could safely be made blocking. `exited: false` marks a
  * censored observation: the hook was still running when the observation
  * window closed, so treat `durationMs` as a lower bound and count these
@@ -853,11 +853,11 @@ export function captureHookDiscovery(
  * Identifies which compaction implementation produced a
  * `task.compaction_executed` / `task.compaction_skipped` event.
  *
- * - `basic`   — built-in token-budget truncation
+ * - `basic`   - built-in token-budget truncation
  *   (see `extensions/context/basic-compaction.ts`).
- * - `agentic` — built-in LLM-powered summarization
+ * - `agentic` - built-in LLM-powered summarization
  *   (see `extensions/context/agentic-compaction.ts`).
- * - `custom`  — user-supplied `compaction.compact()` callback on
+ * - `custom`  - user-supplied `compaction.compact()` callback on
  *   `CoreSessionConfig`.
  */
 export type TelemetryCompactionStrategy = "basic" | "agentic" | "custom";
@@ -865,10 +865,10 @@ export type TelemetryCompactionStrategy = "basic" | "agentic" | "custom";
 /**
  * Trigger mode for a compaction attempt.
  *
- * - `auto`   — fired automatically by `createContextCompactionPrepareTurn`
+ * - `auto`   - fired automatically by `createContextCompactionPrepareTurn`
  *   when input tokens reach the fixed compaction threshold.
- * - `manual` — user-initiated (e.g. CLI `/compact`).
- * - `overflow_recovery` — forced by the runtime after a provider rejected
+ * - `manual` - user-initiated (e.g. CLI `/compact`).
+ * - `overflow_recovery` - forced by the runtime after a provider rejected
  *   the request as exceeding the model's context window.
  */
 export type TelemetryCompactionMode = "auto" | "manual" | "overflow_recovery";
@@ -889,7 +889,7 @@ export interface CaptureCompactionExecutedProperties {
 	thresholdRatio: number;
 	durationMs: number;
 	// Name matches the rest of the TASK-namespace capture functions
-	// (`captureTaskCompleted`, `captureToolUsage`, etc.) — using `provider`,
+	// (`captureTaskCompleted`, `captureToolUsage`, etc.) - using `provider`,
 	// not `providerId`, keeps downstream PostHog joins consistent.
 	provider?: string;
 	modelId?: string;
@@ -913,7 +913,7 @@ export interface CaptureCompactionSkippedProperties {
 	/**
 	 * Why the strategy decided not to compact. Currently only one value is
 	 * emitted by the wrapper:
-	 * - `no_result` — strategy returned `undefined` (e.g. there was nothing
+	 * - `no_result` - strategy returned `undefined` (e.g. there was nothing
 	 *   safe to remove). Strategy *exceptions* propagate up instead of
 	 *   firing telemetry, so no `strategy_error` value is emitted today.
 	 * The field is kept loosely typed (`string`) so additional reasons can

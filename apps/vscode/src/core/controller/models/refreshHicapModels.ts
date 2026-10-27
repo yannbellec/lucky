@@ -8,7 +8,7 @@ import { type ProviderCatalogController, resolveProviderModelsRecord } from "./p
  *
  * Model catalogs are consolidated in the SDK: `resolveProviderConfig` serves
  * the models.dev-backed catalog and, when a Hicap API key is configured,
- * merges in the SDK's authenticated Hicap model fetch — the same source the
+ * merges in the SDK's authenticated Hicap model fetch - the same source the
  * CLI uses.
  */
 export async function refreshHicapModels(

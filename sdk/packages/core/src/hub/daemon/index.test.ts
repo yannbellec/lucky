@@ -627,7 +627,7 @@ describe("ensureDetachedHubServer", () => {
 			await pending;
 			expect(spawn).not.toHaveBeenCalled();
 			// The hub survived the retirement attempt, so its discovery record
-			// must not be cleared — clearing it would leave the live daemon
+			// must not be cleared - clearing it would leave the live daemon
 			// undiscoverable.
 			expect(clearHubDiscovery).not.toHaveBeenCalled();
 		} finally {

@@ -281,7 +281,7 @@ function readTraceSamplePercent(): number {
  * The user's global telemetry opt-out (shared settings file written by the
  * extension/CLI settings flows). Spans bypass the ITelemetryService wrapper
  * that enforces opt-out for events and metrics, so the relay path re-checks
- * the setting per stream — which also honors mid-session opt-outs. The
+ * the setting per stream - which also honors mid-session opt-outs. The
  * direct Langfuse path is intentionally not gated here: it only activates
  * on explicit operator-supplied credentials.
  */
@@ -294,7 +294,7 @@ async function isTelemetryOptedOutGlobally(): Promise<boolean> {
 		raw = readFileSync(resolveGlobalSettingsPath(), "utf8");
 	} catch (error) {
 		// A genuinely absent file means no opt-out was ever recorded (first
-		// run). Every other failure — permissions, I/O, no fs in this runtime —
+		// run). Every other failure - permissions, I/O, no fs in this runtime -
 		// fails closed: consent that cannot be verified is not consent.
 		return (error as NodeJS.ErrnoException)?.code !== "ENOENT";
 	}
@@ -310,7 +310,7 @@ async function isTelemetryOptedOutGlobally(): Promise<boolean> {
 
 /**
  * True only when the globally registered tracer provider is the intended
- * OTLP collector relay — identified by the marker its creator stamped, not
+ * OTLP collector relay - identified by the marker its creator stamped, not
  * by "some recording tracer exists". A console-only tracer must neither
  * enable the relay path nor suppress direct Langfuse export.
  */

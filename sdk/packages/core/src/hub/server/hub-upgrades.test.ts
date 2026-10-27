@@ -282,7 +282,7 @@ describe("Hub app-server upgrades", () => {
 			const { requestToolApproval } = await import(
 				"./handlers/approval-handlers"
 			);
-			// Raise an approval while nobody is subscribed — the old Hub lost
+			// Raise an approval while nobody is subscribed - the old Hub lost
 			// this event forever and parked the turn.
 			const approvalPromise = requestToolApproval(ctx, {
 				sessionId: "approval-session",

@@ -6,7 +6,7 @@ import type { MessageWithMetadata } from "@cline/shared";
  * Child agents of a chat session: `spawn_agent` subagent runs and team-task
  * teammate runs. Both are persisted as sessions parented to the root session
  * (see the SDK's team-child-session-manager), which is the only place their
- * real status lives — the tool events forwarded to the webview carry no agent
+ * real status lives - the tool events forwarded to the webview carry no agent
  * attribution at all.
  */
 export type SessionAgentRecord = {
@@ -16,7 +16,7 @@ export type SessionAgentRecord = {
 	/** "subagent" for spawn_agent runs, "teamtask" for team-task runs. */
 	kind: "subagent" | "teamtask";
 	status: string;
-	/** The task the agent was given — its first prompt. */
+	/** The task the agent was given - its first prompt. */
 	prompt?: string;
 	/** Most recent thing the agent did, for an at-a-glance progress line. */
 	lastAction?: string;
@@ -104,7 +104,7 @@ function asRecord(value: unknown): Record<string, unknown> | null {
  * Summarize the agent's most recent step from the tail of its transcript.
  *
  * A tool call names itself usefully ("Running read_files"), so it wins over
- * prose; assistant text is the fallback. Reasoning blocks are skipped — they
+ * prose; assistant text is the fallback. Reasoning blocks are skipped - they
  * describe intent rather than an action taken.
  */
 function deriveLastAction(messages: unknown[]): string | undefined {

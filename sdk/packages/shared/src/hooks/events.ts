@@ -176,7 +176,7 @@ export interface HookEventPayloadBase {
 	 * Structured workspace and git metadata for the session.
 	 *
 	 * Contains `rootPath`, `hint`, `associatedRemoteUrls`,
-	 * `latestGitCommitHash`, and `latestGitBranchName` — the same data as
+	 * `latestGitCommitHash`, and `latestGitBranchName` - the same data as
 	 * `workspaceRoots[0]` plus the git fields. Hook scripts can use this for
 	 * branch-aware logic or commit attribution without running `git` themselves.
 	 *

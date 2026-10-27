@@ -73,11 +73,11 @@ export function parseJsonStream(input: unknown): unknown {
 	const text = input.trimStart();
 	if (text[0] !== "{" && text[0] !== "[") return input;
 
-	// Always attempt a straight parse first — this is the common path.
+	// Always attempt a straight parse first - this is the common path.
 	try {
 		return JSON.parse(text);
 	} catch {
-		// Not valid JSON — attempt repair below.
+		// Not valid JSON - attempt repair below.
 	}
 
 	// If the text has an unterminated string literal the content was almost
@@ -92,7 +92,7 @@ export function parseJsonStream(input: unknown): unknown {
 		try {
 			return JSON.parse(jsonrepair(text));
 		} catch {
-			// jsonrepair failed — try bare-object repair below.
+			// jsonrepair failed - try bare-object repair below.
 		}
 	}
 

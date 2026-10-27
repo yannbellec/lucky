@@ -26,7 +26,7 @@ const HOOK_GATED_REPLY_TIMEOUT_MS = 45_000
 // working directory, recording process.cwd() and the workspaceRoots it received
 // on stdin. Discovery, cwd selection, and hook input metadata all resolve from
 // the window's actual workspace folders, so the marker must land in this
-// window's workspace root and name it — regardless of what any other Cline
+// window's workspace root and name it - regardless of what any other Cline
 // instance recorded in shared state.
 hooksE2e("Hooks - workspace hook runs from this window's workspace root", async ({ helper, sidebar, workspaceDir }) => {
 	// Each prompt here waits on a hook spawn before the reply; give the spec
@@ -79,7 +79,7 @@ hooksE2e("Hooks - workspace hook runs from this window's workspace root", async 
 // The fixture hook also returns a contextModification naming a distinctive
 // fact ("HOOK_INJECTED_FACT: the codename is ZEBRA-7."), and the mock server
 // answers the "hook context probe" prompt according to whether that fact is
-// present in the model request it received — asserting injection through the
+// present in the model request it received - asserting injection through the
 // real adapter → orchestrator → runtime → request pipeline, not a unit seam.
 hooksE2e("Hooks - injected context reaches the model and later prompts stay real", async ({ helper, sidebar, workspaceDir }) => {
 	// Each prompt here waits on a hook spawn before the reply; give the spec

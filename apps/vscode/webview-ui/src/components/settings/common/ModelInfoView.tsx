@@ -171,14 +171,14 @@ interface ModelInfoViewProps {
 	selectedModelId: string
 	modelInfo: ModelInfo
 	isPopup?: boolean
-	// Provider routing props (optional - only shown for Cline provider)
+	// Provider routing props (optional - only shown for Lucky provider)
 	providerSorting?: string
 	onProviderSortingChange?: (value: string) => void
 	showProviderRouting?: boolean
 	/**
 	 * Suppress the per-token pricing display (compact input/output row, cache
 	 * pricing in Advanced, and tiered pricing). Set this for providers whose
-	 * billing is subscription-based or otherwise not per-token — any
+	 * billing is subscription-based or otherwise not per-token - any
 	 * `ProviderInfo.metadata.usageCostDisplay` other than `"show"` (see
 	 * `resolveProviderUsageCostDisplay` in `@cline/llms`).
 	 */

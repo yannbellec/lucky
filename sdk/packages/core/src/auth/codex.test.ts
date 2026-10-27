@@ -277,7 +277,7 @@ async function occupyCodexPort(): Promise<net.Server> {
 	return blocker;
 }
 
-describe("auth/codex loginOpenAICodex — callback port unavailable", () => {
+describe("auth/codex loginOpenAICodex - callback port unavailable", () => {
 	afterEach(() => {
 		vi.unstubAllGlobals();
 		vi.restoreAllMocks();

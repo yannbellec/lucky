@@ -87,8 +87,8 @@ beforeEach(() => {
 })
 
 // The regional API line must persist through useProviderConfig's write()
-// (WriteProviderConfig gRPC), which updates providers.json — shared with the
-// CLI and desktop app — and mirrors to the legacy state key host-side. A
+// (WriteProviderConfig gRPC), which updates providers.json - shared with the
+// CLI and desktop app - and mirrors to the legacy state key host-side. A
 // legacy-state-only write leaves providers.json stale and sends other hosts
 // to the wrong regional endpoint.
 describe.each([

@@ -54,7 +54,7 @@ const ConversationContext = createContext<ConversationContextValue | null>(
 );
 
 /**
- * Access the surrounding Conversation's scroll controls — e.g. to force a
+ * Access the surrounding Conversation's scroll controls - e.g. to force a
  * scroll to the latest message when the user submits, regardless of where
  * they had scrolled. Must be called under a `Conversation`.
  */
@@ -591,7 +591,7 @@ export type ThinkingBlockProps = Omit<
 	open?: boolean;
 	defaultOpen?: boolean;
 	onOpenChange?: (open: boolean) => void;
-	/** Rendered reasoning body — typically the product's Markdown output. */
+	/** Rendered reasoning body - typically the product's Markdown output. */
 	children?: ReactNode;
 };
 
@@ -943,7 +943,7 @@ export type WorkActivityContentProps = Omit<
 };
 
 /**
- * Expanded work re-shows the run's normal chat rows at transcript level — no
+ * Expanded work re-shows the run's normal chat rows at transcript level - no
  * rail or extra indent, since the rows inside (tool disclosures, thinking
  * traces) already carry their own nesting when expanded.
  */

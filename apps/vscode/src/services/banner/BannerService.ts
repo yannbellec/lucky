@@ -164,7 +164,7 @@ export class BannerService {
 	/**
 	 * Returns welcome banners (placement === "welcome") for the What's New modal.
 	 * These are version-targeted banners fetched from the backend.
-	 * Gated by REMOTE_WELCOME_BANNERS feature flag — when off, returns empty
+	 * Gated by REMOTE_WELCOME_BANNERS feature flag - when off, returns empty
 	 * so the webview falls back to hardcoded welcome items.
 	 */
 	public getWelcomeBanners(): BannerCardData[] | undefined {

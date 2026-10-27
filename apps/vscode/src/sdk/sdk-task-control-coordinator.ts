@@ -21,8 +21,8 @@ export interface SdkTaskControlCoordinatorOptions {
 	rebuilds: Pick<SdkSessionRebuildScheduler, "runTaskTransition">
 	/**
 	 * Drops the StateManager's task-scoped settings overlay (persisting pending
-	 * writes first). Task settings — e.g. autoApprovalSettings written by
-	 * toggling auto-approve while a task is open — shadow global settings in
+	 * writes first). Task settings - e.g. autoApprovalSettings written by
+	 * toggling auto-approve while a task is open - shadow global settings in
 	 * getGlobalSettingsKey(). If the overlay outlives the task view, later
 	 * global updates are accepted but never surface in posted state (the stale
 	 * overlay version wins), which froze the auto-approve checkboxes after
@@ -32,7 +32,7 @@ export interface SdkTaskControlCoordinatorOptions {
 	clearTaskSettings: () => Promise<void>
 	/**
 	 * Sets the authoritative turn phase. showTaskWithId must derive the phase
-	 * from the reopened conversation (resumable/completed) — leaving the
+	 * from the reopened conversation (resumable/completed) - leaving the
 	 * previous task's phase in place hides the Resume button for interrupted
 	 * sessions opened from History (and can leak stale buttons in general).
 	 */
@@ -90,7 +90,7 @@ export class SdkTaskControlCoordinator {
 		// FENCE FIRST: raise the cancel fence synchronously BEFORE awaiting the abort. Any event
 		// the SDK emits after this point carries the old epoch (dropped by the webview) and is
 		// marked cancelled (display suppressed by the session-event coordinator; usage still
-		// accounted). Order matters — aborting first would leave a window where a straggler gets
+		// accounted). Order matters - aborting first would leave a window where a straggler gets
 		// the new epoch.
 		this.options.raiseCancelFence?.()
 
@@ -155,7 +155,7 @@ export class SdkTaskControlCoordinator {
 
 	/**
 	 * Opens a task from History. The view generation is allocated synchronously
-	 * on entry — BEFORE any asynchronous work, including the history lookup —
+	 * on entry - BEFORE any asynchronous work, including the history lookup -
 	 * so the newest user selection always holds the newest generation and every
 	 * older in-flight request self-abandons at its next fence check. (The
 	 * lookup used to live in SdkController before the generation was taken; a

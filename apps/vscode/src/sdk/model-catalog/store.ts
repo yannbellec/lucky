@@ -166,7 +166,7 @@ function patchStringValue(value: string | null | undefined): string | undefined 
  * API keys are opaque pasted tokens. Clipboards smuggle in control and
  * invisible formatting characters (newlines, zero-width spaces, BOM,
  * direction marks) that make the provider reject the key with a 401 that is
- * indistinguishable from a genuinely wrong key — while the field's masked
+ * indistinguishable from a genuinely wrong key - while the field's masked
  * rendering hides the corruption from the user. Strip those characters and
  * surrounding whitespace before the value reaches either backing store.
  */
@@ -675,7 +675,7 @@ function writeProviderSettingsFields(providerId: ProviderId, patch: ProviderConf
 		}
 	}
 
-	// Handle reasoning patch separately — maps to ProviderSettings.reasoning
+	// Handle reasoning patch separately - maps to ProviderSettings.reasoning
 	if ("reasoning" in patch) {
 		const reasoningPatch = patch.reasoning
 		if (reasoningPatch === null || reasoningPatch === undefined) {
@@ -731,7 +731,7 @@ function writeSelectionToState(providerId: ProviderId, mode: Mode, selection: Re
 			// catalog lookups), and persist the pre-override base rather than
 			// the resolved value (a deleted override must not be resurrected
 			// from a snapshot it was baked into). openai-compatible keeps the
-			// legacy resolved write — its snapshot is never used as a
+			// legacy resolved write - its snapshot is never used as a
 			// resolution base, and old extension versions still read it after
 			// a rollback.
 			if (usesStateModelInfoHint(providerId)) {
@@ -749,7 +749,7 @@ function writeSelectionToState(providerId: ProviderId, mode: Mode, selection: Re
 function writeSelectionToProviderSettings(providerId: ProviderId, selection: ModelSelection): void {
 	const next: ProviderSettingsRecord = { ...getProviderSettings(providerId), model: selection.modelId }
 	// Prune model metadata that earlier builds may have written to
-	// providers.json — except for Ollama, whose contextWindow is a real
+	// providers.json - except for Ollama, whose contextWindow is a real
 	// user setting (maps to num_ctx) written by the settings UI.
 	if (providerKey(providerId) !== "ollama") {
 		delete next.contextWindow
@@ -803,7 +803,7 @@ function legacyModelInfoToOverrides(modelInfo: ModelInfo, fallback: ModelInfo): 
 
 // Providers/models whose legacy-state migration has already been attempted in
 // this process. The migration runs from the read path, so it must be cheap on
-// repeat reads and must never run more than once per selection — including
+// repeat reads and must never run more than once per selection - including
 // when the legacy snapshot diffs to an empty override set and nothing is
 // written.
 const attemptedLegacyMigrations = new Set<string>()

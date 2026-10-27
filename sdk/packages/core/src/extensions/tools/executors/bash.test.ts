@@ -602,7 +602,7 @@ describe("createShellExecutor", () => {
 	});
 
 	it("runs an object-form command with no args as a shell command line", async () => {
-		// Models emit e.g. { command: "echo hello" } — a full command line in
+		// Models emit e.g. { command: "echo hello" } - a full command line in
 		// the object form. Spawning it verbatim fails with ENOENT; it must be
 		// routed through the shell like the string form.
 		const shell = createShellExecutor();

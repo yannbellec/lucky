@@ -812,8 +812,8 @@ describe("Code sidecar runtime capabilities", () => {
 			status: "running",
 		});
 
-		// Removing the head only produces a shrunken snapshot — no
-		// pending_prompt_submitted — so nothing must reach the transcript.
+		// Removing the head only produces a shrunken snapshot - no
+		// pending_prompt_submitted - so nothing must reach the transcript.
 		onEvent?.({
 			type: "pending_prompts",
 			payload: {

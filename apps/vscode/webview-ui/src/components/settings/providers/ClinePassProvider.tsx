@@ -77,13 +77,13 @@ function toFreeEntry(model: Pick<ClineRecommendedModel, "id" | "name" | "descrip
 
 /**
  * ClinePass is a first-class SDK provider whose credentials are backed by the
- * user's Cline OAuth account. Keep the UX close to the Cline provider (account
+ * user's Lucky OAuth account. Keep the UX close to the Lucky provider (account
  * card + model selection), but resolve and persist selections through the SDK
  * provider catalog under providerId="cline-pass".
  *
  * The featured section splits the catalog into Subscribed (the plan's models)
- * and Free (Cline free models, selectable here because both providers hit the
- * same Cline API — free models simply ride usage billing at $0).
+ * and Free (Lucky free models, selectable here because both providers hit the
+ * same Lucky API - free models simply ride usage billing at $0).
  */
 export const ClinePassProvider = ({ showModelOptions, isPopup, currentMode }: ClinePassProviderProps) => {
 	const { models, defaultModelId, isLoading, isStale, error } = useProviderModels(CLINE_PASS_PROVIDER_ID)

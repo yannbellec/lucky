@@ -292,7 +292,7 @@ describe("@cline/ui agent chat primitives", () => {
 		expect(trigger.getAttribute("aria-expanded")).toBe("true");
 		expect(panel?.getAttribute("data-state")).toBe("open");
 		expect(panel?.textContent).toContain("Ran tests, edited theme.css");
-		// Expanded rows sit at transcript level — no rail or extra indent.
+		// Expanded rows sit at transcript level - no rail or extra indent.
 		const content = panel?.querySelector(".cline-chat-work-content");
 		expect(content).not.toBeNull();
 		expect(content?.classList.contains("cline-chat-panel-rail")).toBe(false);

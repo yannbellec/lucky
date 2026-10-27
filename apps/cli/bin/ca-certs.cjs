@@ -153,7 +153,7 @@ function resolveClineDir(env, os, path) {
  * True when the api-unavailable warning should print. Stamped per Node version
  * in the cline dir so the nudge shows once rather than on every command; a
  * version change (upgrade that still falls short, or downgrade) re-arms it.
- * When the stamp cannot be read or written, warn — bookkeeping failures must
+ * When the stamp cannot be read or written, warn - bookkeeping failures must
  * never suppress a real diagnostic.
  */
 function shouldWarnApiUnavailable(env, deps = {}) {

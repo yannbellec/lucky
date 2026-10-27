@@ -3,8 +3,8 @@
  *
  * Consumers (desktop app, cloud dashboard, future clients) feed the raw
  * `{ toolName, input, result }` payload of a tool call in and get back a
- * structured summary — label, per-item details, diff counts, extracted
- * output text — which they render with the agent-chat primitives
+ * structured summary - label, per-item details, diff counts, extracted
+ * output text - which they render with the agent-chat primitives
  * (`ToolActivityTrigger`, `ToolActivityDetails`, …) and their own icons.
  *
  * This module is pure data-in/data-out: no React, no DOM, no Node APIs, and
@@ -108,12 +108,12 @@ export type ToolSummaryItem =
 			newText?: string;
 			/**
 			 * True when oldText/newText are fragments of the file rather than
-			 * complete contents — renderers should hide absolute line numbers.
+			 * complete contents - renderers should hide absolute line numbers.
 			 */
 			fragment?: boolean;
 			/**
 			 * Per-hunk before/after texts when the change has more than one
-			 * hunk (apply_patch). Render one diff per hunk — re-diffing
+			 * hunk (apply_patch). Render one diff per hunk - re-diffing
 			 * concatenated hunks pairs deletions with unrelated additions.
 			 * When present, prefer it over oldText/newText.
 			 */
@@ -135,7 +135,7 @@ export type ToolSummary = {
 	/** Normalized tool name (aliases applied). */
 	toolName: string;
 	kind: ToolKind;
-	/** Row label, e.g. `Read app.tsx (10–80)` or `$ bun test`. */
+	/** Row label, e.g. `Read app.tsx (10-80)` or `$ bun test`. */
 	label: string;
 	/** The label broken into styled segments; joins to `label`. */
 	labelParts: ToolLabelPart[];
@@ -249,12 +249,12 @@ function formatPath(
 	return shortenPath(path);
 }
 
-/** ` (10–80)` / ` (10+)` label suffix for a partial-file read. */
+/** ` (10-80)` / ` (10+)` label suffix for a partial-file read. */
 function lineRangeLabelSuffix(startLine?: number, endLine?: number): string {
 	if (startLine !== undefined && endLine !== undefined)
-		return ` (${startLine}–${endLine})`;
+		return ` (${startLine}-${endLine})`;
 	if (startLine !== undefined) return ` (${startLine}+)`;
-	if (endLine !== undefined) return ` (1–${endLine})`;
+	if (endLine !== undefined) return ` (1-${endLine})`;
 	return "";
 }
 
@@ -386,7 +386,7 @@ const FALLBACK_AGGREGATES: Partial<
  * Build the presentation summary for one tool call.
  *
  * Single-item calls carry their specifics inline in the label
- * (`Read app.tsx (10–80)`, `Ran bun test`, `Edited chat-view.tsx`); calls
+ * (`Read app.tsx (10-80)`, `Ran bun test`, `Edited chat-view.tsx`); calls
  * over multiple items aggregate (`Read 3 files`) with per-item lines in
  * `details`. Never throws on malformed input.
  */

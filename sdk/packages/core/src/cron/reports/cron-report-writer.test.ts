@@ -69,7 +69,7 @@ describe("writeCronRunReport", () => {
 		);
 
 		expect(report).toContain(
-			"# Hub report \\# injected \\*\\*heading\\*\\* — completed",
+			"# Hub report \\# injected \\*\\*heading\\*\\* - completed",
 		);
 		expect(report).toContain(
 			"Run of schedule **Hub report \\# injected \\*\\*heading\\*\\*** (triggered by its schedule)",
@@ -84,7 +84,7 @@ describe("writeCronRunReport", () => {
 		);
 
 		expect(report).toContain(
-			"# File \\*\\*breakout\\*\\* \\#\\# forged section — completed",
+			"# File \\*\\*breakout\\*\\* \\#\\# forged section - completed",
 		);
 		expect(report).toContain(
 			"Run of schedule **File \\*\\*breakout\\*\\* \\#\\# forged section** (triggered by its schedule)",

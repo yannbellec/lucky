@@ -370,7 +370,7 @@ describe("collapseCompletedWork", () => {
 		// a tool call: the tool row and the reasoning-only row are both stamped
 		// with pre-execution timestamps, and the reasoning row attaches to the
 		// run's final answer in groupChatMessages. The duration must span to
-		// the answer itself (14_500), not to the pre-tool thinking (6_001) —
+		// the answer itself (14_500), not to the pre-tool thinking (6_001) -
 		// that would exclude the entire tool execution from "Worked for".
 		const items = collapse(
 			[
@@ -434,7 +434,7 @@ describe("collapseCompletedWork", () => {
 	}
 
 	it("keeps a trailing submit_and_exit row visible as the collapsed run's answer", () => {
-		// Scheduled runs end on submit_and_exit — its row carries the final
+		// Scheduled runs end on submit_and_exit - its row carries the final
 		// report, so it must not fold into the work summary.
 		const items = collapse(
 			[

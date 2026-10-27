@@ -389,8 +389,8 @@ export const ToolStates = () => (
 );
 
 /**
- * A finished run folds its working rows — tool calls, thinking traces,
- * intermediate narration — into one "Worked for …" summary that expands back
+ * A finished run folds its working rows - tool calls, thinking traces,
+ * intermediate narration - into one "Worked for …" summary that expands back
  * into the normal rows. The run's final answer stays visible below it.
  */
 export const CollapsedWork = () => (
@@ -558,7 +558,7 @@ function SummaryToolRow({ summary }: { summary: ToolSummary }) {
 
 /**
  * Rows driven end-to-end by `buildToolSummary` from
- * `@cline/ui/components/agent-chat/tool-summary` — the same payloads the
+ * `@cline/ui/components/agent-chat/tool-summary` - the same payloads the
  * desktop app and cloud dashboard feed it.
  */
 export const ToolSummaries = () => (

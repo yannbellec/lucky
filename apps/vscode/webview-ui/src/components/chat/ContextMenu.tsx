@@ -35,7 +35,7 @@ const ContextMenu: React.FC<ContextMenuProps> = ({
 
 	const filteredOptions = useMemo(() => {
 		const options = getContextMenuOptions(searchQuery, selectedType, queryItems, dynamicSearchResults)
-		// While a search is in flight, don't tell the user "No results found" —
+		// While a search is in flight, don't tell the user "No results found" -
 		// the answer is "still searching", not "nothing matched". Suppress
 		// eagerly on `isLoading` (not just after the 500 ms spinner delay) so
 		// there's no NoResults flicker before the spinner appears.

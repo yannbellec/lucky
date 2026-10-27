@@ -47,7 +47,7 @@ e2e.describe("File Edit Auto-Approval", () => {
 				// The edit was actually applied to the file on disk.
 				expect(readFileSync(editedFilePath, "utf-8")).toContain('export const name = "cline"')
 			} finally {
-				// Skip the restore when the initial read failed — there is
+				// Skip the restore when the initial read failed - there is
 				// nothing to restore and the read error is the real failure.
 				if (originalFileContent !== undefined) {
 					writeFileSync(editedFilePath, originalFileContent, "utf-8")

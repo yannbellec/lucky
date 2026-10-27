@@ -9,7 +9,7 @@ import {
 /**
  * Requests arrive over the core connection as proto3 JSON (the webview encodes
  * them with ts-proto's toJSON): enums are string names, and default-valued
- * fields — empty repeated fields included — are omitted entirely. The protobus
+ * fields - empty repeated fields included - are omitted entirely. The protobus
  * handlers assume ts-proto message shapes (numeric enums, repeated fields
  * always present), so decode with the generated fromJSON before dispatch.
  * The in-process VS Code webview does not need this: it posts structured-cloned

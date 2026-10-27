@@ -35,7 +35,7 @@ export type TerminalType = "vscode" | "standalone"
 /**
  * VSCode-specific output capture methods.
  *
- * "shell_integration" means the OSC 633 C/D markers were seen and trusted —
+ * "shell_integration" means the OSC 633 C/D markers were seen and trusted -
  * output and exit code are as reliable as VS Code's shell integration gets.
  * "markerless_heuristic" means completion was inferred from an idle timeout
  * and/or prompt-pattern guess because markers never arrived (e.g. commands
@@ -430,7 +430,7 @@ export class TelemetryService {
 	}
 
 	/**
-	 * NOTE — SDK-line telemetry parity gap. This method and several others in
+	 * NOTE - SDK-line telemetry parity gap. This method and several others in
 	 * this file have no caller on this line but are called on
 	 * `legacy-extension`. They are kept, not deleted: the signals they emit
 	 * originate in this bundle (webview UI, VS Code storage, host terminal,
@@ -1117,14 +1117,14 @@ export class TelemetryService {
 	 * @param terminalType The type of terminal ("vscode")
 	 * @param method The VSCode-specific method used to capture output
 	 * @param details Optional dimensions:
-	 *   exitCode — the process exit code, when captured (via
+	 *   exitCode - the process exit code, when captured (via
 	 *   onDidEndTerminalShellExecution, the OSC 633;D marker, or child_process);
-	 *   terminalExecutionMode — foreground ("vscodeTerminal") or background
+	 *   terminalExecutionMode - foreground ("vscodeTerminal") or background
 	 *   ("backgroundExec");
-	 *   markerlessCause — for method "markerless_heuristic", why the command was
+	 *   markerlessCause - for method "markerless_heuristic", why the command was
 	 *   considered complete;
-	 *   terminalClosed — the terminal was closed while the command was running;
-	 *   errorCode — for a failed background execution that produced no exit code,
+	 *   terminalClosed - the terminal was closed while the command was running;
+	 *   errorCode - for a failed background execution that produced no exit code,
 	 *   why: the OS code when the shell could not start (ENOENT, EACCES, EFTYPE),
 	 *   "ENOENT_CWD" when the working directory had vanished instead, "signal"
 	 *   or "no_exit_code" for termination, "spawn" when the shell could not start
@@ -1147,7 +1147,7 @@ export class TelemetryService {
 	 * @param success Whether the command output was successfully captured
 	 * @param terminalType The type of terminal ("standalone")
 	 * @param method The standalone-specific method used to capture output
-	 * @param details Optional dimensions: exitCode — the process exit code (useful for
+	 * @param details Optional dimensions: exitCode - the process exit code (useful for
 	 * diagnosing failure types: 1=error, 127=not found, 126=permission denied)
 	 */
 	public captureTerminalExecution(

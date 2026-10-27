@@ -39,7 +39,7 @@ export interface RunSubprocessEventOptions {
 	 * `exited: true` means the hook finished and `durationMs` is its runtime.
 	 * `exited: false` is a censored observation: the hook was still running
 	 * after the observation window, and `durationMs` is that window, so read
-	 * it as "ran at least this long" and count these separately — the
+	 * it as "ran at least this long" and count these separately - the
 	 * case that matters most, since those are the hooks that would stall a
 	 * blocking run. Without it the sample would only contain hooks that
 	 * finished.
@@ -263,7 +263,7 @@ export async function runSubprocessEvent(
 		child.once("close", (exitCode) => settle(exitCode));
 		// "close" waits for the stdio pipes to reach EOF, and a hook that spawned
 		// a background child sharing its stdout keeps the pipe open after the
-		// hook itself exits — without a fallback the caller would wait on that
+		// hook itself exits - without a fallback the caller would wait on that
 		// grandchild forever (the timeout's SIGKILL only reaches the direct
 		// child). Settle shortly after process exit with whatever output arrived,
 		// then drop the pipes: resolving alone would leave them (and their data
@@ -294,7 +294,7 @@ export async function runSubprocessEvent(
 	// Armed before the stdin write is awaited: a hook that never reads stdin
 	// can leave that write pending until it exits (seen on Windows), and an
 	// observation window that only starts afterwards would never censor
-	// anything — the sample would silently fall back to hooks that finished.
+	// anything - the sample would silently fall back to hooks that finished.
 	if (detached && options.onDetachedSettled) {
 		const startedAt = Date.now();
 		const report = options.onDetachedSettled;

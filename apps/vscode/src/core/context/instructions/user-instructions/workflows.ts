@@ -29,7 +29,7 @@ function mergeToggleStateAfterScan(
 		} else if (!(key in preScan)) {
 			merged[key] = value
 		}
-		// else: the entry was removed from state while the scan ran — keep it removed.
+		// else: the entry was removed from state while the scan ran - keep it removed.
 	}
 	for (const [key, value] of Object.entries(current)) {
 		if (!(key in scanned) && !(key in preScan)) {

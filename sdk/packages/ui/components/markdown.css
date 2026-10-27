@@ -132,7 +132,7 @@
 }
 
 /*
- * Code blocks: Streamdown renders a double box — an outer sidebar-tinted card
+ * Code blocks: Streamdown renders a double box - an outer sidebar-tinted card
  * holding a language header row plus an inner bordered body. Collapse it to a
  * single quiet block: no outer chrome, no language label, and the copy button
  * only appears while hovering the block.

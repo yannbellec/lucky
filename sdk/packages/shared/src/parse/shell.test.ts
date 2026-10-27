@@ -43,8 +43,8 @@ describe("shell helpers", () => {
 			);
 			// The bootstrap sets $ErrorActionPreference='Stop' before reading the
 			// script from stdin, so per-item pipeline errors terminate immediately
-			// instead of flooding stderr. It must be set in the bootstrap scope —
-			// not prepended to the script text — so the user script stays
+			// instead of flooding stderr. It must be set in the bootstrap scope -
+			// not prepended to the script text - so the user script stays
 			// byte-identical: a leading param(...) keeps its mandatory
 			// first-statement position and error positions are unshifted.
 			expect(args[3]).toContain(

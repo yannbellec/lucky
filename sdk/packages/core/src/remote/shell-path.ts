@@ -3,8 +3,8 @@
  *
  * When the Tauri app is launched from Finder/the Dock on macOS, it inherits
  * launchd's minimal PATH (/usr/bin:/bin:/usr/sbin:/sbin) instead of the
- * user's shell PATH. The sidecar — and every process it spawns for the agent
- * (bash tool, MCP servers) — then can't find tools like `gh` that live in
+ * user's shell PATH. The sidecar - and every process it spawns for the agent
+ * (bash tool, MCP servers) - then can't find tools like `gh` that live in
  * /opt/homebrew/bin or other shell-profile-added directories, even though
  * the same task works from the CLI in a terminal.
  *
@@ -21,7 +21,7 @@ const PATH_MARKER_END = "__CLINE_SIDECAR_PATH_END__";
 
 /**
  * Bounded so a pathological shell profile cannot stall sidecar startup, but
- * generous enough for slow real-world profiles — nvm initialisation on older
+ * generous enough for slow real-world profiles - nvm initialisation on older
  * machines regularly needs more than 2s, and a failed probe cascades into
  * missing runtimes for everything the sidecar spawns (cline/cline#14129).
  * Worst case both attempts together take 1.5x this budget (see
@@ -32,7 +32,7 @@ const SHELL_TIMEOUT_MS = 5_000;
 
 /**
  * The command every shell is asked to run. $PATH expansion happens inside
- * POSIX sh — not the user's shell — so shells with different expansion rules
+ * POSIX sh - not the user's shell - so shells with different expansion rules
  * (fish would space-join "$PATH") still produce a colon-delimited value; sh
  * reads the PATH environment variable the login shell exported.
  */
@@ -52,7 +52,7 @@ export function defaultShellFor(platform: NodeJS.Platform): string {
  * The user's configured login shell. The account database is authoritative:
  * a GUI-launched process has no parent shell, so $SHELL may be unset there.
  * userInfo() reads getpwuid(), which on macOS goes through DirectoryServices
- * — the same source `dscl . -read /Users/$USER UserShell` reports — and on
+ * - the same source `dscl . -read /Users/$USER UserShell` reports - and on
  * Linux resolves via NSS (/etc/passwd et al.). $SHELL and the platform
  * default are fallbacks for environments with no passwd entry.
  */
@@ -66,7 +66,7 @@ export function loginShellFor(
 			return shell;
 		}
 	} catch {
-		// No passwd entry for the current uid (some containers) — fall through.
+		// No passwd entry for the current uid (some containers) - fall through.
 	}
 	return env.SHELL?.trim() || defaultShellFor(platform);
 }
@@ -84,8 +84,8 @@ export interface ShellInvocation {
  * How to invoke a shell so it sources its profiles and runs a command.
  * csh/tcsh accept -l only as the sole flag, so they're marked login via the
  * argv[0] dash convention instead (sources ~/.login on top of the always-read
- * ~/.cshrc or ~/.tcshrc); everything else gets login (-l, ~/.zprofile —
- * Homebrew's shellenv) plus interactive (-i, ~/.zshrc — nvm-style version
+ * ~/.cshrc or ~/.tcshrc); everything else gets login (-l, ~/.zprofile -
+ * Homebrew's shellenv) plus interactive (-i, ~/.zshrc - nvm-style version
  * managers) as separate flags.
  */
 export function shellInvocation(
@@ -135,7 +135,7 @@ export function mergePaths(shellPath: string, currentPath: string): string {
 /**
  * Run the user's shell with its profiles sourced and capture its PATH.
  * Resolves to undefined on any failure (missing shell, timeout, profile
- * error) — callers should treat that as "keep the current PATH".
+ * error) - callers should treat that as "keep the current PATH".
  */
 export function resolveLoginShellPath(
 	shell: string,

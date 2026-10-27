@@ -1,27 +1,27 @@
 /**
  * Telemetry & Logger Plugin Example
  *
- * The reference example for observability from a plugin. Shows how — and how
- * NOT — to use the two host-provided observability channels on the setup
+ * The reference example for observability from a plugin. Shows how - and how
+ * NOT - to use the two host-provided observability channels on the setup
  * context:
  *
- *   ctx.logger    — structured, session-scoped logging for humans debugging a
+ *   ctx.logger    - structured, session-scoped logging for humans debugging a
  *                   session. Goes to the host's log sink (e.g. the CLI log
  *                   file), tagged with your plugin name.
- *   ctx.telemetry — aggregated product/ops signals for dashboards. Goes to
+ *   ctx.telemetry - aggregated product/ops signals for dashboards. Goes to
  *                   the host's telemetry service (events + metrics).
  *
  * The contract, in one place:
  *
- *   1. FEATURE-DETECT BOTH. Each is optional — `ctx.logger?.log(...)`,
+ *   1. FEATURE-DETECT BOTH. Each is optional - `ctx.logger?.log(...)`,
  *      `ctx.telemetry?.capture(...)`. They are undefined when the host does
  *      not provide them; your plugin must work without them.
  *
  *   2. PLAIN DATA ONLY. Sandboxed plugins run in a separate process; logger
  *      and telemetry calls are forwarded to the host over JSON IPC. Pass
- *      strings, numbers, and booleans — never sockets, clients, or other live
+ *      strings, numbers, and booleans - never sockets, clients, or other live
  *      objects. (One exception: `logger` metadata may include an `error`
- *      value that is an Error instance — the bridge serializes its
+ *      value that is an Error instance - the bridge serializes its
  *      name/message/stack for you.)
  *
  *   3. NAMESPACING IS AUTOMATIC. The host prefixes every plugin event and
@@ -32,11 +32,11 @@
  *   4. OPT-OUT IS HANDLED HOST-SIDE. When the user disabled telemetry, the
  *      host drops forwarded events. In the sandbox `isEnabled()` always
  *      reports `true` (the bridge is stateless), so do NOT gate expensive
- *      property computation on it — keep properties cheap to build.
+ *      property computation on it - keep properties cheap to build.
  *
  *   5. LOW CARDINALITY, NO CONTENT. Telemetry properties should be statuses,
  *      names of known presets, durations, counts. Never user prompts, file
- *      contents, tool output, or anything secret — that belongs nowhere, and
+ *      contents, tool output, or anything secret - that belongs nowhere, and
  *      free-form text does not aggregate anyway. Detailed context goes to the
  *      logger instead (which stays on the user's machine).
  *
@@ -57,7 +57,7 @@ import {
 //
 // setup() receives the logger and telemetry handles; hooks and background
 // work do not. Capture them once at module level. If your host runs multiple
-// sessions in one process, key any *data* by ctx.session?.sessionId — the
+// sessions in one process, key any *data* by ctx.session?.sessionId - the
 // handles themselves are safe to share.
 // ---------------------------------------------------------------------------
 
@@ -112,7 +112,7 @@ const plugin: AgentPlugin = {
 						// Failure pattern: log the details for the user's log file,
 						// count the failure class (not the message!) in telemetry,
 						// and return a structured error for the model.
-						// `error` is optional on BasicLogger — hence `?.` twice.
+						// `error` is optional on BasicLogger - hence `?.` twice.
 						logger?.error?.("roll_die rejected invalid input", {
 							sides,
 						});
@@ -133,7 +133,7 @@ const plugin: AgentPlugin = {
 
 					// Metrics: counter for volume, histogram for distributions,
 					// gauge for point-in-time values. Attribute values must stay
-					// low-cardinality — `sides` is fine, a user string is not.
+					// low-cardinality - `sides` is fine, a user string is not.
 					telemetry?.recordCounter("demo.rolls", 1, { sides });
 					telemetry?.recordHistogram("demo.roll_value", roll, { sides });
 					telemetry?.recordGauge("demo.best_roll", bestRoll);

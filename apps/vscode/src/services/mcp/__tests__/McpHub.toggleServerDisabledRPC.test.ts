@@ -114,7 +114,7 @@ describe("McpHub.toggleServerDisabledRPC", () => {
 		// File reflects enabled.
 		const persisted = JSON.parse(await fs.readFile(settingsPath, "utf-8"))
 		persisted.mcpServers.alpha.disabled.should.equal(false)
-		// The connection was actually rebuilt as enabled — this is the fix: a
+		// The connection was actually rebuilt as enabled - this is the fix: a
 		// real connect happens rather than just flipping the flag to "connecting".
 		connectArgs.should.deepEqual([{ name: "alpha", disabled: false }])
 		// The returned (and in-memory) server is enabled and connected, not

@@ -1,5 +1,5 @@
 // LanguageModelV4 middleware that retries a stream when the model returns an
-// *empty* turn — no converted content and no unsupported output (see
+// *empty* turn - no converted content and no unsupported output (see
 // `stream-part-classification.ts` for the authoritative taxonomy).
 //
 // Background: providers intermittently return a response that finishes
@@ -12,7 +12,7 @@
 // but it lives in `doGenerate` and *owns the tool loop* (it executes tools
 // itself and force-synthesizes a final text answer). That is fundamentally
 // incompatible with Cline, which streams via `doStream` and runs its own tool
-// loop — a tool-call-only turn is the correct, desired outcome here, not
+// loop - a tool-call-only turn is the correct, desired outcome here, not
 // something to "complete". So instead of adopting that layer, this middleware
 // adds the one piece that is safe for a streaming, self-looping host: retry
 // only when a turn produced genuinely nothing.
@@ -21,12 +21,12 @@
 // `ai-sdk.ts` (see `withEmptyResponseRetry`); vendors can opt out or tune
 // attempts via `ProviderFactoryResult.retryEmptyResponses`.
 //
-// Stream mechanics: each attempt is BUFFERED until it proves itself — the
+// Stream mechanics: each attempt is BUFFERED until it proves itself - the
 // first output part (converted content, unsupported output, or an error)
 // accepts the attempt, at which point the buffer is flushed and the rest of
 // the attempt streams through live. Rejected (empty) attempts are discarded
 // wholesale, so no structural parts, response metadata, or empty block
-// markers from discarded requests ever leak into the logical stream — one
+// markers from discarded requests ever leak into the logical stream - one
 // retried request produces one clean stream. Because empty attempts still
 // bill real tokens on hosted providers, their `finish.usage` is aggregated
 // into the final finish part, so a turn that took three requests reports
@@ -36,13 +36,13 @@
 // failure mode: the attempt's stream REJECTING with a network interruption
 // before the model produced anything (see `isTransientNetworkError`).
 // Production telemetry on the SDK arch shows these as the dominant
-// network-class run killer — `terminated: SocketError: other side closed
+// network-class run killer - `terminated: SocketError: other side closed
 // (UND_ERR_SOCKET)`, `terminated: BodyTimeoutError`, `terminated: read
 // ECONNRESET`, `fetch failed: HeadersTimeoutError`. The AI SDK's own retry
 // only guards request *initiation* (it re-runs `doStream()` when that call
 // rejects with a retryable APICallError); once the stream has started, a
 // body death escapes `postToApi`'s error wrapping and rejects the stream
-// raw, killing the run — a failure the legacy extension's first-chunk retry
+// raw, killing the run - a failure the legacy extension's first-chunk retry
 // loop absorbed silently. Retrying here is safe for the same reason the
 // empty retry is: nothing has been emitted yet, so a discarded attempt is
 // invisible to the consumer. A failure AFTER output has flowed still passes
@@ -52,7 +52,7 @@
 // Safety properties:
 //   * A tool-call-only turn counts as content, so it is never retried.
 //   * Unsupported-but-real output (custom parts, reasoning files, sources,
-//     provider-executed tool results) is never retried either — the model
+//     provider-executed tool results) is never retried either - the model
 //     responded; re-billing the request would not help.
 //   * Non-empty turns stream through live: buffering only lasts until the
 //     first output part, which for a non-empty turn is the moment it starts
@@ -60,7 +60,7 @@
 //   * Turns that finish with an error or hit the token limit are passed
 //     through unchanged (retrying wouldn't help and could mask the cause).
 //   * Provider-reported in-band `error` parts accept the attempt and pass
-//     through — they are business errors, not transport failures.
+//     through - they are business errors, not transport failures.
 //   * A successfully retried failure never reaches `streamText`, so no
 //     `onError`/`captureSdkError`/`task.provider_api_error` fires for it;
 //     an exhausted or non-retryable failure rejects the stream exactly as
@@ -104,7 +104,7 @@ const MAX_CAUSE_DEPTH = 8;
 
 /**
  * Error codes of transient transport interruptions, from the runtimes this
- * package runs under: undici (Node fetch — the VS Code extension host),
+ * package runs under: undici (Node fetch - the VS Code extension host),
  * plain Node/Bun sockets, and Bun's fetch (CLI, desktop sidecar).
  */
 const TRANSIENT_NETWORK_ERROR_CODES = new Set([
@@ -131,11 +131,11 @@ const NETWORK_TYPE_ERROR_MESSAGES = new Set([
 
 /**
  * Whether an error (anywhere in its `cause` chain) identifies a transient
- * transport interruption — the connection died or timed out underneath a
+ * transport interruption - the connection died or timed out underneath a
  * request the provider never rejected. An abort anywhere in the chain
  * vetoes the match: cancelled requests surface the same socket vocabulary,
- * and a user cancel must never be retried. Everything else — HTTP business
- * errors, context-window errors, provider-reported payloads — does not
+ * and a user cancel must never be retried. Everything else - HTTP business
+ * errors, context-window errors, provider-reported payloads - does not
  * match.
  */
 export function isTransientNetworkError(error: unknown): boolean {
@@ -181,7 +181,7 @@ export function isTransientNetworkError(error: unknown): boolean {
 /**
  * Finish reasons that indicate a "normal" completion where an empty body is a
  * transient provider glitch worth retrying. `error` (upstream failure),
- * `length` (token limit — retrying re-hits it), and `content-filter` are left
+ * `length` (token limit - retrying re-hits it), and `content-filter` are left
  * alone.
  */
 const RETRYABLE_FINISH_REASONS = new Set(["stop", "other", "unknown"]);
@@ -426,8 +426,8 @@ export function createRetryEmptyResponseMiddleware(
 
 						if (!canRetry) {
 							// Out of retries (or a non-retryable finish): surface
-							// the final attempt as-is — its structural parts plus a
-							// finish carrying every attempt's usage — so the
+							// the final attempt as-is - its structural parts plus a
+							// finish carrying every attempt's usage - so the
 							// downstream failure is honest about what happened.
 							for (const part of buffered) {
 								controller.enqueue(part);

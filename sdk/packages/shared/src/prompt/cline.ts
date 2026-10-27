@@ -130,14 +130,14 @@ export interface ClineSystemPromptOptions
 	extends Omit<WorkspaceContext, "rootPath"> {
 	/**
 	 * Workspace root path. Accepts either `rootPath` (from WorkspaceContext/WorkspaceInfo)
-	 * or `workspaceRoot` (legacy alias) — whichever is provided will be used.
+	 * or `workspaceRoot` (legacy alias) - whichever is provided will be used.
 	 */
 	rootPath?: string;
-	/** Alias for rootPath — kept for backwards compatibility with existing call sites */
+	/** Alias for rootPath - kept for backwards compatibility with existing call sites */
 	workspaceRoot?: string;
 	/** Per-request system prompt override */
 	overridePrompt?: string;
-	/** Provider ID — used to gate Cline-specific metadata injection */
+	/** Provider ID - used to gate Cline-specific metadata injection */
 	providerId?: string;
 	/**
 	 * Whether the host exposes the switch_to_act_mode tool in plan mode.

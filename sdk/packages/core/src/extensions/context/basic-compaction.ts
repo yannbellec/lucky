@@ -106,7 +106,7 @@ function userContentBlocks(
 	}
 	// Attached files and images are stale context bloat once the turn is
 	// old enough to compact; the dropped-work summaries carry file paths.
-	// Only the latest typed prompt keeps its attachments — they may be
+	// Only the latest typed prompt keeps its attachments - they may be
 	// load-bearing for the active request.
 	return message.content.filter(
 		(block) => block.type !== "file" && block.type !== "image",
@@ -114,8 +114,8 @@ function userContentBlocks(
 }
 
 /**
- * Collapse runs of adjacent typed user messages — left behind when the
- * assistant turns between them were removed — into a single user message.
+ * Collapse runs of adjacent typed user messages - left behind when the
+ * assistant turns between them were removed - into a single user message.
  * Each gap is bridged with a summary of the tool work that was dropped
  * there, resolved by message id against the original transcript. Work
  * dropped after a typed user message with no surviving messages in
@@ -524,7 +524,7 @@ export function runBasicCompaction(options: {
 			index -= 1
 		) {
 			// Reaching frozen messages means the rest is a previous
-			// compaction's output — already kept, nothing left to walk.
+			// compaction's output - already kept, nothing left to walk.
 			if (frozenIndices.has(index)) {
 				break;
 			}
@@ -607,7 +607,7 @@ export function runBasicCompaction(options: {
 	// deliberately kept: typed prompts and frozen output of earlier
 	// compactions must not be trimmed to chase a target that is already
 	// below their size (e.g. a repeated manual compaction halving its
-	// target each run). The trigger stays a hard ceiling — content that
+	// target each run). The trigger stays a hard ceiling - content that
 	// cannot fit the window at all is still trimmed best-effort.
 	const projectionTargetTokens = Math.min(
 		Math.max(totalTargetTokens, totalTokens),
@@ -638,7 +638,7 @@ export function runBasicCompaction(options: {
 	// Mirror the recovery_notice metadata convention: mark the folded
 	// message as system-inserted and record what the fold removed, since
 	// the per-message metrics it aggregates are stripped below. Stats
-	// accumulate across repeated compactions — earlier passes already
+	// accumulate across repeated compactions - earlier passes already
 	// stripped their metrics, so this pass only sees the new tail's.
 	const prior = readPriorCompactionStats(mergedMessages[0]);
 	const usageBefore = addAggregatedUsage(

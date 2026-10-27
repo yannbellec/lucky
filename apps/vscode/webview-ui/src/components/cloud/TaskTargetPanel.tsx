@@ -195,7 +195,7 @@ export function TaskTargetPanel() {
 								{!workspaceRepoAccessible ? (
 									<>
 										This workspace's repository ({formatRepoLabel(workspaceRepoUrl)}) isn't accessible to the
-										Cline GitHub App.{" "}
+										Lucky GitHub App.{" "}
 										<button
 											className="cursor-pointer border-0 bg-transparent p-0 text-[11px] text-link hover:underline"
 											onClick={connectGitHub}
@@ -204,7 +204,7 @@ export function TaskTargetPanel() {
 										</button>
 									</>
 								) : (
-									`Uses a Cline model and Cline credits in an isolated sandbox. Tools are auto-approved so the task can keep going after you close ${editor}.`
+									`Uses a Lucky model and Lucky credits in an isolated sandbox. Tools are auto-approved so the task can keep going after you close ${editor}.`
 								)}
 							</p>
 						</div>

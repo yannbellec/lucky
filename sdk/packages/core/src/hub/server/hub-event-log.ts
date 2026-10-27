@@ -6,7 +6,7 @@
  * client that reconnects can resume exactly where it left off by passing
  * `sinceSequence` on `stream.subscribe`: the adapter replays pages from this
  * log, then live-tails. Nothing about delivery depends on who was watching
- * when the event happened — disconnect never implies data loss.
+ * when the event happened - disconnect never implies data loss.
  *
  * The log is a projection aid, not the source of truth for conversation
  * history (session messages remain canonical on disk); it is bounded by a
@@ -187,7 +187,7 @@ export class HubEventLogStore {
 		// Age/row caps alone don't bound disk: envelopes carrying full session
 		// snapshots reach hundreds of KB each, so retained rows could still
 		// total tens of GB (#13505). Over budget, keep only the newest rows
-		// that fit in half the budget (the newest row — a NULL running sum —
+		// that fit in half the budget (the newest row - a NULL running sum -
 		// is never deleted, so cursors never rewind), then VACUUM: DELETE
 		// alone never shrinks the file on disk.
 		if (this.fileSizeBytes() > this.maxTotalBytes) {
@@ -204,7 +204,7 @@ export class HubEventLogStore {
 					);`,
 				)
 				.run(Math.floor(this.maxTotalBytes / 2));
-			// VACUUM needs scratch space and can fail on a full disk — the
+			// VACUUM needs scratch space and can fail on a full disk - the
 			// very state a ballooned log causes. The deletes above already
 			// bound live data, so keep the log running and let the next
 			// sweep retry the reclaim once space frees up.

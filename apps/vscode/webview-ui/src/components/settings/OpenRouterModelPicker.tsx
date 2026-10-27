@@ -82,7 +82,7 @@ const OpenRouterModelPicker: React.FC<OpenRouterModelPickerProps> = ({ isPopup, 
 	}
 
 	// The mode-specific fields are the primary source, but they can be empty
-	// even when a model is committed — e.g. right after the SDK provider
+	// even when a model is committed - e.g. right after the SDK provider
 	// migration, which records the model in providers.json but not in the
 	// openRouterModelId/Info state this picker reads. In that case fall back to
 	// the authoritative resolver (which reads the committed providers.json
@@ -226,7 +226,7 @@ const OpenRouterModelPicker: React.FC<OpenRouterModelPickerProps> = ({ isPopup, 
 	)
 	// Reasoning support comes from the SDK catalog (models.dev), not model-id
 	// heuristics: any reasoning-capable model gets the effort selector. Prefer
-	// the live catalog entry over the committed legacy snapshot — the snapshot
+	// the live catalog entry over the committed legacy snapshot - the snapshot
 	// can be cleared by provider-config writes (fallback-source resolutions).
 	// Read the raw snapshot field (not the hook's default-info fallback) so an
 	// id that is absent from the catalog never inherits reasoning support from

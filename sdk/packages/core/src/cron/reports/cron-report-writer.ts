@@ -15,7 +15,7 @@ import type {
  * Writes a markdown report for a completed or failed cron run.
  * Reports live under `<cron-specs-dir>/reports/<run-id>.md`.
  * By default that is `~/.cline/cron/reports/<run-id>.md`.
- * and are derived artifacts — the database is still the operational source
+ * and are derived artifacts - the database is still the operational source
  * of truth.
  */
 
@@ -84,7 +84,7 @@ function escapeMarkdownInline(value: string): string {
 
 /**
  * Hub-managed schedules use a virtual sourcePath (`hub/schedules/<id>.cron.md`)
- * that never exists on disk — the definition lives in cron.db. File-based specs
+ * that never exists on disk - the definition lives in cron.db. File-based specs
  * store a path relative to the cron specs directory; resolve it so the report
  * points at a real file.
  */
@@ -190,7 +190,7 @@ function buildHeader(
 			? ` in ${formatDuration(data.durationMs)}`
 			: "";
 	const lines = [
-		`# ${title} — ${statusWord}`,
+		`# ${title} - ${statusWord}`,
 		"",
 		`Run of schedule **${title}** (${trigger})${when}, ${statusWord}${duration}.`,
 		"",

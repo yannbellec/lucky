@@ -24,7 +24,7 @@ const FEATURE_FLAG_CALLED_EVENT = "$feature_flag_called";
 /**
  * Mirror the distinct-id derivation in apps/vscode
  * (src/services/logging/distinctId.ts) so PostHog evaluates the rollout flag
- * against the same id the bundles report telemetry with — otherwise cohort
+ * against the same id the bundles report telemetry with - otherwise cohort
  * membership can't be correlated with cohort behavior in dashboards.
  * Falls back to vscode.env.machineId rather than generating + persisting a new
  * id: the loader must never write to the shared ~/.cline state files.
@@ -163,7 +163,7 @@ export async function refreshCohort(
  * The loader's own decision event. Distinct from the AUTHORITATIVE
  * `extension.rollout.bundle_activated` event, which the activated bundle
  * itself captures through its variant-attributed telemetry pipeline (the
- * loader triggers it via the bundle's reportRolloutActivation export — see
+ * loader triggers it via the bundle's reportRolloutActivation export - see
  * src/extension.ts). This event carries the loader-side metadata that event
  * can't (override source, launch cadence, loader version) and is the only
  * signal left when BOTH bundles fail to activate.
@@ -183,7 +183,7 @@ export async function reportLoaderDecision(
 		fallback: boolean;
 		/** Bundle the loader originally decided on; differs from `bundle` on fallback. */
 		attemptedBundle?: Bundle;
-		/** Both bundles threw — nothing activated, and no bundle telemetry exists. */
+		/** Both bundles threw - nothing activated, and no bundle telemetry exists. */
 		doubleFailure?: boolean;
 		errorMessage?: string;
 		/** Time since the previous loader activation on this machine, if known. */

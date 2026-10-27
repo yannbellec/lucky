@@ -226,7 +226,7 @@ describe("createRetryEmptyResponseMiddleware", () => {
 		);
 	});
 
-	it("discards a rejected attempt wholesale — no structural parts leak", async () => {
+	it("discards a rejected attempt wholesale - no structural parts leak", async () => {
 		// The discarded attempt carries structural debris (response metadata,
 		// empty text block markers, raw parts) that must never reach the
 		// consumer: one retried request produces one clean logical stream.
@@ -377,7 +377,7 @@ describe("createRetryEmptyResponseMiddleware", () => {
 
 // ---------------------------------------------------------------------------
 // Mid-stream network interruptions. The error shapes mirror what Node's
-// fetch (undici) actually rejects with when a live response body dies — the
+// fetch (undici) actually rejects with when a live response body dies - the
 // exact signatures surfaced by task.provider_api_error telemetry on the SDK
 // arch: `terminated: SocketError: other side closed (UND_ERR_SOCKET)`,
 // `terminated: BodyTimeoutError`, `terminated: read ECONNRESET`,
@@ -480,7 +480,7 @@ describe("network interruption retry", () => {
 
 		expect(doStream).toHaveBeenCalledTimes(2);
 		expect(error).toBeUndefined();
-		// The dead attempt is discarded wholesale — one clean logical stream.
+		// The dead attempt is discarded wholesale - one clean logical stream.
 		expect(parts.filter((p) => p.type === "stream-start")).toHaveLength(1);
 		expect(
 			parts.some((p) => p.type === "text-delta" && p.delta === "hello"),
@@ -630,7 +630,7 @@ describe("network interruption retry", () => {
 
 	it("scales network backoff by the network retry count, not the shared attempt number", async () => {
 		// Attempt 1: empty response (its own 250ms-class delay). Attempt 2:
-		// FIRST network interruption — its backoff must be the configured
+		// FIRST network interruption - its backoff must be the configured
 		// base delay, not doubled just because an empty retry came first.
 		const log = vi.fn();
 		const doStream = vi

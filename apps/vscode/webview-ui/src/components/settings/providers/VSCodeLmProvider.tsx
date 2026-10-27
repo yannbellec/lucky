@@ -28,7 +28,7 @@ export const VSCodeLmProvider = ({ currentMode }: VSCodeLmProviderProps) => {
 		: (committedSelection?.modelId ?? "")
 
 	// Fetch VS Code LM models on mount, when the dropdown is focused, and via
-	// the explicit refresh link (no interval polling — ENG-2344), so models
+	// the explicit refresh link (no interval polling - ENG-2344), so models
 	// registered after mount (e.g. Copilot enabled later) are still discovered.
 	const requestVsCodeLmModels = useCallback(async () => {
 		try {
@@ -103,9 +103,9 @@ export const VSCodeLmProvider = ({ currentMode }: VSCodeLmProviderProps) => {
 							color: "var(--vscode-descriptionForeground)",
 						}}>
 						Uses models contributed by other extensions through the VS Code Language Model API. The most common source
-						is GitHub Copilot — install the{" "}
+						is GitHub Copilot - install the{" "}
 						<a href="https://marketplace.visualstudio.com/items?itemName=GitHub.copilot">Copilot extension</a> and
-						enable models in Copilot settings — but any extension that registers a language model provider will appear
+						enable models in Copilot settings - but any extension that registers a language model provider will appear
 						here.{" "}
 						<VSCodeLink
 							onClick={() => void requestVsCodeLmModels()}

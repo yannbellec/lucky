@@ -76,7 +76,7 @@ function flushAsync(): Promise<void> {
 // onListening
 // ---------------------------------------------------------------------------
 
-describe("auth/server startLocalOAuthServer — onListening", () => {
+describe("auth/server startLocalOAuthServer - onListening", () => {
 	socketIt(
 		"is called with host, port, and callbackUrl when the server binds",
 		async () => {
@@ -162,7 +162,7 @@ describe("auth/server startLocalOAuthServer — onListening", () => {
 // onClose
 // ---------------------------------------------------------------------------
 
-describe("auth/server startLocalOAuthServer — onClose", () => {
+describe("auth/server startLocalOAuthServer - onClose", () => {
 	socketIt("is called with host and port when close() is invoked", async () => {
 		const port = await getFreePort();
 		const onClose = vi.fn();
@@ -260,7 +260,7 @@ describe("auth/server startLocalOAuthServer — onClose", () => {
 // Sequential flows on a fixed port (keep-alive socket teardown)
 // ---------------------------------------------------------------------------
 
-describe("auth/server startLocalOAuthServer — sequential flows on a fixed port", () => {
+describe("auth/server startLocalOAuthServer - sequential flows on a fixed port", () => {
 	// A browser / global-fetch connection pool keeps a keep-alive socket to the
 	// callback port alive across requests. If close() left those sockets open, a
 	// later request to a re-bound port could be delivered over the pooled socket
@@ -303,7 +303,7 @@ describe("auth/server startLocalOAuthServer — sequential flows on a fixed port
 
 			// A second request over the same agent must not be served by the closed
 			// first server. close() destroys the pooled socket, so the reused
-			// connection errors rather than reaching the (already-settled) server —
+			// connection errors rather than reaching the (already-settled) server -
 			// which is what would otherwise swallow a subsequent flow's callback.
 			const reused = await getOverAgent("/callback?code=abc123&state=xyz");
 			expect(reused).not.toHaveProperty("status");
@@ -336,7 +336,7 @@ describe("auth/server startLocalOAuthServer — sequential flows on a fixed port
 // onListening + onClose ordering
 // ---------------------------------------------------------------------------
 
-describe("auth/server startLocalOAuthServer — onListening + onClose together", () => {
+describe("auth/server startLocalOAuthServer - onListening + onClose together", () => {
 	afterEach(() => {
 		vi.restoreAllMocks();
 	});

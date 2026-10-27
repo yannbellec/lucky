@@ -106,7 +106,7 @@ const TerminalSettingsSection: React.FC<TerminalSettingsSectionProps> = ({ rende
 								<VSCodeOption value="backgroundExec">Background Exec</VSCodeOption>
 							</VSCodeDropdown>
 							<p className="text-xs text-[var(--vscode-descriptionForeground)] mt-1">
-								Choose whether Cline runs commands in the VS Code terminal or a background process.
+								Choose whether Lucky runs commands in the VS Code terminal or a background process.
 							</p>
 						</div>
 					)}
@@ -130,7 +130,7 @@ const TerminalSettingsSection: React.FC<TerminalSettingsSectionProps> = ({ rende
 									)}
 								</div>
 								<p className="text-xs text-(--vscode-descriptionForeground)">
-									Set how long Cline waits for shell integration to activate before executing commands. Increase
+									Set how long Lucky waits for shell integration to activate before executing commands. Increase
 									this value if you experience terminal connection timeouts.
 								</p>
 							</div>
@@ -144,7 +144,7 @@ const TerminalSettingsSection: React.FC<TerminalSettingsSectionProps> = ({ rende
 									</VSCodeCheckbox>
 								</div>
 								<p className="text-xs text-(--vscode-descriptionForeground)">
-									When enabled, Cline will reuse existing terminal windows that aren't in the current working
+									When enabled, Lucky will reuse existing terminal windows that aren't in the current working
 									directory. Disable this if you experience issues with task lockout after a terminal command.
 								</p>
 							</div>
@@ -168,7 +168,7 @@ const TerminalSettingsSection: React.FC<TerminalSettingsSectionProps> = ({ rende
 							))}
 						</VSCodeDropdown>
 						<p className="text-xs text-(--vscode-descriptionForeground) mt-1">
-							Select the default terminal Cline will use. 'Default' uses your VSCode global setting.
+							Select the default terminal Lucky will use. 'Default' uses your VSCode global setting.
 						</p>
 					</div>
 					<div className="mt-5 p-3 bg-(--vscode-textBlockQuote-background) rounded border border-(--vscode-textBlockQuote-border)">

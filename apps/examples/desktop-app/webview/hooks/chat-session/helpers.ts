@@ -220,7 +220,7 @@ export function resolveCredentialError(
 		if (config.provider.trim().toLowerCase() !== "cline") {
 			return "Cloud sessions require the Cline provider.";
 		}
-		// Sends into an existing cloud session need no repo URL — the sandbox
+		// Sends into an existing cloud session need no repo URL - the sandbox
 		// was already provisioned with one.
 		if (options?.hasActiveSession) {
 			return null;
@@ -229,7 +229,7 @@ export function resolveCredentialError(
 		if (!repoUrl) {
 			return "Select a GitHub repository before starting a cloud session.";
 		}
-		// The picker validates as-you-type, but config accepts any keystroke —
+		// The picker validates as-you-type, but config accepts any keystroke -
 		// re-validate here so a half-typed URL can't reach the create call.
 		if (!isGitHubRepositoryUrl(repoUrl)) {
 			return "Enter a valid HTTPS GitHub repository URL (https://github.com/owner/repo).";
@@ -268,7 +268,7 @@ export function resolveCredentialError(
 /**
  * Where to send the user after a credential-looking turn failure. Local-auth
  * providers (Claude Code, Codex CLI, OpenCode) borrow their login from a CLI
- * on this machine, so Settings → Providers has nothing to fix — e.g. Claude
+ * on this machine, so Settings → Providers has nothing to fix - e.g. Claude
  * Code's "OAuth session expired and could not be refreshed" needs a fresh
  * sign-in in the `claude` CLI itself.
  */
@@ -381,7 +381,7 @@ export function inferHydratedChatStatus(
 }
 
 /**
- * The session record's status mapped verbatim — no transcript inference. For
+ * The session record's status mapped verbatim - no transcript inference. For
  * callers observing a session whose record is actively maintained by the
  * executing host (the stale-stream poll), the record is the authority;
  * inferHydratedChatStatus's stale-record heuristic would misread a mid-run

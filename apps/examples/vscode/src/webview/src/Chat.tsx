@@ -1188,7 +1188,7 @@ export default function Chat() {
 														postToHost({ type: "forkSession" });
 													}}
 													size="sm"
-													title="Fork session — copy full message history into a new session"
+													title="Fork session - copy full message history into a new session"
 													type="button"
 													variant="ghost"
 												>

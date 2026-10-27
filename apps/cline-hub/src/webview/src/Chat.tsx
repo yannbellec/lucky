@@ -850,7 +850,7 @@ export default function Chat({
 					return;
 				case "error":
 					// Recoverable errors are in-run notices (e.g. a plan-mode
-					// guard-blocked command recorded as a model mistake) — the
+					// guard-blocked command recorded as a model mistake) - the
 					// run continues and any tool failure is already shown on
 					// its tool row, so keep the turn state and transcript
 					// intact. Only genuine failures end the turn.
@@ -1348,7 +1348,7 @@ export default function Chat({
 														postToHost({ type: "forkSession" });
 													}}
 													size="sm"
-													title="Fork session — copy full message history into a new session"
+													title="Fork session - copy full message history into a new session"
 													type="button"
 													variant="ghost"
 												>

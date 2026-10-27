@@ -90,7 +90,7 @@ e2e("History - hides cost estimates for subscription-billed tasks", async ({ app
 	await expect(sidebar.getByText("$0.13")).toBeVisible()
 	await expect(sidebar.getByText("$0.42")).not.toBeVisible()
 
-	// Full history page (HistoryView) — scope to the virtualized list, since
+	// Full history page (HistoryView) - scope to the virtualized list, since
 	// the HistoryPreview beneath still holds matching task titles.
 	await sidebar.getByRole("button", { name: "View all history" }).click()
 	const historyList = sidebar.getByTestId("virtuoso-item-list")

@@ -65,7 +65,7 @@ interface SupervisedEntry {
 	/**
 	 * Whether `args` is this instance's real argv. An adopted process's argv is
 	 * not ours to reconstruct, and an empty argv is legitimate for a connector
-	 * configured entirely through the connector store — so emptiness cannot
+	 * configured entirely through the connector store - so emptiness cannot
 	 * stand in for "unknown".
 	 */
 	argsKnown: boolean;
@@ -127,7 +127,7 @@ export class ConnectorSupervisor {
 	 * Tail of the in-flight start/stop chain per instance key. `start` suspends
 	 * on `stop` (which shells into the CLI for cleanup, taking seconds), and two
 	 * unserialised starts interleaving across that suspension each spawn their
-	 * own process — the map ends up tracking one while the other survives as an
+	 * own process - the map ends up tracking one while the other survives as an
 	 * untracked ghost holding the connector's credentials and ports.
 	 */
 	private readonly instanceLocks = new Map<string, Promise<unknown>>();
@@ -218,8 +218,8 @@ export class ConnectorSupervisor {
 
 	/**
 	 * Serialise start/stop work per instance key. Both operations suspend
-	 * mid-flight — a stop waits for the process to die and for the CLI cleanup,
-	 * a start may embed a stop — and interleaving two of them across those
+	 * mid-flight - a stop waits for the process to die and for the CLI cleanup,
+	 * a start may embed a stop - and interleaving two of them across those
 	 * suspensions is how the map ends up tracking one process while another
 	 * lives on untracked. One instance, one queue.
 	 */
@@ -263,8 +263,8 @@ export class ConnectorSupervisor {
 			await this.stopLocked({ channel, instanceId, disableAutostart: false });
 		} else if (existing) {
 			// A dead entry can still act: a pending backoff timer would spawn a
-			// second process for this instance once it fires — untracked, so
-			// unstoppable — and an exit-cleanup chain still in flight would
+			// second process for this instance once it fires - untracked, so
+			// unstoppable - and an exit-cleanup chain still in flight would
 			// schedule that timer after this replacement is made. Retire the old
 			// entry explicitly; both paths check for "stopped" and stand down.
 			this.cancelRestart(existing);
@@ -320,7 +320,7 @@ export class ConnectorSupervisor {
 			this.signal(pid, "SIGTERM");
 			// Wait for the process to actually die. A replacement spawned while
 			// the old process still holds the connector's listen port or socket
-			// fails on it — observed as an EADDRINUSE crash loop when a webhook
+			// fails on it - observed as an EADDRINUSE crash loop when a webhook
 			// connector was restarted for a new hub session.
 			if (!(await this.waitForProcessExit(pid, STOP_SIGTERM_TIMEOUT_MS))) {
 				this.signal(pid, "SIGKILL");

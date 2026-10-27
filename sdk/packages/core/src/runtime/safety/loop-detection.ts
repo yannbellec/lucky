@@ -1,8 +1,8 @@
 /**
  * Repeated tool-call loop detection.
  *
- * @see PLAN.md §3.1 — helpers moved from `packages/agents/src/context/loop-detection.ts`.
- * @see PLAN.md §3.2.3 — public surface of `LoopDetectionTracker`.
+ * @see PLAN.md §3.1 - helpers moved from `packages/agents/src/context/loop-detection.ts`.
+ * @see PLAN.md §3.2.3 - public surface of `LoopDetectionTracker`.
  *
  * The pure helpers (`createLoopDetectionState`, `resetLoopDetectionState`,
  * `toolCallSignature`, `checkRepeatedToolCall`) are ported verbatim. The
@@ -87,16 +87,16 @@ export function checkRepeatedToolCall(
 }
 
 // =============================================================================
-// Class wrapper (new — per PLAN.md §3.2.3)
+// Class wrapper (new - per PLAN.md §3.2.3)
 // =============================================================================
 
 /**
  * Verdict returned by {@link LoopDetectionTracker.inspect}.
  *
- * - `"ok"`   — no repeated call detected.
- * - `"soft"` — soft-warning threshold reached; SessionRuntime may surface a
+ * - `"ok"`   - no repeated call detected.
+ * - `"soft"` - soft-warning threshold reached; SessionRuntime may surface a
  *              recovery notice but should not block the call.
- * - `"hard"` — hard-escalation threshold reached; SessionRuntime should
+ * - `"hard"` - hard-escalation threshold reached; SessionRuntime should
  *              stop the run with the provided `message`.
  */
 export interface LoopDetectionVerdict {

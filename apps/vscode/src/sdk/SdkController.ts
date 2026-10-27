@@ -229,7 +229,7 @@ export class Controller {
 	private readonly providerCatalog: ProviderCatalog
 	private readonly providerConfigStoreSubscription: Disposable
 	private providerConfigStatePostScheduled = false
-	// Debounces/coalesces postStateToWebview() calls — see StatePostDebouncer.
+	// Debounces/coalesces postStateToWebview() calls - see StatePostDebouncer.
 	private static readonly STATE_POST_DEBOUNCE_MS = 50
 	private readonly statePostDebouncer: StatePostDebouncer
 
@@ -248,12 +248,12 @@ export class Controller {
 
 	// Lazy terminal manager for foreground (VS Code terminal) command execution.
 	// Created on first use; shared across all sessions in this Controller's lifetime.
-	// Only used in the `vscodeTerminal` execution mode — `backgroundExec` and the
+	// Only used in the `vscodeTerminal` execution mode - `backgroundExec` and the
 	// standalone (JetBrains/CLI) host use the custom tool's SDK shell executor.
 	private _terminalManager?: VscodeTerminalManager
 
 	// Registry of in-flight foreground (VS Code terminal) command executions.
-	// Owned here — not by the session — so it survives session rebuilds, which
+	// Owned here - not by the session - so it survives session rebuilds, which
 	// recreate the tool set. Drives the "Proceed While Running" button.
 	private readonly foregroundCommands = new SdkForegroundCommandCoordinator({
 		onRunningChanged: () => {
@@ -283,7 +283,7 @@ export class Controller {
 	// Watches user-instruction files (workflows/skills/rules), including those
 	// materialized by remote config under `.cline/remote-config/`. Used to expand
 	// `/workflow` and `/skill` slash commands into their instruction bodies before
-	// the prompt reaches the model — the same mechanism the CLI uses in
+	// the prompt reaches the model - the same mechanism the CLI uses in
 	// `buildUserInputMessage`. The agent loop never auto-expands commands, so this
 	// host-side expansion is required. Created lazily (memoized as a promise to be
 	// race-free under concurrent first sends) and rebuilt if the workspace root
@@ -353,7 +353,7 @@ export class Controller {
 		// completion row (plan → yellow plan box, act → green completion box).
 		this.messageTranslatorState = new MessageTranslatorState(
 			undefined,
-			// Provider backing the active turn — error reshaping branches on it
+			// Provider backing the active turn - error reshaping branches on it
 			// (BYOK credential guidance vs the cline sign-in card). Prefer the
 			// active session's start metadata over the current settings
 			// selection: a provider/mode switch made while a turn is in flight
@@ -364,7 +364,7 @@ export class Controller {
 			() => this.getSessionProviderId() ?? this.getActiveProviderId(),
 			() => this.getDisplayedTaskMode(),
 			() => this.lastKnownWorkspaceRoot,
-			// Model backing the active turn — lets error reshaping recognize
+			// Model backing the active turn - lets error reshaping recognize
 			// retired cline-free/ models (the error payload itself never names one).
 			// The task shim is preferred over session-start metadata: a mid-task
 			// model-only switch updates the running session's model in place
@@ -375,7 +375,7 @@ export class Controller {
 			() => this.getTaskModelId() ?? this.getSessionModelId(),
 		)
 		// Warm the synchronous workspace-root snapshot used for display-path
-		// relativization (getWorkspaceRoot never rejects — it falls back internally).
+		// relativization (getWorkspaceRoot never rejects - it falls back internally).
 		void this.getWorkspaceRoot()
 		// Authoritative UI-mode tracker, sharing the one id/seq/epoch authority.
 		this.turnStateTracker = new TurnStateTracker(this.messageTranslatorState.getMinter())
@@ -467,7 +467,7 @@ export class Controller {
 				})
 			},
 			onSendError: async (error, sessionId) => {
-				// A turn failed — the UI shows error recovery (Retry / Sign In / Add Credits).
+				// A turn failed - the UI shows error recovery (Retry / Sign In / Add Credits).
 				void this.diffEdits.discardAllPreviews("turn error")
 				this.turnStateTracker.set("error")
 				const errorMessage = error instanceof Error ? error.message : String(error)
@@ -935,7 +935,7 @@ export class Controller {
 			if (this.stateManager.getGlobalStateKey("lastManagedOrganizationId")) {
 				// This install last ran under organization policy, but the current
 				// identity could not be resolved (refresh failed and no org was
-				// restored — e.g. the API is unreachable). Fail closed rather than
+				// restored - e.g. the API is unreachable). Fail closed rather than
 				// starting an unpoliced session.
 				void telemetryService.captureRemoteConfigSessionGate({
 					outcome: "blocked",
@@ -1033,7 +1033,7 @@ export class Controller {
 		await this.setRemoteConfigCoreIntegration(undefined)
 		this.isDisposed = true
 		// Tear down the debounced state-post machinery before downstream resources
-		// are disposed below — see StatePostDebouncer.dispose().
+		// are disposed below - see StatePostDebouncer.dispose().
 		await this.statePostDebouncer.dispose()
 		await this.invalidateUserInstructionService()
 		this.messages.cancelPendingSave()
@@ -1059,7 +1059,7 @@ export class Controller {
 	 * materialized under `<root>/.cline/remote-config/{workflows,skills,rules}`.
 	 *
 	 * `workspaceRoot` is resolved by the caller so the memoization check below runs
-	 * synchronously on entry — there is no `await` before the assignment, so
+	 * synchronously on entry - there is no `await` before the assignment, so
 	 * concurrent callers cannot create two competing watchers.
 	 */
 	private ensureUserInstructionService(workspaceRoot: string): Promise<UserInstructionConfigService> {
@@ -1101,12 +1101,12 @@ export class Controller {
 	 * The user's enabled rules rendered as the SDK renders them into a session's
 	 * system prompt, for standalone utility requests (commit message generation)
 	 * that don't run through a session. Empty when no rule is enabled or the
-	 * rules can't be read — a utility request should still go out without them.
+	 * rules can't be read - a utility request should still go out without them.
 	 *
 	 * "Enabled" means what the SDK means by it: the rule file has no
 	 * `disabled: true` frontmatter. The Rules panel's on/off toggles are stored
 	 * in extension state that the SDK does not read (CLINE-3120), so a rule
-	 * switched off there is still sent here — exactly as it is still sent to
+	 * switched off there is still sent here - exactly as it is still sent to
 	 * chat. Fixing that in one place fixes both.
 	 */
 	async getRulesForSystemPrompt(): Promise<string> {
@@ -1399,9 +1399,9 @@ export class Controller {
 	 * "Sign in to Cline" button.
 	 *
 	 * Message sequence:
-	 *   1. say:'task'           – the user's message text
-	 *   2. say:'api_req_started' – opens the API request row
-	 *   3. ask:'api_req_failed'  – ClineError JSON → ErrorRow renders auth UI
+	 *   1. say:'task'           - the user's message text
+	 *   2. say:'api_req_started' - opens the API request row
+	 *   3. ask:'api_req_failed'  - ClineError JSON → ErrorRow renders auth UI
 	 */
 	private emitClineAuthError(task?: string): void {
 		const ts = Date.now()
@@ -1481,8 +1481,8 @@ export class Controller {
 	 * webview renders the "Buy Credits" button via CreditLimitError.
 	 *
 	 * Message sequence:
-	 *   1. say:'api_req_started' – streamingFailedMessage holds the ClineError JSON
-	 *   2. ask:'api_req_failed'  – ClineError JSON → ErrorRow renders balance UI
+	 *   1. say:'api_req_started' - streamingFailedMessage holds the ClineError JSON
+	 *   2. ask:'api_req_failed'  - ClineError JSON → ErrorRow renders balance UI
 	 */
 	private emitClineBalanceError(rawErrorMessage: string): void {
 		const ts = Date.now()
@@ -1553,7 +1553,7 @@ export class Controller {
 			return startCloudTask()
 		}
 		await this.waitForInitialRemoteConfig()
-		// A new task is starting — the agent is about to stream.
+		// A new task is starting - the agent is about to stream.
 		this.turnStateTracker.set("streaming")
 		// Clear the previous turn's completion signal so this turn's phase is computed fresh.
 		this.messageTranslatorState.clearTurnOutcome()
@@ -1645,7 +1645,7 @@ export class Controller {
 
 	async clearTask(): Promise<void> {
 		this.pendingStartRetry = undefined
-		// No active task — UI returns to idle (input enabled, no buttons/thinking).
+		// No active task - UI returns to idle (input enabled, no buttons/thinking).
 		this.turnStateTracker.set("idle")
 		// A cloud task still provisioning has no SDK session for taskControl to end;
 		// stop it here so it cannot re-install its view after the user left.
@@ -1660,11 +1660,11 @@ export class Controller {
 
 	/**
 	 * Send a follow-up message to the active session.
-	 * This is the "askResponse" equivalent — continues the conversation.
+	 * This is the "askResponse" equivalent - continues the conversation.
 	 *
 	 * Like initTask(), this is fire-and-forget: core.send() blocks until
 	 * the agent turn completes, but events stream in real-time via the
-	 * subscription. We do NOT await the send — the gRPC handler needs to
+	 * subscription. We do NOT await the send - the gRPC handler needs to
 	 * return immediately so the webview stays responsive.
 	 */
 	async askResponse(prompt?: string, images?: string[], files?: string[]): Promise<void> {
@@ -1741,7 +1741,7 @@ export class Controller {
 		const turnStateBefore = this.turnStateTracker.get()
 
 		// Answering an ask / continuing after completion / resuming a cancelled task all kick off a
-		// new agent turn — move the authoritative phase to "streaming" so the footer shows
+		// new agent turn - move the authoritative phase to "streaming" so the footer shows
 		// Thinking + Cancel (and not the stale resumable/completed/awaiting_followup buttons or the
 		// scroll-arrow default). Mirrors initTask(). The webview gates turnState by seq, and the
 		// session-event coordinator will set the terminal phase (completed/awaiting_followup/error)
@@ -1751,7 +1751,7 @@ export class Controller {
 		this.messageTranslatorState.clearTurnOutcome()
 		// The webview only learns the phase through a full state post. Without one here it would
 		// keep the stale terminal phase (and hide the thinking indicator) until the first session
-		// event of the new turn posts state — a visible delay after every follow-up/approval.
+		// event of the new turn posts state - a visible delay after every follow-up/approval.
 		this.postStateToWebview().catch((error) => {
 			Logger.error("[SdkController] Failed to post state after askResponse phase change:", error)
 		})
@@ -1872,7 +1872,7 @@ export class Controller {
 				})
 			}
 
-			// The edit supersedes the old session — settle any pending tool
+			// The edit supersedes the old session - settle any pending tool
 			// approval / ask_question exactly like cancelTask does. Without this,
 			// the old run stays suspended forever on a promise nothing can
 			// resolve, and the stale parked resolver intercepts later responses.
@@ -2011,8 +2011,8 @@ export class Controller {
 	}
 
 	/**
-	 * Diffs the latest checkpoint — snapshotted when the user's last message
-	 * started a run — against the current working tree. Returns undefined when
+	 * Diffs the latest checkpoint - snapshotted when the user's last message
+	 * started a run - against the current working tree. Returns undefined when
 	 * no checkpoint exists (e.g. the workspace is not a git repository).
 	 * Throws when there is no task at all.
 	 */
@@ -2120,8 +2120,8 @@ export class Controller {
 
 	/**
 	 * "View Changes" on the completion row: opens a multi-file diff of
-	 * everything that changed between the latest checkpoint — snapshotted when
-	 * the user's last message started this run — and the current working tree.
+	 * everything that changed between the latest checkpoint - snapshotted when
+	 * the user's last message started this run - and the current working tree.
 	 */
 	async viewLatestCheckpointChanges(): Promise<void> {
 		const diffs = await this.computeLatestCheckpointChanges()
@@ -2152,7 +2152,7 @@ export class Controller {
 
 	/**
 	 * Show a task from history by loading its messages.
-	 * This does NOT start inference — it just loads the task for viewing.
+	 * This does NOT start inference - it just loads the task for viewing.
 	 *
 	 * IMPORTANT: We do NOT call clearTask() here because clearTask() sets
 	 * this.task = undefined and may trigger async operations (session stop/dispose)
@@ -2168,7 +2168,7 @@ export class Controller {
 	 *
 	 * Delegates straight to the coordinator (including the history lookup) so
 	 * the "latest selection wins" generation is allocated synchronously at the
-	 * moment of the request — awaiting the lookup here first would let a
+	 * moment of the request - awaiting the lookup here first would let a
 	 * stalled older request grab a NEWER generation than a later selection and
 	 * replace it.
 	 */

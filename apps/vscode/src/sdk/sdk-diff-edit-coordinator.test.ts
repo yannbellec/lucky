@@ -229,7 +229,7 @@ describe("buildEditPreviewAnimation", () => {
 		const typing = frames.filter((f) => !f.zip)
 		expect(typing.filter((f) => f.activeLine >= 50 && f.activeLine < 55)).toHaveLength(5)
 		expect(typing.filter((f) => f.activeLine >= 155 && f.activeLine < 160)).toHaveLength(5)
-		// The gap between the hunks zips — no typing frames inside it.
+		// The gap between the hunks zips - no typing frames inside it.
 		expect(typing.some((f) => f.activeLine >= 55 && f.activeLine < 155)).toBe(false)
 		expect(frames.some((f) => f.zip && f.activeLine >= 55 && f.activeLine < 155)).toBe(true)
 		// Short hunks still dwell perceptibly (~350ms per hunk).
@@ -339,7 +339,7 @@ describe("SdkDiffEditCoordinator", () => {
 
 	it("never throws from openForApproval and the executor still applies the edit", async () => {
 		await writeFile("a.ts", "content")
-		// old_text won't match — computeNewEditorContent throws, preview is skipped
+		// old_text won't match - computeNewEditorContent throws, preview is skipped
 		await coordinator.openForApproval("tc1", "editor", { path: "a.ts", old_text: "nope", new_text: "x" })
 		expect(previews).toHaveLength(0)
 

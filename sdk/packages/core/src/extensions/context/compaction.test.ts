@@ -486,7 +486,7 @@ describe("createContextCompactionPrepareTurn", () => {
 	});
 
 	it("drops the latest turn's tool pair atomically when over budget", () => {
-		// The whole history is compactable — there is no protected latest
+		// The whole history is compactable - there is no protected latest
 		// turn. A fresh tool pair that does not fit the budget is removed
 		// with both halves together, never split.
 		const messages: LlmsProviders.Message[] = [
@@ -1242,7 +1242,7 @@ describe("createContextCompactionPrepareTurn", () => {
 		it("compacts when the provider's actual count crosses a trigger the estimate does not", async () => {
 			// Same under-the-trigger estimate, but the provider reports that the
 			// PREVIOUS (smaller) request already consumed more than the estimate
-			// claims the current one does — the estimator is under-counting.
+			// claims the current one does - the estimator is under-counting.
 			// 1.5x sits comfortably past the 1.05x trigger; a count right at the
 			// multiple would only cross it by rounding.
 			const result = await run({
@@ -1439,7 +1439,7 @@ describe("createContextCompactionPrepareTurn", () => {
 	it("skips with a diagnostic warning when the summarizer only produced reasoning output", async () => {
 		// Repro for CLINE-2911: a reasoning model can spend the entire output
 		// budget thinking. Reasoning chunks are discarded, so no summary text
-		// arrives and compaction is skipped — that skip must be diagnosable.
+		// arrives and compaction is skipped - that skip must be diagnosable.
 		const logger = { debug: vi.fn(), log: vi.fn() };
 		const emitStatusNotice = vi.fn();
 		createHandlerMock.mockReturnValue({
@@ -2766,7 +2766,7 @@ describe("createContextCompactionPrepareTurn", () => {
 				id: "mock-model",
 				provider: "anthropic",
 				// Large window: the estimate-based trigger would not fire, yet
-				// the provider said otherwise — recovery must compact anyway.
+				// the provider said otherwise - recovery must compact anyway.
 				info: { id: "mock-model", maxInputTokens: 1_000_000 },
 			},
 		});
@@ -2920,7 +2920,7 @@ describe("createContextCompactionPrepareTurn", () => {
 	});
 
 	it("falls back to basic compaction when a custom compactor does not shrink during overflow recovery", async () => {
-		// Echoes its input back — "succeeds" without removing anything, which
+		// Echoes its input back - "succeeds" without removing anything, which
 		// the runtime would reject as a non-shrinking retry.
 		const compact = vi.fn(async (context: CoreCompactionContext) => ({
 			messages: context.messages,
@@ -2996,7 +2996,7 @@ describe("createContextCompactionPrepareTurn", () => {
 	});
 
 	it("falls back to basic compaction when a custom compactor shrinks but misses the recovery target", async () => {
-		// Drops only the short final message — strictly smaller, but far above
+		// Drops only the short final message - strictly smaller, but far above
 		// the ~50% recovery target, so the retry would still not fit.
 		const compact = vi.fn(async (context: CoreCompactionContext) => ({
 			messages: context.messages.slice(0, -1),
@@ -4111,7 +4111,7 @@ describe("createContextCompactionPrepareTurn", () => {
 	});
 
 	// ------------------------------------------------------------------
-	// Telemetry coverage — task.compaction_executed / task.compaction_skipped
+	// Telemetry coverage - task.compaction_executed / task.compaction_skipped
 	// ------------------------------------------------------------------
 
 	it("emits task.compaction_executed telemetry after a successful basic compaction", async () => {
@@ -4680,7 +4680,7 @@ describe("createContextCompactionPrepareTurn", () => {
 		// Regression: local-runtime-host validated the persist by projecting the
 		// state against agent.getMessages(), which mid-turn can legally differ
 		// from the transcript the prepareTurn context carries (the state's hash
-		// input) — so auto-compaction persists were spuriously skipped as stale.
+		// input) - so auto-compaction persists were spuriously skipped as stale.
 		// saveState must receive the same messages the hash was computed over.
 		const compact = vi.fn().mockResolvedValue({
 			messages: [{ role: "user", content: "summary" }],

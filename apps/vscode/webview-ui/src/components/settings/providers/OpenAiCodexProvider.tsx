@@ -26,7 +26,7 @@ interface OpenAiCodexProviderProps {
  * come from the extension over gRPC (`ResolveProviderModels` /
  * `ListProviders`), which in turn sources them from the `@cline/llms` SDK.
  * The webview imports no static model data from `@shared/api` for this
- * provider, and the `hideUsageCost` flag is not hard-coded — it is
+ * provider, and the `hideUsageCost` flag is not hard-coded - it is
  * derived from the SDK's `ProviderInfo.metadata.usageCostDisplay`.
  */
 export const OpenAiCodexProvider = ({ showModelOptions, isPopup, currentMode }: OpenAiCodexProviderProps) => {

@@ -433,7 +433,7 @@ describe("BrowserWebSocketHubAdapter", () => {
 			payload: { approvalId: "approval_1" },
 		};
 		// HubEventLogStore.append() returns a *new* object stamped with a
-		// sequence rather than mutating the original — same eventId, though.
+		// sequence rather than mutating the original - same eventId, though.
 		const stampedApproval: HubEventEnvelope = {
 			...pendingApproval,
 			sequence: 1,

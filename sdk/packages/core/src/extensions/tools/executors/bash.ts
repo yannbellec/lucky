@@ -351,8 +351,8 @@ export class CommandTerminationError extends Error {
 
 /**
  * The shell process could not be started, so the command never ran and there
- * is no exit code. `code` carries the operating system error libuv reported —
- * `ENOENT`, `EACCES`, `EFTYPE` for a file that is not a valid executable — so
+ * is no exit code. `code` carries the operating system error libuv reported -
+ * `ENOENT`, `EACCES`, `EFTYPE` for a file that is not a valid executable - so
  * a host can count "the shell is missing" separately from "the command
  * failed" without parsing the message.
  *
@@ -402,12 +402,12 @@ export interface ShellExecutorOptions {
 	 * middle-truncated: the head and tail are preserved and the middle is
 	 * elided, since build and test failures usually live at the end of the
 	 * output.
-	 * @default 48_000 — see MAX_COMMAND_OUTPUT_CHARS in output-limits.ts
+	 * @default 48_000 - see MAX_COMMAND_OUTPUT_CHARS in output-limits.ts
 	 */
 	maxOutputChars?: number;
 
 	/**
-	 * @deprecated Misnamed — the limit was always enforced in characters,
+	 * @deprecated Misnamed - the limit was always enforced in characters,
 	 * not bytes. Use {@link maxOutputChars}; this alias is honored when
 	 * maxOutputChars is not set.
 	 */
@@ -1050,7 +1050,7 @@ function spawnAndCollect(
 		// that backgrounds a child (`cmd &`, Start-Process, nohup) leaves the
 		// inherited pipe write-ends held open, so after the shell itself exits
 		// 'close' never arrives and the command would hang until the timeout
-		// kills the whole tree — even though the command, like a prompt
+		// kills the whole tree - even though the command, like a prompt
 		// returning in an interactive terminal, actually finished (GitHub
 		// #12417). When the process has exited and the streams stay open past
 		// a grace period, settle with the exit code and the output collected

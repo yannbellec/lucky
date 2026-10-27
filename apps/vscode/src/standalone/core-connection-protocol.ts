@@ -49,7 +49,7 @@ export async function dispatchCoreConnectionRequest(
  * chain. Streaming handlers deliver updates fire-and-forget, so two logical
  * responses for the same request can be in flight at once; without this, the
  * awaits inside the chunk loop would let their chunk sequences interleave and
- * the receiver — which reassembles purely by arrival order — would splice two
+ * the receiver - which reassembles purely by arrival order - would splice two
  * payloads together. A failed write rejects every later forward for the
  * request, so a torn payload is never followed by more chunks.
  */

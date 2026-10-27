@@ -117,7 +117,7 @@ export interface AgentExtensionSessionContext {
 /**
  * API surface passed to an extension's `setup()` method.
  *
- * Use it to register the contributions the extension wants to make — tools,
+ * Use it to register the contributions the extension wants to make - tools,
  * commands, message builders, providers, and automation event types. All
  * registrations accumulate into the `ContributionRegistry` and are available to
  * the host after `setup()` completes.
@@ -149,7 +149,7 @@ export type AgentExtensionHooks = Partial<AgentRuntimeHooks>;
  * Session-scoped workspace context passed as the second argument to an
  * extension's `setup(api, ctx)` method.
  *
- * These values are always sourced from the host session config — never from
+ * These values are always sourced from the host session config - never from
  * `process.cwd()`. Use them to resolve paths or build workspace-aware tool
  * schemas at registration time.
  *
@@ -189,7 +189,7 @@ export interface PluginSetupContext {
 	 * telemetry service.
 	 *
 	 * In-process plugins receive the host service directly. Sandboxed plugins
-	 * receive a bridge — the live service cannot cross the JSON IPC boundary —
+	 * receive a bridge - the live service cannot cross the JSON IPC boundary -
 	 * that forwards `capture`/`captureRequired`/`recordCounter`/
 	 * `recordHistogram`/`recordGauge` to the host, which namespaces every
 	 * event and metric under `plugin.`, stamps `plugin_name`, and drops them
@@ -283,7 +283,7 @@ export interface ContributionRegistryExtension<
 	 * contributions.
 	 *
 	 * The optional second argument provides workspace context that is always
-	 * sourced from the host session config — never from `process.cwd()`. Use
+	 * sourced from the host session config - never from `process.cwd()`. Use
 	 * `ctx.workspaceInfo?.rootPath` instead of `process.cwd()` or
 	 * `import.meta.url` tricks when you need workspace-relative paths.
 	 */

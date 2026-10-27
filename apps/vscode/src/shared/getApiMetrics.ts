@@ -82,7 +82,7 @@ export function getApiMetrics(messages: ClineMessage[]): ApiMetrics {
  * context-window bar updates immediately instead of waiting for the next
  * request to run. The ratio is used rather than tokensAfter itself because the
  * compaction counters are the SDK's estimate (chars/4-class), a different
- * scale from the provider-reported usage that normally drives this value —
+ * scale from the provider-reported usage that normally drives this value -
  * substituting the estimate would make the bar visibly re-snap when the next
  * request's real usage lands. Both counters come from the same estimator, so
  * their ratio is scale-free. Multiple compactions since the last request

@@ -1988,7 +1988,7 @@ export class HubRuntimeHost implements RuntimeHost {
 				// Snapshot-only session.updated events (persistence updates)
 				// carry no session record and can trail a turn's final idle
 				// update. Defaulting them to "running" flipped clients back to
-				// busy after the turn had finished — for queue-drained turns
+				// busy after the turn had finished - for queue-drained turns
 				// nothing else owns the busy flag, so it stuck forever (e.g.
 				// the desktop's workspace-restore gate). Report the snapshot's
 				// real status, or nothing when neither source has one.

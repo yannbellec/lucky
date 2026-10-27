@@ -102,7 +102,7 @@ export function listAvailableRuntimeCommandsFromWatcher(
 ): AvailableRuntimeCommand[] {
 	// Workflows are effectively deprecated in favor of skills, so a skill owns
 	// its token outright and a workflow whose normalized name collides with it
-	// is dropped rather than renamed — renaming would silently change command
+	// is dropped rather than renamed - renaming would silently change command
 	// tokens users already rely on. Same-kind collisions resolve to the
 	// first entry in the deterministic (name, id) sort from
 	// listCommandsForKind, so ownership is stable across discovery order.
@@ -124,7 +124,7 @@ export type ResolveRuntimeSlashCommandOptions = {
 	 * Hosts pass false when the session registers the runtime's `skills`
 	 * tool: the typed `/skill args` then goes through as-is and the model
 	 * loads the instructions via the tool, so the persisted transcript keeps
-	 * the typed command instead of the skill body. Workflows always expand —
+	 * the typed command instead of the skill body. Workflows always expand -
 	 * the skills tool does not serve them. Defaults to true.
 	 */
 	expandSkillCommands?: boolean;

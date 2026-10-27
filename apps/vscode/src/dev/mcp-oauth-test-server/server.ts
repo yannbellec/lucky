@@ -7,9 +7,9 @@
  * exercising and debugging Cline's MCP OAuth flow locally, including failure
  * modes such as:
  *
- *   - State expiry — the OAuth `state` times out before the callback returns
+ *   - State expiry - the OAuth `state` times out before the callback returns
  *     (e.g. a slow user, or a callback that arrives with a stale state).
- *   - Denial — the user clicks "Deny" on the consent screen, so the redirect
+ *   - Denial - the user clicks "Deny" on the consent screen, so the redirect
  *     comes back with `error=access_denied`.
  *
  * It plays BOTH roles that a real remote MCP server + its OAuth provider play:
@@ -18,7 +18,7 @@
  *        GET  /.well-known/oauth-protected-resource[/<path>]
  *        GET  /.well-known/oauth-authorization-server[/<path>]
  *        POST /register        (Dynamic Client Registration)
- *        GET  /authorize       (consent screen — Approve / Deny)
+ *        GET  /authorize       (consent screen - Approve / Deny)
  *        POST /token           (authorization_code + refresh_token grants)
  *
  *   2. MCP StreamableHTTP resource server:
@@ -201,7 +201,7 @@ interface PendingAuthCode {
 	redirectUri: string
 	codeChallenge?: string
 	codeChallengeMethod?: string
-	/** OAuth `state` the client sent on /authorize — echoed back on redirect. */
+	/** OAuth `state` the client sent on /authorize - echoed back on redirect. */
 	state?: string
 	issuedAt: number
 	resource?: string
@@ -223,7 +223,7 @@ class TestServer {
 	/**
 	 * The port actually bound. Differs from `opts.port` when `randomPort` is
 	 * set (the OS assigns it), and is the value every absolute URL we emit
-	 * (discovery metadata, redirect targets, the /mcp resource id) must use —
+	 * (discovery metadata, redirect targets, the /mcp resource id) must use -
 	 * otherwise the SDK's redirect_uri / resource checks fail.
 	 */
 	private boundPort = 0
@@ -429,7 +429,7 @@ class TestServer {
 		}
 
 		if (!approved) {
-			// RFC 6749 §4.1.2.1 — redirect back with error=access_denied.
+			// RFC 6749 §4.1.2.1 - redirect back with error=access_denied.
 			const redirect = new URL(redirectUri)
 			redirect.searchParams.set("error", "access_denied")
 			redirect.searchParams.set("error_description", "The user denied the authorization request.")
@@ -582,7 +582,7 @@ class TestServer {
 		}
 
 		// Advertise the `frozzle` tool. Its description deliberately does NOT
-		// reveal what frozzling does, so a model cannot fabricate the result —
+		// reveal what frozzling does, so a model cannot fabricate the result -
 		// the only way to produce a correct answer is to actually call the tool
 		// over MCP. This makes it a reliable end-to-end signal that the OAuth'd
 		// MCP connection works (vs. the model hallucinating an answer).
@@ -654,7 +654,7 @@ class TestServer {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MCP OAuth Test — Authorize</title>
+  <title>MCP OAuth Test - Authorize</title>
   <style>
     body { font-family: system-ui, sans-serif; background: #1e1e1e; color: #ddd; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
     .card { background: #252526; border: 1px solid #3c3c3c; border-radius: 8px; padding: 32px; max-width: 480px; }
@@ -747,7 +747,7 @@ function base64UrlSha256(input: string): string {
  * cannot guess or compute the result without actually calling the tool over
  * the (OAuth-authenticated) MCP connection. So when an eval asks the agent to
  * "frozzle <text>" and checks the answer, a correct result is proof the MCP
- * round-trip really happened — not a hallucination.
+ * round-trip really happened - not a hallucination.
  *
  * It is nonetheless deterministic, easy to verify at a glance, and invertible:
  * reverse the string and swap the case of each letter (upper<->lower), then
@@ -796,7 +796,7 @@ export { buildSettingsFragment, parseArgs, TestServer, type TestServerOptions }
  * Uses the nested `transport` shape the CLI/SDK writes (and the extension also
  * accepts), so the output can be dropped straight into the settings file. When
  * there are multiple endpoints the names are suffixed (`oauth-test-1`, …) since
- * OAuth state is keyed by server name — distinct names get independent tokens.
+ * OAuth state is keyed by server name - distinct names get independent tokens.
  */
 function buildSettingsFragment(endpoints: string[]): string {
 	const mcpServers: Record<string, unknown> = {}

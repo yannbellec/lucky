@@ -162,8 +162,8 @@ export abstract class ConnectorBase<Options, State>
 	 *
 	 * The hub keys supervision by (channel, instanceId), so it needs the id
 	 * before anything is spawned. Adapters that can only determine it with a side
-	 * effect — Telegram resolves its bot username from the API when the flag is
-	 * omitted — return undefined, and the caller falls back to starting the
+	 * effect - Telegram resolves its bot username from the API when the flag is
+	 * omitted - return undefined, and the caller falls back to starting the
 	 * connector locally.
 	 */
 	resolveInstanceId(rawArgs: string[]): string | undefined {

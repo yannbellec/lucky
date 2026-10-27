@@ -16,7 +16,7 @@ export type SessionAgentRunState =
 	| "completed"
 	| "failed"
 	| "cancelled"
-	/** Dispatched, but no observed outcome — a run interrupted by a crash or reload. */
+	/** Dispatched, but no observed outcome - a run interrupted by a crash or reload. */
 	| "unresolved";
 
 export type SessionAgentActivity = {
@@ -260,7 +260,7 @@ function collectAgentRunStates(
  * Count the child agents started during a session, bucketed by outcome.
  *
  * `sessionActive` distinguishes a run that is genuinely still working from one
- * that was recorded without an outcome — a hydrated transcript keeps its
+ * that was recorded without an outcome - a hydrated transcript keeps its
  * unfinished `tool_use` blocks forever, and reporting those as "running" in an
  * idle session would be wrong.
  */
@@ -301,8 +301,8 @@ export function hasAgentActivity(activity: SessionAgentActivity): boolean {
  *
  * The roster is authoritative where it exists: it carries each agent's real
  * persisted status and its own session id, which is what makes peeking at a
- * transcript possible. It lags the live stream though — a row appears only once
- * the runtime has persisted the spawn — so counts still fall back to the
+ * transcript possible. It lags the live stream though - a row appears only once
+ * the runtime has persisted the spawn - so counts still fall back to the
  * message-derived tally while a turn is in flight.
  */
 export type SessionAgentEntry = {
@@ -311,7 +311,7 @@ export type SessionAgentEntry = {
 	parentAgentId?: string;
 	kind: "subagent" | "teamtask";
 	status: string;
-	/** The task the agent was given — its first prompt. */
+	/** The task the agent was given - its first prompt. */
 	prompt?: string;
 	/** Most recent step the agent took, for an at-a-glance progress line. */
 	lastAction?: string;

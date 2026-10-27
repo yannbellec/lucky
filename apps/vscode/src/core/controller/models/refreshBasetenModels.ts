@@ -6,7 +6,7 @@ import { type ProviderCatalogController, resolveProviderModelsRecord } from "./p
  *
  * Model catalogs are consolidated in the SDK: `resolveProviderConfig` serves
  * the models.dev-backed catalog and, when a Baseten API key is configured,
- * merges in the SDK's authenticated Baseten model fetch — the same source
+ * merges in the SDK's authenticated Baseten model fetch - the same source
  * the CLI uses.
  */
 export async function refreshBasetenModels(controller: ProviderCatalogController): Promise<Record<string, ModelInfo>> {

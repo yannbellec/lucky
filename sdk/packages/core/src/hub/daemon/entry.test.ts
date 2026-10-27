@@ -345,7 +345,7 @@ describe("hub daemon entry", () => {
 		expect(onUnhandledRejection).toBeDefined();
 
 		// Cancelling a turn can leave provider fetches rejecting on floating
-		// promises after the run settled. None of these may kill the daemon —
+		// promises after the run settled. None of these may kill the daemon -
 		// it hosts every resident session.
 		const { AgentRuntimeAbortError } = await import("@cline/agents");
 		onUnhandledRejection?.(new AgentRuntimeAbortError("run aborted"));

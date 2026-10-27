@@ -8,8 +8,8 @@ export const CLINE_PASS_PROVIDER_ID = "cline-pass"
  * ClinePass always uses the user's personal Cline account balance.
  *
  * The account switch is a network round-trip (plus a possible token refresh),
- * so it runs fire-and-forget: callers must not block the config update — or
- * the state post that re-renders the settings UI — on it. Auth state changes
+ * so it runs fire-and-forget: callers must not block the config update - or
+ * the state post that re-renders the settings UI - on it. Auth state changes
  * propagate to the webview separately once the switch completes.
  *
  * switchAccount does nothing when the account is already Personal, waits for

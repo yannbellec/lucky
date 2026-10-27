@@ -170,8 +170,8 @@ export class VscodeTelemetryPolicyService implements ITelemetryService {
 
 	private initializeHostTelemetryState(): void {
 		// Resolve host-derived metadata first and only then let events flow: the gate
-		// below (and every subscription update) waits on this promise, so no event —
-		// including the deferred provider_created — is emitted before the host
+		// below (and every subscription update) waits on this promise, so no event -
+		// including the deferred provider_created - is emitted before the host
 		// identity metadata is in place. Never rejects: resolveHostMetadata catches.
 		const hostMetadataApplied = this.resolveHostMetadata().then((hostMetadata) => {
 			if (Object.keys(hostMetadata).length > 0) {

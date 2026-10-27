@@ -180,7 +180,7 @@ export function WorkspaceSelector({
 				}
 				return;
 			} catch (pickError) {
-				// No usable native picker — fall through to manual path entry.
+				// No usable native picker - fall through to manual path entry.
 				setWorkspaceError(
 					pickError instanceof Error && pickError.message.trim()
 						? pickError.message
@@ -366,7 +366,7 @@ export function WorkspaceSelector({
 											<div className="px-2 py-2 text-xs text-muted-foreground">
 												{looksLikeFolderPath(search)
 													? "Press the option above to open this folder"
-													: "No workspaces found — type a full folder path to add one"}
+													: "No workspaces found - type a full folder path to add one"}
 											</div>
 										) : (
 											filteredWorkspaces.map((wp) => {

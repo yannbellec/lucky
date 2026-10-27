@@ -48,10 +48,10 @@ describe("read_files summaries", () => {
 			toolName: "read_files",
 			input: { files: [{ path: "src/app.tsx", start_line: 10, end_line: 80 }] },
 		});
-		expect(summary.label).toBe("Read file app.tsx (10–80)");
+		expect(summary.label).toBe("Read file app.tsx (10-80)");
 		expect(summary.labelParts).toEqual([
 			{ text: "Read file " },
-			{ text: "app.tsx (10–80)", code: true },
+			{ text: "app.tsx (10-80)", code: true },
 		]);
 		expect(summary.kind).toBe("read");
 		expect(summary.details).toEqual(["src/app.tsx:10-80"]);
@@ -132,7 +132,7 @@ describe("run_commands summaries", () => {
 		expect(summary.details).toEqual(["bun run test"]);
 	});
 
-	it("never truncates labels by default — layout owns overflow", () => {
+	it("never truncates labels by default - layout owns overflow", () => {
 		const command = `echo ${"x".repeat(400)}`;
 		const summary = buildToolSummary({
 			toolName: "run_commands",
@@ -584,7 +584,7 @@ describe("buildGroupedToolLabel", () => {
 			toolName: "read_files",
 			input: { files: [{ path: "a.ts", start_line: 1, end_line: 5 }] },
 		});
-		expect(buildGroupedToolLabel([summary])).toBe("Read file a.ts (1–5)");
+		expect(buildGroupedToolLabel([summary])).toBe("Read file a.ts (1-5)");
 	});
 
 	it("merges input-less fallback summaries into grouped counts", () => {

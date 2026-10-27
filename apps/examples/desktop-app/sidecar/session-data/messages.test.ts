@@ -117,7 +117,7 @@ describe("readSessionMessages", () => {
 	it("projects pre-tool thinking before the tool row it preceded", async () => {
 		// A thinking model can issue a tool call without narration text:
 		// content = [thinking, tool_use]. The thinking happened before the
-		// tool executed, so it must project before the tool row — matching the
+		// tool executed, so it must project before the tool row - matching the
 		// live-stream order and keeping the reasoning from attaching to the
 		// next turn-ending answer (which would corrupt the work summary's
 		// duration anchor in the webview).
@@ -212,7 +212,7 @@ describe("readSessionMessages", () => {
 	it("keeps interleaved thinking between the tool calls it separates", async () => {
 		// Interleaved thinking can produce [thinking, tool_use, thinking,
 		// tool_use] in a single assistant message. Each thinking segment must
-		// project at its own position — merging the second segment into the
+		// project at its own position - merging the second segment into the
 		// first row would display it before a tool call it actually followed.
 		const sessionId = `interleaved-thinking-projection-${Date.now()}`;
 		const assistantTimestamp = 1_781_041_621_000;

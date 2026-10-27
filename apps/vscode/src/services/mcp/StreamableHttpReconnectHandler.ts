@@ -15,15 +15,15 @@ export interface ReconnectCallbacks {
 	notifyWebviewOfServerChanges: () => Promise<void>
 	/** Appends an error message to the connection's server object */
 	appendErrorMessage: (connection: { server: { status: string } }, message: string) => void
-	/** Awaitable delay — injected so tests can substitute a zero-delay or fake timer */
+	/** Awaitable delay - injected so tests can substitute a zero-delay or fake timer */
 	delay: (ms: number) => Promise<void>
 	/**
 	 * Reads current settings fresh and returns whether this server is still
 	 * configured, enabled, and defined with the same connection-relevant
 	 * config this handler's connectToServer callback would reconnect with.
 	 * Checked before every reconnect attempt so a retry can't resurrect a
-	 * server the user removed or disabled — or an obsolete config the user
-	 * changed — during a backoff delay. Should return true when settings
+	 * server the user removed or disabled - or an obsolete config the user
+	 * changed - during a backoff delay. Should return true when settings
 	 * can't be read: a transient read failure must not kill the reconnect
 	 * chain.
 	 */
@@ -88,7 +88,7 @@ export class StreamableHttpReconnectHandler {
 	 * Publish server state to the webview, retrying transient failures up to
 	 * `attempts` times. Never throws: handleError runs from transport.onerror
 	 * with its promise discarded, so a rejection here would surface as an
-	 * unhandled rejection — and a publication failure must never be confused
+	 * unhandled rejection - and a publication failure must never be confused
 	 * with a transport failure.
 	 */
 	private async publishServerChanges(attempts = 1): Promise<void> {
@@ -163,8 +163,8 @@ export class StreamableHttpReconnectHandler {
 
 		while (this.attempts <= this.config.maxAttempts) {
 			// Revalidate before every attempt: during the preceding await
-			// (teardown or a backoff delay) another path — the settings
-			// watcher, an RPC — may have installed a replacement connection,
+			// (teardown or a backoff delay) another path - the settings
+			// watcher, an RPC - may have installed a replacement connection,
 			// or settings may have removed/disabled the server. Proceeding
 			// would displace the replacement without closing it (leaking its
 			// transport) or resurrect a server the user removed. Ordinary
@@ -211,8 +211,8 @@ export class StreamableHttpReconnectHandler {
 			// connectToServer() loads fresh lists but doesn't publish them;
 			// without this, the webview keeps showing "connecting" and
 			// consumers keep the pre-reconnect capabilities. Kept outside the
-			// connect try/catch — a publication failure must not be treated
-			// as a transport failure and restart the already-live connection —
+			// connect try/catch - a publication failure must not be treated
+			// as a transport failure and restart the already-live connection -
 			// and retried so a transient failure doesn't leave consumers
 			// stuck on "connecting" with pre-reconnect capabilities.
 			await this.publishServerChanges(PUBLISH_ATTEMPTS)
@@ -230,7 +230,7 @@ export class StreamableHttpReconnectHandler {
 			exhaustedConnection.server.status = "disconnected"
 			this.callbacks.appendErrorMessage(exhaustedConnection, error instanceof Error ? error.message : `${error}`)
 		}
-		// Terminal state — same rationale as the early-exhausted path above
+		// Terminal state - same rationale as the early-exhausted path above
 		await this.publishServerChanges(PUBLISH_ATTEMPTS)
 	}
 }

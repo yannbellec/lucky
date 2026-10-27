@@ -143,7 +143,7 @@ export function sanitizeInitialMessagesForSessionStart(messages: unknown[]): unk
 						typeof block.tool_use_id === "string" &&
 						toolUseIdSet.has(block.tool_use_id)
 					) {
-						// Duplicate tool_result for an ID we already matched — skip it
+						// Duplicate tool_result for an ID we already matched - skip it
 					} else {
 						otherBlocks.push(block)
 					}

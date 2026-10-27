@@ -83,7 +83,7 @@ export class SdkModeCoordinator {
 	/**
 	 * Returns (and clears) the pending mode-switch notice when the outbound
 	 * message targets the session the switch was recorded for; otherwise leaves
-	 * it pending — mode is a global setting, so the notice stays valid for the
+	 * it pending - mode is a global setting, so the notice stays valid for the
 	 * recorded session even if the user visits another task in between.
 	 */
 	consumeModeSwitchNotice(sessionId: string): ModeSwitchNotice | null {
@@ -262,7 +262,7 @@ export class SdkModeCoordinator {
 				// Replacement was refused. When the session we tried to replace is
 				// still the active one (e.g. a queued turn started running in the
 				// meantime), it still has the previous mode's tools, so roll the
-				// setting back — same reasoning as the auth guard above. When another
+				// setting back - same reasoning as the auth guard above. When another
 				// session took over (or none is left), the superseding flow owns the
 				// mode now and the setting must not be clobbered.
 				if (this.options.sessions.getActiveSession() === activeSession) {
@@ -390,8 +390,8 @@ export class SdkModeCoordinator {
 
 		// The turn was aborted mid-flight, so nothing will ever settle its phase:
 		// the aborted session's done event is fenced off as a stale event once the
-		// rebuild unsubscribes it. Mirror cancelTask — append a resume ask and mark
-		// the turn resumable — so the footer offers Resume Task with the input
+		// rebuild unsubscribes it. Mirror cancelTask - append a resume ask and mark
+		// the turn resumable - so the footer offers Resume Task with the input
 		// enabled instead of an eternal Thinking spinner (aborted while streaming)
 		// or dead approval buttons (aborted while awaiting approval). When the
 		// rebuild auto-continues, onAutoContinueStarting flips the phase back to

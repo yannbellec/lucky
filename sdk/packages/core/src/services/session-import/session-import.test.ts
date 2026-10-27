@@ -285,7 +285,7 @@ function writeCodexFixture(codexHome: string): void {
 			type: "turn_context",
 			payload: { model: "gpt-5.5", cwd: "/workspace/api" },
 		},
-		// Injected context arrives as a user response_item — never imported.
+		// Injected context arrives as a user response_item - never imported.
 		{
 			timestamp: "2026-01-05T09:00:00.200Z",
 			type: "response_item",
@@ -649,7 +649,7 @@ function writeOpencodeFixture(dataDir: string): void {
 		"ses_1",
 		t0,
 		t0,
-		JSON.stringify({ type: "text", text: "Done — navbar is sticky." }),
+		JSON.stringify({ type: "text", text: "Done - navbar is sticky." }),
 	);
 	db.close?.();
 }
@@ -1156,7 +1156,7 @@ describe("SessionImportService", () => {
 		expect(
 			(survivor.metadata as Record<string, unknown> | undefined)?.importedFrom,
 		).toBeUndefined();
-		// Rows are created terminal — never a running/pid-0 state that the
+		// Rows are created terminal - never a running/pid-0 state that the
 		// stale-session reconciler could flip to failed mid-import.
 		expect(survivor.status).toBe("completed");
 		const rediscovered = await importer.discover();
@@ -1179,7 +1179,7 @@ describe("SessionImportService", () => {
 		const [first] = await importer.importMany([
 			{ tool: "claude-code", sourceId: "abc" },
 		]);
-		// Same request again — from a stale picker, a double click, whatever —
+		// Same request again - from a stale picker, a double click, whatever -
 		// resolves to the existing session instead of writing a second copy.
 		const [second, third] = await importer.importMany([
 			{ tool: "claude-code", sourceId: "abc" },

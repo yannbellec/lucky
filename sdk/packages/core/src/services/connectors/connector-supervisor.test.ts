@@ -379,8 +379,8 @@ describe("ConnectorSupervisor", () => {
 		// A user runs `cline connect` while the instance is waiting out its
 		// backoff. The old entry's timer must not survive the replacement: it
 		// holds a closure over the old entry, so firing it would spawn a second
-		// process for the same instance — untracked by the map, so invisible to
-		// list() and unreachable by stop() — two processes on one bot token.
+		// process for the same instance - untracked by the map, so invisible to
+		// list() and unreachable by stop() - two processes on one bot token.
 		const children = [
 			new FakeChild(1300),
 			new FakeChild(1301),
@@ -417,7 +417,7 @@ describe("ConnectorSupervisor", () => {
 
 	it("serialises a boot-time restart with a concurrent user start", async () => {
 		// Observed live: a new hub's boot reconnect restarts an adopted survivor
-		// — which suspends inside stop() waiting on the CLI cleanup — while a
+		// - which suspends inside stop() waiting on the CLI cleanup - while a
 		// user `cline connect` for the same instance arrives over the hub.
 		// Unserialised, both spawned: the map tracked one process while the other
 		// lived on untracked, holding the connector's webhook port, and the

@@ -20,7 +20,7 @@ type SessionConfig = Awaited<ReturnType<SdkSessionConfigBuilder["build"]>>
 /**
  * Sent when the user resumes a task without typing anything: a turn cannot
  * start without a prompt, so the Resume button needs a synthetic one. Never
- * include the original task text here — the model treats it as new
+ * include the original task text here - the model treats it as new
  * instructions and redoes already-completed work (#12975). Hidden from the
  * transcript by isSyntheticUserPrompt via the [TASK RESUMPTION] prefix.
  */
@@ -105,7 +105,7 @@ export class SdkFollowupCoordinator {
 			}
 
 			// Stopping a turn keeps the session alive, so a matching idle
-			// session is continued in place — mirroring the CLI, which reuses
+			// session is continued in place - mirroring the CLI, which reuses
 			// the live session after an abort. Rebuilding from task history is
 			// reserved for tasks without a live session (opened from history,
 			// extension host reload).

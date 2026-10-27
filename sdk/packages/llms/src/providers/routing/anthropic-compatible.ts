@@ -352,7 +352,7 @@ export function resolveAnthropicReasoningRequestPolicy(
 	// No catalog reasoning metadata: fall back to the id-based era policy
 	// (see resolveClaudeThinkingEra). 4.6+/5.x Claude ids require adaptive;
 	// unknown Claude ids default to adaptive for forward compatibility,
-	// matching @ai-sdk/anthropic's capability defaults — except when the
+	// matching @ai-sdk/anthropic's capability defaults - except when the
 	// request carries an explicit numeric budget, which signals a custom
 	// endpoint that expects the manual shape. Legacy Claude families and
 	// non-Claude Anthropic-compatible ids keep manual, the safe shape for

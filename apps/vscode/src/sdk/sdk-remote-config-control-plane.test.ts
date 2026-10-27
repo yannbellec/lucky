@@ -125,7 +125,7 @@ describe("SdkRemoteConfigControlPlane", () => {
 
 	it("throws instead of reporting no-config when identity restore fails on a previously managed install", async () => {
 		// Offline cold start: auth restore failed, so BOTH the token and the
-		// active org are gone — but the persisted marker says this install runs
+		// active org are gone - but the persisted marker says this install runs
 		// under org policy. Reporting no-config would wipe the policy and the
 		// marker, permanently disarming the fail-closed session gate.
 		activeOrganization.id = null

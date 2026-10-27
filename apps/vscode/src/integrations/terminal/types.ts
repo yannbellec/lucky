@@ -3,7 +3,7 @@
  *
  * These types describe the event/process surface implemented by
  * `VscodeTerminalProcess` and consumed by `VscodeTerminalManager`. The
- * standalone (CLI/JetBrains) terminal manager was removed — those hosts run
+ * standalone (CLI/JetBrains) terminal manager was removed - those hosts run
  * commands through the SDK's built-in `run_commands` (child_process) tool.
  */
 
@@ -39,7 +39,7 @@ export interface TerminalCompletionDetails {
 	signal?: NodeJS.Signals | null
 	/**
 	 * True when the terminal was closed while the command was still running.
-	 * There is no exit code in this case — the command's success/failure is
+	 * There is no exit code in this case - the command's success/failure is
 	 * unknown, but callers must not report success, since e.g. the terminal
 	 * closing mid-`npm test` must not be read as tests passing.
 	 */

@@ -77,7 +77,7 @@ describe("convertToVsCodeLmMessages", () => {
 
 	it("extracts text from structured (untyped) tool_result content (run_commands shape)", () => {
 		// SDK tool executors return rich, untyped objects (ToolOperationResult:
-		// { query, result, success }) — NOT typed text blocks. The result text
+		// { query, result, success }) - NOT typed text blocks. The result text
 		// must reach the model, not an empty string.
 		const messages: Message[] = [
 			{ role: "assistant", content: [{ type: "tool_use", id: "c1", name: "run_commands", input: {} }] },

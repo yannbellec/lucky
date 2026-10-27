@@ -340,7 +340,7 @@ export function findLatestSummaryIndex(
  * orphan half of a tool_use/tool_result pair. Typed user turns qualify,
  * and so do assistant messages: an assistant's tool_use keeps its results
  * in the user message that follows it, so both halves stay on the same
- * side of the cut. A tool_result-only user message is never safe — its
+ * side of the cut. A tool_result-only user message is never safe - its
  * matching tool_use sits in the preceding assistant message and would be
  * folded into the summary, leaving an orphaned tool_result the provider
  * rejects.

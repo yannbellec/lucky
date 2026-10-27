@@ -1131,7 +1131,7 @@ describe("buildSessionConfig", () => {
 			openRouterApiKey: "openrouter-key",
 			// Dynamic-list picker snapshot: legacy boolean flags but no SDK
 			// capability list. The reconstructed capabilities array must still
-			// carry "tools" — the SDK treats a populated list without it as
+			// carry "tools" - the SDK treats a populated list without it as
 			// "cannot call tools" and silently drops every tool from the session
 			// (the file-edit e2e regression).
 			actModeOpenRouterModelInfo: {
@@ -1158,7 +1158,7 @@ describe("buildSessionConfig", () => {
 			actModeOpenRouterModelId: "mock/empty-capabilities-model",
 			openRouterApiKey: "openrouter-key",
 			// A capabilities field that round-tripped through a boundary
-			// defaulting the missing array to [] — same "no signal" state as
+			// defaulting the missing array to [] - same "no signal" state as
 			// an absent one (modelHasCapability treats both as unspecified).
 			// Before the fix, the strict `=== undefined` guard skipped the
 			// tools seeding, supportsReasoning populated the array, and the

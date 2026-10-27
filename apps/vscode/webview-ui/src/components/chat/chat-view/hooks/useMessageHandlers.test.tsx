@@ -107,7 +107,7 @@ const completedConversation: ClineMessage[] = [
 	{ ts: 2, type: "say", say: "completion_result", text: "all done" },
 ]
 
-describe("useMessageHandlers — send routing", () => {
+describe("useMessageHandlers - send routing", () => {
 	beforeEach(() => {
 		newTask.mockReset()
 		newTask.mockResolvedValue(undefined)
@@ -220,7 +220,7 @@ describe("useMessageHandlers — send routing", () => {
 		)
 	})
 
-	it("after a completed turn (no clineAsk), Enter continues the conversation via askResponse — NOT newTask", async () => {
+	it("after a completed turn (no clineAsk), Enter continues the conversation via askResponse - NOT newTask", async () => {
 		mockTurnState = { phase: "completed", seq: 7 }
 		const { result } = renderHook(() => useMessageHandlers(completedConversation, makeChatState(completedConversation)))
 

@@ -375,7 +375,7 @@ export class SubprocessSandbox {
 			} catch (error) {
 				// send() throws synchronously when the message is not
 				// serializable (e.g. cyclic structures). Cancel the pending
-				// entry so the timeout timer above never fires — otherwise it
+				// entry so the timeout timer above never fires - otherwise it
 				// would shut down the sandbox process out from under unrelated
 				// in-flight calls. Reject with the original error so callers
 				// can classify it (see isSerializationError in plugin-sandbox).

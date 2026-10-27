@@ -182,7 +182,7 @@ const ModelSelection = ({
 				})}
 			</div>
 
-			{/* SEARCH MODEL — hidden for ClinePass, whose selection is constrained to the curated list. */}
+			{/* SEARCH MODEL - hidden for ClinePass, whose selection is constrained to the curated list. */}
 			{!isClinePass && (
 				<div className="flex w-full max-w-lg flex-col gap-6 my-4 border-t border-muted-foreground">
 					<div className="flex flex-col gap-3 mt-6" key="search-results">
@@ -554,7 +554,7 @@ const OnboardingViewContent = ({ onboardingModels }: { onboardingModels: Onboard
 					}
 				})
 
-			// Save the selection but stay on the "Almost there!" step — the host
+			// Save the selection but stay on the "Almost there!" step - the host
 			// completes the welcome view once the browser sign-in succeeds.
 			await finishOnboarding(updateModelId, step, false)
 			setIsActionLoading(false)

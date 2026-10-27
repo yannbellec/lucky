@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 /**
  * Persistent "update ready" indicator for the sidebar. Renders nothing until
  * the auto-updater has staged an update, then shows an accented button that
- * opens a popover with the new version and a restart action — so the update
+ * opens a popover with the new version and a restart action - so the update
  * stays reachable after the one-time toast is dismissed.
  */
 export function AppUpdateIndicator({ className }: { className?: string }) {

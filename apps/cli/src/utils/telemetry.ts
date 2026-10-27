@@ -118,7 +118,7 @@ export function identifyTelemetryAccount(
  *
  * When `account` is provided, `identifyAccount` is called first so the
  * activation event payload includes `organization_id`, `organization_name`,
- * `member_id`, and similar account identifiers — matching the legacy CLI
+ * `member_id`, and similar account identifiers - matching the legacy CLI
  * funnel observed in `otel.otel_logs`.
  *
  * The memoization gate lives in {@link ./telemetry.activation-gate} so a

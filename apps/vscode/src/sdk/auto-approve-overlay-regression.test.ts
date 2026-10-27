@@ -5,7 +5,7 @@
 // (updateAutoApprovalSettings -> setTaskSettings), and the overlay shadows
 // global settings in getGlobalSettingsKey(). If clearTask() leaves the overlay
 // behind, every later toggle RPC is accepted into global state but every
-// posted state still carries the overlay's old version — which the webview
+// posted state still carries the overlay's old version - which the webview
 // rejects as not newer, so the checkboxes never move again.
 //
 // Unlike the SdkTaskControlCoordinator unit tests (which assert clearTask
@@ -111,14 +111,14 @@ describe("auto-approve settings after New Task (#13260)", () => {
 	})
 
 	it("keeps checkboxes working after a mid-task toggle followed by New Task", async () => {
-		// A task view is open (running or completed — the proxy stays installed
+		// A task view is open (running or completed - the proxy stays installed
 		// either way) and the user unchecks "Edit files". The handler writes the
 		// setting to BOTH global state and the task overlay.
 		task = makeTaskProxy("task-1")
 		await clickCheckbox("editFiles", false)
 		expect(webviewSettings.actions.editFiles).toBe(false)
 
-		// User clicks "New Task" — the real coordinator path, which must drop the
+		// User clicks "New Task" - the real coordinator path, which must drop the
 		// overlay along with the task proxy.
 		await makeCoordinator().clearTask()
 		await postStateToWebview()
@@ -157,7 +157,7 @@ describe("auto-approve settings after New Task (#13260)", () => {
 	})
 
 	it("never freezes when toggles happen with no task view open", async () => {
-		// Control: with no task, only global state is written — no overlay exists,
+		// Control: with no task, only global state is written - no overlay exists,
 		// so New Task has nothing to leak.
 		await clickCheckbox("editFiles", false)
 		await makeCoordinator().clearTask()

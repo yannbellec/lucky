@@ -62,7 +62,7 @@ describe("ToolFileDiff", () => {
 
 	it("inherits the app color-scheme so light-dark() palettes follow the app theme", async () => {
 		// Regression: pierre's :host declares `color-scheme: light dark`,
-		// which resolves token colors from the browser preference — light
+		// which resolves token colors from the browser preference - light
 		// syntax palette (near-black text) on a dark app surface.
 		await render(
 			<ToolFileDiff newText={"b\n"} oldText={"a\n"} path="src/app.ts" />,

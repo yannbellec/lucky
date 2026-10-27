@@ -146,8 +146,8 @@ function isReusableHubRecord(record: HubServerProbeRecord): boolean {
 
 /**
  * Reads the discovery record the npm postinstall set aside (see
- * apps/cli/script/postinstall.mjs). Deliberately bypasses readHubDiscovery —
- * the file is best-effort recovery metadata, not a live record — and stays
+ * apps/cli/script/postinstall.mjs). Deliberately bypasses readHubDiscovery -
+ * the file is best-effort recovery metadata, not a live record - and stays
  * synchronous so it adds no async boundary to the ensure flow.
  *
  * Exported for `cline doctor`, which must not mistake a shielded live hub for
@@ -173,14 +173,14 @@ export function readSupersededHubDiscovery(
 /**
  * The set-aside record is one-shot recovery metadata: once an ensure completes
  * with a live, verified hub it has served its purpose, and keeping it around
- * is a hazard — its pid can be recycled by the OS and a much later launch
+ * is a hazard - its pid can be recycled by the OS and a much later launch
  * that finds no live record would SIGTERM an unrelated process with it.
  */
 function discardSupersededHubDiscovery(discoveryPath: string): void {
 	try {
 		unlinkSync(`${discoveryPath}.superseded`);
 	} catch {
-		// Already gone or unreadable — nothing to discard.
+		// Already gone or unreadable - nothing to discard.
 	}
 }
 
@@ -240,7 +240,7 @@ export async function retireDiscoveredHub(
 	}
 	// Graceful handover, in order of increasing force: drain (refuse new
 	// work), then an authenticated shutdown, then SIGTERM only as a fallback
-	// and only at a pid we can positively observe alive right now — a recorded
+	// and only at a pid we can positively observe alive right now - a recorded
 	// pid may have been recycled by the OS onto an unrelated process.
 	await requestHubDrain(
 		record.url,

@@ -231,7 +231,7 @@ const mockStreamingMessages: ClineMessage[] = [
 ]
 
 // Reusable state and decorator factories
-// Minimal fixture for the `openRouterModels` storybook prop — the story
+// Minimal fixture for the `openRouterModels` storybook prop - the story
 // only needs a non-empty record to exercise the picker code paths.
 const STORYBOOK_OPENROUTER_MODELS: Record<string, ModelInfo> = {
 	"anthropic/claude-sonnet-4.6": {

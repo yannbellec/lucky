@@ -1942,7 +1942,7 @@ describe("MessageBuilder outdated-read rewrite batching (prefix-cache stability)
 
 	it("counts multi-file read results per outdated locator, not per whole block", () => {
 		// One read_files call returns files A, B, C (~850 bytes each entry).
-		// Only A is later re-read, so the reclaimable amount is ~850 bytes —
+		// Only A is later re-read, so the reclaimable amount is ~850 bytes -
 		// NOT the ~2.5KB whole-block size. With a 2KB threshold, a whole-block
 		// (over)count would commit immediately; correct per-locator attribution
 		// must defer.
@@ -2166,7 +2166,7 @@ describe("MessageBuilder outdated-read rewrite batching (prefix-cache stability)
 			readToolUse("t2", "img/shot.png"),
 			readToolResult("t2", SMALL_CONTENT(1), "img/shot.png"),
 		];
-		// Text marker alone is ~70 bytes — below the 2KB threshold. The 4KB
+		// Text marker alone is ~70 bytes - below the 2KB threshold. The 4KB
 		// base64 payload must count, committing the batch.
 		const result = builder.buildForApi(messages);
 		const block = JSON.stringify(result[2]);

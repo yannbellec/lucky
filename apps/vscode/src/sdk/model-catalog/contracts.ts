@@ -1,5 +1,5 @@
 /**
- * SDK-backed Model Catalog — Contracts
+ * SDK-backed Model Catalog - Contracts
  *
  * This file is the type-level contract for the model catalog system. Every
  * load-bearing invariant that can be expressed in the type system lives here.
@@ -201,12 +201,12 @@ export interface ResolvedModelSelection extends ModelSelection {
 	/**
 	 * Where the base `modelInfo` came from, before overrides were applied:
 	 *
-	 *  - "catalog"  — SDK catalog metadata (generated snapshot, registry, or live host cache).
-	 *  - "state"    — the mode-specific `*ModeModelInfo` snapshot persisted by
+	 *  - "catalog"  - SDK catalog metadata (generated snapshot, registry, or live host cache).
+	 *  - "state"    - the mode-specific `*ModeModelInfo` snapshot persisted by
 	 *    the host at selection time. Authoritative for dynamic-list providers
 	 *    (openrouter, litellm, requesty, …) whose models are not in the static
 	 *    catalog.
-	 *  - "fallback" — provider-safe defaults fabricated because nothing better
+	 *  - "fallback" - provider-safe defaults fabricated because nothing better
 	 *    was available. Consumers should treat a "fallback" resolution without
 	 *    overrides as weak data and prefer live catalog lookups over it.
 	 */
@@ -360,7 +360,7 @@ export interface ProviderModelsEvent {
 
 /**
  * Read-only view of `ProviderConfigStore`. Held by `ProviderCatalog` so the
- * catalog is read-only with respect to the store by type — it can never write.
+ * catalog is read-only with respect to the store by type - it can never write.
  *
  * If a future need arises to grant a non-store consumer write access,
  * pass it the full `ProviderConfigStore` interface explicitly; do not

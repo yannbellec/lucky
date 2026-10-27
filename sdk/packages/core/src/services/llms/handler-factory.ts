@@ -79,7 +79,7 @@ function buildGatewayProviderOptions(
 	if (config.providerId === "claude-code") {
 		// The Claude Code CLI executes its own tools, so its session must be
 		// anchored on the workspace. Without an explicit cwd the spawned CLI
-		// inherits the host process cwd — `/` in GUI extension hosts — and
+		// inherits the host process cwd - `/` in GUI extension hosts - and
 		// then refuses writes outside its allowed working directories.
 		const workspace = config.extensionContext?.workspace;
 		Object.assign(options, {
@@ -109,7 +109,7 @@ export function resolveKnownModelsFromConfig(
 		: (config.knownModels ??
 			MODEL_COLLECTIONS_BY_PROVIDER_ID[config.providerId]?.models ??
 			undefined);
-	// Caller-configured limits are authoritative for the selected model —
+	// Caller-configured limits are authoritative for the selected model -
 	// surface them to the gateway so the resolved model definition carries
 	// the right limits (e.g. Ollama's num_ctx derives from the resolved
 	// model's context window):
@@ -262,7 +262,7 @@ export function createAgentModelFromConfig(
 
 	// The gateway starts with builtin providers only. Custom providers (Add
 	// Provider / providers.json / models.json) and routed provider ids live in
-	// the model catalog — bridge them into this gateway instance, exactly as
+	// the model catalog - bridge them into this gateway instance, exactly as
 	// the legacy ApiHandler path does, so runs don't fail with
 	// "Unknown or disabled provider" for ids the picker legitimately offers.
 	const registration = resolveGatewayProviderRegistrationSync(

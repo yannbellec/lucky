@@ -13,8 +13,8 @@ const LS_FILES_MAX_BUFFER = 1024 * 1024 * 64;
 /**
  * Scratch dirs whose mtime is older than this are reaped opportunistically.
  * Each snapshot rewrites the index (and so touches the dir), so any live
- * session refreshes its dir every turn; only sessions idle for this long —
- * typically ones never explicitly deleted — are affected.
+ * session refreshes its dir every turn; only sessions idle for this long -
+ * typically ones never explicitly deleted - are affected.
  */
 const SCRATCH_DIR_MAX_AGE_MS = 14 * 24 * 60 * 60 * 1000;
 
@@ -30,7 +30,7 @@ function checkpointScratchBaseDir(): string {
  * Per-session scratch directory holding the persistent `GIT_INDEX_FILE` used
  * to snapshot untracked files. Persisting the index across turns lets git's
  * stat cache skip re-reading (and re-hashing) untracked files that have not
- * changed since the previous checkpoint — without it, every turn re-hashes
+ * changed since the previous checkpoint - without it, every turn re-hashes
  * every untracked byte in the workspace.
  *
  * Lives under the user's Cline data dir (never the world-shared OS tmpdir:
@@ -52,7 +52,7 @@ export function checkpointScratchDir(cwd: string, sessionId: string): string {
  * Best-effort reaper for scratch dirs of sessions that were never explicitly
  * deleted. Everything under the base dir is ours, so age is the only
  * criterion. Errors (missing base dir, races with concurrent sessions) are
- * ignored — the next hook instance tries again.
+ * ignored - the next hook instance tries again.
  */
 async function pruneStaleScratchDirs(): Promise<void> {
 	try {
@@ -68,12 +68,12 @@ async function pruneStaleScratchDirs(): Promise<void> {
 						await rm(dir, { recursive: true, force: true });
 					}
 				} catch {
-					// Raced with another process — ignore.
+					// Raced with another process - ignore.
 				}
 			}),
 		);
 	} catch {
-		// Base dir missing or unreadable — nothing to prune.
+		// Base dir missing or unreadable - nothing to prune.
 	}
 }
 
@@ -111,7 +111,7 @@ type CreateCheckpointHooksOptions = {
 	 * Emits one `checkpoint.snapshot` event per built-in snapshot attempt so
 	 * snapshot cost and degradations (HEAD fallbacks, skipped turns) are
 	 * observable in the field, not only in local logs. Properties carry
-	 * outcome and duration — never file paths or contents.
+	 * outcome and duration - never file paths or contents.
 	 */
 	telemetry?: Pick<ITelemetryService, "capture">;
 };
@@ -259,7 +259,7 @@ async function createUntrackedParentCommit(
 	if (untrackedFiles.length === 0) {
 		return undefined;
 	}
-	// 0700: the index and pathspec enumerate workspace paths — private to the
+	// 0700: the index and pathspec enumerate workspace paths - private to the
 	// user (mode is a no-op on Windows, where the data dir is per-user anyway).
 	await mkdir(scratchDir, { recursive: true, mode: 0o700 });
 	const indexFile = join(scratchDir, "index");
@@ -278,7 +278,7 @@ async function createUntrackedParentCommit(
 		await runGitWithIndex(cwd, indexFile, addArgs);
 	} catch (error) {
 		// A listed file vanishing before the add is a per-turn race, not index
-		// damage — keep the cache and let the caller degrade this turn only.
+		// damage - keep the cache and let the caller degrade this turn only.
 		const stderr = String((error as { stderr?: unknown }).stderr ?? "");
 		if (stderr.includes("did not match any files")) {
 			throw error;
@@ -291,10 +291,10 @@ async function createUntrackedParentCommit(
 		await runGitWithIndex(cwd, indexFile, addArgs);
 	}
 	// Drop index entries that fell out of the untracked set (file deleted or
-	// became tracked) so they don't ghost into the snapshot tree — `git add`
+	// became tracked) so they don't ghost into the snapshot tree - `git add`
 	// with a pathspec never removes entries. Normalize trailing slashes when
 	// comparing: `ls-files --others` reports an untracked nested repo as
-	// "sub/", but the index records its gitlink entry as "sub" — without the
+	// "sub/", but the index records its gitlink entry as "sub" - without the
 	// normalization the gitlink would be purged the same turn it was added.
 	const indexedListing = await execFile(
 		"git",
@@ -356,7 +356,7 @@ async function createWorktreeStashCommit(
 
 	if (stashRef) {
 		if (!untrackedParent) {
-			// Tracked changes only — the plain stash already captures them.
+			// Tracked changes only - the plain stash already captures them.
 			return stashRef;
 		}
 		const tree = (await runGit(cwd, ["rev-parse", `${stashRef}^{tree}`]))
@@ -508,7 +508,7 @@ export function createCheckpointHooks(
 	// the sole gate: hosts that seed the prompt *before* the run (SessionRuntime
 	// calls `run("")` with the prompt already in initialMessages) leave the
 	// delta empty, and a fresh hook instance after a process restart resets it
-	// to undefined — so the durable persisted checkpoint history is what
+	// to undefined - so the durable persisted checkpoint history is what
 	// actually prevents duplicate/overwriting checkpoints.
 	let rootRunMessageStart: number | undefined;
 
@@ -551,7 +551,7 @@ export function createCheckpointHooks(
 		// One event per built-in snapshot attempt. Outcomes: "stash" (full
 		// snapshot), "head_clean" (clean worktree, HEAD entry is the normal
 		// result), "head_fallback" (degraded to HEAD after a failure), and
-		// "skipped" (no checkpoint written this turn). Durations only — never
+		// "skipped" (no checkpoint written this turn). Durations only - never
 		// file paths or contents.
 		const captureSnapshot = (
 			outcome: "stash" | "head_clean" | "head_fallback" | "skipped",
@@ -612,7 +612,7 @@ export function createCheckpointHooks(
 			return fallback;
 		}
 		if (!ref) {
-			// A clean worktree with no untracked files — the HEAD entry is the
+			// A clean worktree with no untracked files - the HEAD entry is the
 			// expected result here, not a degradation.
 			const fallback = await createHeadCheckpoint(
 				"Checkpoint HEAD fallback failed",

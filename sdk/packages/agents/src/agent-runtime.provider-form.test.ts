@@ -164,7 +164,7 @@ describe("AgentRuntime (provider-form config + Agent alias)", () => {
 		});
 
 		// After the facade/runtime merge (Option B), `Agent` is an alias for
-		// `AgentRuntime`. Both constructors return the same class — verified
+		// `AgentRuntime`. Both constructors return the same class - verified
 		// here so future refactors don't silently reintroduce a split.
 		expect(agent).toBeInstanceOf(Agent);
 		expect(agent).toBeInstanceOf(AgentRuntime);

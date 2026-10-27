@@ -45,7 +45,7 @@ export const ClineAuthStatus = ({ message }: ClineAuthStatusProps) => {
 			{authCode ? (
 				<div className="mt-2 flex items-center justify-center gap-2">
 					<div className="font-mono text-2xl font-semibold tracking-wider">{authCode}</div>
-					<Button aria-label="Copy Cline sign-in code" onClick={handleCopy} size="sm" variant="secondary">
+					<Button aria-label="Copy Lucky sign-in code" onClick={handleCopy} size="sm" variant="secondary">
 						{didCopy ? "Copied" : "Copy"}
 					</Button>
 				</div>

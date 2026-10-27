@@ -204,7 +204,7 @@ export interface CoreCheckpointContext {
 export interface CoreCheckpointConfig {
 	/**
 	 * Whether to create checkpoints on each root-agent run start.
-	 * Defaults to `false` — checkpoints are **opt-in**. Set to `true` to
+	 * Defaults to `false` - checkpoints are **opt-in**. Set to `true` to
 	 * enable the built-in git stash/ref checkpoint behaviour for this session.
 	 */
 	enabled?: boolean;

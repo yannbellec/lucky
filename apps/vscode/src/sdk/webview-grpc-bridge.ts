@@ -62,7 +62,7 @@ export class WebviewGrpcBridge {
 	 * Handle a session event by pushing translated messages to webview streams.
 	 *
 	 * NOTE: The messages are already translated by SdkController.handleSessionEvent().
-	 * We do NOT re-translate here — that would double-emit messages and corrupt
+	 * We do NOT re-translate here - that would double-emit messages and corrupt
 	 * the MessageTranslatorState (e.g., state.reset() on iteration_start would
 	 * clear streaming timestamps that the first translation used).
 	 */
@@ -73,14 +73,14 @@ export class WebviewGrpcBridge {
 		}
 
 		// Check if we need to push a state update based on event type.
-		// Do NOT call translateSessionEvent() again — the messages are already
+		// Do NOT call translateSessionEvent() again - the messages are already
 		// translated. Just check the raw event type for state update triggers.
 		const needsStateUpdate =
 			event.type === "ended" ||
 			(event.type === "agent_event" && (event.payload.event.type === "done" || event.payload.event.type === "error"))
 
 		if (needsStateUpdate) {
-			// Push state update asynchronously — don't block the event stream
+			// Push state update asynchronously - don't block the event stream
 			this.pushStateUpdate().catch((err) => {
 				Logger.error("[WebviewGrpcBridge] Failed to push state update:", err)
 			})

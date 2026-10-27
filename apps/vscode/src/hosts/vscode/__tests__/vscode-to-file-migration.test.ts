@@ -163,7 +163,7 @@ describe("vscode-to-file-migration", () => {
 			result.globalStateCount.should.equal(0)
 			result.workspaceStateCount.should.equal(0)
 			result.mcpServersAdded.should.equal(0)
-			// Should NOT have the VSCode values — migration was skipped
+			// Should NOT have the VSCode values - migration was skipped
 			const modeVal = storageContext.globalState.get("mode")
 			;(modeVal === undefined).should.be.true()
 		})
@@ -198,7 +198,7 @@ describe("vscode-to-file-migration", () => {
 		it("should migrate workspace state when globals already migrated (new workspace)", async () => {
 			// Simulate: globals+secrets already migrated, but this is a fresh workspace
 			storageContext.globalState.update("__vscodeMigrationVersion", 1)
-			// workspaceState has NO sentinel — this is a new workspace
+			// workspaceState has NO sentinel - this is a new workspace
 
 			const mockCtx = createMockVSCodeContext()
 			mockCtx._globalStateStore.set("mode", "plan") // should be skipped
@@ -273,7 +273,7 @@ describe("vscode-to-file-migration", () => {
 
 		it("should skip undefined values", async () => {
 			const mockCtx = createMockVSCodeContext()
-			// Don't set anything — all keys will be undefined
+			// Don't set anything - all keys will be undefined
 
 			const result = await exportVSCodeStorageToSharedFiles(mockCtx as any, storageContext)
 
@@ -760,7 +760,7 @@ describe("vscode-to-file-migration", () => {
 			const result1 = await exportVSCodeStorageToSharedFiles(mockCtx as any, storageContext)
 			result1.migrated.should.be.true()
 
-			// Second run — should be skipped due to sentinel
+			// Second run - should be skipped due to sentinel
 			const result2 = await exportVSCodeStorageToSharedFiles(mockCtx as any, storageContext)
 			result2.migrated.should.be.false()
 			result2.globalStateCount.should.equal(0)

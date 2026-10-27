@@ -296,13 +296,13 @@ const CLIENT_COUNT_EXIT_TIMEOUT_MS = 3_000;
  * Non-blocking auto-update check for CLI startup.
  *
  * Deliberately does NOT install right away: replacing the npm package while
- * cline processes are running swaps the binary under them — their respawn
- * paths break on the new build fingerprint — and historically also restarted
+ * cline processes are running swaps the binary under them - their respawn
+ * paths break on the new build fingerprint - and historically also restarted
  * the hub daemon out from under live sessions. The check only records that an
  * update is available; the CLI entrypoint calls applyDeferredUpdate() from
  * its exit sequence (an explicit process.exit() follows, so a beforeExit hook
  * would never fire), and the install runs only when no other CLI is attached
- * to the hub — at that point nothing is running that the swap could hurt.
+ * to the hub - at that point nothing is running that the swap could hurt.
  * The next launch picks up the new binary and a fresh hub.
  *
  * Skipped for npx, dev, unknown installs. Disable with CLINE_NO_AUTO_UPDATE=1.
@@ -332,8 +332,8 @@ export function autoUpdateOnStartup(): void {
 
 /**
  * True when a hub is reachable and another cli* client is attached to it.
- * Only cli* clients run the npm-installed binary — desktop sidecars and
- * connectors ship their own — so only they make the swap unsafe. This runs
+ * Only cli* clients run the npm-installed binary - desktop sidecars and
+ * connectors ship their own - so only they make the swap unsafe. This runs
  * after the entrypoint's disposeAll(), so this process's own registrations
  * are closed and any cli client still listed belongs to another process. Errors count as attached:
  * never install unless the hub positively confirms nothing would be hurt.
@@ -417,7 +417,7 @@ export async function applyDeferredUpdate(
 	}
 	// The whole query is bounded: the user is waiting on their prompt, and a
 	// wedged hub must not turn a finished command into a hung one. A timeout
-	// counts as "attached" — never install unless the hub positively confirms.
+	// counts as "attached" - never install unless the hub positively confirms.
 	const attached = await Promise.race([
 		otherCliClientsAttached(),
 		sleep(CLIENT_COUNT_EXIT_TIMEOUT_MS).then(() => true),

@@ -145,7 +145,7 @@ describe("Osc633Parser", () => {
 			expect(r1.cleanedData).toBe("before")
 			expect(r1.events).toEqual([])
 
-			// Next chunk does not start with ']' — the ESC was never part of an
+			// Next chunk does not start with ']' - the ESC was never part of an
 			// OSC sequence and rejoins the stream as a literal character.
 			const r2 = parser.parse("Xafter")
 			expect(r2.cleanedData).toBe("\x1bXafter")
@@ -155,7 +155,7 @@ describe("Osc633Parser", () => {
 		it("handles a chunk ending in a bare ESC while already inside an OSC body scan (mid-loop), split at introducer", () => {
 			const parser = new Osc633Parser()
 			// First chunk contains a complete sequence AND a trailing bare ESC that
-			// starts the *next* sequence's introducer — exercises the mid-loop scan
+			// starts the *next* sequence's introducer - exercises the mid-loop scan
 			// path (escIdx === -1 after an earlier OSC was already found), not just
 			// the top-level fast path.
 			const r1 = parser.parse(`${"\x1b]633;A\x07"}text\x1b`)
@@ -169,7 +169,7 @@ describe("Osc633Parser", () => {
 
 		it("streams output between C and D arriving in separate chunks (slow command)", () => {
 			const parser = new Osc633Parser()
-			// echo hi; sleep 40; echo there — C and first output arrive early...
+			// echo hi; sleep 40; echo there - C and first output arrive early...
 			const r1 = parser.parse(`${osc633("C")}hi\n`)
 			expect(r1.cleanedData).toBe("hi\n")
 			expect(r1.events).toEqual([{ type: Osc633EventType.CommandExecuted }])
@@ -210,8 +210,8 @@ describe("Osc633Parser", () => {
 	describe("unbounded OSC body protection", () => {
 		it("abandons an unterminated OSC body once it exceeds the size cap, flushing buffered bytes as text", () => {
 			const parser = new Osc633Parser()
-			// A very large unterminated OSC body — e.g. a stray ESC ] in binary
-			// output with no BEL/ST anywhere — must not accumulate forever.
+			// A very large unterminated OSC body - e.g. a stray ESC ] in binary
+			// output with no BEL/ST anywhere - must not accumulate forever.
 			const hugeUnterminated = "x".repeat(100_000)
 			const result = parser.parse(`before${OSC_START_FOR_TEST}${hugeUnterminated}`)
 			// The introducer and buffered bytes are recovered as literal text

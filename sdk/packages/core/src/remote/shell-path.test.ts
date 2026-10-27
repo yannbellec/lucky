@@ -139,7 +139,7 @@ describe.skipIf(isWindows)("resolveLoginShellPath", () => {
 	it("reads PATH from the environment, not the shell's own expansion", async () => {
 		// Mimics fish: its "$PATH" expansion would space-join the entries,
 		// but the printf runs inside /bin/sh, which reads the exported
-		// colon-delimited PATH env var — so the shell's expansion rules
+		// colon-delimited PATH env var - so the shell's expansion rules
 		// never apply. This fake shell never evals the command text; it
 		// only exports PATH and runs the command via sh, like fish would.
 		const shell = writeFakeShell(

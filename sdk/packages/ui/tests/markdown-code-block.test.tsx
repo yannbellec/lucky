@@ -66,7 +66,7 @@ async function renderFence(content: string): Promise<HTMLElement> {
  * Streamdown emits one <span> per Shiki token line with no newline text
  * between non-empty lines, and only applies its own block line class when
  * lineNumbers is on. With lineNumbers off, line separation exists only
- * because markdown.css makes the line spans display: block — without it
+ * because markdown.css makes the line spans display: block - without it
  * every multi-line fence collapses into one run-on line (white-space: pre
  * has no newline characters to preserve).
  */

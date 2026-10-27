@@ -19,7 +19,7 @@ const require = createRequire(import.meta.url);
 
 // CLI versions <= 3.0.54 restart the hub daemon after a background
 // auto-update even while it is serving live sessions, killing those sessions
-// mid-turn — and their build-fingerprint check then rejects every replacement
+// mid-turn - and their build-fingerprint check then rejects every replacement
 // hub, bricking the running TUI. That restart code is the *old* version's, so
 // it cannot be patched here; but it bails out harmlessly when no hub
 // discovery record exists, and it runs only after this install (and this

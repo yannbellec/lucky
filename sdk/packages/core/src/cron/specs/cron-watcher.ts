@@ -88,7 +88,7 @@ export class CronWatcher {
 		try {
 			const abs = resolve(this.reconciler.getCronDir(), relativePath);
 			if (!existsSync(abs)) {
-				// File was deleted — force a full reconcile to catch the
+				// File was deleted - force a full reconcile to catch the
 				// missing source and mark the spec removed.
 				await this.reconciler.reconcileAll();
 				await this.onReconciled();

@@ -41,7 +41,7 @@ export type ComposioStatusResponse = {
 	 * True when connectors are available to this install: the user is signed
 	 * in to a Cline account that the Cline API connectors proxy entitles for
 	 * the feature. The Connectors UI is hidden entirely when false. There is
-	 * no user-entered or client-held API key — the proxy holds the Composio
+	 * no user-entered or client-held API key - the proxy holds the Composio
 	 * key server-side.
 	 */
 	configured: boolean;

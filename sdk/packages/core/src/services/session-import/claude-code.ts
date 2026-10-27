@@ -305,7 +305,7 @@ export class ClaudeCodeImportAdapter implements SessionImportAdapter {
 			}
 		}
 		// Sessions with neither an assistant reply nor real user text are
-		// slash-command shells (/fast and friends) — nothing to import.
+		// slash-command shells (/fast and friends) - nothing to import.
 		if (messageCount === 0 || (assistantCount === 0 && !preview)) {
 			return undefined;
 		}

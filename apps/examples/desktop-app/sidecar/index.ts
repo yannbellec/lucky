@@ -61,7 +61,7 @@ async function main(desktopCliPath?: string) {
 	// When launched from Finder/the Dock the app inherits launchd's minimal
 	// PATH, so agent-spawned processes can't find shell-profile-installed
 	// tools like `gh`. Kick resolution off first so it overlaps the rest of
-	// startup, but await it before the session manager exists — that's what
+	// startup, but await it before the session manager exists - that's what
 	// spawns children (agent sessions, MCP servers, scheduled runs).
 	const shellPathPromise = ensureLoginShellPath();
 

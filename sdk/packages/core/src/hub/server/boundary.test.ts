@@ -751,7 +751,7 @@ describe("HubServerTransport boundaries", () => {
 
 		expect(snapshotReply.payload).toHaveProperty("snapshot");
 		// Snapshots are state notifications: even when requested they never
-		// carry (or read) the transcript — that's session.messages' job.
+		// carry (or read) the transcript - that's session.messages' job.
 		expect(readSessionMessages).not.toHaveBeenCalled();
 		expect(
 			snapshotReply.payload?.snapshot as Record<string, unknown>,
@@ -1607,7 +1607,7 @@ describe("HubServerTransport boundaries", () => {
 		transport.subscribe("owner-client", (event) => events.push(event));
 
 		// A status change projects a session.updated whose snapshot carries
-		// state (status, usage, ...) but never the conversation — the session
+		// state (status, usage, ...) but never the conversation - the session
 		// host's transcript must not even be read for it.
 		capturedSessionListener?.({
 			type: "status",

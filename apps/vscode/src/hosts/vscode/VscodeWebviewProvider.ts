@@ -99,7 +99,7 @@ export class VscodeWebviewProvider extends WebviewProvider implements vscode.Web
 		// Listen for when the view is disposed. This happens when the user moves the
 		// view between the primary and secondary sidebars: VS Code destroys the old
 		// WebviewView and calls resolveWebviewView again on this same provider with a
-		// new one. Only release view-scoped resources here — the controller must stay
+		// new one. Only release view-scoped resources here - the controller must stay
 		// alive so the re-resolved view keeps working. The controller is disposed on
 		// extension deactivation (tearDown -> WebviewProvider.disposeAllInstances).
 		webviewView.onDidDispose(

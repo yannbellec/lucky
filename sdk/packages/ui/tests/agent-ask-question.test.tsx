@@ -47,7 +47,7 @@ describe("AgentAskQuestion", () => {
 		).toBe(true);
 		await act(async () => buttons[1]?.click());
 
-		// The element carries no visible heading — the question itself leads —
+		// The element carries no visible heading - the question itself leads -
 		// but stays labelled for assistive tech.
 		const section = container.querySelector("section");
 		expect(section?.getAttribute("aria-label")).toBe("Follow-up question");

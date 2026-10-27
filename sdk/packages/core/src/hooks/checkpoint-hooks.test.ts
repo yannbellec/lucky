@@ -628,7 +628,7 @@ describe("createCheckpointHooks", () => {
 				outcome: "stash",
 			});
 			expect(typeof events[0]?.properties?.durationMs).toBe("number");
-			// Durations and outcomes only — never workspace file paths.
+			// Durations and outcomes only - never workspace file paths.
 			expect(JSON.stringify(events[0])).not.toContain("loose-data");
 		} finally {
 			await deleteCheckpointRefs(cwd, sessionId);
@@ -666,7 +666,7 @@ describe("createCheckpointHooks", () => {
 				`${first.ref}^3`,
 			);
 			expect(firstTree.split("\n").sort()).toEqual(["a.txt", "b.txt"]);
-			// The scratch index survives the turn — that is the cross-turn cache.
+			// The scratch index survives the turn - that is the cross-turn cache.
 			expect(
 				existsSync(join(checkpointScratchDir(cwd, sessionId), "index")),
 			).toBe(true);

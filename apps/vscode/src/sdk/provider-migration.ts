@@ -41,7 +41,7 @@ export interface ProviderMigrationResult {
  * when a dataDir is provided or can be inferred. This function wraps that
  * process and returns a typed result.
  *
- * Migration is idempotent — calling it multiple times is safe because the SDK
+ * Migration is idempotent - calling it multiple times is safe because the SDK
  * never overwrites existing provider entries.
  *
  * @param dataDir Override for the Cline data directory. Defaults to

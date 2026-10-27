@@ -228,7 +228,7 @@ function DiffHunk({ hunk, path }: { hunk: SessionDiffHunk; path: string }) {
 	// A hunk with no old side that starts at line 1 on both sides carries the
 	// complete new contents (editor `create`, apply_patch Add File). Chat tool
 	// rows render those with complete-file semantics (real line numbers);
-	// everything else is a file fragment, which hides line numbers — see
+	// everything else is a file fragment, which hides line numbers - see
 	// ToolCallRow in chat-messages.tsx. Matching that keeps both surfaces
 	// visually in agreement.
 	const isCompleteNewContents =

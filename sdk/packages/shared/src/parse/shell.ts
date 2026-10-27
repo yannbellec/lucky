@@ -73,7 +73,7 @@ const NESTED_POWERSHELL_REQUIRED_FLAG = "-noprofile";
  * Decode the body of a PowerShell double-quoted string to the literal text a
  * nested `powershell -Command "…"` would have received: backtick escapes
  * (`` `n ``, `` `t ``, `` `" ``, `` `$ ``, …) resolve to their characters and
- * `""` to a quote. `$`-expressions stay literal — the model wrote them for the
+ * `""` to a quote. `$`-expressions stay literal - the model wrote them for the
  * inner shell's parser. `` `u{…} `` code-point and `` `e `` ESC escapes
  * exist only in PowerShell 7+, so the OUTER edition that owns this string
  * decides how (or whether) they decode, not the requested inner edition.
@@ -220,7 +220,7 @@ function splitNestedCommandToScript(
  * source, so a nested `-Command "…"` argument is parsed by the outer parser:
  * `$_` inside the double quotes is interpolated away before the nested shell
  * ever sees it. A pipeline like `… | Where-Object { $_.Name … }` then errors
- * once per enumerated item — a flood that looks like a hang (GitHub #13284).
+ * once per enumerated item - a flood that looks like a hang (GitHub #13284).
  * Feeding the decoded script directly preserves its variables and embedded
  * quotes for the intended script, bypassing outer interpolation and native
  * argument quoting. Single-quoted arguments avoid interpolation but can still
@@ -235,11 +235,11 @@ function splitNestedCommandToScript(
  *   bare executable names and paths may omit it
  * - the nested executable is `powershell` or `pwsh` (either edition; the
  *   requested one is returned so cross-edition wrappers such as `powershell`
- *   inside `pwsh` run in the edition the command asked for — which binary
+ *   inside `pwsh` run in the edition the command asked for - which binary
  *   provides that edition is then chosen by selectNestedExecutable)
  * - the nested invocation carries `-NoProfile` (written in full), and every
  *   other flag before `-Command` is bootstrap-equivalent (-NonInteractive)
- *   or a no-op under -Command (-NoLogo) — without -NoProfile the shell would
+ *   or a no-op under -Command (-NoLogo) - without -NoProfile the shell would
  *   load the user's profile (functions, aliases, modules), which the
  *   profile-less outer process cannot reproduce, and other flags
  *   (`-ExecutionPolicy`, `-File`, `-WorkingDirectory`, abbreviations such as
@@ -311,7 +311,7 @@ function parseNestedPowerShellCommand(
  * kept: hosts resolve it to an absolute path, and an absolute path is spawned
  * as-is. Taking the bare name from the command text instead would make
  * `child_process.spawn` search for it, and on Windows that search looks in
- * the command's working directory before PATH — a `powershell.exe` planted
+ * the command's working directory before PATH - a `powershell.exe` planted
  * in the workspace would run in place of the real shell. PowerShell itself
  * never resolves a bare name from the current directory.
  *
@@ -370,11 +370,11 @@ export function getShellInvocation(
 			// The script runs with $ErrorActionPreference='Stop' so pipelines fail
 			// fast on the first error. Under the default 'Continue', a pipeline that
 			// errors per item (e.g. a bad Where-Object over Get-ChildItem -Recurse)
-			// emits one error record per file — flooding stderr for minutes on large
-			// trees — and can still exit 0. The preference is set in the bootstrap
+			// emits one error record per file - flooding stderr for minutes on large
+			// trees - and can still exit 0. The preference is set in the bootstrap
 			// scope, not prepended to the script text: preference variables are
 			// dynamically scoped, so the scriptblock invoked below inherits it, while
-			// the user's script stays byte-identical — error line/column positions
+			// the user's script stays byte-identical - error line/column positions
 			// are untouched and a script that begins with param(...) keeps param in
 			// the mandatory first-statement position.
 			//
@@ -384,7 +384,7 @@ export function getShellInvocation(
 			// junction) now stops at its first error, and on Windows PowerShell 5.1
 			// a native command that redirects stderr inside the script (2>&1,
 			// 2>file) terminates on its first stderr line even when it would exit 0
-			// — 5.1 wraps redirected native stderr in error records that Stop makes
+			// - 5.1 wraps redirected native stderr in error records that Stop makes
 			// fatal, while PowerShell 7.2+ exempts native stderr from the
 			// preference. GitHub Actions prepends the same preamble to its
 			// powershell/pwsh steps, so model-authored commands tend to already

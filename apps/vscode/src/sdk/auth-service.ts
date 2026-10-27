@@ -5,7 +5,7 @@
 // single source of truth for credentials.
 //
 // User profile info (email, displayName, organizations) is NOT stored on
-// disk — it's fetched from the Cline API on startup and cached in memory.
+// disk - it's fetched from the Cline API on startup and cached in memory.
 // This matches the CLI's pattern (see apps/cli/src/runtime/interactive-welcome.ts).
 
 import type { ITelemetryService, OAuthCredentials, ProviderSettings } from "@cline/core"
@@ -188,7 +188,7 @@ function writeClineCredentials(credentials: {
 
 		// Token refreshes and startup restores also land here. Only claim the
 		// last-used slot when the current selection isn't already a provider
-		// backed by this credential entry (cline-pass stores under "cline") —
+		// backed by this credential entry (cline-pass stores under "cline") -
 		// otherwise every refresh resets a ClinePass selection back to
 		// usage-billing in the shared providers.json (#13501).
 		const lastUsedProvider = manager.read().lastUsedProvider
@@ -266,14 +266,14 @@ export class AuthService {
 			try {
 				BannerService.initialize(controller)
 			} catch {
-				// BannerService may already be initialized — that's fine
+				// BannerService may already be initialized - that's fine
 			}
 		}
 		return AuthService.instance
 	}
 
 	set controller(_controller: Controller) {
-		// Kept for interface compatibility — not needed in SDK-backed version
+		// Kept for interface compatibility - not needed in SDK-backed version
 	}
 
 	// ---- SDK OAuth → ClineAuthInfo conversion ----
@@ -374,7 +374,7 @@ export class AuthService {
 			const currentTime = Date.now() / 1000
 			const bufferSeconds = 5 * 60 // 5 minute buffer
 			if (currentTime + bufferSeconds >= expiresAt) {
-				// Token is expired or about to expire — try to refresh
+				// Token is expired or about to expire - try to refresh
 				const refreshed = await this.refreshAccessToken()
 				if (!refreshed) {
 					return null
@@ -384,7 +384,7 @@ export class AuthService {
 
 		// Verify the token is still valid (not past expiry). Re-read the expiry:
 		// a successful refresh above replaces _clineAuthInfo, and the expiry
-		// captured before it belongs to the old token — which has already passed
+		// captured before it belongs to the old token - which has already passed
 		// whenever the process sat idle beyond token lifetime.
 		const currentExpiresAt = this._clineAuthInfo.expiresAt
 		if (currentExpiresAt && Date.now() / 1000 >= currentExpiresAt) {
@@ -420,8 +420,8 @@ export class AuthService {
 				if (!newCredentials) {
 					// null means the refresh token was rejected (transient failures
 					// throw). The SDK resolver already emitted user.auth_logged_out
-					// (reason=token_invalid) for this — don't double-report here.
-					sdkDebug("[SdkAuthService] refreshAccessToken: refresh returned null — clearing credentials")
+					// (reason=token_invalid) for this - don't double-report here.
+					sdkDebug("[SdkAuthService] refreshAccessToken: refresh returned null - clearing credentials")
 					this._clineAuthInfo = null
 					this._authenticated = false
 					clearClineCredentials()
@@ -533,7 +533,7 @@ export class AuthService {
 
 	/**
 	 * A successful login completes onboarding. The onboarding webview does NOT
-	 * set this flag for OAuth sign-ups — it waits on the "Almost there!" step
+	 * set this flag for OAuth sign-ups - it waits on the "Almost there!" step
 	 * until the host confirms authentication (parity with the classic
 	 * extension, where Controller.handleAuthCallback set it post-exchange).
 	 */
@@ -761,7 +761,7 @@ export class AuthService {
 					await openExternal(url)
 				},
 				onOpenUrlError: ({ url, error }) => {
-					// Same recovery the CLI offers ("open the URL above manually") —
+					// Same recovery the CLI offers ("open the URL above manually") -
 					// the toast is the extension's only place to surface the URL.
 					Logger.error(`[SdkAuthService] Failed to open browser for Codex: ${url}:`, error)
 					HostProvider.window.showMessage({
@@ -844,7 +844,7 @@ export class AuthService {
 	// ---- Logout ----
 
 	/**
-	 * Handle deauthentication — clear tokens from providers.json and push unauthenticated state.
+	 * Handle deauthentication - clear tokens from providers.json and push unauthenticated state.
 	 */
 	async handleDeauth(reason: LogoutReason = LogoutReason.UNKNOWN): Promise<void> {
 		try {
@@ -955,7 +955,7 @@ export class AuthService {
 	async handleOcaAuthCallback(_code: string, _state: string): Promise<void> {
 		// OCA uses SDK's local callback server, so this shouldn't normally be called.
 		// Keeping it as a stub for interface compatibility.
-		Logger.warn("[SdkAuthService] handleOcaAuthCallback called — OCA uses SDK callback server")
+		Logger.warn("[SdkAuthService] handleOcaAuthCallback called - OCA uses SDK callback server")
 	}
 
 	// ---- Restore auth on startup ----
@@ -964,7 +964,7 @@ export class AuthService {
 	 * Restore authentication from providers.json on startup.
 	 *
 	 * Reads tokens from providers.json, refreshes if needed, then fetches
-	 * user profile from the API. This matches the CLI's pattern — credentials
+	 * user profile from the API. This matches the CLI's pattern - credentials
 	 * live in providers.json, user info is fetched fresh each session.
 	 */
 	async restoreRefreshTokenAndRetrieveAuthInfo(): Promise<void> {
@@ -995,7 +995,7 @@ export class AuthService {
 				validCredentials = await this.resolveValidClineCredentials(restoredAuthInfo)
 			} catch (error) {
 				// The resolver throws only on transient failures (network,
-				// timeout, 5xx) — stored credentials stay untouched and the next
+				// timeout, 5xx) - stored credentials stay untouched and the next
 				// refresh recovers automatically, so this is not a logout. The
 				// SDK already books it as user.auth_refresh_soft_failure; only
 				// the in-memory state is reset for this session.
@@ -1007,7 +1007,7 @@ export class AuthService {
 			if (!validCredentials) {
 				// null means the stored refresh token was rejected. The SDK
 				// resolver already emitted user.auth_logged_out
-				// (reason=token_invalid) for this — don't double-report here.
+				// (reason=token_invalid) for this - don't double-report here.
 				this._authenticated = false
 				this._clineAuthInfo = null
 				clearClineCredentials()
@@ -1038,14 +1038,14 @@ export class AuthService {
 			}
 			this._authenticated = true
 
-			// Fetch full user info from the API (the key step — fills in
+			// Fetch full user info from the API (the key step - fills in
 			// email, displayName, organizations that providers.json doesn't store)
 			if (this._authenticated && this._clineAuthInfo) {
 				const userInfo = await this.fetchUserInfoFromApi(this._clineAuthInfo.idToken)
 				if (userInfo) {
 					this._clineAuthInfo.userInfo = userInfo
 				} else {
-					Logger.warn("[SdkAuthService] Could not fetch user info on restore — UI will show limited profile")
+					Logger.warn("[SdkAuthService] Could not fetch user info on restore - UI will show limited profile")
 				}
 			}
 

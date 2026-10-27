@@ -435,7 +435,7 @@ function buildGatewayModels(
 		definitions.set(definition.id, definition);
 	}
 
-	// Caller-configured limits are authoritative for the selected model —
+	// Caller-configured limits are authoritative for the selected model -
 	// project them onto its gateway definition so the resolved model carries
 	// the right limits (e.g. Ollama's num_ctx derives from the resolved
 	// model's context window). `maxInputTokens` is where

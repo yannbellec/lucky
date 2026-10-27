@@ -602,7 +602,7 @@ function buildLegacyProviderSettings(
 		// on older installs, a bare awsProfile value with neither flag. Treat a
 		// profile name with no explicit authentication choice as profile auth,
 		// mirroring how the settings UI displays that state and how the Next
-		// extension resolves it from live settings — otherwise the migrated
+		// extension resolves it from live settings - otherwise the migrated
 		// entry has no profile and providers.json readers (CLI, desktop) fall
 		// back to the default credential chain (cline/cline#14095).
 		const useBedrockProfile =
@@ -746,7 +746,7 @@ function resolveLegacyCustomProviderRegistration(
 	}
 	// Carry the user-authored legacy model overrides into the seeded entry.
 	// This entry becomes the source of truth for openai-compatible models, and
-	// later override migrations skip models that already exist here — so
+	// later override migrations skip models that already exist here - so
 	// seeding bare defaults would silently discard the user's configuration.
 	// Legacy treated maxTokens -1, temperature 0, and prices 0 as unset.
 	const contextWindow =

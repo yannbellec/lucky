@@ -20,7 +20,7 @@ const CONNECT_POLL_INTERVAL_MS = 3_000;
  *
  * The OAuth flow finishes in the external browser, which cannot navigate the
  * app back, so while a connection is pending this hook polls the sidecar
- * until the connection lands — the same pattern as the GitHub App install
+ * until the connection lands - the same pattern as the GitHub App install
  * step in onboarding.
  */
 export function useComposioConnections({

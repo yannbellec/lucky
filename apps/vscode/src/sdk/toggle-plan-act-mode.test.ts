@@ -20,7 +20,7 @@ vi.mock("@/shared/services/Logger", () => ({
 	},
 }))
 
-// We don't need the full Controller — just a mock that implements togglePlanActMode.
+// We don't need the full Controller - just a mock that implements togglePlanActMode.
 import { togglePlanActModeProto } from "../core/controller/state/togglePlanActModeProto"
 
 // biome-ignore lint/suspicious/noExplicitAny: minimal mock for the controller surface we exercise

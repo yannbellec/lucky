@@ -12,7 +12,7 @@ import {
 	shouldSkipReasoningForModel,
 } from "../model-utils"
 
-// Minimal helper — modelDoesntSupportWebp only reads apiHandlerModel.id
+// Minimal helper - modelDoesntSupportWebp only reads apiHandlerModel.id
 const m = (id: string): ApiHandlerModel => ({ id, info: { supportsPromptCache: false } })
 
 describe("shouldSkipReasoningForModel", () => {

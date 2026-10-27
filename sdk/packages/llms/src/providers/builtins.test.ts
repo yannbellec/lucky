@@ -223,7 +223,7 @@ describe("vertex builtin models", () => {
 
 		expect(models["claude-sonnet-5@default"]).toBeDefined();
 		// The default comes from the generated (models.dev-derived) provider
-		// spec and rotates as the upstream catalog changes — assert it resolves
+		// spec and rotates as the upstream catalog changes - assert it resolves
 		// to a model in the list rather than pinning a specific id.
 		const provider = await getProvider("vertex");
 		expect(provider.defaultModelId).toBeTruthy();

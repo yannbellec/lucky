@@ -49,7 +49,7 @@ export async function resolveFreshClineAuthToken(
 	);
 	// Never-signed-in resolves to undefined without a refresh attempt and is
 	// silent. A refresh failure with no persisted fallback means credentials
-	// existed but yielded nothing — that is the signal a real auth regression
+	// existed but yielded nothing - that is the signal a real auth regression
 	// would show up as, so report exactly one event for it.
 	if (!persisted && refreshError) {
 		ctx.logger?.error?.("Cline auth token refresh failed with no fallback", {
@@ -103,7 +103,7 @@ export type ConnectorsApiAuth = {
 /**
  * Auth for the Cline API connectors proxy: the account bearer token plus the
  * API base URL. Undefined when signed out (or when a refresh fails with no
- * persisted fallback) — connector calls then fail closed.
+ * persisted fallback) - connector calls then fail closed.
  */
 export async function resolveConnectorsApiAuth(
 	ctx: ClineAuthTelemetryContext = {},

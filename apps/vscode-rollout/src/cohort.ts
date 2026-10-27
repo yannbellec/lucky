@@ -3,11 +3,11 @@ export type Bundle = "next" | "legacy";
 /**
  * The combined VSIX ships under two identities: the stable extension
  * (manifest name "claude-dev", contribution IDs under "cline.*") and the
- * nightly (name "cline-nightly", IDs under "cline-nightly.*" — the nightly
+ * nightly (name "cline-nightly", IDs under "cline-nightly.*" - the nightly
  * packaging rewrites every `"cline.` prefix in the manifest, see
  * scripts/nightlify.mjs and apps/vscode/scripts/publish-nightly.mjs). Anything
- * the loader reads from or feeds back into the manifest namespace — the
- * bundleOverride setting and the sdkBundle context key — must use the prefix
+ * the loader reads from or feeds back into the manifest namespace - the
+ * bundleOverride setting and the sdkBundle context key - must use the prefix
  * matching the installed identity. scripts/gen-manifest.mjs derives the same
  * prefix when generating the union manifest; keep them in sync.
  */
@@ -47,7 +47,7 @@ export const LAST_ACTIVATION_STATE_KEY = "cline.rollout.lastActivationAt";
  * The assignment is TWO-WAY: each background refresh caches exactly what the
  * flag says (true => next, anything else => legacy) for the next window, so
  * dialing the percentage down moves machines back to legacy on their next
- * reload — the single emergency lever is "set the rollout to 0%". Demoted
+ * reload - the single emergency lever is "set the rollout to 0%". Demoted
  * machines keep their settings/creds (the state files round-trip), but tasks
  * created on the SDK bundle aren't visible in legacy's history until
  * re-promoted, and tokens rotated on next may require re-auth on legacy.
@@ -59,10 +59,10 @@ export const BUNDLE_OVERRIDE_ENV = "CLINE_BUNDLE_OVERRIDE";
 
 /**
  * User-visible escape hatch: `<prefix>.rollout.bundleOverride` in VS Code
- * settings ("auto" | "next" | "legacy") — see settingSection() for the
+ * settings ("auto" | "next" | "legacy") - see settingSection() for the
  * identity-dependent section name. Editable from settings.json without
  * touching mementos, beats the remote flag in either direction, applies on
- * window reload. Injected into the union manifest by gen-manifest.mjs — keep
+ * window reload. Injected into the union manifest by gen-manifest.mjs - keep
  * the schema there in sync with these constants.
  */
 export const SETTING_BUNDLE_OVERRIDE = "bundleOverride";
@@ -100,7 +100,7 @@ export function decideBundle(inputs: CohortInputs): Bundle {
 	return inputs.cached === "next" ? "next" : "legacy";
 }
 
-/** Which override produced the decision, if any — reported on the activation event. */
+/** Which override produced the decision, if any - reported on the activation event. */
 export function decisionOverrideSource(
 	inputs: Pick<CohortInputs, "envOverride" | "settingOverride">,
 ): "env" | "setting" | undefined {
@@ -116,11 +116,11 @@ export function decisionOverrideSource(
 /**
  * Parse a PostHog /decide (v3) response into the assignment to cache for the
  * next window, or undefined when the response is malformed (leave the cached
- * assignment untouched — sticky on transient failures).
+ * assignment untouched - sticky on transient failures).
  *
  * Deliberately strict so a mis-configured flag fails SAFE toward legacy: only
  * boolean `true` promotes. A multivariate variant string, a number, a payload,
- * or a missing/deleted flag all resolve to legacy — the flag must stay a plain
+ * or a missing/deleted flag all resolve to legacy - the flag must stay a plain
  * boolean release flag with a percentage rollout.
  */
 export function parseRolloutAssignment(response: unknown): Bundle | undefined {

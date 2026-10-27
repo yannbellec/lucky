@@ -71,7 +71,7 @@ The commit message should:
  * System prompt for commit message generation: the base instructions plus the
  * user's enabled rules, rendered the same way a session's system prompt renders
  * them (see `Controller.getRulesForSystemPrompt`). Without this the button
- * ignored `.clinerules` entirely — commit conventions users had written down
+ * ignored `.clinerules` entirely - commit conventions users had written down
  * were applied in chat and dropped here.
  */
 export function buildCommitMessageSystemPrompt(rulesSection: string): string {

@@ -216,7 +216,7 @@ describe("captureProviderConfigured", () => {
 		const stub = createTelemetryStub();
 		captureProviderConfigured(stub.telemetry, "anthropic");
 		expect(stub.capture).toHaveBeenCalledTimes(1);
-		// Must NOT be captureRequired — the BYO configure step is not an
+		// Must NOT be captureRequired - the BYO configure step is not an
 		// essential lifecycle event and should respect telemetry opt-out.
 		expect(stub.captureRequired).not.toHaveBeenCalled();
 		const { event, properties } = captureCallAt(stub, 0);

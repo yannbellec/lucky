@@ -105,7 +105,7 @@ describe("MessageTranslatorState", () => {
 		expect(state.consumeApprovedToolMessageTs("approved-call")).toBeUndefined()
 	})
 
-	it("reset() (per-iteration) does NOT clear attemptCompletionSeen — it is turn-scoped", () => {
+	it("reset() (per-iteration) does NOT clear attemptCompletionSeen - it is turn-scoped", () => {
 		// The agent can call the completion tool in one iteration and the loop then emits another
 		// `iteration_start` → state.reset() before the turn's `done` event. The completion signal
 		// is turn-scoped and must survive per-iteration resets; otherwise the turn-end phase
@@ -129,10 +129,10 @@ describe("MessageTranslatorState", () => {
 })
 
 // ---------------------------------------------------------------------------
-// translateSessionEvent — chunk events
+// translateSessionEvent - chunk events
 // ---------------------------------------------------------------------------
 
-describe("translateSessionEvent — chunk events", () => {
+describe("translateSessionEvent - chunk events", () => {
 	it("ignores agent stream chunks (raw model output not displayed)", () => {
 		// Chunk events contain raw model output which may include JSON,
 		// tool call fragments, etc. The structured agent_event system
@@ -172,10 +172,10 @@ describe("translateSessionEvent — chunk events", () => {
 })
 
 // ---------------------------------------------------------------------------
-// translateSessionEvent — pending prompts
+// translateSessionEvent - pending prompts
 // ---------------------------------------------------------------------------
 
-describe("translateSessionEvent — pending prompts", () => {
+describe("translateSessionEvent - pending prompts", () => {
 	it("renders a submitted queued prompt as user feedback", () => {
 		const state = new MessageTranslatorState()
 		const event: CoreSessionEvent = {
@@ -284,10 +284,10 @@ describe("translateSessionEvent — pending prompts", () => {
 })
 
 // ---------------------------------------------------------------------------
-// translateSessionEvent — agent_event (content_start)
+// translateSessionEvent - agent_event (content_start)
 // ---------------------------------------------------------------------------
 
-describe("translateSessionEvent — agent_event content_start", () => {
+describe("translateSessionEvent - agent_event content_start", () => {
 	it("reuses the approved tool prompt row for the matching tool lifecycle", () => {
 		const state = new MessageTranslatorState()
 		const approvedMessageTs = 42
@@ -589,10 +589,10 @@ describe("translateSessionEvent — agent_event content_start", () => {
 })
 
 // ---------------------------------------------------------------------------
-// translateSessionEvent — agent_event (content_end)
+// translateSessionEvent - agent_event (content_end)
 // ---------------------------------------------------------------------------
 
-describe("translateSessionEvent — agent_event content_end", () => {
+describe("translateSessionEvent - agent_event content_end", () => {
 	it("translates text content_end to complete text message", () => {
 		const state = new MessageTranslatorState()
 		// First, start streaming
@@ -747,7 +747,7 @@ describe("translateSessionEvent — agent_event content_end", () => {
 		// S6-48: when both old_text and new_text are provided, content is a search/replace diff
 		expect(startTool.content).toBe(expectedDiff)
 
-		// 2. content_end — should preserve the input from content_start
+		// 2. content_end - should preserve the input from content_start
 		const endEvent: CoreSessionEvent = {
 			type: "agent_event",
 			payload: {
@@ -1002,7 +1002,7 @@ describe("translateSessionEvent — agent_event content_end", () => {
 	it("content_end without prior content_start still works (graceful fallback)", () => {
 		const state = new MessageTranslatorState()
 
-		// content_end with no prior content_start — stored input is undefined
+		// content_end with no prior content_start - stored input is undefined
 		const endResult = translateSessionEvent(
 			{
 				type: "agent_event",
@@ -1028,10 +1028,10 @@ describe("translateSessionEvent — agent_event content_end", () => {
 })
 
 // ---------------------------------------------------------------------------
-// translateSessionEvent — agent_event (done)
+// translateSessionEvent - agent_event (done)
 // ---------------------------------------------------------------------------
 
-describe("translateSessionEvent — agent_event done", () => {
+describe("translateSessionEvent - agent_event done", () => {
 	it("translates done event to ask completion_result with empty text (no green rectangle)", () => {
 		const state = new MessageTranslatorState()
 		const event: CoreSessionEvent = {
@@ -1134,7 +1134,7 @@ describe("translateSessionEvent — agent_event done", () => {
 						type: "content_start",
 						contentType: "tool",
 						toolName: "submit_and_exit",
-						input: { summary: "All done — issue resolved." },
+						input: { summary: "All done - issue resolved." },
 					} as AgentEvent,
 				},
 			},
@@ -1143,7 +1143,7 @@ describe("translateSessionEvent — agent_event done", () => {
 
 		// content_start emits a partial say:"completion_result" with the summary text.
 		const startSay = startResult.messages.find((m) => m.type === "say" && m.say === "completion_result")
-		expect(startSay?.text).toBe("All done — issue resolved.")
+		expect(startSay?.text).toBe("All done - issue resolved.")
 		expect(state.wasAttemptCompletionSeen()).toBe(true)
 
 		const endResult = translateSessionEvent(
@@ -1164,15 +1164,15 @@ describe("translateSessionEvent — agent_event done", () => {
 		// content_end finalizes the green "Task Completed" box (non-partial completion_result).
 		const finalSay = endResult.messages.find((m) => m.type === "say" && m.say === "completion_result")
 		expect(finalSay?.partial).toBe(false)
-		expect(finalSay?.text).toBe("All done — issue resolved.")
+		expect(finalSay?.text).toBe("All done - issue resolved.")
 	})
 })
 
 // ---------------------------------------------------------------------------
-// translateSessionEvent — inferred turn-final completion retag
+// translateSessionEvent - inferred turn-final completion retag
 // ---------------------------------------------------------------------------
 
-describe("translateSessionEvent — inferred turn-final completion", () => {
+describe("translateSessionEvent - inferred turn-final completion", () => {
 	const agentEvent = (event: Partial<AgentEvent> & { type: string }): CoreSessionEvent =>
 		({
 			type: "agent_event",
@@ -1225,7 +1225,7 @@ describe("translateSessionEvent — inferred turn-final completion", () => {
 		endText(state, "Halfway through...")
 		expect(done(state, "aborted").messages).toHaveLength(0)
 
-		// The abort cleared the candidate — a later stray done must not resurrect it.
+		// The abort cleared the candidate - a later stray done must not resurrect it.
 		expect(done(state).messages).toHaveLength(0)
 
 		endText(state, "Almost there...")
@@ -1260,14 +1260,14 @@ describe("translateSessionEvent — inferred turn-final completion", () => {
 			}),
 			state,
 		)
-		const finalText = endText(state, "All done — the file looks good.")
+		const finalText = endText(state, "All done - the file looks good.")
 
 		const doneResult = done(state)
 		expect(doneResult.messages).toHaveLength(1)
 		expect(doneResult.messages[0]).toMatchObject({
 			ts: finalText.messages[0].ts,
 			say: "completion_result",
-			text: "All done — the file looks good.",
+			text: "All done - the file looks good.",
 		})
 	})
 
@@ -1298,10 +1298,10 @@ describe("translateSessionEvent — inferred turn-final completion", () => {
 })
 
 // ---------------------------------------------------------------------------
-// translateSessionEvent — agent_event (error)
+// translateSessionEvent - agent_event (error)
 // ---------------------------------------------------------------------------
 
-describe("translateSessionEvent — agent_event error", () => {
+describe("translateSessionEvent - agent_event error", () => {
 	it("translates error event to api_req_started + api_req_failed messages", () => {
 		const state = new MessageTranslatorState()
 		const event: CoreSessionEvent = {
@@ -1792,10 +1792,10 @@ describe("translateSessionEvent — agent_event error", () => {
 })
 
 // ---------------------------------------------------------------------------
-// translateSessionEvent — ended event
+// translateSessionEvent - ended event
 // ---------------------------------------------------------------------------
 
-describe("translateSessionEvent — ended event", () => {
+describe("translateSessionEvent - ended event", () => {
 	it("marks session as ended and turn as complete", () => {
 		const state = new MessageTranslatorState()
 		const event: CoreSessionEvent = {
@@ -1815,10 +1815,10 @@ describe("translateSessionEvent — ended event", () => {
 })
 
 // ---------------------------------------------------------------------------
-// translateSessionEvent — hook events
+// translateSessionEvent - hook events
 // ---------------------------------------------------------------------------
 
-describe("translateSessionEvent — hook events", () => {
+describe("translateSessionEvent - hook events", () => {
 	it("translates tool_call hook to hook_status message", () => {
 		const state = new MessageTranslatorState()
 		const event: CoreSessionEvent = {
@@ -1854,10 +1854,10 @@ describe("translateSessionEvent — hook events", () => {
 })
 
 // ---------------------------------------------------------------------------
-// translateSessionEvent — status event
+// translateSessionEvent - status event
 // ---------------------------------------------------------------------------
 
-describe("translateSessionEvent — status event", () => {
+describe("translateSessionEvent - status event", () => {
 	it("produces no messages for status events", () => {
 		const state = new MessageTranslatorState()
 		const event: CoreSessionEvent = {
@@ -1876,10 +1876,10 @@ describe("translateSessionEvent — status event", () => {
 })
 
 // ---------------------------------------------------------------------------
-// translateSessionEvent — streaming flow
+// translateSessionEvent - streaming flow
 // ---------------------------------------------------------------------------
 
-describe("translateSessionEvent — full streaming flow", () => {
+describe("translateSessionEvent - full streaming flow", () => {
 	it("handles a complete text streaming flow", () => {
 		const state = new MessageTranslatorState()
 
@@ -1921,7 +1921,7 @@ describe("translateSessionEvent — full streaming flow", () => {
 		expect(endResult.messages[0].partial).toBe(false)
 		expect(endResult.messages[0].text).toBe("Hello world!")
 
-		// 3. Done — the turn ended cleanly on a text response, so the final text row is
+		// 3. Done - the turn ended cleanly on a text response, so the final text row is
 		// retagged in place (same ts) to say:"completion_result" for the green
 		// "Task Completed" box (act mode is the default when no mode source is provided).
 		const doneResult = translateSessionEvent(
@@ -2046,10 +2046,10 @@ describe("translateSessionEvent — full streaming flow", () => {
 })
 
 // ---------------------------------------------------------------------------
-// translateSessionEvent — notice event
+// translateSessionEvent - notice event
 // ---------------------------------------------------------------------------
 
-describe("translateSessionEvent — agent_event notice", () => {
+describe("translateSessionEvent - agent_event notice", () => {
 	it("translates notice event to info message", () => {
 		const state = new MessageTranslatorState()
 		const event: CoreSessionEvent = {
@@ -2191,10 +2191,10 @@ describe("translateSessionEvent — agent_event notice", () => {
 })
 
 // ---------------------------------------------------------------------------
-// translateSessionEvent — content_update
+// translateSessionEvent - content_update
 // ---------------------------------------------------------------------------
 
-describe("translateSessionEvent — agent_event content_update", () => {
+describe("translateSessionEvent - agent_event content_update", () => {
 	const translate = (state: MessageTranslatorState, event: AgentEvent) =>
 		translateSessionEvent({ type: "agent_event", payload: { sessionId: "session-1", event } }, state).messages
 	const start = (state: MessageTranslatorState, toolName = "run_commands", toolCallId?: string) =>
@@ -2376,10 +2376,10 @@ describe("translateSessionEvent — agent_event content_update", () => {
 })
 
 // ---------------------------------------------------------------------------
-// translateSessionEvent — agent_event (usage)
+// translateSessionEvent - agent_event (usage)
 // ---------------------------------------------------------------------------
 
-describe("translateSessionEvent — agent_event usage", () => {
+describe("translateSessionEvent - agent_event usage", () => {
 	it("splits SDK inclusive input tokens into classic disjoint usage buckets", () => {
 		const state = new MessageTranslatorState()
 		const event: CoreSessionEvent = {
@@ -2462,7 +2462,7 @@ describe("historyItemToSessionFields", () => {
 	})
 })
 
-describe("translateSessionEvent — accumulated text streaming (S6-21 fix)", () => {
+describe("translateSessionEvent - accumulated text streaming (S6-21 fix)", () => {
 	it("uses accumulated text for smooth streaming instead of delta", () => {
 		const state = new MessageTranslatorState()
 
@@ -2509,7 +2509,7 @@ describe("translateSessionEvent — accumulated text streaming (S6-21 fix)", () 
 		// Using delta would cause "flip book" effect in the webview
 		expect(chunk2.messages[0].text).toBe("Hello world")
 		expect(chunk2.messages[0].partial).toBe(true)
-		// Same timestamp — webview updates in-place
+		// Same timestamp - webview updates in-place
 		expect(chunk2.messages[0].ts).toBe(streamingTs)
 
 		// Third chunk: more text
@@ -2766,10 +2766,10 @@ describe("translateSessionEvent — accumulated text streaming (S6-21 fix)", () 
 	})
 
 	// ---------------------------------------------------------------------------
-	// command content_end — output formatting
+	// command content_end - output formatting
 	// ---------------------------------------------------------------------------
 
-	describe("translateSessionEvent — command content_end output formatting", () => {
+	describe("translateSessionEvent - command content_end output formatting", () => {
 		it("formats ToolOperationResult[] as raw text, not JSON", () => {
 			const state = new MessageTranslatorState()
 			const startEvent: CoreSessionEvent = {
@@ -2906,7 +2906,7 @@ describe("translateSessionEvent — accumulated text streaming (S6-21 fix)", () 
 // ENG-1867: run_commands with bare array input renders command text
 // ---------------------------------------------------------------------------
 
-describe("translateSessionEvent — run_commands bare array/string input (ENG-1867)", () => {
+describe("translateSessionEvent - run_commands bare array/string input (ENG-1867)", () => {
 	it("content_start with bare array input shows command text", () => {
 		const state = new MessageTranslatorState()
 		const event: CoreSessionEvent = {
@@ -3122,7 +3122,7 @@ describe("translateSessionEvent — run_commands bare array/string input (ENG-18
 // S6-40: skills tool renders skill name (SDK input: { skill: "name" })
 // ---------------------------------------------------------------------------
 
-describe("sdkToolToClineSayTool — fetch_web_content and skills (S6-39, S6-40)", () => {
+describe("sdkToolToClineSayTool - fetch_web_content and skills (S6-39, S6-40)", () => {
 	it("S6-39: fetch_web_content extracts URL from SDK requests array", () => {
 		const state = new MessageTranslatorState()
 		const event: CoreSessionEvent = {
@@ -3314,7 +3314,7 @@ describe("sdkToolToClineSayTool — fetch_web_content and skills (S6-39, S6-40)"
 // S6-47: search_codebase renders query and path correctly
 // ---------------------------------------------------------------------------
 
-describe("sdkToolToClineSayTool — search_codebase (S6-47)", () => {
+describe("sdkToolToClineSayTool - search_codebase (S6-47)", () => {
 	it("S6-47: search_codebase with { queries: ['TODO', 'FIXME'] } extracts regex", () => {
 		const state = new MessageTranslatorState()
 		const event: CoreSessionEvent = {
@@ -3439,7 +3439,7 @@ describe("sdkToolToClineSayTool — search_codebase (S6-47)", () => {
 			},
 			state,
 		)
-		// content_end (no input — S6-24 pattern)
+		// content_end (no input - S6-24 pattern)
 		const endResult = translateSessionEvent(
 			{
 				type: "agent_event",
@@ -3522,10 +3522,10 @@ describe("sdkToolToClineSayTool — search_codebase (S6-47)", () => {
 })
 
 // ---------------------------------------------------------------------------
-// S6-48: Editor diff rendering — search/replace format for old_text+new_text
+// S6-48: Editor diff rendering - search/replace format for old_text+new_text
 // ---------------------------------------------------------------------------
 
-describe("sdkToolToClineSayTool — editor diff rendering (S6-48)", () => {
+describe("sdkToolToClineSayTool - editor diff rendering (S6-48)", () => {
 	it("S6-48: editor with old_text and new_text builds search/replace diff in content", () => {
 		const state = new MessageTranslatorState()
 		const event: CoreSessionEvent = {
@@ -3647,10 +3647,10 @@ describe("sdkToolToClineSayTool — editor diff rendering (S6-48)", () => {
 	})
 
 	// ---------------------------------------------------------------------------
-	// S6-48: apply_patch tool — content populated from SDK input field
+	// S6-48: apply_patch tool - content populated from SDK input field
 	// ---------------------------------------------------------------------------
 
-	describe("sdkToolToClineSayTool — apply_patch content (S6-48)", () => {
+	describe("sdkToolToClineSayTool - apply_patch content (S6-48)", () => {
 		it("S6-48: apply_patch with SDK { input: '...' } populates both content and diff", () => {
 			const state = new MessageTranslatorState()
 			const patchContent = "*** Begin Patch\n*** Update File: src/file.ts\n@@\n-old\n+new\n*** End Patch"
@@ -3898,7 +3898,7 @@ describe("apply_patch multi-file split (cline#9904)", () => {
 })
 
 // ---------------------------------------------------------------------------
-// MCP tool handling — say="use_mcp_server" + say="mcp_server_response"
+// MCP tool handling - say="use_mcp_server" + say="mcp_server_response"
 // ---------------------------------------------------------------------------
 
 describe("MCP tool rendering (serverName__toolName convention)", () => {
@@ -4159,7 +4159,7 @@ describe("MCP tool rendering (serverName__toolName convention)", () => {
 })
 
 // ---------------------------------------------------------------------------
-// Display-path relativization — tool paths shown in the chat view render
+// Display-path relativization - tool paths shown in the chat view render
 // relative to the task's cwd instead of as full absolute paths.
 // ---------------------------------------------------------------------------
 

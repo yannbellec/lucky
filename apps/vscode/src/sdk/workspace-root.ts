@@ -12,7 +12,7 @@ export function resolveWorkspaceRootPath(paths: readonly string[] | undefined, n
  * Controller likewise always seeded its manager with a fallback root via
  * setupWorkspaceManager() → getCwd(getDesktopDir()). Without the fallback,
  * @-mention file search in an empty window returns zero results and emits
- * task.mention_failed (workspace_unavailable) — see searchFiles.ts.
+ * task.mention_failed (workspace_unavailable) - see searchFiles.ts.
  */
 export function resolveWorkspaceManagerPaths(
 	paths: readonly string[] | undefined,

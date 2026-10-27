@@ -303,7 +303,7 @@ export class SessionImportService {
 		// history origin records that this session was initiated by an import
 		// and which agent it came from, so the messages file `origin` and
 		// downstream telemetry can separate imported transcripts from Cline's
-		// own — the same shape scheduled runs use (`automation`/`hub-schedule`).
+		// own - the same shape scheduled runs use (`automation`/`hub-schedule`).
 		const baseMetadata: Record<string, unknown> =
 			withSessionHistoryOriginMetadata(
 				{
@@ -317,8 +317,8 @@ export class SessionImportService {
 
 		// Created already completed: an imported session is history from
 		// birth, and a transient running/pid-0 row is exactly what the
-		// stale-session reconciler — running in the hub daemon against the
-		// same DB — would flip to failed mid-import. Creation sits inside the
+		// stale-session reconciler - running in the hub daemon against the
+		// same DB - would flip to failed mid-import. Creation sits inside the
 		// rollback: it upserts the row before writing the artifact files, so a
 		// failed file write must not leave a completed row with no transcript.
 		try {

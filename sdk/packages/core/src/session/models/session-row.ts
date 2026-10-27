@@ -74,7 +74,7 @@ export interface CreateRootSessionWithArtifactsInput {
 	startedAt?: string;
 	/**
 	 * Create the session already in a terminal state (defaults to "running").
-	 * Sessions that are pure history from birth — imports — use this so they
+	 * Sessions that are pure history from birth - imports - use this so they
 	 * never pass through a transient running/pid-0 state that the
 	 * stale-session reconciler (in any process sharing the DB) could flip to
 	 * failed before the creator finishes writing.

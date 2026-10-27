@@ -845,7 +845,7 @@ export function MarketplaceView({
 	// When an entry loses all local items backing it (e.g. the matching server
 	// was deleted through its own card controls), drop its installed key right
 	// away so the entry moves back to the Marketplace section without waiting
-	// for the async recheck above — which could be slow or fail and briefly
+	// for the async recheck above - which could be slow or fail and briefly
 	// resurrect the entry as an installed card.
 	const previouslyEvidencedEntryKeysRef = useRef<Set<string>>(new Set());
 	useEffect(() => {

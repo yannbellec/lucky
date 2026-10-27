@@ -101,7 +101,7 @@ describe("ActionButtons", () => {
 		expect(screen.getByRole("button", { name: "Save" })).toBeDisabled()
 
 		// A second create-file ask arrives. Its config is the same object as the
-		// first, but the anchored timestamp changes — buttons must re-enable.
+		// first, but the anchored timestamp changes - buttons must re-enable.
 		const secondAsk = fileApprovalAsk(2, "/notes2.txt")
 		mockTurnState.mockReturnValue({ phase: "awaiting_approval", anchorTs: 2 })
 		rerender(<ActionButtons {...props} messages={[task, secondAsk]} />)

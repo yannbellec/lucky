@@ -18,15 +18,15 @@ function isUsageCostDisplay(value: string | undefined): value is UsageCostDispla
  *
  * Returns `"hide"` when cost is unknowable or meaningless for the
  * provider, and `"subscription"` when usage is billed through a
- * flat-rate subscription (e.g. ChatGPT Plus/Pro, ClinePass) — in that
+ * flat-rate subscription (e.g. ChatGPT Plus/Pro, ClinePass) - in that
  * case any computed dollar figure is a per-token API-rate estimate, not
  * an actual charge. Cost displays must render only for `"show"`, which
  * matches the CLI's `shouldShowCliUsageCost` consumer.
  *
  * Returns `"unknown"` until the listings have arrived (and if the
  * listing request failed). Rendering cost in that window would flash a
- * dollar estimate at subscription users — the exact display this hook
- * exists to suppress — so consumers treat `"unknown"` like any other
+ * dollar estimate at subscription users - the exact display this hook
+ * exists to suppress - so consumers treat `"unknown"` like any other
  * non-`"show"` value and render nothing. Once listings are present, a
  * provider the SDK does not explicitly mark falls back to `"show"`,
  * the same default policy the SDK and CLI use.

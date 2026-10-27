@@ -25,7 +25,7 @@ on:
 # Read-only by default. The publish job elevates itself to contents: write for
 # the tag push and GitHub release; nothing here needs packages/checks/PR
 # write. Keeping the default minimal matters doubly in this workflow because
-# the test job runs BEFORE any environment approval — it must never hold a
+# the test job runs BEFORE any environment approval - it must never hold a
 # write token while executing checked-out code.
 permissions:
     contents: read
@@ -36,8 +36,8 @@ concurrency:
 
 jobs:
     # Gate the publish on the legacy branch's own npm-based test suite. We can't
-    # reuse ./.github/workflows/ext-vscode-test.yml here — on main that's the
-    # bun-based suite and it would test main, not the legacy branch — so the
+    # reuse ./.github/workflows/ext-vscode-test.yml here - on main that's the
+    # bun-based suite and it would test main, not the legacy branch - so the
     # essential quality + test steps are inlined against the checked-out legacy
     # branch.
     test:
@@ -47,7 +47,7 @@ jobs:
           run:
             working-directory: apps/vscode
         steps:
-            # Always the protected legacy-extension branch — deliberately not
+            # Always the protected legacy-extension branch - deliberately not
             # an input. This job runs full npm lifecycle scripts from the
             # checked-out code with no environment approval, and the publish
             # job below does the same next to the marketplace PATs; an
@@ -109,7 +109,7 @@ jobs:
             working-directory: apps/vscode
 
         steps:
-            # Check out the legacy branch (NOT main; hardcoded — see the test
+            # Check out the legacy branch (NOT main; hardcoded - see the test
             # job's checkout comment). fetch-depth: 0 + tags so we can
             # create/push the release tag and compute the previous tag.
             - uses: actions/checkout@v4

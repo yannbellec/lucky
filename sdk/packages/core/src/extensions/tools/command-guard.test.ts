@@ -9,7 +9,7 @@ function blocks(command: string): boolean {
 	return findFileEditingCommand(command) !== undefined;
 }
 
-describe("findFileEditingCommand — read-only commands pass", () => {
+describe("findFileEditingCommand - read-only commands pass", () => {
 	it.each([
 		"ls -la",
 		"pwd",
@@ -101,7 +101,7 @@ describe("findFileEditingCommand — read-only commands pass", () => {
 	});
 });
 
-describe("findFileEditingCommand — file mutations are blocked", () => {
+describe("findFileEditingCommand - file mutations are blocked", () => {
 	it.each([
 		["rm -rf build", "`rm`"],
 		["rm file.txt", "`rm`"],
@@ -210,7 +210,7 @@ describe("findFileEditingCommand — file mutations are blocked", () => {
 	});
 });
 
-describe("findFileEditingCommand — evasion via nesting and wrappers", () => {
+describe("findFileEditingCommand - evasion via nesting and wrappers", () => {
 	it("unwraps wrapper commands", () => {
 		expect(findFileEditingCommand("sudo rm -rf /data")).toBe("`rm`");
 		expect(blocks("env FOO=1 mv a b")).toBe(true);
@@ -245,7 +245,7 @@ describe("findFileEditingCommand — evasion via nesting and wrappers", () => {
 	});
 });
 
-describe("findFileEditingCommand — review feedback cases", () => {
+describe("findFileEditingCommand - review feedback cases", () => {
 	it("does not flag value-taking uppercase flags as in-place edits", () => {
 		expect(blocks("perl -Ilib script.pl")).toBe(false);
 		expect(blocks("perl -pi -e 's/a/b/' f.txt")).toBe(true);
@@ -344,7 +344,7 @@ describe("findFileEditingCommand — review feedback cases", () => {
 	});
 });
 
-describe("findFileEditingCommand — structured commands", () => {
+describe("findFileEditingCommand - structured commands", () => {
 	it("checks structured command executables and argv", () => {
 		expect(
 			findFileEditingCommand({ command: "rm", args: ["-rf", "build"] }),

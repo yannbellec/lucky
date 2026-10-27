@@ -10,9 +10,9 @@ import { sendChatButtonClickedEvent } from "./core/controller/ui/subscribeToChat
 import { sendHistoryButtonClickedEvent } from "./core/controller/ui/subscribeToHistoryButtonClicked"
 import { sendMarketplaceButtonClickedEvent } from "./core/controller/ui/subscribeToMarketplaceButtonClicked"
 import { sendMcpButtonClickedEvent } from "./core/controller/ui/subscribeToMcpButtonClicked"
-import { sendSettingsButtonClickedEvent } from "./core/controller/ui/subscribeToSettingsButtonClicked"
 import { sendWorktreesButtonClickedEvent } from "./core/controller/ui/subscribeToWorktreesButtonClicked"
 import { WebviewProvider } from "./core/webview"
+import { parseProviderId } from "./sdk/model-catalog/provider-id"
 import { createClineAPI } from "./exports"
 import "./utils/path" // necessary to have access to String.prototype.toPosix
 import path from "node:path"
@@ -143,10 +143,348 @@ export async function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
 		vscode.commands.registerCommand(commands.MarketplaceButton, () => sendMarketplaceButtonClickedEvent()),
 	)
-	context.subscriptions.push(vscode.commands.registerCommand(commands.SettingsButton, () => sendSettingsButtonClickedEvent()))
+	// Lucky : notre propre fenetre de reglages (webview cree par l'extension, comme la planete).
+	// Independante du systeme d'evenements du webview d'origine qui ne repond pas chez nous.
+	let luckySettingsPanel: vscode.WebviewPanel | undefined
+	context.subscriptions.push(
+		vscode.commands.registerCommand(commands.SettingsButton, () => {
+			const nodeFs = require("fs")
+			const nodeOs = require("os")
+			const nodePath = require("path")
+			const webFile = nodePath.join(nodeOs.homedir(), ".config", "deep-research-local", "settings.json")
+			const readWeb = (): any => {
+				try {
+					return JSON.parse(nodeFs.readFileSync(webFile, "utf8"))
+				} catch {
+					return {}
+				}
+			}
+			const writeWeb = (partial: any) => {
+				let cur: any = {}
+				try {
+					cur = JSON.parse(nodeFs.readFileSync(webFile, "utf8"))
+				} catch {}
+				const merged = { ...cur, ...partial }
+				nodeFs.mkdirSync(nodePath.dirname(webFile), { recursive: true })
+				nodeFs.writeFileSync(webFile, JSON.stringify(merged, null, 2))
+			}
+			const getStore = (): any => {
+				try {
+					return (WebviewProvider.getInstance() as any)?.controller?.getProviderConfigStore()
+				} catch {
+					return undefined
+				}
+			}
+			const readCtx = (): number => {
+				try {
+					const c = getStore()?.read(parseProviderId("ollama"))
+					return c && typeof c.contextWindow === "number" && c.contextWindow > 0 ? c.contextWindow : 32768
+				} catch {
+					return 32768
+				}
+			}
+			const writeCtx = (n: number) => {
+				try {
+					getStore()?.write(parseProviderId("ollama"), { contextWindow: n })
+				} catch (e: any) {
+					Logger.log("[Lucky] ecriture contexte impossible: " + (e?.message || e))
+				}
+			}
+
+			if (luckySettingsPanel) {
+				luckySettingsPanel.reveal(vscode.ViewColumn.Active, false)
+				return
+			}
+			luckySettingsPanel = vscode.window.createWebviewPanel(
+				"luckySettings",
+				"Lucky - Reglages",
+				{ viewColumn: vscode.ViewColumn.Active, preserveFocus: false },
+				{ enableScripts: true, retainContextWhenHidden: true },
+			)
+			luckySettingsPanel.onDidDispose(() => {
+				luckySettingsPanel = undefined
+			})
+			luckySettingsPanel.webview.onDidReceiveMessage((msg: any) => {
+				if (!msg) {
+					return
+				}
+				if (msg.type === "setCtx" && typeof msg.value === "number") {
+					writeCtx(msg.value)
+				} else if (msg.type === "saveWeb" && msg.partial) {
+					try {
+						writeWeb(msg.partial)
+					} catch {}
+				}
+			})
+
+			const nonce = Math.random().toString(36).slice(2) + Date.now().toString(36)
+			const cspSource = luckySettingsPanel.webview.cspSource
+			const CTX_STEPS = [2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144]
+			const WEB_PARAMS = [
+				{ key: "results_per_search", label: "Sources par recherche", min: 1, max: 50, step: 1, def: 8, unit: "" },
+				{ key: "max_pages", label: "Pages ouvertes (max)", min: 1, max: 100, step: 1, def: 20, unit: "" },
+				{ key: "page_chars", label: "Texte par page", min: 1000, max: 200000, step: 1000, def: 8000, unit: "car" },
+				{ key: "fetch_concurrency", label: "Telechargements en parallele", min: 1, max: 32, step: 1, def: 8, unit: "" },
+				{ key: "fetch_timeout", label: "Delai par page (timeout)", min: 5, max: 120, step: 1, def: 20, unit: "s" },
+				{ key: "max_steps", label: "Etapes de l'agent (max)", min: 1, max: 50, step: 1, def: 12, unit: "" },
+				{ key: "num_ctx", label: "Contexte agent de recherche", min: 2048, max: 262144, step: 2048, def: 32768, unit: "tok" },
+			]
+			const init = { ctx: readCtx(), web: readWeb() }
+
+			const css =
+				"*{box-sizing:border-box}body{font-family:var(--vscode-font-family);color:var(--vscode-foreground);background:var(--vscode-editor-background);padding:16px;margin:0;font-size:12px;max-width:640px}" +
+				"h1{font-size:16px;margin:0 0 2px;display:flex;align-items:center;gap:8px}" +
+				"h2{font-size:11.5px;margin:18px 0 4px;text-transform:uppercase;letter-spacing:.05em;color:var(--vscode-descriptionForeground)}" +
+				".sub{color:var(--vscode-descriptionForeground);margin:0 0 6px;font-size:11px}" +
+				".row,.toggle{padding:9px 0;border-top:1px solid var(--vscode-widget-border,rgba(128,128,128,.25))}" +
+				".toggle{display:flex;align-items:center;justify-content:space-between;gap:12px}" +
+				".hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}" +
+				".lab{display:flex;flex-direction:column;gap:2px}.k{font-weight:600}.hint{color:var(--vscode-descriptionForeground);font-size:10.5px}" +
+				".val{color:var(--vscode-descriptionForeground)}.ctl{display:flex;align-items:center;gap:10px}" +
+				"input[type=range]{flex:1;accent-color:var(--vscode-focusBorder,#3fb950);height:4px}" +
+				".num{width:92px;text-align:right;background:var(--vscode-input-background);color:var(--vscode-input-foreground);border:1px solid var(--vscode-input-border,transparent);border-radius:4px;padding:4px 6px}" +
+				".unit{color:var(--vscode-descriptionForeground);min-width:26px;font-size:10.5px}" +
+				".ticks{display:flex;justify-content:space-between;font-size:10px;color:var(--vscode-descriptionForeground);margin-top:2px}" +
+				".switch{position:relative;width:38px;height:20px;flex:none}.switch input{opacity:0;width:0;height:0}" +
+				".slider{position:absolute;inset:0;background:var(--vscode-input-background);border:1px solid var(--vscode-input-border,#555);border-radius:20px;cursor:pointer;transition:.15s}" +
+				'.slider:before{content:"";position:absolute;width:14px;height:14px;left:2px;top:2px;background:var(--vscode-foreground);border-radius:50%;transition:.15s}' +
+				"input:checked+.slider{background:var(--vscode-focusBorder,#3fb950)}input:checked+.slider:before{transform:translateX(18px);background:#fff}" +
+				".on{color:#3fb950;font-weight:600}.off{color:var(--vscode-descriptionForeground)}" +
+				".warn{color:#d29922;font-size:10.5px;margin-top:8px}" +
+				"#saved{position:fixed;top:12px;right:16px;color:#3fb950;font-size:11px;opacity:0;transition:opacity .2s}"
+
+			const ctxOptions = CTX_STEPS.map((_, i) => '<option value="' + i + '"></option>').join("")
+			const webRows = WEB_PARAMS.map(
+				(p) =>
+					'<div class="row"><div class="hdr"><span class="k">' +
+					p.label +
+					'</span><span class="val" id="wv_' +
+					p.key +
+					'"></span></div><div class="ctl"><input type="range" id="wr_' +
+					p.key +
+					'" min="' +
+					p.min +
+					'" max="' +
+					p.max +
+					'" step="' +
+					p.step +
+					'"><input type="number" class="num" id="wn_' +
+					p.key +
+					'" min="' +
+					p.min +
+					'" max="' +
+					p.max +
+					'" step="' +
+					p.step +
+					'">' +
+					(p.unit ? '<span class="unit">' + p.unit + "</span>" : "") +
+					"</div></div>",
+			).join("")
+
+			const scriptJs =
+				"var vscode=acquireVsCodeApi();var CTX=" +
+				JSON.stringify(CTX_STEPS) +
+				";var WP=" +
+				JSON.stringify(WEB_PARAMS) +
+				";var INIT=" +
+				JSON.stringify(init) +
+				";var fT;function flash(){var b=document.getElementById('saved');b.style.opacity='1';clearTimeout(fT);fT=setTimeout(function(){b.style.opacity='0';},900);}" +
+				"function nearIdx(v){var b=0;for(var i=1;i<CTX.length;i++){if(Math.abs(CTX[i]-v)<Math.abs(CTX[b]-v))b=i;}return b;}" +
+				"var cr=document.getElementById('ctxRange'),cv=document.getElementById('ctxVal');var ci=nearIdx((INIT.ctx)||32768);cr.value=ci;cv.textContent=CTX[ci].toLocaleString()+' tok';" +
+				"cr.addEventListener('input',function(){cv.textContent=CTX[parseInt(cr.value,10)].toLocaleString()+' tok';});" +
+				"cr.addEventListener('change',function(){var n=CTX[parseInt(cr.value,10)];vscode.postMessage({type:'setCtx',value:n});flash();});" +
+				"var webx=INIT.web||{};var en=webx.enabled!==false;var tg=document.getElementById('webEnabled');tg.checked=en;wlbl(en);" +
+				"tg.addEventListener('change',function(){wlbl(tg.checked);sw({enabled:tg.checked});});" +
+				"function wlbl(x){var e=document.getElementById('webEnabledLabel');e.textContent=x?'ACTIVEE':'coupee';e.className=x?'on':'off';}" +
+				"function sw(o){vscode.postMessage({type:'saveWeb',partial:o});flash();}" +
+				"function wv(k,d){return (webx[k]!==undefined&&webx[k]!==null)?webx[k]:d;}" +
+				"WP.forEach(function(p){var r=document.getElementById('wr_'+p.key),n=document.getElementById('wn_'+p.key),v=document.getElementById('wv_'+p.key),cur=wv(p.key,p.def);r.value=cur;n.value=cur;v.textContent=cur+(p.unit?' '+p.unit:'');" +
+				"function commit(x){var m=parseInt(x,10);if(isNaN(m))return;if(m<p.min)m=p.min;if(m>p.max)m=p.max;r.value=m;n.value=m;v.textContent=m+(p.unit?' '+p.unit:'');var o={};o[p.key]=m;sw(o);}" +
+				"r.addEventListener('input',function(){n.value=r.value;v.textContent=r.value+(p.unit?' '+p.unit:'');});" +
+				"r.addEventListener('change',function(){commit(r.value);});n.addEventListener('change',function(){commit(n.value);});});"
+
+			luckySettingsPanel.webview.html =
+				'<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">' +
+				"<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; style-src " +
+				cspSource +
+				" 'unsafe-inline'; script-src 'nonce-" +
+				nonce +
+				"'\">" +
+				'<meta name="viewport" content="width=device-width, initial-scale=1.0"><style>' +
+				css +
+				"</style></head><body>" +
+				'<div id="saved">Enregistre</div>' +
+				"<h1>&#127808; Lucky - Reglages</h1>" +
+				'<p class="sub">Nos reglages, ecrits directement la ou Lucky les lit. Chaque changement est pris en compte au prochain echange.</p>' +
+				"<h2>Modele de chat (Ollama)</h2>" +
+				'<div class="row"><div class="hdr"><span class="k">Contexte du modele (crante)</span><span class="val" id="ctxVal"></span></div>' +
+				'<input type="range" id="ctxRange" list="ctxSteps" min="0" max="' +
+				(CTX_STEPS.length - 1) +
+				'" step="1"><datalist id="ctxSteps">' +
+				ctxOptions +
+				"</datalist>" +
+				'<div class="ticks"><span>2k</span><span>16k</span><span>64k</span><span>256k</span></div>' +
+				'<p class="warn">Crans : 2k, 4k, 8k, 16k, 32k, 64k, 128k, 256k. Au-dela de ~64k sur une machine de 64 Go, risque de plantage du modele. 32k est le reglage sur.</p></div>' +
+				"<h2>Recherche web</h2>" +
+				'<div class="toggle"><div class="lab"><span class="k">Recherche web</span><span class="hint">Activer ou couper l\'acces internet</span></div>' +
+				'<div class="ctl"><span id="webEnabledLabel"></span><label class="switch"><input type="checkbox" id="webEnabled"><span class="slider"></span></label></div></div>' +
+				webRows +
+				'<script nonce="' +
+				nonce +
+				'">' +
+				scriptJs +
+				"</script></body></html>"
+		}),
+	)
 	context.subscriptions.push(vscode.commands.registerCommand(commands.HistoryButton, () => sendHistoryButtonClickedEvent()))
 	context.subscriptions.push(vscode.commands.registerCommand(commands.AccountButton, () => sendAccountButtonClickedEvent()))
 	context.subscriptions.push(vscode.commands.registerCommand(commands.WorktreesButton, () => sendWorktreesButtonClickedEvent()))
+
+	// Lucky : panneau de reglages de la recherche web (sliders, webview compact a cote du chat)
+	let webSearchPanel: vscode.WebviewPanel | undefined
+	context.subscriptions.push(
+		vscode.commands.registerCommand("cline.webSearchSettings", async () => {
+			const nodeFs = require("fs")
+			const nodeOs = require("os")
+			const nodePath = require("path")
+			const settingsFile = nodePath.join(nodeOs.homedir(), ".config", "deep-research-local", "settings.json")
+			const readSettings = (): any => {
+				try {
+					return JSON.parse(nodeFs.readFileSync(settingsFile, "utf8"))
+				} catch {
+					return {}
+				}
+			}
+			const writeSettings = (partial: any) => {
+				let cur: any = {}
+				try {
+					cur = JSON.parse(nodeFs.readFileSync(settingsFile, "utf8"))
+				} catch {}
+				const merged = { ...cur, ...partial }
+				nodeFs.mkdirSync(nodePath.dirname(settingsFile), { recursive: true })
+				nodeFs.writeFileSync(settingsFile, JSON.stringify(merged, null, 2))
+			}
+
+			if (webSearchPanel) {
+				webSearchPanel.reveal(vscode.ViewColumn.Beside, false)
+				return
+			}
+			webSearchPanel = vscode.window.createWebviewPanel(
+				"luckyWebSearch",
+				"Lucky - Recherche web",
+				{ viewColumn: vscode.ViewColumn.Beside, preserveFocus: false },
+				{ enableScripts: true, retainContextWhenHidden: true },
+			)
+			webSearchPanel.onDidDispose(() => {
+				webSearchPanel = undefined
+			})
+			webSearchPanel.webview.onDidReceiveMessage((msg: any) => {
+				if (msg && msg.type === "save" && msg.partial) {
+					try {
+						writeSettings(msg.partial)
+					} catch {}
+				}
+			})
+
+			const nonce = Math.random().toString(36).slice(2) + Date.now().toString(36)
+			const cspSource = webSearchPanel.webview.cspSource
+			const PARAMS = [
+				{ key: "results_per_search", label: "Sources par recherche", hint: "Combien de liens gardes a chaque recherche", min: 1, max: 50, step: 1, def: 8, unit: "" },
+				{ key: "max_pages", label: "Pages ouvertes (max)", hint: "Nb total de sites reellement ouverts et lus", min: 1, max: 100, step: 1, def: 20, unit: "" },
+				{ key: "page_chars", label: "Texte par page", hint: "Caracteres de texte lus sur chaque page", min: 1000, max: 200000, step: 1000, def: 8000, unit: "car" },
+				{ key: "fetch_concurrency", label: "Telechargements en parallele", hint: "Pages chargees en meme temps", min: 1, max: 32, step: 1, def: 8, unit: "" },
+				{ key: "fetch_timeout", label: "Delai par page (timeout)", hint: "Secondes avant d'abandonner une page lente", min: 5, max: 120, step: 1, def: 20, unit: "s" },
+				{ key: "max_steps", label: "Etapes de l'agent (max)", hint: "Tours de reflexion/action avant de s'arreter", min: 1, max: 50, step: 1, def: 12, unit: "" },
+				{ key: "num_ctx", label: "Contexte modele (num_ctx)", hint: "Memoire du modele. Trop haut = crash. 32768 est sur.", min: 2048, max: 262144, step: 2048, def: 32768, unit: "tok" },
+			]
+			const init = readSettings()
+			const rows = PARAMS.map(
+				(p) =>
+					'<div class="row"><div class="lab"><span class="k">' +
+					p.label +
+					'</span><span class="hint">' +
+					p.hint +
+					'</span></div><div class="ctl"><input type="range" id="r_' +
+					p.key +
+					'" min="' +
+					p.min +
+					'" max="' +
+					p.max +
+					'" step="' +
+					p.step +
+					'"><input type="number" class="num" id="n_' +
+					p.key +
+					'" min="' +
+					p.min +
+					'" max="' +
+					p.max +
+					'" step="' +
+					p.step +
+					'">' +
+					(p.unit ? '<span class="unit">' + p.unit + "</span>" : "") +
+					"</div></div>",
+			).join("")
+
+			const css =
+				"*{box-sizing:border-box}body{font-family:var(--vscode-font-family);color:var(--vscode-foreground);background:var(--vscode-editor-background);padding:14px;margin:0;font-size:12px}" +
+				"h1{font-size:15px;margin:0 0 2px;display:flex;align-items:center;gap:8px}.sub{color:var(--vscode-descriptionForeground);margin:0 0 12px;font-size:11px}" +
+				".row,.toggle,.modelrow{border-top:1px solid var(--vscode-widget-border,rgba(128,128,128,.25));padding:9px 0}" +
+				".toggle,.modelrow{display:flex;align-items:center;justify-content:space-between;gap:12px}" +
+				".lab{display:flex;flex-direction:column;gap:2px;margin-bottom:6px}.toggle .lab,.modelrow .lab{margin:0}" +
+				".k{font-weight:600}.hint{color:var(--vscode-descriptionForeground);font-size:10.5px}" +
+				".ctl{display:flex;align-items:center;gap:10px}" +
+				"input[type=range]{flex:1;accent-color:var(--vscode-focusBorder,#3f9);height:4px}" +
+				".num{width:88px;text-align:right}.num,#model{background:var(--vscode-input-background);color:var(--vscode-input-foreground);border:1px solid var(--vscode-input-border,transparent);border-radius:4px;padding:4px 6px}#model{flex:1}" +
+				".unit{color:var(--vscode-descriptionForeground);min-width:26px;font-size:10.5px}" +
+				".switch{position:relative;width:38px;height:20px;flex:none}.switch input{opacity:0;width:0;height:0}" +
+				".slider{position:absolute;inset:0;background:var(--vscode-input-background);border:1px solid var(--vscode-input-border,#555);border-radius:20px;cursor:pointer;transition:.15s}" +
+				'.slider:before{content:"";position:absolute;width:14px;height:14px;left:2px;top:2px;background:var(--vscode-foreground);border-radius:50%;transition:.15s}' +
+				"input:checked+.slider{background:var(--vscode-focusBorder,#3fb950)}input:checked+.slider:before{transform:translateX(18px);background:#fff}" +
+				".on{color:#3fb950;font-weight:600}.off{color:var(--vscode-descriptionForeground)}" +
+				".warn{color:#d29922;font-size:10.5px;margin-top:10px}#saved{color:#3fb950;font-size:11px;opacity:0;transition:opacity .2s;margin-top:12px;height:14px}"
+
+			const script =
+				"const vscode=acquireVsCodeApi();var PARAMS=" +
+				JSON.stringify(PARAMS) +
+				";var INIT=" +
+				JSON.stringify(init) +
+				";var fT;function flash(){var b=document.getElementById('saved');b.style.opacity='1';clearTimeout(fT);fT=setTimeout(function(){b.style.opacity='0';},900);}" +
+				"function save(o){vscode.postMessage({type:'save',partial:o});flash();}" +
+				"function v(k,d){return (INIT[k]!==undefined&&INIT[k]!==null)?INIT[k]:d;}" +
+				"var en=INIT.enabled!==false;var tg=document.getElementById('enabled');tg.checked=en;lbl(en);" +
+				"tg.addEventListener('change',function(){lbl(tg.checked);save({enabled:tg.checked});});" +
+				"function lbl(x){var e=document.getElementById('enabledLabel');e.textContent=x?'ACTIVEE':'coupee';e.className=x?'on':'off';}" +
+				"var md=document.getElementById('model');md.value=v('model','');md.addEventListener('change',function(){save({model:md.value});});" +
+				"PARAMS.forEach(function(p){var r=document.getElementById('r_'+p.key),n=document.getElementById('n_'+p.key),cur=v(p.key,p.def);r.value=cur;n.value=cur;" +
+				"function commit(x){var m=parseInt(x,10);if(isNaN(m))return;if(m<p.min)m=p.min;if(m>p.max)m=p.max;r.value=m;n.value=m;var o={};o[p.key]=m;save(o);}" +
+				"r.addEventListener('input',function(){n.value=r.value;});r.addEventListener('change',function(){commit(r.value);});n.addEventListener('change',function(){commit(n.value);});});"
+
+			webSearchPanel.webview.html =
+				'<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">' +
+				'<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src ' +
+				cspSource +
+				" 'unsafe-inline'; script-src 'nonce-" +
+				nonce +
+				"'\">" +
+				'<meta name="viewport" content="width=device-width, initial-scale=1.0"><style>' +
+				css +
+				"</style></head><body>" +
+				"<h1>&#127808; Recherche web</h1>" +
+				'<p class="sub">Reglages en direct. Chaque changement est enregistre tout de suite et pris en compte au prochain appel du modele.</p>' +
+				'<div class="toggle"><div class="lab"><span class="k">Recherche web</span><span class="hint">Autoriser ou couper l\'acces internet</span></div>' +
+				'<div class="ctl"><span id="enabledLabel"></span><label class="switch"><input type="checkbox" id="enabled"><span class="slider"></span></label></div></div>' +
+				'<div class="modelrow"><div class="lab"><span class="k">Modele (agent CLI)</span><span class="hint">Modele Ollama pour l\'agent en ligne de commande</span></div>' +
+				'<input type="text" id="model" placeholder="ex: qwen3.6-uncensored:35b"></div>' +
+				rows +
+				'<p class="warn">Astuce : un contexte (num_ctx) trop grand peut faire planter le modele. 32768 est un reglage sur ; monte au-dela seulement si ta machine suit.</p>' +
+				'<div id="saved">Enregistre</div>' +
+				'<script nonce="' +
+				nonce +
+				'">' +
+				script +
+				"</script></body></html>"
+		}),
+	)
 
 	context.subscriptions.push(vscode.workspace.registerTextDocumentContentProvider(DIFF_VIEW_URI_SCHEME, diffContentProvider))
 
@@ -266,37 +604,37 @@ export async function activate(context: vscode.ExtensionContext) {
 					// diagnostics themselves via getContextForCommand.
 					const actions: vscode.CodeAction[] = []
 
-					// Add to Cline (Always available)
-					const addAction = new vscode.CodeAction("Add to Cline", vscode.CodeActionKind.QuickFix)
+					// Add to Lucky (Always available)
+					const addAction = new vscode.CodeAction("Add to Lucky", vscode.CodeActionKind.QuickFix)
 					addAction.command = {
 						command: commands.AddToChat,
-						title: "Add to Cline",
+						title: "Add to Lucky",
 					}
 					actions.push(addAction)
 
-					// Explain with Cline (Always available)
-					const explainAction = new vscode.CodeAction("Explain with Cline", vscode.CodeActionKind.RefactorExtract) // Using a refactor kind
+					// Explain with Lucky (Always available)
+					const explainAction = new vscode.CodeAction("Explain with Lucky", vscode.CodeActionKind.RefactorExtract) // Using a refactor kind
 					explainAction.command = {
 						command: commands.ExplainCode,
-						title: "Explain with Cline",
+						title: "Explain with Lucky",
 					}
 					actions.push(explainAction)
 
-					// Improve with Cline (Always available)
-					const improveAction = new vscode.CodeAction("Improve with Cline", vscode.CodeActionKind.RefactorRewrite) // Using a refactor kind
+					// Improve with Lucky (Always available)
+					const improveAction = new vscode.CodeAction("Improve with Lucky", vscode.CodeActionKind.RefactorRewrite) // Using a refactor kind
 					improveAction.command = {
 						command: commands.ImproveCode,
-						title: "Improve with Cline",
+						title: "Improve with Lucky",
 					}
 					actions.push(improveAction)
 
-					// Fix with Cline (Only if diagnostics exist)
+					// Fix with Lucky (Only if diagnostics exist)
 					if (context.diagnostics.length > 0) {
-						const fixAction = new vscode.CodeAction("Fix with Cline", vscode.CodeActionKind.QuickFix)
+						const fixAction = new vscode.CodeAction("Fix with Lucky", vscode.CodeActionKind.QuickFix)
 						fixAction.isPreferred = true
 						fixAction.command = {
 							command: commands.FixWithCline,
-							title: "Fix with Cline",
+							title: "Fix with Lucky",
 						}
 						actions.push(fixAction)
 					}

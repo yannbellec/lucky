@@ -114,7 +114,7 @@ describe("listFiles gitignore handling", () => {
 	})
 
 	it("reads .gitignore from subdirectories during BFS traversal", async () => {
-		// .gitignore files aren't only at the root — subdirectories can have their own.
+		// .gitignore files aren't only at the root - subdirectories can have their own.
 		// During BFS, when we enter a non-ignored directory, we read its .gitignore
 		// and add those patterns to the accumulator for all deeper traversal.
 		//
@@ -188,6 +188,6 @@ describe("listFiles gitignore handling", () => {
 		normalized.should.containEql(normalizeForComparison(path.join(project, "app.ts")))
 
 		const hasThirdPartyContent = normalized.some((f) => f.includes("third-party"))
-		hasThirdPartyContent.should.equal(false, "third-party/ contents should be excluded — and its .gitignore files never read")
+		hasThirdPartyContent.should.equal(false, "third-party/ contents should be excluded - and its .gitignore files never read")
 	})
 })

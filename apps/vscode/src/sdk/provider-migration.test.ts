@@ -29,7 +29,7 @@ afterEach(() => {
 })
 
 // ---------------------------------------------------------------------------
-// migrateProviders — adapter wrapper over ProviderSettingsManager
+// migrateProviders - adapter wrapper over ProviderSettingsManager
 // ---------------------------------------------------------------------------
 
 describe("migrateProviders", () => {
@@ -82,7 +82,7 @@ describe("migrateProviders", () => {
 		expect(result.migrated).toBe(true)
 	})
 
-	it("is idempotent — calling twice produces the same result", () => {
+	it("is idempotent - calling twice produces the same result", () => {
 		getProviderSettingsManager(tempDir).saveProviderSettings({
 			provider: "anthropic",
 			tokenSource: "migration",

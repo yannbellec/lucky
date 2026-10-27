@@ -261,7 +261,7 @@ export class SqliteSessionStore implements SessionStore {
 	}
 
 	/**
-	 * Child sessions — subagent runs and team-task runs — recorded under a
+	 * Child sessions - subagent runs and team-task runs - recorded under a
 	 * parent, oldest first so a caller can present them in spawn order.
 	 */
 	listChildren(parentSessionId: string, limit = 200): SessionRecord[] {

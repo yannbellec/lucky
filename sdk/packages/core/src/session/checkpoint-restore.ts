@@ -465,7 +465,7 @@ export async function applyCheckpointToWorktree(
 	// (build output, node_modules, .env) alone, and clearing before apply also
 	// avoids "already exists" apply conflicts. For 2-parent stashes and
 	// HEAD-commit fallbacks (no ^3) untracked files can't be reconstructed, so
-	// they are left untouched — deleting them would be unrecoverable data loss.
+	// they are left untouched - deleting them would be unrecoverable data loss.
 	if (capturedUntracked) {
 		await execFile("git", ["-C", cwd, "clean", "-fd"], { windowsHide: true });
 	}

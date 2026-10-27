@@ -4,7 +4,7 @@
 // this union: the empty-response retry middleware decided "did the model
 // produce anything?" and `emitAiSdkEvents()` in `ai-sdk.ts` decided "what do
 // we convert into agent events?". A part counted by one but not the other
-// produced exactly the failure the retry exists to prevent — e.g. a
+// produced exactly the failure the retry exists to prevent - e.g. a
 // file-only turn was "content" to the middleware (never retried) but was
 // dropped by the adapter, so the assistant message came out empty and the
 // task still died with "Model returned empty response".
@@ -28,7 +28,7 @@ export type ModelStreamPartClass =
 	/**
 	 * Real model output that Cline does not (yet) convert into agent events.
 	 * The model responded, so retrying would waste billable requests and
-	 * likely reproduce the same output — never retried. If a turn contains
+	 * likely reproduce the same output - never retried. If a turn contains
 	 * ONLY unsupported output the assistant message can still come out
 	 * empty; that is an explicit contract gap of this bucket, preferred over
 	 * silently re-billing a turn the model did answer.
@@ -36,9 +36,9 @@ export type ModelStreamPartClass =
 	| "unsupported-output"
 	/** Markers and metadata that do not constitute model output. */
 	| "structural"
-	/** `stream-start` — carries warnings; one per attempt. */
+	/** `stream-start` - carries warnings; one per attempt. */
 	| "stream-start"
-	/** Terminal accounting part — carries usage and the finish reason. */
+	/** Terminal accounting part - carries usage and the finish reason. */
 	| "finish"
 	/** An upstream error surfaced as a stream part. */
 	| "error";
@@ -52,7 +52,7 @@ export function classifyModelStreamPart(
 			return part.delta.length > 0 ? "converted-content" : "structural";
 		// Tool activity: the adapter converts tool calls (and their streaming
 		// input parts assemble into them). A tool-call-only turn is the
-		// normal shape when the model wants to act — never empty.
+		// normal shape when the model wants to act - never empty.
 		case "tool-call":
 		case "tool-input-start":
 		case "tool-input-delta":

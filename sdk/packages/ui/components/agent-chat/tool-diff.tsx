@@ -6,7 +6,7 @@
  * module: feed a file item's `path`/`oldText`/`newText`/`fragment` straight
  * in and every product renders the same syntax-highlighted, theme-aware diff.
  *
- * @pierre/diffs is an optional peer dependency — only consumers importing
+ * @pierre/diffs is an optional peer dependency - only consumers importing
  * this subpath need to install it.
  */
 
@@ -62,7 +62,7 @@ const BASE_OPTIONS: DiffOptions = {
 
 // Tool payloads carry code fragments that rarely end in a newline, which
 // would otherwise litter every diff with "No newline at end of file"
-// markers — meaningless noise for chat rows. Empty text stays empty so an
+// markers - meaningless noise for chat rows. Empty text stays empty so an
 // empty side diffs as zero lines rather than one blank line.
 function ensureTrailingNewline(text: string): string {
 	if (!text) return "";
@@ -71,8 +71,8 @@ function ensureTrailingNewline(text: string): string {
 
 // A freshly mounted FileDiff can end up permanently blank: React StrictMode
 // double-invokes the wrapper's ref, the first (immediately cleaned up)
-// instance leaves a half-rendered shadow tree behind — its async highlight
-// work aborts on cleanup — and the second instance adopts that skeleton as if
+// instance leaves a half-rendered shadow tree behind - its async highlight
+// work aborts on cleanup - and the second instance adopts that skeleton as if
 // it were complete prerendered output, never rendering the code or attaching
 // its theme stylesheet. A rendered diff always carries `style[data-theme-css]`
 // in the shadow root; when it is missing after the async window, remounting
@@ -100,7 +100,7 @@ export function ToolFileDiff({
 				{ contents: ensureTrailingNewline(newText), name: path },
 			);
 		} catch {
-			// Unparsable or identical contents — the row's +/- badge and
+			// Unparsable or identical contents - the row's +/- badge and
 			// detail lines still describe the change.
 			return null;
 		}
@@ -146,8 +146,8 @@ export function ToolFileDiff({
 						"--diffs-dark-bg": background,
 						// @pierre/diffs declares `color-scheme: light dark` on its
 						// shadow :host, so its light-dark() token colors follow the
-						// browser's preferred scheme — not the host app's
-						// class-based theme — leaving e.g. near-black light-palette
+						// browser's preferred scheme - not the host app's
+						// class-based theme - leaving e.g. near-black light-palette
 						// text on a dark app surface. Inheriting the app's
 						// color-scheme (flipped by `.dark` in the @cline/ui theme)
 						// keeps the syntax palette in lockstep with the app theme.

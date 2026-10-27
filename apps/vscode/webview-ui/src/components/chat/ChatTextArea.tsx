@@ -381,7 +381,7 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 							)
 								.then((results) => {
 									if (myToken !== latestSearchTokenRef.current) {
-										// Stale response — a newer search has been issued.
+										// Stale response - a newer search has been issued.
 										return
 									}
 									setFileSearchResults((results.results || []) as SearchResult[])
@@ -809,7 +809,7 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 							)
 								.then((results) => {
 									if (myToken !== latestSearchTokenRef.current) {
-										// Stale response — a newer search has been issued.
+										// Stale response - a newer search has been issued.
 										return
 									}
 									setFileSearchResults((results.results || []) as SearchResult[])
@@ -1156,7 +1156,7 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 			} = getModeSpecificFields(apiConfiguration, mode)
 			const unknownModel = "unknown"
 
-			// A cloud task runs on a Cline model in the sandbox, whatever the
+			// A cloud task runs on a Lucky model in the sandbox, whatever the
 			// local provider is; the extension reports which one.
 			if (cloudActOnly) {
 				return `cline:${cloudModelId || unknownModel}`
@@ -1168,7 +1168,7 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 				case "cline":
 					return `${selectedProvider}:${selectedModelId}`
 				case "cline-pass":
-					// Free models selected on ClinePass go through Cline usage billing,
+					// Free models selected on ClinePass go through Lucky usage billing,
 					// so label them the same way as the cline provider
 					return selectedModelId.startsWith("cline-pass/")
 						? `${selectedProvider}:${selectedModelId.replace(/^cline-pass\//, "")}`
@@ -1708,7 +1708,7 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 								"Cloud sessions only support Act mode for now."
 							) : (
 								<>
-									{`In ${shownTooltipMode === "act" ? "Act" : "Plan"}  mode, Cline will ${shownTooltipMode === "act" ? "complete the task immediately" : "gather information to architect a plan"}`}
+									{`In ${shownTooltipMode === "act" ? "Act" : "Plan"}  mode, Lucky will ${shownTooltipMode === "act" ? "complete the task immediately" : "gather information to architect a plan"}`}
 									<p className="text-description/80 text-xs mb-0">
 										Toggle w/ <kbd className="text-muted-foreground mx-1">{togglePlanActKeys}</kbd>
 									</p>

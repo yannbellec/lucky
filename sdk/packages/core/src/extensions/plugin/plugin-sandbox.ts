@@ -620,7 +620,7 @@ export async function loadSandboxedPlugins(
  * Tool contexts and hook payloads cross the sandbox boundary over JSON IPC
  * (subprocess) or structured clone (worker), so they must be plain data. Host code must not place
  * live host objects (telemetry services, sockets, abort signals) on them,
- * but a single offender would otherwise fail every sandboxed call — the
+ * but a single offender would otherwise fail every sandboxed call - the
  * telemetry service on toolContextMetadata did exactly that ("JSON.stringify
  * cannot serialize cyclic structures"). These helpers are the safety net:
  * the first attempt sends the payload untouched (no extra serialization on
@@ -643,7 +643,7 @@ function isSerializationError(error: unknown): boolean {
 /**
  * Deep-clone into a JSON-safe shape: cycles and non-serializable leaves
  * (functions, symbols, bigints) are dropped, `toJSON` (e.g. Date) is
- * honored. Fallback path only — never run on the happy path.
+ * honored. Fallback path only - never run on the happy path.
  */
 function toJsonSafePayload(
 	value: unknown,

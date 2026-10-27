@@ -28,7 +28,7 @@ mock.module("node:fs/promises", fsPromisesMock)
 // The settings write goes through settingsLock.ts, which writes the file with
 // synchronous `node:fs` (temp file + rename), not `fs/promises`. Wrap
 // writeFileSync/renameSync at the module level so a test can observe that the
-// real settings path is only ever produced by an atomic rename — never written
+// real settings path is only ever produced by an atomic rename - never written
 // in place. Both default to the real implementation so the lock and the write
 // still hit disk.
 const actualNodeFs = await import("node:fs")
@@ -149,7 +149,7 @@ describe("McpHub.deleteServerRPC", () => {
 		// it writes the new contents to a temp file, then renames that temp file
 		// onto the real settings path. So writeFileSync must only ever target a
 		// path other than the settings file, and the real path only changes via
-		// renameSync. Wrap the module-level node:fs spies (mock.module) — the
+		// renameSync. Wrap the module-level node:fs spies (mock.module) - the
 		// write goes through node:fs, not fs/promises.
 		const writeSyncTargets: string[] = []
 		writeFileSyncSpy.callsFake((...args: unknown[]) => {

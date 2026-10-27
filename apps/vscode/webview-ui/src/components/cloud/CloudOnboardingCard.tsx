@@ -35,7 +35,7 @@ export function CloudOnboardingCard({
 	if (variant === "error") {
 		return (
 			<div className="flex flex-col gap-2 py-1 text-xs">
-				<div className="font-medium text-foreground">Could not reach Cline Cloud</div>
+				<div className="font-medium text-foreground">Could not reach Lucky Cloud</div>
 				<div className="text-description">{errorMessage || "Check your connection and try again."}</div>
 				<div>
 					<Button disabled={checking} onClick={onRefresh} size="sm" variant="secondary">
@@ -55,20 +55,20 @@ export function CloudOnboardingCard({
 			<div className="flex flex-col gap-1">
 				<div className="text-sm font-medium text-foreground">
 					{isSignedOut
-						? "Run Cline in the cloud"
+						? "Run Lucky in the cloud"
 						: isNoRepositories
-							? "Give Cline access to a repository"
+							? "Give Lucky access to a repository"
 							: "Connect GitHub to get started"}
 				</div>
 				<p className="m-0 text-xs leading-relaxed text-description">
-					Cloud sessions run in an isolated sandbox on Cline's infrastructure. Cline clones your repository, works on a
+					Cloud sessions run in an isolated sandbox on Lucky's infrastructure. Lucky clones your repository, works on a
 					branch, and keeps going after you close {editor}.
 				</p>
 			</div>
 
 			<ol className="m-0 flex list-none flex-col gap-1.5 p-0">
 				{isSignedOut ? (
-					<Step icon={<LogInIcon className="size-3" />} index={1} title="Sign in to Cline" />
+					<Step icon={<LogInIcon className="size-3" />} index={1} title="Sign in to Lucky" />
 				) : (
 					<Step done={isNoRepositories} icon={<CloudIcon className="size-3" />} index={1} title="Connect GitHub" />
 				)}
@@ -76,7 +76,7 @@ export function CloudOnboardingCard({
 					active={isNoRepositories}
 					icon={<GitBranchIcon className="size-3" />}
 					index={2}
-					title="Choose the repositories Cline may access"
+					title="Choose the repositories Lucky may access"
 				/>
 				<Step icon={<PlayIcon className="size-3" />} index={3} title="Pick a repo and branch, then start a task" />
 			</ol>
@@ -85,7 +85,7 @@ export function CloudOnboardingCard({
 				{isSignedOut ? (
 					<Button onClick={onSignIn} size="sm">
 						<LogInIcon className="size-3" />
-						Sign in to Cline
+						Sign in to Lucky
 					</Button>
 				) : (
 					<Button onClick={onConnect} size="sm">

@@ -49,7 +49,7 @@ async function installNodeDependencies() {
 
 	// This is an ISOLATED runtime install inside the standalone distribution
 	// directory (dist-standalone), driven by the "cline-core" runtime-files
-	// manifest — it is NOT part of the monorepo workspace install. TARGET_NODE_VERSION
+	// manifest - it is NOT part of the monorepo workspace install. TARGET_NODE_VERSION
 	// and the prebuild-install calls below target the Node ABI of the bundled
 	// runtime (matching the JetBrains-packaged Node), not the build tooling.
 	console.log("Running bun install in distribution directory...")

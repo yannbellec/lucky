@@ -23,7 +23,7 @@ const UNKNOWN: FsInfo = { fsClass: "unknown", fsType: "unknown" }
 // rather than being misreported as "local".
 //
 // On macOS, SSHFS / FUSE-T / NTFS-3G / gocryptfs / rclone all surface as
-// "macfuse" (or "fuse" on older macOS) in `mount` output — macFUSE doesn't
+// "macfuse" (or "fuse" on older macOS) in `mount` output - macFUSE doesn't
 // expose the underlying driver. We bucket all of them as "network" since
 // they share the not-actually-local performance profile that motivated this
 // work.
@@ -79,7 +79,7 @@ const LOCAL_FS_TYPES = new Set([
 const cache = new Map<string, FsInfo>()
 
 // Whole-operation budget covering realpath + mount/stat. The exec child has
-// its own 2s, but realpath has none — a stale network mount can hang it
+// its own 2s, but realpath has none - a stale network mount can hang it
 // indefinitely. Race the whole detection against this so callers (telemetry)
 // never block forever.
 const DETECT_TIMEOUT_MS = 3000
@@ -155,7 +155,7 @@ async function detect(path: string): Promise<FsInfo> {
 
 /**
  * macOS detection by parsing `mount(8)` output and picking the longest
- * matching mount point. BSD `stat` has no portable filesystem-type flag —
+ * matching mount point. BSD `stat` has no portable filesystem-type flag -
  * `stat -f` is a format-string mode where `%T` means "file type"
  * (regular/directory/etc.), not "filesystem type". Parsing `mount` is the
  * pragmatic alternative.

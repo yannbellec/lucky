@@ -280,7 +280,7 @@ export function SettingsView({
 				// the authoritative catalog. Retry when a concurrent edit
 				// superseded the in-flight response (that edit performs no
 				// reload of its own), then remount the detail panel so its
-				// field drafts re-seed from the reloaded state — not before,
+				// field drafts re-seed from the reloaded state - not before,
 				// or they would re-capture the unpersisted optimistic values.
 				for (let attempt = 0; attempt < 3; attempt++) {
 					providerCatalogCache = null;
@@ -344,7 +344,7 @@ export function SettingsView({
 	const updateProvider = useCallback(
 		(id: string, updates: ProviderSettingsUpdate) => {
 			// Saving settings creates the provider's persisted entry, which is
-			// what "connected" means for keyless providers — reflect it locally.
+			// what "connected" means for keyless providers - reflect it locally.
 			catalogGenerationRef.current++;
 			setProvidersWithCache((prev) =>
 				prev.map((p) =>

@@ -884,7 +884,7 @@ export default function Home() {
 		[activeEnvironmentId, activeThread?.environmentId, sessionHistory.sessions],
 	);
 	// A child agent session names its parent, but only the history list knows the
-	// parent's title — resolve it here so the chat header can point back to it.
+	// parent's title - resolve it here so the chat header can point back to it.
 	const activeParentSession = useMemo(() => {
 		const parentSessionId =
 			activeThread?.historySession?.parentSessionId?.trim();
@@ -2412,7 +2412,7 @@ function ChatThreadPane({
 		[agents, derivedAgentActivity, isSessionActive],
 	);
 	// A child agent has its own session row, so opening it goes through the same
-	// path as any other session — it is just never listed in the sidebar.
+	// path as any other session - it is just never listed in the sidebar.
 	const onOpenAgentSession = useCallback(
 		async (agentSessionId: string) => {
 			await onOpenSessionById?.(agentSessionId, environmentId);

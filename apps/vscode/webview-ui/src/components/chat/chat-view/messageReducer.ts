@@ -95,7 +95,7 @@ export function applyTurnState(state: ReplicaState, incoming: TurnState | undefi
  *                    strength of a single message. The authoritative wholesale replace for a
  *                    new task/render comes from a full state snapshot (applyStateSnapshot); a
  *                    lone newer-epoch *partial* (e.g. a bookkeeping api_req_started that raced
- *                    ahead of its snapshot) must not empty a live conversation — that would
+ *                    ahead of its snapshot) must not empty a live conversation - that would
  *                    strand the webview at messages.length === 0 and route Enter to newTask().
  *                    So we bump the epoch and append/merge this one message; the snapshot that
  *                    follows will reconcile to the true new-task transcript.
@@ -139,7 +139,7 @@ export function applyMessage(state: ReplicaState, incoming: ClineMessage): Repli
 		return { ...state, messages, seqByTs }
 	}
 
-	// New ts at the current epoch — append.
+	// New ts at the current epoch - append.
 	const messages = [...state.messages, incoming]
 	const seqByTs = new Map(state.seqByTs)
 	seqByTs.set(incoming.ts, seqOf(incoming))
@@ -195,7 +195,7 @@ export function applyStateSnapshot(
 		return applyTurnState(next, snapshotTurnState)
 	}
 	if (snapshotVersion !== 0 && snapshotVersion <= state.stateVersion) {
-		// A newer (or equal) snapshot already applied for the transcript — but a turnState with a
+		// A newer (or equal) snapshot already applied for the transcript - but a turnState with a
 		// higher seq may still need to move the UI forward, so don't bail before the seq gate.
 		return applyTurnState(state, snapshotTurnState)
 	}

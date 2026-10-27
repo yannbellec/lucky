@@ -503,7 +503,7 @@ describe("ProviderDetailContent audio capabilities", () => {
 
 		// Switching directly to the other featured provider must not keep
 		// showing the previous provider's fetched models while its own
-		// request is still pending — the same component instance is reused.
+		// request is still pending - the same component instance is reused.
 		await render(clinePassProvider);
 		expect(container.textContent).not.toContain("Claude Opus 5");
 		expect(container.textContent).toContain("Pass Snapshot");
@@ -698,7 +698,7 @@ describe("ProviderDetailContent audio capabilities", () => {
 			],
 		});
 
-		// The second addition must include the first one — the stale fetched
+		// The second addition must include the first one - the stale fetched
 		// list used to shadow the update and submit a list without it.
 		await addModel("custom/two");
 		expect(onUpdateModels).toHaveBeenLastCalledWith([

@@ -484,7 +484,7 @@ export class LocalRuntimeHost implements RuntimeHost {
 
 		// An interactive session started without a prompt has no turn in
 		// flight (turns arrive through separate send calls), so it must not
-		// report "running" — a created-but-never-prompted session otherwise
+		// report "running" - a created-but-never-prompted session otherwise
 		// stayed "running" forever, wedging clients that gate workspace
 		// operations (e.g. checkpoint restore) on active turns. One-shot
 		// starts still run their prompt inside start() and begin "running".
@@ -1181,7 +1181,7 @@ export class LocalRuntimeHost implements RuntimeHost {
 			// detector / mistake limit) and user-initiated aborts keep the
 			// queue intact, so without a drain here the user-queued prompts
 			// would be stranded forever. "error" finishes deliberately do NOT
-			// drain — auto-running queued prompts into a failing provider
+			// drain - auto-running queued prompts into a failing provider
 			// would consume them; they stay queued and drain on the next
 			// enqueue/update or successful turn.
 			if (result.finishReason !== "error") {
@@ -1230,10 +1230,10 @@ export class LocalRuntimeHost implements RuntimeHost {
 		});
 		// Aborting a user-initiated turn leaves pendingPrompts untouched:
 		// clearing here would silently destroy prompts the user already typed
-		// and queued — they drain once the abort completes. Aborting a
+		// and queued - they drain once the abort completes. Aborting a
 		// queue-initiated turn (drainingPendingPrompts) is the opposite
 		// gesture: the user is cancelling the queued work itself, so drop the
-		// remainder — otherwise every Escape would consume one queued prompt
+		// remainder - otherwise every Escape would consume one queued prompt
 		// and start a fresh provider call, and the session could never be
 		// brought to a full stop.
 		session.aborting = true;
@@ -1732,7 +1732,7 @@ export class LocalRuntimeHost implements RuntimeHost {
 	 * re-reads the disk manifest first so disk-only writers (compaction-path
 	 * updates, title/metadata renames) are never reverted by a stale in-memory
 	 * copy, applies the field-level mutation, syncs the in-memory copy, and
-	 * persists — one mutation at a time per session.
+	 * persists - one mutation at a time per session.
 	 */
 	private async mutateSessionManifest(
 		session: ActiveSession,
@@ -1904,7 +1904,7 @@ export class LocalRuntimeHost implements RuntimeHost {
 		// assistant-message/turn boundaries, so without this an aborted turn
 		// (including the user's prompt) exists only in memory. If the session
 		// later has to be rebuilt from disk (hub restart, session eviction),
-		// the recovery would silently drop the aborted exchange — or, for a
+		// the recovery would silently drop the aborted exchange - or, for a
 		// session seeded with in-memory history, the entire conversation.
 		if (messages.length > 0) {
 			try {
@@ -2140,7 +2140,7 @@ export class LocalRuntimeHost implements RuntimeHost {
 	 * Single choke point for the fallback `task.completed` emission on
 	 * session teardown. Every path a session can end through funnels into
 	 * `shutdownSession(...)` or `releaseSessionRuntime(...)`, and BOTH must
-	 * call this helper — the emission must never depend on which teardown
+	 * call this helper - the emission must never depend on which teardown
 	 * branch a stop happens to route through. (The 4.1.11 regression:
 	 * truthful session-status reporting re-routed many interactive stops
 	 * onto the release branch, and the fallback that lived only inside
@@ -2397,8 +2397,8 @@ export class LocalRuntimeHost implements RuntimeHost {
 		notifyTeamRunWaiters(session);
 
 		// Drain an in-flight run before tearing anything down. `stopSession` aborts
-		// first for exactly this reason; callers that arrive here another way — hub
-		// `dispose()` on a restart, most notably — otherwise hit two failures at
+		// first for exactly this reason; callers that arrive here another way - hub
+		// `dispose()` on a restart, most notably - otherwise hit two failures at
 		// once: the runtime refuses to shut down while a run is in progress, and the
 		// plugin sandbox is SIGTERMed with tool calls still pending, so those calls
 		// reject with "plugin-sandbox process exited". A connector turn awaiting the
@@ -2477,7 +2477,7 @@ export class LocalRuntimeHost implements RuntimeHost {
 	): Promise<void> {
 		// Releasing is a full session exit too: interactive sessions whose
 		// reported status is already terminal are stopped/disposed through
-		// this branch. The completion emission must happen here as well —
+		// this branch. The completion emission must happen here as well -
 		// this is the branch that silently dropped `task.completed` when
 		// truthful status reporting re-routed interactive stops onto it.
 		this.emitTaskCompletedOnTeardown(session);
@@ -2514,7 +2514,7 @@ export class LocalRuntimeHost implements RuntimeHost {
 		// rethrown below, and the plugin sandbox is SIGTERMed while tool calls are
 		// still pending, so those calls reject with "plugin-sandbox process exited".
 		// A connector turn awaiting the run sees whichever surfaced first instead of
-		// an answer — which is what a hub restart looked like from Slack.
+		// an answer - which is what a hub restart looked like from Slack.
 		if (!session.aborting && !session.agent.canStartRun()) {
 			session.aborting = true;
 			session.agent.abort(new Error(reason));

@@ -1,4 +1,4 @@
-// CloudSessionHost — an SdkSessionHost backed by a Cline Cloud sandbox.
+// CloudSessionHost - an SdkSessionHost backed by a Cline Cloud sandbox.
 //
 // A cloud session has two ids: the outer `ses-…` record owned by the Cline
 // Cloud control plane (what extension history and the task view use as their

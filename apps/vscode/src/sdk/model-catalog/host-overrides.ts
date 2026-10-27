@@ -18,7 +18,7 @@ import type { ProviderId } from "./contracts"
 
 /**
  * The context window Ollama actually applies is the requested `num_ctx`,
- * not the model's native maximum — Ollama truncates the prompt to it
+ * not the model's native maximum - Ollama truncates the prompt to it
  * server-side. Surface the user's "Model Context Window" setting (or the
  * request default) instead of catalog/safe-default values so the chat
  * indicator and context management match reality.
@@ -33,7 +33,7 @@ function resolveOllamaContextWindow(): number {
 			return Math.floor(value)
 		}
 	} catch {
-		// providers.json unavailable — fall through to the legacy state key.
+		// providers.json unavailable - fall through to the legacy state key.
 	}
 	try {
 		const raw = StateManager.get().getApiConfiguration().ollamaApiOptionsCtxNum?.trim()
@@ -44,7 +44,7 @@ function resolveOllamaContextWindow(): number {
 			}
 		}
 	} catch {
-		// StateManager unavailable (e.g. tests) — fall through to the default.
+		// StateManager unavailable (e.g. tests) - fall through to the default.
 	}
 	return OLLAMA_DEFAULT_CONTEXT_WINDOW
 }

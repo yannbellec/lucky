@@ -39,7 +39,7 @@ type RecordedEvent = {
 /**
  * Minimal capturing stub used by the smoke harness. Intentionally **not**
  * declared `implements ITelemetryService` because this file is a CLI smoke
- * harness — its purpose is to record `capture()` / `captureRequired()`
+ * harness - its purpose is to record `capture()` / `captureRequired()`
  * payloads for human inspection, not to track every method that lands on
  * the production telemetry interface (e.g. `setMetadata`,
  * `setCommonProperties`, the `recordCounter` overload). Casting the

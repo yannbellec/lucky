@@ -40,14 +40,14 @@ export interface LocalOAuthServerOptions {
 	/**
 	 * Called when the local redirect server successfully binds to a port and is
 	 * ready to receive the OAuth callback. Hosts can use this to display a
-	 * "waiting for callback" status indicator or — in remote-development
-	 * environments like JetBrains Gateway — to forward the port from the remote
+	 * "waiting for callback" status indicator or - in remote-development
+	 * environments like JetBrains Gateway - to forward the port from the remote
 	 * machine to the local machine where the user's browser is running.
 	 *
 	 * May be async; `startLocalOAuthServer` will **await** this callback before
 	 * returning so that any setup it performs (e.g. port-forwarding) is
 	 * guaranteed to complete before the caller opens the auth URL. Errors
-	 * thrown by this callback are swallowed — they do not prevent the OAuth
+	 * thrown by this callback are swallowed - they do not prevent the OAuth
 	 * flow from proceeding.
 	 */
 	onListening?: (info: OAuthServerListeningInfo) => void | Promise<void>;
@@ -103,7 +103,7 @@ export async function startLocalOAuthServer(
 			// keep-alive sockets keep working. A browser / global-fetch connection
 			// pool keeps such a socket to the (fixed) callback port alive, and a
 			// later request to that port can be delivered over the pooled socket to
-			// this server even after it has settled — so a subsequent OAuth flow
+			// this server even after it has settled - so a subsequent OAuth flow
 			// reusing the port would have its callback delivered here and never
 			// resolve. Drop lingering connections so no pooled socket outlives this
 			// server.

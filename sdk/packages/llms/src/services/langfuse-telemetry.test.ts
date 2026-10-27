@@ -406,7 +406,7 @@ describe("langfuse telemetry", () => {
 			clearLangfuseEnv();
 			mockHostOtlpTracer();
 			// FNV-1a buckets: task-b=7, task-c=88. A 50% rate keeps the low
-			// bucket and drops the high one — on every call.
+			// bucket and drops the high one - on every call.
 			process.env.CLINE_TRACE_SAMPLE_PERCENT = "50";
 
 			for (let i = 0; i < 2; i++) {
@@ -517,7 +517,7 @@ describe("langfuse telemetry", () => {
 		it("does not treat a console-only tracer as the relay", async () => {
 			clearLangfuseEnv();
 			process.env.CLINE_TRACE_SAMPLE_PERCENT = "100";
-			// Recording provider without the relay marker — e.g. the SDK's
+			// Recording provider without the relay marker - e.g. the SDK's
 			// console traces exporter.
 			getTracerProviderSpy.mockReturnValue({
 				getDelegate: () => ({

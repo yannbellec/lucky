@@ -34,7 +34,7 @@ describe("StatePostDebouncer", () => {
 
 	it("rejects all callers of the batch when flush() fails, instead of swallowing the error", async () => {
 		// Before this fix, runDebouncedStatePost() caught the flush error, logged
-		// it, and resolved every pending caller — so postStateToWebview() callers
+		// it, and resolved every pending caller - so postStateToWebview() callers
 		// could never observe a failed rebuild. Callers must see the rejection.
 		const failure = new Error("boom")
 		const flush = vi.fn().mockRejectedValue(failure)
@@ -96,7 +96,7 @@ describe("StatePostDebouncer", () => {
 
 		// Drain many microtask ticks (generously more than the couple of hops
 		// needed to unwrap an already-settled promise chain) without resolving
-		// firstFlushGate. dispose() must still be pending — it can only resolve
+		// firstFlushGate. dispose() must still be pending - it can only resolve
 		// once the real, still-running flush #1 finishes.
 		for (let i = 0; i < 50; i++) {
 			await Promise.resolve()

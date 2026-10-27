@@ -46,7 +46,7 @@ import {
  * Every Composio call goes through the Cline API connectors proxy
  * (`cline-connectors-api.ts`), which holds the Composio project key
  * server-side and derives the Composio `user_id` from the authenticated
- * account — a client-held key can't be user-scoped, so the proxy is what
+ * account - a client-held key can't be user-scoped, so the proxy is what
  * keeps one install from acting as another user. There is no local API key.
  *
  * The sidecar owns connection bookkeeping and OAuth completion, persisting
@@ -55,7 +55,7 @@ import {
  * connection management never fetches or stores app tool schemas.
  */
 
-/** Where pre–in-process-registration builds materialized a drop-in plugin;
+/** Where pre-in-process-registration builds materialized a drop-in plugin;
  * kept only so those legacy files can be cleaned up. */
 const LEGACY_COMPOSIO_PLUGIN_RELATIVE_PATH = ["plugins", "composio-tools.ts"];
 /** How long the background waiter gives the user to finish the browser flow. */
@@ -76,7 +76,7 @@ type StoredComposioState = {
 	 * complete. Reconciliation refuses to import these and keeps trying to
 	 * revoke them remotely. Persisted so a sidecar restart cannot forget a
 	 * cancellation, and kept until the account is confirmed deleted on
-	 * Composio's side — never evicted on a count or age bound, because an
+	 * Composio's side - never evicted on a count or age bound, because an
 	 * abandoned browser flow can complete arbitrarily late. Growth is
 	 * therefore limited to attempts whose remote deletion has not been
 	 * confirmed yet.
@@ -91,7 +91,7 @@ type PendingConnection = {
 	startedSequence: number;
 	/** The webview connection that started this attempt, if any. When that
 	 * connection goes away (webview closed/reloaded, transport drop) the
-	 * attempt is abandoned — matching how provider and MCP OAuth waits are
+	 * attempt is abandoned - matching how provider and MCP OAuth waits are
 	 * cancelled for a departing owner. Identity only; never dereferenced. */
 	owner?: object;
 };
@@ -189,11 +189,11 @@ function writeComposioState(
 
 /**
  * The single mutation path for the persisted state: read the current file,
- * apply `mutate`, persist the result — with no await anywhere between read
+ * apply `mutate`, persist the result - with no await anywhere between read
  * and write, so the event loop serializes every mutation in this process. A
  * writer can therefore never clobber a tombstone or connection that another
  * path persisted while this one was suspended on network I/O. Callers must
- * apply changes inside `mutate` on the freshly read state — never by
+ * apply changes inside `mutate` on the freshly read state - never by
  * persisting a snapshot they held across an await.
  */
 function updateComposioState(
@@ -258,7 +258,7 @@ function pruneConfirmedCancelledAccount(
  * Best-effort remote revocation for cancelled/abandoned OAuth attempts,
  * through the proxy's delete (which revokes upstream credentials). Returns
  * true when the account is confirmed gone (deleted now, or already gone / a
- * 404) — the caller then prunes its tombstone. A failure is logged, not
+ * 404) - the caller then prunes its tombstone. A failure is logged, not
  * thrown: the persisted tombstone keeps the account from ever being imported
  * locally, and the status-refresh reconciliation retries the deletion
  * whenever the proxy still reports the account.
@@ -315,7 +315,7 @@ function abandonPendingConnections(
  * `~/.cline/plugins/composio-tools.ts`; core now registers only meta tools.
  * A leftover file would eagerly expose app schemas again on hosts that can
  * load drop-in plugins (and fail noisily on hosts that
- * cannot). Best-effort removal on every reconciled read — a forced unlink
+ * cannot). Best-effort removal on every reconciled read - a forced unlink
  * of a missing file is a single cheap syscall.
  */
 function removeLegacyComposioPluginQuietly(logger?: BasicLogger): void {
@@ -508,7 +508,7 @@ export async function getComposioStatus(options?: {
 		const activeByToolkit = new Map<string, string>();
 		for (const account of connections) {
 			if (cancelledIds.has(account.id)) {
-				// A cancelled attempt the proxy still knows about — its browser
+				// A cancelled attempt the proxy still knows about - its browser
 				// flow may have completed after the cancel. Retry the revocation
 				// instead of importing it; once the delete is confirmed the
 				// tombstone has nothing left to guard and is pruned.
@@ -546,7 +546,7 @@ export async function getComposioStatus(options?: {
 			if (stored && cancelledIds.has(stored.connectedAccountId)) {
 				// A stored entry carrying a tombstoned account (imported by a
 				// refresh that raced an attempt's failure) must never stay
-				// reported as installed — its account is abandoned/revoked.
+				// reported as installed - its account is abandoned/revoked.
 				removals.push(slug);
 			} else if (stored && !remoteAccountId) {
 				// The proxy list is authoritative (client-side pagination to
@@ -780,7 +780,7 @@ export async function connectComposioToolkit(
 		const guard: FinalizeGuard = { startedSequence };
 		if (!redirectUrl) {
 			// No browser step needed (the account is already authorized on
-			// Composio's side) — finalize right away. There is no pending entry
+			// Composio's side) - finalize right away. There is no pending entry
 			// on this path, so the disconnect defense lives entirely in the
 			// guard's startedSequence check inside finalizeToolkitConnection.
 			let persisted: boolean;
@@ -795,7 +795,7 @@ export async function connectComposioToolkit(
 			} catch (error) {
 				// The attempt failed from the app's point of view, but the freshly
 				// created account is authorized on Composio's side and nothing
-				// references it — abandon it like a cancel before surfacing.
+				// references it - abandon it like a cancel before surfacing.
 				await abandonFinalizedConnection(scope, connectedAccountId, ctx);
 				throw error;
 			}
@@ -854,7 +854,7 @@ export async function connectComposioToolkit(
 				logger?.log?.(`composio connect ${toolkit} failed: ${reason}`);
 				// The attempt is dead from the app's point of view (timeout, wait
 				// error, or a failed finalize), but the browser flow can still turn
-				// the remote account ACTIVE later — where reconciliation would
+				// the remote account ACTIVE later - where reconciliation would
 				// import it, materializing a connection the user was told failed.
 				// Abandon it like a cancel: tombstone first, revoke best-effort.
 				await abandonFinalizedConnection(scope, connectedAccountId, ctx);
@@ -897,7 +897,7 @@ async function cancelAccountConnect(
 	// Tombstone the attempt first (persisted, so a sidecar restart cannot
 	// forget it), then revoke the account remotely. If the revocation fails,
 	// the account can linger on Composio's side until a later status refresh
-	// retries the delete — the tombstone keeps it from ever materializing
+	// retries the delete - the tombstone keeps it from ever materializing
 	// tools here, and is only pruned once the delete is confirmed.
 	updateComposioState(scope, (state) => {
 		rememberCancelledAccountId(state, pending.connectedAccountId);
@@ -913,7 +913,7 @@ async function cancelAccountConnect(
 }
 
 /**
- * Abandon every pending OAuth attempt started by `owner` — the webview
+ * Abandon every pending OAuth attempt started by `owner` - the webview
  * connection that initiated it. Called when that connection goes away
  * (webview closed/reloaded, transport drop), mirroring how provider and MCP
  * OAuth waits are cancelled for a departing owner: an interactive attempt the
@@ -940,7 +940,7 @@ export function abandonComposioConnectsForOwner(
 
 /**
  * Whether a remote deletion failed because the account is ALREADY gone
- * (revoked from the Composio dashboard, or an attempt that never completed) —
+ * (revoked from the Composio dashboard, or an attempt that never completed) -
  * the only failure that may be treated as a successful revocation. The proxy
  * surfaces this as an HTTP 404 through {@link ConnectorsApiError.status}.
  * Anything else fails CLOSED: the revocation counts as unconfirmed, local
@@ -968,7 +968,7 @@ export async function disconnectComposioToolkit(
 	const pending = scope.pendingConnections.get(toolkit);
 	scope.pendingConnections.delete(toolkit);
 	scope.lastConnectionErrors.delete(toolkit);
-	// Snapshot for decisions only — every persisted change below goes through
+	// Snapshot for decisions only - every persisted change below goes through
 	// updateComposioState so a concurrent writer is never clobbered.
 	const state = readReconciledComposioState(scope, logger);
 	if (pending) {
@@ -1005,16 +1005,16 @@ export async function disconnectComposioToolkit(
 					// on Composio's side, and running Hub sessions that loaded
 					// this connector keep executing against it until the delete
 					// lands. Removing only the local state would report an
-					// uninstall that never took effect remotely — keep the
+					// uninstall that never took effect remotely - keep the
 					// connector installed (it is the retry vehicle) and surface
 					// the failure.
 					throw new Error(
-						`Could not revoke the ${toolkit} connection: ${formatConnectorsError(error)}. The connector is still connected — try again, or revoke it from the Composio dashboard.`,
+						`Could not revoke the ${toolkit} connection: ${formatConnectorsError(error)}. The connector is still connected - try again, or revoke it from the Composio dashboard.`,
 					);
 				}
 				// The slot was replaced by a newer connect (or one is mid-flight
 				// and may replace it), so the stored entry can no longer serve
-				// as the retry vehicle for this still-authorized account —
+				// as the retry vehicle for this still-authorized account -
 				// throwing here would orphan it with no local reference at all.
 				// Tombstone it instead: reconciliation retries the revocation on
 				// every refresh and prunes once it is confirmed.
@@ -1039,7 +1039,7 @@ export async function disconnectComposioToolkit(
 		// connection finalized while the awaited revocation above was in
 		// flight is the newer user intent (its startedSequence is after this
 		// disconnect's entry marker, so finalize was NOT dropped): it carries
-		// a different account id and its remote account was never touched —
+		// a different account id and its remote account was never touched -
 		// blindly deleting it here would leave that account authorized with no
 		// local record, for the next refresh to import as a resurrected
 		// connector.
@@ -1069,12 +1069,12 @@ type FinalizeGuard = {
 	startedSequence: number;
 };
 
-/** An attempt whose result must not be persisted — superseded by a
+/** An attempt whose result must not be persisted - superseded by a
  * disconnect, or failed from the app's point of view (wait timeout/error,
- * failed finalize) — can still leave an authorized account behind on
+ * failed finalize) - can still leave an authorized account behind on
  * Composio's side that nothing references, and its browser flow may even
  * complete later. Tombstone it so reconciliation can never import it, then
- * revoke it — the same lifecycle as a cancelled attempt. */
+ * revoke it - the same lifecycle as a cancelled attempt. */
 async function abandonFinalizedConnection(
 	scope: AccountScope,
 	connectedAccountId: string,
@@ -1102,7 +1102,7 @@ async function abandonFinalizedConnection(
 	}
 }
 
-/** Returns whether the connection was actually persisted — a dropped result
+/** Returns whether the connection was actually persisted - a dropped result
  * (superseded attempt or a disconnect that won the race) must not be
  * reported as a successful connect by callers. */
 async function finalizeToolkitConnection(

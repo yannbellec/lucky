@@ -2,11 +2,11 @@
  * Rewrite an apps/vscode package.json to the nightly identity, in place.
  *
  * Reproduces updatePackageJson() from apps/vscode/scripts/publish-nightly.mjs
- * (the same script exists on BOTH main and legacy-extension — those copies are
+ * (the same script exists on BOTH main and legacy-extension - those copies are
  * the source of truth for the mutation; if they change, change this too):
  *   - textual rewrites: "claude-dev" -> "cline-nightly" everywhere, and every
  *     `"cline.` ID prefix -> `"cline-nightly.` (commands, settings, view IDs,
- *     when-clauses that START with the key — mid-string references like
+ *     when-clauses that START with the key - mid-string references like
  *     `config.cline.x` are NOT rewritten, same as the standalone nightly)
  *   - name / displayName / activity bar title / version
  *
@@ -43,7 +43,7 @@ export function nightlifyPackageJson(rawContent, version) {
 	pkg.displayName = NIGHTLY_DISPLAY_NAME;
 	pkg.version = version;
 	// publish-nightly.mjs assigns `.title` on the activitybar value directly,
-	// which is a silent no-op on the real manifest (activitybar is an ARRAY —
+	// which is a silent no-op on the real manifest (activitybar is an ARRAY -
 	// JSON.stringify drops non-index properties). Retitle the actual entries.
 	const activitybar = pkg.contributes?.viewsContainers?.activitybar;
 	for (const container of Array.isArray(activitybar) ? activitybar : []) {

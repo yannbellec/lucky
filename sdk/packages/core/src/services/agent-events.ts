@@ -122,7 +122,7 @@ function usageDeltaFromEvent(event: Extract<AgentEvent, { type: "usage" }>) {
 /**
  * `task.tokens` telemetry contract (inherited from the legacy extension):
  * one event per completed model request, carrying that request's token/cost
- * deltas as DISJOINT buckets — `tokensIn` is uncached input only, with cache
+ * deltas as DISJOINT buckets - `tokensIn` is uncached input only, with cache
  * reads/writes reported in their own attributes, so
  * `sum(tokensIn + cacheReadTokens + cacheWriteTokens)` equals total input.
  *
@@ -132,8 +132,8 @@ function usageDeltaFromEvent(event: Extract<AgentEvent, { type: "usage" }>) {
  * context on every request, so per-task sums re-count the same context
  * tokens once per request. This helper translates to the legacy disjoint
  * buckets (mirroring the webview's `normalizeUsageEvent`). The clamp keeps
- * ApiHandler-backed providers — whose `inputTokens` is already uncached-only
- * — from going negative.
+ * ApiHandler-backed providers - whose `inputTokens` is already uncached-only
+ * - from going negative.
  */
 export function legacyTokenUsageFromUsageEvent(
 	event: Extract<AgentEvent, { type: "usage" }>,

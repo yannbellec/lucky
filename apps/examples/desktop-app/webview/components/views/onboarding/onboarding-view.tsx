@@ -305,7 +305,7 @@ function WelcomeStep({ onContinue }: { onContinue: () => void }) {
 				<p className="mt-2 text-lg text-foreground">Build software your way</p>
 				<p className="mt-6 text-md text-muted-foreground">
 					Cline is an AI coding agent. It reads your code, edits files, runs
-					commands, and works through tasks with you — in any project on your
+					commands, and works through tasks with you - in any project on your
 					machine.
 				</p>
 				<Button
@@ -382,7 +382,7 @@ function ConnectStep({
 					operation: "fetchMe",
 				});
 				// A typed not-authenticated result means the sidecar found no
-				// usable credential after the save — the key did not stick.
+				// usable credential after the save - the key did not stick.
 				if (isClineAccountNotAuthenticatedResult(verified)) {
 					throw new Error("no Cline account credentials were found");
 				}
@@ -829,7 +829,7 @@ function ConnectStep({
  * on entry and silently advances when there is nothing to import, so only
  * people who actually have Claude Code / Codex / opencode history ever see
  * this step. After a successful import, onFinish closes onboarding directly
- * — a second "you're all set" screen right after the import confirmation
+ * - a second "you're all set" screen right after the import confirmation
  * reads as a loop, not a finish.
  */
 function ImportHistoryStep({
@@ -927,7 +927,7 @@ function ImportHistoryStep({
 				<p className="mt-3 text-md text-muted-foreground">
 					{imported
 						? "Your sessions are in Cline's history now. You can import more anytime from the Sessions page."
-						: `Cline found ${found.count} session${found.count === 1 ? "" : "s"} from ${toolList} on this machine. Import them to keep your past conversations — and continue them here.`}
+						: `Cline found ${found.count} session${found.count === 1 ? "" : "s"} from ${toolList} on this machine. Import them to keep your past conversations - and continue them here.`}
 				</p>
 				{imported ? (
 					<Button

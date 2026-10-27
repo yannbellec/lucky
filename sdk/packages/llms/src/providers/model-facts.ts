@@ -198,7 +198,7 @@ const CLAUDE_NAME_FIRST_VERSION_PATTERN =
  * - "legacy": known pre-4.6 families that require the manual shape.
  * - "unknown-claude": a Claude id the version parser does not recognize.
  *   Callers should treat these as NEWER than the known list and prefer
- *   adaptive — the forward-compatible policy the ecosystem converged on
+ *   adaptive - the forward-compatible policy the ecosystem converged on
  *   (vercel/ai#17804 for @ai-sdk/anthropic's capability lookup; opencode's
  *   transform.ts after repeated allowlist misses for opus-4.7, sonnet-5,
  *   and opus-5). New Claude releases reject the manual shape, so an
@@ -248,7 +248,7 @@ export function isQwenModel(options: {
 
 // OpenAI reasoning-era chat models: the o-series (o1/o3/o4, including -mini,
 // -pro, and dated variants) and the gpt-5 family (including gpt-5-chat).
-// These models diverge from classic chat-completions parameter rules — most
+// These models diverge from classic chat-completions parameter rules - most
 // importantly they reject `max_tokens` and require `max_completion_tokens`.
 // Detection is an id-pattern fallback (mirroring the legacy extension's
 // OpenAI handler) because OpenAI-compatible endpoints accept free-form,

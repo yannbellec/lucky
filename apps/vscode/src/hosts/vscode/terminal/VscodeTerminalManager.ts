@@ -485,7 +485,7 @@ export class VscodeTerminalManager {
 	}
 
 	setDefaultTerminalProfile(profileId: string): void {
-		// Just update the profile setting. We don't close existing terminals —
+		// Just update the profile setting. We don't close existing terminals -
 		// they stay open and are reusable if the user switches back. New
 		// terminals created by getOrCreateTerminal() will use the new profile,
 		// and existing terminals with a different effective shell are simply

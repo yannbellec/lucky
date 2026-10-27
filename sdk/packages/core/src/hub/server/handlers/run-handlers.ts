@@ -42,7 +42,7 @@ function errorMessageForResult(result: AgentResult): string | undefined {
 /**
  * Marks an RPC-driven turn as in flight for the session. While marked, the
  * session-event projector suppresses its own `run.failed` projection for
- * agent-level error events — this handler publishes the authoritative
+ * agent-level error events - this handler publishes the authoritative
  * terminal event once `runTurn` settles.
  */
 function trackActiveRpcTurn(

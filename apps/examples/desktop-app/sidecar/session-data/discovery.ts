@@ -92,7 +92,7 @@ export function discoverChatSessions(
 			if (!sessionId || out.some((item) => item.sessionId === sessionId)) {
 				continue;
 			}
-			// Skip subagent / team-task child sessions — they are shown
+			// Skip subagent / team-task child sessions - they are shown
 			// under their parent, not as top-level sidebar entries.
 			if (sessionId.includes("__teamtask__") || sessionId.includes("__sub__")) {
 				continue;

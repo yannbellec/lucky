@@ -252,7 +252,7 @@ export class E2ETestHelper {
 		// xdg-open handlers, ...) inherit the extra stdio pipes Playwright
 		// creates for Electron, and Playwright only reports the app as closed
 		// once every pipe holder is gone. A survivor keeps the never-resolving
-		// app.close() pending — even after the main process exits cleanly — and
+		// app.close() pending - even after the main process exits cleanly - and
 		// the worker teardown then hangs on it until its 60s timeout fails the
 		// job. Playwright launches Electron detached, so on POSIX the pid is
 		// the process group id.
@@ -395,7 +395,7 @@ export const e2e = test
 			// agent host utility process is rolled out via server-side
 			// experiments (so runs break without any repo change) and can fail
 			// to shut down ("unable to kill the process"), outliving the main
-			// process while holding the Playwright pipes — which wedges the
+			// process while holding the Playwright pipes - which wedges the
 			// worker teardown until its 60s timeout fails the job.
 			const settingsDir = path.join(userDataDir, "User")
 			mkdirSync(settingsDir, { recursive: true })

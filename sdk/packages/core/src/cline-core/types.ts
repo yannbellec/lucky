@@ -189,11 +189,11 @@ export interface ClineCoreOptions {
 	distinctId?: string;
 	/**
 	 * Controls how the runtime host is selected:
-	 * - `"auto"` (default) — prefers a compatible local hub when one is available and falls
+	 * - `"auto"` (default) - prefers a compatible local hub when one is available and falls
 	 *   back to local in-process execution when not.
-	 * - `"hub"` — requires a compatible websocket hub runtime; throws if one is not reachable.
-	 * - `"remote"` — requires an explicit remote websocket hub endpoint.
-	 * - `"local"` — always uses local in-process execution and local SQLite/file storage.
+	 * - `"hub"` - requires a compatible websocket hub runtime; throws if one is not reachable.
+	 * - `"remote"` - requires an explicit remote websocket hub endpoint.
+	 * - `"local"` - always uses local in-process execution and local SQLite/file storage.
 	 */
 	backendMode?: RuntimeHostMode;
 	/**

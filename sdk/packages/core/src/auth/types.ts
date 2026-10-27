@@ -49,7 +49,7 @@ export interface OAuthLoginCallbacks {
 	 */
 	onServerListening?: (info: OAuthServerListeningInfo) => void | Promise<void>;
 	/**
-	 * Called when the local OAuth redirect server closes — either because the
+	 * Called when the local OAuth redirect server closes - either because the
 	 * callback was received, the flow was cancelled, or the timeout elapsed.
 	 *
 	 * Use this to:

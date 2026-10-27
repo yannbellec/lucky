@@ -4,7 +4,7 @@
 // data directory, so the SDK adapter can surface tasks and settings created
 // before the SDK migration.
 //
-// All reads are non-throwing — missing or corrupt files return defaults.
+// All reads are non-throwing - missing or corrupt files return defaults.
 
 import fs from "node:fs"
 import path from "node:path"
@@ -80,7 +80,7 @@ function taskMetadataPath(taskId: string, dataDir?: string): string {
 
 /**
  * Read and parse a JSON file, returning undefined on any error.
- * Never throws — returns fallback instead.
+ * Never throws - returns fallback instead.
  */
 function readJsonFile<T>(filePath: string, fallback: T): T {
 	try {
@@ -104,7 +104,7 @@ function readJsonFile<T>(filePath: string, fallback: T): T {
 
 /**
  * Read the full globalState.json contents.
- * Returns a partial record — only keys present on disk are included.
+ * Returns a partial record - only keys present on disk are included.
  */
 export function readGlobalState(dataDir?: string): Partial<GlobalStateAndSettings> {
 	return readJsonFile<Partial<GlobalStateAndSettings>>(globalStatePath(dataDir), {})
@@ -127,7 +127,7 @@ export function readGlobalStateKey<K extends keyof GlobalStateAndSettings>(
 
 /**
  * Read the full secrets.json contents.
- * Returns a partial record — only keys present on disk are included.
+ * Returns a partial record - only keys present on disk are included.
  */
 export function readSecrets(dataDir?: string): Partial<Secrets> {
 	return readJsonFile<Partial<Secrets>>(secretsPath(dataDir), {})

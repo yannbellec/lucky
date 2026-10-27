@@ -9,7 +9,7 @@ export const IMAGE_OMITTED_PLACEHOLDER =
  * real image, so switching to an image-capable model restores it.
  */
 export const IMAGE_UNSUPPORTED_PLACEHOLDER =
-	"[Image attached — this model cannot view images]";
+	"[Image attached - this model cannot view images]";
 
 export const GeneratedMediaModalitySchema = z.enum([
 	"image",

@@ -30,7 +30,7 @@ function makeCallbacks(connection?: ReturnType<typeof makeConnection>): Reconnec
 		connectToServer: sinon.stub().resolves(),
 		notifyWebviewOfServerChanges: sinon.stub().resolves(),
 		appendErrorMessage: sinon.stub(),
-		delay: sinon.stub().resolves(), // instant — no real waiting in tests
+		delay: sinon.stub().resolves(), // instant - no real waiting in tests
 		isStillWanted: sinon.stub().resolves(true),
 	}
 	return { ...(stubs as unknown as ReconnectCallbacks), stubs }
@@ -124,7 +124,7 @@ describe("StreamableHttpReconnectHandler", () => {
 		await handler.handleError(new Error("connection lost"))
 
 		// Once for the "connecting" status, once after connectToServer
-		// succeeded — the second publishes the freshly fetched lists and
+		// succeeded - the second publishes the freshly fetched lists and
 		// "connected" status that connectToServer loads but doesn't send.
 		cbs.stubs.notifyWebviewOfServerChanges.calledTwice.should.be.true()
 		cbs.stubs.notifyWebviewOfServerChanges.lastCall.calledAfter(cbs.stubs.connectToServer.lastCall).should.be.true()
@@ -163,7 +163,7 @@ describe("StreamableHttpReconnectHandler", () => {
 		const handler = new StreamableHttpReconnectHandler("test-server", cbs, TEST_CONFIG)
 		await handler.handleError(new Error("transport error"))
 
-		// The retry after the removal must not run — it would resurrect the server
+		// The retry after the removal must not run - it would resurrect the server
 		cbs.stubs.connectToServer.calledOnce.should.be.true()
 	})
 
@@ -201,7 +201,7 @@ describe("StreamableHttpReconnectHandler", () => {
 		const conn = makeConnection()
 		const cbs = makeCallbacks(conn)
 		// An OAuth-required connection is "disconnected" but retains its
-		// client/transport/authProvider for when the user authenticates —
+		// client/transport/authProvider for when the user authenticates -
 		// oauthRequired: true is what distinguishes it from an ordinary
 		// failed connection
 		const oauthReplacement = { server: { status: "disconnected", oauthRequired: true }, client: {} }
@@ -222,7 +222,7 @@ describe("StreamableHttpReconnectHandler", () => {
 		const handler = new StreamableHttpReconnectHandler("test-server", cbs, TEST_CONFIG)
 		await handler.handleError(new Error("transport error"))
 
-		// The retry must not displace the OAuth replacement — connectToServer
+		// The retry must not displace the OAuth replacement - connectToServer
 		// would drop it without closing, orphaning its session and auth state
 		attempts.should.equal(1)
 	})
@@ -233,7 +233,7 @@ describe("StreamableHttpReconnectHandler", () => {
 		// A failed non-OAuth connectToServer() registers a connection, closes
 		// its client on failure, but leaves the (closed) client attached and
 		// the connection in the list, marked "disconnected". The guard must
-		// recognize it as our own failed attempt — not a replacement — and
+		// recognize it as our own failed attempt - not a replacement - and
 		// let the next retry proceed.
 		const failedAttempt = { ...makeConnection({ status: "disconnected" }), client: {} }
 		let deleted = false
@@ -281,7 +281,7 @@ describe("StreamableHttpReconnectHandler", () => {
 		const handler = new StreamableHttpReconnectHandler("test-server", cbs, TEST_CONFIG)
 
 		// handleError runs from transport.onerror with its promise discarded,
-		// so it must never reject — even when publication never succeeds
+		// so it must never reject - even when publication never succeeds
 		await handler.handleError(new Error("connection lost"))
 
 		cbs.stubs.connectToServer.calledOnce.should.be.true()
@@ -296,7 +296,7 @@ describe("StreamableHttpReconnectHandler", () => {
 		cbs.stubs.connectToServer.onSecondCall().resolves()
 		const handler = new StreamableHttpReconnectHandler("test-server", cbs, TEST_CONFIG)
 
-		// Single handleError call — the retry loop handles both attempts internally
+		// Single handleError call - the retry loop handles both attempts internally
 		await handler.handleError(new Error("err1"))
 
 		// Initial backoff delay (attempt 0 → 100ms), then retry delay (attempt 1 → 200ms)
@@ -321,7 +321,7 @@ describe("StreamableHttpReconnectHandler", () => {
 		// but connectToServer may leave a partial connection, so simulate that.
 		// A partial connection from a failed connectToServer is marked
 		// "disconnected" with its (already-closed) client still attached and
-		// oauthRequired false — the retry loop must keep retrying past it, not
+		// oauthRequired false - the retry loop must keep retrying past it, not
 		// mistake it for an OAuth-required replacement.
 		const partialConn = { ...makeConnection({ status: "disconnected" }), client: {} }
 		let deleted = false

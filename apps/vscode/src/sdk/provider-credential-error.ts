@@ -4,7 +4,7 @@ export function describeMissingCredentialError(rawMessage: string, providerId?: 
 	if (!MISSING_AUTH_HEADER.test(rawMessage)) {
 		return undefined
 	}
-	// Only name the provider when the caller actually knows it — a fallback id
+	// Only name the provider when the caller actually knows it - a fallback id
 	// here would blame the wrong provider for the missing key.
 	const subject = providerId ? `Missing API key for provider "${providerId}".` : "Missing API key for the active provider."
 	return `${subject} Add credentials in Settings, or switch providers.`
@@ -13,7 +13,7 @@ export function describeMissingCredentialError(rawMessage: string, providerId?: 
 /**
  * Actionable text for a credential rejection (HTTP 401/403) from a BYOK
  * provider. The provider's raw body is appended because it is the only
- * provider-specific diagnostic the user has — but alone it is a dead end
+ * provider-specific diagnostic the user has - but alone it is a dead end
  * (e.g. Mistral answers an identical `{"detail":"Invalid API Key"}` for a
  * wrong, empty, or wrong-scope key).
  */

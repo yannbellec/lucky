@@ -121,7 +121,7 @@ function doneFinishReason(chunk: ApiStreamDoneChunk): AgentModelFinishReason {
 
 /**
  * Resolves the `ApiHandler` to delegate to. A function is supported (and may be
- * async) so handler construction can be deferred to the first `stream` call —
+ * async) so handler construction can be deferred to the first `stream` call -
  * which is required for providers registered via `registerAsyncHandler`.
  */
 export type ApiHandlerSource =
@@ -139,8 +139,8 @@ export function createAgentModelFromApiHandler(
 			let sawFinish = false;
 			let sawToolCall = false;
 			try {
-				// Resolving the handler (e.g. `createHandlerAsync`) can reject — for
-				// instance when the host API is unavailable at stream time — so it
+				// Resolving the handler (e.g. `createHandlerAsync`) can reject - for
+				// instance when the host API is unavailable at stream time - so it
 				// happens inside the try block to be reported as a terminal finish.
 				const handler = typeof source === "function" ? await source() : source;
 
@@ -183,7 +183,7 @@ export function createAgentModelFromApiHandler(
 						type: "finish",
 						reason: aborted ? "aborted" : "error",
 						error: error instanceof Error ? error.message : String(error),
-						// Classify while the raw error is still structured — the
+						// Classify while the raw error is still structured - the
 						// message alone can hide the provider's detail (status codes,
 						// response bodies). Without this, an overflow rejection from a
 						// registered handler would never reach recovery.

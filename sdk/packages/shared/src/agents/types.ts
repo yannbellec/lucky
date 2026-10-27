@@ -336,7 +336,7 @@ export interface AgentHookScheduleContext {
 /**
  * Workspace location fields shared by session-scoped and run-scoped contexts.
  *
- * These fields are always sourced from the host session config — never from
+ * These fields are always sourced from the host session config - never from
  * `process.cwd()`. Plugins and hooks must use these values when they need to
  * resolve paths relative to the session's working directory or project root,
  * because the `--cwd` CLI flag sets the session cwd without calling
@@ -345,7 +345,7 @@ export interface AgentHookScheduleContext {
 export interface SessionWorkspaceEnv {
 	/**
 	 * The session's active working directory as configured by the host (e.g.
-	 * via `--cwd`). Always accurate — never use `process.cwd()` in plugins or
+	 * via `--cwd`). Always accurate - never use `process.cwd()` in plugins or
 	 * hooks; use this field instead.
 	 */
 	cwd?: string;

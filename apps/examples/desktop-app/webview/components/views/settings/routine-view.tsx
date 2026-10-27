@@ -526,7 +526,7 @@ export function RoutineSchedulesContent({
 		ReadonlySet<string>
 	>(new Set());
 	// Ref mirrors busyScheduleIds so a second click on the same row is
-	// rejected synchronously — two rapid clicks can both fire before React
+	// rejected synchronously - two rapid clicks can both fire before React
 	// re-renders the disabled state, and state alone can't distinguish them.
 	const busyScheduleIdsRef = useRef<Set<string>>(new Set());
 	// Guards the run-now follow-up: an auto-navigation into the started
@@ -828,11 +828,11 @@ export function RoutineSchedulesContent({
 			});
 			// A reply without an execution means no run was enqueued (the
 			// schedule may have been disabled or deleted since the page
-			// loaded) — say so instead of confirming a start.
+			// loaded) - say so instead of confirming a start.
 			if (!reply?.execution) {
 				toast({
 					title: "Run not started",
-					description: `"${schedule.name}" did not queue a run — the schedule may be disabled or deleted.`,
+					description: `"${schedule.name}" did not queue a run - the schedule may be disabled or deleted.`,
 					variant: "destructive",
 				});
 				await refreshSchedules({ force: true, showLoading: false });
@@ -1370,8 +1370,8 @@ export function RoutineSchedulesContent({
 											</TooltipTrigger>
 											<TooltipContent>
 												{schedule.enabled
-													? "Enabled — click to disable"
-													: "Disabled — click to enable"}
+													? "Enabled - click to disable"
+													: "Disabled - click to enable"}
 											</TooltipContent>
 										</Tooltip>
 									</div>

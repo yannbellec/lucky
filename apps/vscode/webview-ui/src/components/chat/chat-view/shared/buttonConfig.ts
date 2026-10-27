@@ -394,11 +394,11 @@ export function buttonsForPhase(
 			}
 			return BUTTON_CONFIGS.api_req_failed
 		case "awaiting_followup":
-			// followup / plan_mode_respond — input enabled, no approve/reject buttons. (If the
+			// followup / plan_mode_respond - input enabled, no approve/reject buttons. (If the
 			// anchored message is a recognized ask, defer to its config for correct labels.)
 			return anchoredMessage ? getButtonConfig(anchoredMessage, "act") : BUTTON_CONFIGS.followup
 		case "awaiting_approval":
-			// Approve/Reject (or Run Command / Save / etc.) — driven by the anchored ask so the
+			// Approve/Reject (or Run Command / Save / etc.) - driven by the anchored ask so the
 			// labels match the tool kind. Falls back to generic tool approval.
 			return anchoredMessage ? getButtonConfig(anchoredMessage, "act") : BUTTON_CONFIGS.tool_approve
 		default:

@@ -13,7 +13,7 @@ import { ClineMemento } from "./ClineStorage"
  * file-backed implementation.
  */
 export interface StorageContext {
-	/** Global state — settings, task history references, UI state, etc. */
+	/** Global state - settings, task history references, UI state, etc. */
 	readonly globalState: ClineMemento
 
 	// TODO: Privatize this field after StorageContext becomes class with a reset method.
@@ -25,10 +25,10 @@ export interface StorageContext {
 	 */
 	readonly globalStateBackingStore: ClineFileStorage
 
-	/** Secrets — API keys and other sensitive values. File uses restricted permissions (0o600). */
+	/** Secrets - API keys and other sensitive values. File uses restricted permissions (0o600). */
 	readonly secrets: ClineFileStorage<string>
 
-	/** Workspace-scoped state — per-project toggles, rules, etc. */
+	/** Workspace-scoped state - per-project toggles, rules, etc. */
 	readonly workspaceState: ClineFileStorage
 
 	/** The resolved path to the data directory (~/.cline/data) */
@@ -86,7 +86,7 @@ function hashString(str: string): string {
  * Single source of truth shared by createStorageContext and the SDK adapter's
  * legacy-state-reader, matching the SDK's own resolveClineDataDir. Every
  * reader/writer of globalState.json, secrets.json, and providers.json must
- * resolve through the same rules — diverging resolvers split provider state
+ * resolve through the same rules - diverging resolvers split provider state
  * across directories, so requests can run on a provider the settings never
  * show (ENG-2332).
  */
@@ -102,13 +102,13 @@ export function resolveDataDirFromEnv(): string {
 /**
  * Creates a StorageContext backed by JSON files on disk.
  *
- * All path computation is contained here — callers should not
+ * All path computation is contained here - callers should not
  * construct paths to these storage files themselves.
  *
  * File layout (under the resolved data directory, ~/.cline/data by default):
- *   <dataDir>/globalState.json    — global state
- *   <dataDir>/secrets.json        — secrets (mode 0o600)
- *   <dataDir>/workspaces/<hash>/workspaceState.json — per-workspace state
+ *   <dataDir>/globalState.json    - global state
+ *   <dataDir>/secrets.json        - secrets (mode 0o600)
+ *   <dataDir>/workspaces/<hash>/workspaceState.json - per-workspace state
  *
  * @param opts Configuration options for path resolution
  * @returns A StorageContext ready for use by StateManager
@@ -138,7 +138,7 @@ export function createStorageContext(opts: StorageContextOptions = {}): StorageC
 		globalState,
 		globalStateBackingStore: globalState,
 		secrets: new ClineFileStorage<string>(path.join(dataDir, "secrets.json"), "Secrets", {
-			fileMode: 0o600, // Owner read/write only — protects API keys
+			fileMode: 0o600, // Owner read/write only - protects API keys
 		}),
 		workspaceState: new ClineFileStorage(path.join(workspaceDir, "workspaceState.json"), "WorkspaceState"),
 		dataDir,

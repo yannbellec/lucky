@@ -30,7 +30,7 @@ export interface ResolveProviderRequestHeadersInput {
 	 * Optional because not every request is part of a session: standalone
 	 * one-shot utility calls (e.g. VS Code commit message generation) have no
 	 * task. When omitted, `X-Task-ID` is left off entirely rather than sent
-	 * empty — the pre-SDK extension sent `X-Task-ID: ""` from that same
+	 * empty - the pre-SDK extension sent `X-Task-ID: ""` from that same
 	 * commit-message path, so no Cline surface depends on a meaningful id here.
 	 */
 	sessionId?: string;

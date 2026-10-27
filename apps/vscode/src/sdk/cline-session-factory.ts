@@ -6,7 +6,7 @@
 // - Custom session persistence adapter reading ~/.cline/data/tasks/
 // - Mapping HistoryItem ↔ SDK session fields
 //
-// The factory does NOT handle UI concerns — that's the SdkController's job.
+// The factory does NOT handle UI concerns - that's the SdkController's job.
 
 import { BlockList, isIP } from "node:net"
 import {
@@ -150,7 +150,7 @@ async function resolveIsMultiRootWorkspace(): Promise<boolean> {
  * `extensionContext.client`, and the source of the Cline surface headers
  * (`X-CLIENT-TYPE`, `X-PLATFORM`, …). Standalone requests (commit message
  * generation) call this too, so a one-shot request and a task from the same
- * host report the same client by construction — there is no second mapping
+ * host report the same client by construction - there is no second mapping
  * to keep in step. Falls back to the extension's own identity when the host
  * bridge can't answer.
  */
@@ -284,7 +284,7 @@ function toSdkModelInfo(selection: ResolvedModelSelection): SdkModelInfo {
 	// (`adaptSdkModelInfo`), then layer user overrides and the legacy boolean
 	// projections on top. The preserved list is the only source that carries
 	// capabilities without a legacy boolean (e.g. `tools`), and the SDK treats
-	// a populated capabilities array as authoritative — reconstructing one
+	// a populated capabilities array as authoritative - reconstructing one
 	// purely from the booleans silently disables everything they don't cover.
 	const preservedCapabilities = modelInfo.capabilities as NonNullable<SdkModelInfo["capabilities"]> | undefined
 	const capabilities = new Set<NonNullable<SdkModelInfo["capabilities"]>[number]>([
@@ -307,8 +307,8 @@ function toSdkModelInfo(selection: ResolvedModelSelection): SdkModelInfo {
 		// "cannot call tools" to the SDK runtime. Legacy metadata only models
 		// tool support for OpenAI-compatible entries via `supportsTools`.
 		//
-		// An EMPTY array is the same "no signal" state as an absent one —
-		// modelHasCapability treats both as unspecified — and configs carried
+		// An EMPTY array is the same "no signal" state as an absent one -
+		// modelHasCapability treats both as unspecified - and configs carried
 		// over from before the field existed (or round-tripped through a
 		// boundary that defaults it to []) land exactly here. Guarding only
 		// `undefined` let those custom models keep a non-empty, tool-less
@@ -670,7 +670,7 @@ export function resolveVertexProviderConfig(config: ApiConfiguration): Pick<Prov
  * with "Resource not found" (#13655).
  *
  * Values resolved from legacy state are also mirrored into providers.json so
- * the CLI — which reads only providers.json — sees the same Azure
+ * the CLI - which reads only providers.json - sees the same Azure
  * configuration the extension uses. The legacy migration never updates
  * existing entries, so this mirror is the only ongoing sync for these fields.
  */
@@ -718,7 +718,7 @@ type OllamaProviderConfig = {
  * Resolve the user's "Model Context Window" setting for Ollama and surface it
  * as the selected model's `contextWindow`. The gateway carries it on the
  * resolved model definition, and the Ollama vendor maps it onto the wire as
- * `options.num_ctx` — without it Ollama loads every model with its 4096-token
+ * `options.num_ctx` - without it Ollama loads every model with its 4096-token
  * server default. Keeping it on the model also means context management
  * budgets against the window Ollama actually applies (Ollama truncates the
  * prompt to `num_ctx` server-side).
@@ -825,7 +825,7 @@ export function resolveBaseUrl(providerId: string, config: ApiConfiguration): st
 	// SDK-backed providers save their base URL in providers.json instead of
 	// legacy ApiConfiguration fields. Fall back to that store (mirroring
 	// resolveApiKey) so ProviderConfig consumers that don't re-resolve settings
-	// themselves — e.g. the compaction summarizer's createHandlerAsync — still
+	// themselves - e.g. the compaction summarizer's createHandlerAsync - still
 	// reach the configured endpoint instead of the provider default.
 	try {
 		const manager = getProviderSettingsManager()
@@ -850,7 +850,7 @@ export function resolveBaseUrl(providerId: string, config: ApiConfiguration): st
  * 2. The provider's own providers.json `apiLine` (SDK-store fallback).
  * 3. For coding variants without their own legacy field or stored line, the
  *    base provider's legacy field (qwen-code shares Qwen's DashScope region,
- *    zai-coding-plan shares Z AI's account region) — so a variant-specific
+ *    zai-coding-plan shares Z AI's account region) - so a variant-specific
  *    providers.json setting still wins over the shared field.
  *
  * The SDK gateway maps the line to the provider's regional base URL when no
@@ -1031,7 +1031,7 @@ export async function buildSessionConfig(input: SessionConfigInput): Promise<Cor
 		// Local-model-source providers: the committed selection lives in
 		// providers.json when the legacy state slot is empty (e.g. configs
 		// created through the SDK settings store). Never fall through to a
-		// catalog default — an empty model id surfaces an explicit "select a
+		// catalog default - an empty model id surfaces an explicit "select a
 		// model" state instead of silently running a model the user never chose.
 		try {
 			modelId = getProviderSettingsManager().getProviderSettings(providerSettingsProviderId(providerId))?.model?.trim()
@@ -1144,8 +1144,8 @@ export async function buildSessionConfig(input: SessionConfigInput): Promise<Cor
 	// additionally need structured options (region/project/auth/SAP OAuth), which core
 	// reads from providerConfig in createAgentModelFromConfig.
 	const cloudProviderConfig = bedrockProviderConfig ?? vertexProviderConfig ?? sapProviderConfig ?? ollamaProviderConfig
-	// Spread the cloud config first so the explicit fields below — notably the
-	// proxy/CA-aware fetch — can never be clobbered if those types gain matching keys.
+	// Spread the cloud config first so the explicit fields below - notably the
+	// proxy/CA-aware fetch - can never be clobbered if those types gain matching keys.
 	const providerConfig = {
 		...(cloudProviderConfig ?? {}),
 		// Only spread when defined: an explicit `azure: undefined` key would
@@ -1159,7 +1159,7 @@ export async function buildSessionConfig(input: SessionConfigInput): Promise<Cor
 		...(apiLine !== undefined ? { apiLine } : {}),
 		...(knownModels && Object.keys(knownModels).length > 0 ? { knownModels } : {}),
 		// Mirror the user's Max Output Tokens for consumers that build handlers
-		// straight from providerConfig — notably the compaction summarizer, which
+		// straight from providerConfig - notably the compaction summarizer, which
 		// otherwise falls back to a small default output cap (CLINE-2911).
 		...(maxTokensPerTurn !== undefined ? { maxOutputTokens: maxTokensPerTurn } : {}),
 		fetch: resolveProviderFetch(sdkProviderId, baseUrl),
@@ -1235,7 +1235,7 @@ export async function buildSessionConfig(input: SessionConfigInput): Promise<Cor
 export function buildStartSessionInput(config: CoreSessionConfig, input: SessionConfigInput): ClineCoreStartInput {
 	return {
 		config,
-		// Do NOT pass prompt here — start() should return immediately.
+		// Do NOT pass prompt here - start() should return immediately.
 		// The prompt is sent separately via core.send() after session creation.
 		prompt: undefined,
 		interactive: true, // VSCode extension always uses interactive mode
@@ -1247,7 +1247,7 @@ export function buildStartSessionInput(config: CoreSessionConfig, input: Session
 /**
  * Build the StartSessionInput for resuming an existing task.
  *
- * When resuming, we don't pass initialMessages — the SDK's session
+ * When resuming, we don't pass initialMessages - the SDK's session
  * persistence handles loading the conversation history from disk.
  */
 export function buildResumeSessionInput(

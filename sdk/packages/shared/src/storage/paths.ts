@@ -36,7 +36,7 @@ const CLINE_CONFIG_DIR = ".cline";
 /**
  * Claude Code's project directory. Skills authored for Claude Code live in
  * `.claude/skills`, which is documented as a supported project skill location,
- * so Cline must scan it too — otherwise the same skill folder works in Claude
+ * so Cline must scan it too - otherwise the same skill folder works in Claude
  * Code but is silently invisible in Cline.
  */
 const CLAUDE_CONFIG_DIR = ".claude";
@@ -530,7 +530,7 @@ export function resolveGlobalAgentsRulesPath(): string {
  * The workspace-local directories rule files may live in: the legacy
  * `<workspace>/.clinerules` layout and the current
  * `<workspace>/.cline/rules` layout. Every Cline surface (CLI, VS Code
- * extension, desktop app) must honor both — hosts that hardcode one of them
+ * extension, desktop app) must honor both - hosts that hardcode one of them
  * silently drop the other's rules (cline/cline#14186).
  */
 export function resolveWorkspaceRulesConfigPaths(
@@ -827,7 +827,7 @@ export function discoverPluginModulePaths(directoryPath: string): string[] {
 			if (entry.isDirectory()) {
 				// Agent Plugins own their whole subtree. Descending would import a
 				// plugin's skill scripts, another vendor's extension directory, and
-				// its vendored dependencies as though each were a Cline plugin —
+				// its vendored dependencies as though each were a Cline plugin -
 				// and the loader imports a module before validating it, so that
 				// execution cannot be taken back.
 				if (isAgentPluginDirectory(candidate)) {

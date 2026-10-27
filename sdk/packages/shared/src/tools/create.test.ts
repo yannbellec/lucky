@@ -139,7 +139,7 @@ describe("createTool", () => {
 
 	it("merges multiple required-only allOf branches without hoisting them", () => {
 		// Multiple branches each contribute required constraints.  None of them
-		// should be flattened — the allOf composition stays intact, only the
+		// should be flattened - the allOf composition stays intact, only the
 		// top-level type: "object" is added.
 		const tool = createTool({
 			name: "allof_multi_required_tool",

@@ -55,7 +55,7 @@ const CLINE_PASS_PROVIDER_ID = "cline-pass";
 /**
  * A pasted credential can carry invisible control or format characters (BOM,
  * zero-width spaces, bidirectional marks) that make the provider reject it
- * with a 401 indistinguishable from a genuinely wrong key — while masked
+ * with a 401 indistinguishable from a genuinely wrong key - while masked
  * rendering hides the corruption from the user. Strip those characters and
  * surrounding whitespace from every credential-bearing field before the
  * value is persisted.
@@ -150,7 +150,7 @@ export class ProviderSettingsManager {
 			try {
 				chmodSync(this.filePath, 0o600);
 			} catch {
-				// Ignore — Windows does not support POSIX chmod.
+				// Ignore - Windows does not support POSIX chmod.
 			}
 		}
 	}
@@ -192,7 +192,7 @@ export class ProviderSettingsManager {
 		// Stage to a pid-unique temp file and rename into place. Concurrent
 		// Cline processes (CLI, extension, hub) share this file; a bare
 		// writeFileSync lets readers catch a partial file, which read() treats
-		// as empty settings — indistinguishable from being logged out.
+		// as empty settings - indistinguishable from being logged out.
 		const tempPath = `${this.filePath}.${process.pid}.tmp`;
 		try {
 			writeFileSync(tempPath, `${JSON.stringify(normalized, null, 2)}\n`, {
@@ -208,7 +208,7 @@ export class ProviderSettingsManager {
 		try {
 			chmodSync(this.filePath, 0o600);
 		} catch {
-			// Ignore — Windows does not support POSIX chmod.
+			// Ignore - Windows does not support POSIX chmod.
 		}
 		registerConfiguredProvidersFromSettings(normalized);
 	}

@@ -27,7 +27,7 @@ const NON_BEDROCK_API_KEY_ENV = new Set([
 // Bedrock inference-profile model-id resolution.
 //
 // AWS Bedrock offers no on-demand throughput for newer foundation models:
-// they must be invoked through an inference profile — either a geo-prefixed
+// they must be invoked through an inference profile - either a geo-prefixed
 // system profile id ("us." / "eu." / "apac." / "jp." / "au." / "global.") or
 // a provisioned profile ARN. Invoking the bare foundation-model id fails with
 // "Invocation of model ID ... with on-demand throughput isn't supported.
@@ -99,7 +99,7 @@ interface BedrockModelIdOptions {
  * Ids that are already profile-prefixed and ARNs (provisioned throughput,
  * imported/custom models, application inference profiles) are always passed
  * through unmodified. Ids without a known matching profile are kept raw
- * rather than manufacturing a profile id that may not exist — AWS's
+ * rather than manufacturing a profile id that may not exist - AWS's
  * on-demand error is more actionable than "provided model identifier is
  * invalid".
  */
@@ -160,7 +160,7 @@ function geoProfileCandidates(region: string | undefined): string[] {
 		return ["eu."];
 	}
 	if (region.startsWith("ap-")) {
-		// AWS ships dedicated jp./au. profiles — and often no apac. profile —
+		// AWS ships dedicated jp./au. profiles - and often no apac. profile -
 		// for the newest Claude models, so prefer the country profile where the
 		// region allows it.
 		if (JP_INFERENCE_PROFILE_REGIONS.has(region)) {

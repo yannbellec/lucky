@@ -19,7 +19,7 @@ export interface StatePostDebouncerOptions {
  * Debounce/coalesce state posts.
  *
  * `post()` resolves once a snapshot reflecting that call has been shipped (or
- * rejects if the flush that shipped it failed — errors are not swallowed, so
+ * rejects if the flush that shipped it failed - errors are not swallowed, so
  * callers awaiting `post()` can tell a state update did not reach the
  * webview). Requests arriving while a flush is in flight are folded into
  * `queued`; exactly one more flush runs afterward so the final snapshot is
@@ -49,7 +49,7 @@ export class StatePostDebouncer {
 				// If a flush loop is already running, runDebounced() just folds this
 				// request into it (via `queued`) and returns a throwaway resolved
 				// promise without doing any work. Only track the promise from the
-				// call that actually starts the flush loop — otherwise that trivial
+				// call that actually starts the flush loop - otherwise that trivial
 				// promise would overwrite the reference to the real, still-running
 				// flush, and dispose() could await the wrong one and return while
 				// the original flush is still executing.

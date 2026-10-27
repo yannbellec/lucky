@@ -90,7 +90,7 @@ export function CloudOnboardingCard({
 						<p className="mt-1.5 max-w-xl text-sm leading-relaxed text-muted-foreground">
 							Cloud sessions run on secure, isolated sandboxes on Cline's
 							infrastructure. Cline clones your repository, works on a branch,
-							and keeps going even when you close the app — check back in from
+							and keeps going even when you close the app - check back in from
 							any device.
 						</p>
 					</div>
@@ -182,7 +182,7 @@ export function CloudOnboardingCard({
 								aria-hidden="true"
 								className="size-3 animate-spin motion-reduce:animate-none"
 							/>
-							Watching for changes — this updates automatically.
+							Watching for changes - this updates automatically.
 						</span>
 					)}
 				</div>

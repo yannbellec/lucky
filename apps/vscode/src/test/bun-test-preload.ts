@@ -1,6 +1,6 @@
 // Preload for `bun test` (registered via bunfig.toml [test] preload). It makes
-// the SDK-adapter and model-catalog unit tests — written against vitest's `vi`
-// API and module aliases — run under `bun test`.
+// the SDK-adapter and model-catalog unit tests - written against vitest's `vi`
+// API and module aliases - run under `bun test`.
 //
 // TODO: migrate these suites to native `bun:test` (use `mock.module` / `spyOn`
 // directly and stub `vscode`/`@cline/core` per-file) and delete this preload's
@@ -14,11 +14,11 @@
 //   @cline/core  -> src/test/cline-core-vitest-stub.ts (lightweight SDK stub)
 //
 // bun's runtime plugin `onResolve` hook does NOT intercept these (`vscode` is
-// host/builtin-like and `@cline/core` is a symlinked workspace package — both
+// host/builtin-like and `@cline/core` is a symlinked workspace package - both
 // resolve below the JS plugin resolver). `mock.module()` is what works: it
 // registers an in-memory override that takes precedence for the whole test
-// process. (Other workspace packages — @cline/llms, @cline/shared,
-// @cline/shared/storage — and the tsconfig `paths` aliases resolve on their own.)
+// process. (Other workspace packages - @cline/llms, @cline/shared,
+// @cline/shared/storage - and the tsconfig `paths` aliases resolve on their own.)
 //
 // bun's ESM linker statically validates every named import against the names on
 // the mock namespace. The stub only implements the @cline/core exports these
@@ -66,16 +66,16 @@ mock.module("vscode", () => ({ ...vscodeStub, default: vscodeStub.default }))
 // helpers (`vi.hoisted`, `vi.mock`, `vi.waitFor`, `vi.importActual`,
 // `vi.mocked`, `vi.resetModules`) are shimmed on top:
 //
-//   • vi.hoisted(fn)      — vitest hoists these above imports; under bun's ESM
+//   • vi.hoisted(fn)      - vitest hoists these above imports; under bun's ESM
 //                           ordering all imports settle before top-level test
 //                           code runs, so simply executing the factory in place
 //                           is sufficient (the returned object is referenced by
 //                           later vi.mock factory closures, which are lazy).
-//   • vi.mock(spec, fac)  — mapped to bun's mock.module. bun applies module
+//   • vi.mock(spec, fac)  - mapped to bun's mock.module. bun applies module
 //                           mocks retroactively to already-linked imports, which
 //                           matches vitest's hoisted-mock observable behavior.
-//   • vi.waitFor(fn,opts) — poll fn until it resolves/returns without throwing.
-//   • vi.importActual(s)  — the module as resolved by vitest's `resolve.alias`
+//   • vi.waitFor(fn,opts) - poll fn until it resolves/returns without throwing.
+//   • vi.importActual(s)  - the module as resolved by vitest's `resolve.alias`
 //                           BEFORE `vi.mock` is layered on. For specifiers we
 //                           substitute via `mock.module` in this preload
 //                           (@cline/core, vscode), calling bun's `import()` from
@@ -84,8 +84,8 @@ mock.module("vscode", () => ({ ...vscodeStub, default: vscodeStub.default }))
 //                           from a registry of the pre-built "actual" namespaces
 //                           (the stub modules vitest's alias points at) and only
 //                           fall back to real `import()` for everything else.
-//   • vi.mocked(v)        — identity (a TypeScript typing helper at runtime).
-//   • vi.resetModules()   — no-op; bun has no module registry to reset and these
+//   • vi.mocked(v)        - identity (a TypeScript typing helper at runtime).
+//   • vi.resetModules()   - no-op; bun has no module registry to reset and these
 //                           suites re-establish their mocks per-test.
 const viWaitFor = async <T>(predicate: () => T | Promise<T>, options?: { timeout?: number; interval?: number }): Promise<T> => {
 	const timeout = options?.timeout ?? 1000
@@ -108,7 +108,7 @@ const viWaitFor = async <T>(predicate: () => T | Promise<T>, options?: { timeout
 
 // IMPORTANT: bun has a *built-in* `vitest` → `bun:test` compatibility shim that
 // takes precedence over `mock.module("vitest", …)` (the alias does not fire for
-// the `vitest` specifier — verified empirically). The `vi` object that bun
+// the `vitest` specifier - verified empirically). The `vi` object that bun
 // hands to `import { vi } from "vitest"` is the SAME singleton as
 // `import { vi } from "bun:test"`. So instead of registering a fake module, we
 // augment that shared `vi` singleton in place with the vitest-only helpers
@@ -128,7 +128,7 @@ const actualNamespaceRegistry: Record<string, unknown> = {
 //      We pass one (resolving from the "actual" registry, see importActual).
 //
 //  (2) bun's `mock.module` DEADLOCKS if the factory is an async function that
-//      actually suspends on an `await` — bun blocks the importing thread on the
+//      actually suspends on an `await` - bun blocks the importing thread on the
 //      returned promise without pumping the microtask queue (verified
 //      empirically; bun's docs only ever show async factories that return
 //      synchronously). vitest, by contrast, awaits async `vi.mock` factories
@@ -140,7 +140,7 @@ const actualNamespaceRegistry: Record<string, unknown> = {
 //          with the original module's export names so consumers' named imports
 //          link), then re-register synchronously with the resolved namespace
 //          once the promise settles. A plain deferred-only register does NOT
-//          propagate to already-linked *named* imports — the up-front
+//          propagate to already-linked *named* imports - the up-front
 //          placeholder is what makes the live-binding update stick. `vi.mock`
 //          runs at module top level and tests only run after an await boundary,
 //          so the resolved registration is always in place before the first
@@ -178,7 +178,7 @@ const viMock = (specifier: string, factory?: (importOriginal?: () => unknown) =>
 			// Mutate the SAME placeholder object the live ESM bindings already
 			// reference, then re-register it. Copying onto the existing object
 			// (rather than swapping in a fresh one) is what makes already-linked
-			// *named* imports observe the resolved values — re-registering a brand
+			// *named* imports observe the resolved values - re-registering a brand
 			// new object can race the first test before the binding updates.
 			if (resolved && typeof resolved === "object") {
 				for (const name of Object.keys(resolved as object)) {

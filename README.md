@@ -83,7 +83,7 @@ bunx @vscode/vsce package --no-dependencies -o lucky.vsix
 
 ## 🙏 Credits
 
-Lucky is a friendly, local-first fork of the excellent open-source **[Cline](https://github.com/cline/cline)** project, re-tuned to run entirely on your own hardware with zero onboarding. Huge thanks to the Cline authors for their work. Lucky is distributed under the same **Apache-2.0** license - see [`LICENSE`](./LICENSE).
+Lucky is a friendly, local-first fork of the excellent open-source **[Lucky](https://github.com/cline/cline)** project, re-tuned to run entirely on your own hardware with zero onboarding. Huge thanks to the Lucky authors for their work. Lucky is distributed under the same **Apache-2.0** license - see [`LICENSE`](./LICENSE).
 
 ---
 

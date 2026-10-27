@@ -7,7 +7,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
  * Normalizes a path for comparison only, with platform-aware semantics that
  * match the extension host's `arePathsEqual` in src/utils/path.ts:
  * - win32: backslashes are separators; comparison is case-insensitive.
- * - everything else (including darwin and "unknown"): strict —
+ * - everything else (including darwin and "unknown"): strict -
  *   case-sensitive and backslash is an ordinary filename character.
  *
  * darwin is deliberately strict even though the default APFS volume is
@@ -65,7 +65,7 @@ function basename(p: string, platform: Platform): string {
 /**
  * Persistent task-header chip shown when a task's working directory lies
  * outside the folder(s) open in this window (e.g. a task resumed from the
- * CLI or from another workspace). Cline reads, edits, and runs commands in
+ * CLI or from another workspace). Lucky reads, edits, and runs commands in
  * the task's own cwd, so the mismatch must stay visible for the whole task.
  */
 const TaskWorkingDirectoryBadge: React.FC<{
@@ -81,7 +81,7 @@ const TaskWorkingDirectoryBadge: React.FC<{
 	return (
 		<Tooltip>
 			<TooltipContent className="max-w-xs" side="bottom">
-				This task's working directory is {cwd}, which is outside the current workspace. Cline reads and edits files and
+				This task's working directory is {cwd}, which is outside the current workspace. Lucky reads and edits files and
 				runs commands there.
 			</TooltipContent>
 			<TooltipTrigger className="flex items-center min-w-0">

@@ -89,7 +89,7 @@ describe("onboarding auth telemetry forwarding", () => {
 		const [providerArg, , , telemetryArg] =
 			hoisted.loginLocalProvider.mock.calls[0];
 		expect(providerArg).toBe("openai-codex");
-		// Identity, not deep-equal — we are validating the exact reference flows
+		// Identity, not deep-equal - we are validating the exact reference flows
 		// through so opt-out / common metadata stays consistent.
 		expect(telemetryArg).toBe(fakeTelemetry);
 		expect(hoisted.identifyFeatureFlagsAccount).not.toHaveBeenCalled();
@@ -152,7 +152,7 @@ describe("onboarding auth telemetry forwarding", () => {
 		expect(hoisted.completeClineDeviceAuth).toHaveBeenCalledTimes(1);
 		const [opts] = hoisted.completeClineDeviceAuth.mock.calls[0];
 		expect(opts.telemetry).toBe(fakeTelemetry);
-		// We do NOT forward telemetry to startClineDeviceAuth — auth_started is
+		// We do NOT forward telemetry to startClineDeviceAuth - auth_started is
 		// emitted by completeClineDeviceAuth, so passing telemetry to the start
 		// helper would double-emit the event.
 		expect(hoisted.startClineDeviceAuth).toHaveBeenCalledWith();

@@ -186,7 +186,7 @@ describe("SdkSessionEventCoordinator", () => {
 	it("does NOT override the phase on a turn-complete straggler from an already-cancelled session", async () => {
 		// After cancelTask sets phase "resumable" and aborts, the SDK may still emit a trailing
 		// done/turnComplete. Because the session is no longer running, this straggler must NOT
-		// set "awaiting_followup"/"completed" — doing so would clobber "resumable" and the footer
+		// set "awaiting_followup"/"completed" - doing so would clobber "resumable" and the footer
 		// would lose the Resume Task button (showing scroll-arrows).
 		const { coordinator, options, event } = makeCoordinator({
 			activeSession: makeActiveSession({ isRunning: false }),
@@ -206,7 +206,7 @@ describe("SdkSessionEventCoordinator", () => {
 	it("resolves the phase when a queued turn completes after its running flag was clobbered", async () => {
 		// When the SDK drains a queued prompt at turn end, the previous turn's send promise
 		// settles after the queued turn already started and flips isRunning back to false
-		// mid-turn. The queued turn's real completion must still resolve the terminal phase —
+		// mid-turn. The queued turn's real completion must still resolve the terminal phase -
 		// treating it as a cancel straggler leaves the phase stuck on "streaming" (endless
 		// Thinking). Only an actual cancel (phase "resumable") is preserved.
 		const { coordinator, options, event } = makeCoordinator({
@@ -354,7 +354,7 @@ describe("SdkSessionEventCoordinator", () => {
 				event: {
 					type: "error",
 					// The MistakeTracker emits one of these per recorded mistake,
-					// carrying tool-failure details — not a provider API error.
+					// carrying tool-failure details - not a provider API error.
 					error: new Error('2 tool call(s) failed: [shell] {"error":"command not found"}'),
 					recoverable: true,
 				},

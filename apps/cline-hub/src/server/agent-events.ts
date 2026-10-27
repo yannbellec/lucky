@@ -129,7 +129,7 @@ function forwardAgentEvent(
 		// Forwarded with the recoverable flag intact: recoverable errors are
 		// in-run notices (the MistakeTracker emits one per recorded mistake,
 		// e.g. a plan-mode guard-blocked run_commands call) and the run keeps
-		// going, so it is up to each peer to decide how to render them — the
+		// going, so it is up to each peer to decide how to render them - the
 		// turn's outcome is decided by how it actually ends (turn_done /
 		// non-recoverable error).
 		ctx.sendToSelectedPeers(sessionId, {

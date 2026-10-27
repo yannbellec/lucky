@@ -29,7 +29,7 @@ export const ClaudeCodeProvider = ({ showModelOptions, isPopup, currentMode }: C
 	const providerId = "claude-code"
 	const { models, defaultModelId } = useProviderModels(providerId)
 	// The models reuse Anthropic API pricing metadata, but usage is billed
-	// through the Claude subscription — suppress the per-token price rows.
+	// through the Claude subscription - suppress the per-token price rows.
 	const hideUsageCost = useProviderUsageCostDisplay(providerId) !== "show"
 	const { config, write, commitSelection } = useProviderConfig(providerId)
 	const { selectedModelId, selectedModelInfo, commitModelSelection } = useProviderModelSelection(providerId, currentMode, {

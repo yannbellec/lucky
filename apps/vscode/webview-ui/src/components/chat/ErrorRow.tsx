@@ -35,7 +35,7 @@ const ErrorRow = memo((props: ErrorRowProps) => {
 			case "mistake_limit_reached":
 				// Handle API request errors with special error parsing
 				if (rawApiError) {
-					// FIXME: ClineError parsing should not be applied to non-Cline providers, but it seems we're using clineErrorMessage below in the default error display
+					// FIXME: ClineError parsing should not be applied to non-Lucky providers, but it seems we're using clineErrorMessage below in the default error display
 					const clineError = ClineError.parse(rawApiError)
 					const errorMessage = clineError?._error?.message || clineError?.message || rawApiError
 					const requestId = clineError?._error?.request_id
@@ -95,7 +95,7 @@ const ErrorRow = memo((props: ErrorRowProps) => {
 					}
 
 					// A retired free model answers model-not-found once its promotion
-					// ends — dedicated copy plus a route into the model picker,
+					// ends - dedicated copy plus a route into the model picker,
 					// since retrying the deleted model can never succeed.
 					if (clineError?.isErrorType(ClineErrorType.ClineFreePromotionEnded)) {
 						return <ClineFreePromotionEndedError />
@@ -126,13 +126,13 @@ const ErrorRow = memo((props: ErrorRowProps) => {
 
 					if (clineError?.isErrorType(ClineErrorType.Auth) && isClineUsageBillingProvider) {
 						return !clineUser ? (
-							// User is using Cline provider and is not logged in
+							// User is using Lucky provider and is not logged in
 							<div className="flex flex-col gap-3">
 								<div className="flex items-center justify-center rounded border border-neutral-500/30 bg-vscode-editor-background p-6 text-center text-vscode-foreground">
-									Whoops looks like you're logged out – click below to sign in
+									Whoops looks like you're logged out - click below to sign in
 								</div>
 								<Button className="w-full" disabled={isLoginLoading} onClick={handleSignIn}>
-									Sign in to Cline
+									Sign in to Lucky
 									{isLoginLoading && (
 										<span className="ml-1 animate-spin">
 											<span className="codicon codicon-refresh" />
@@ -195,7 +195,7 @@ const ErrorRow = memo((props: ErrorRowProps) => {
 				return (
 					<div className="flex flex-col p-2 rounded text-xs opacity-80 bg-quote text-foreground">
 						<div>
-							Cline tried to access <code>{message.text}</code> which is blocked by the <code>.clineignore</code>
+							Lucky tried to access <code>{message.text}</code> which is blocked by the <code>.clineignore</code>
 							file.
 						</div>
 					</div>

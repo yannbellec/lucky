@@ -102,7 +102,7 @@ describe("getLastApiReqTotalTokens", () => {
 	})
 
 	it("scales the last request by the shrink ratio of a compaction completed after it", () => {
-		// The compaction counters are the SDK's estimate — a different scale from
+		// The compaction counters are the SDK's estimate - a different scale from
 		// the provider-reported request total. Only the ratio carries over.
 		const messages: ClineMessage[] = [
 			{

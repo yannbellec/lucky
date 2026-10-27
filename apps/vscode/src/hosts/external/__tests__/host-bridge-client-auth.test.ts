@@ -12,12 +12,12 @@ type SeenCall = { method: string; token: string | undefined }
  * End-to-end cover for the wiring the middleware unit tests cannot see: the
  * generator has to emit `createHostBridgeClient` into every generated client,
  * and that factory has to put the token on the wire. Asserting against a real
- * server means a regression in the generator template — or in the factory —
+ * server means a regression in the generator template - or in the factory -
  * fails here instead of silently shipping unauthenticated calls.
  *
- * Tokens enter the way they do in production — set in the environment by the
+ * Tokens enter the way they do in production - set in the environment by the
  * host, then captured and scrubbed by the same bootstrap function cline-core
- * runs — so this also covers the startup-to-receiver path, not just the
+ * runs - so this also covers the startup-to-receiver path, not just the
  * middleware in isolation.
  *
  * EnvService stands in for all of them: the clients are generated from one

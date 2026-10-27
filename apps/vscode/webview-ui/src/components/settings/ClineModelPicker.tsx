@@ -152,7 +152,7 @@ const ClineModelPicker: React.FC<ClineModelPickerProps> = ({ isPopup, currentMod
 			setClineFreeModels(free)
 			return true
 		} catch (error) {
-			console.error("Failed to refresh Cline recommended models:", error)
+			console.error("Failed to refresh Lucky recommended models:", error)
 			return false
 		}
 	}, [])
@@ -220,7 +220,7 @@ const ClineModelPicker: React.FC<ClineModelPickerProps> = ({ isPopup, currentMod
 		void commitSelection(currentMode, {
 			providerId: "cline",
 			modelId: newModelId,
-		}).catch((err) => console.error("Failed to commit Cline model selection:", err))
+		}).catch((err) => console.error("Failed to commit Lucky model selection:", err))
 
 		void handleModeFieldsChange(
 			{
@@ -255,7 +255,7 @@ const ClineModelPicker: React.FC<ClineModelPickerProps> = ({ isPopup, currentMod
 					selectedModelInfo: (() => {
 						const persistedModelInfo = committedModelInfo || modeFields.clineModelInfo || selected.selectedModelInfo
 						const liveModelInfo = effectiveClineModels?.[currentClineModelId]
-						// Persisted Cline model info is a snapshot from selection time. When the
+						// Persisted Lucky model info is a snapshot from selection time. When the
 						// model is still in the catalog, refresh metadata/capability flags from
 						// the live catalog so UI controls reflect current model support.
 						return liveModelInfo ? { ...persistedModelInfo, ...liveModelInfo } : persistedModelInfo
@@ -599,7 +599,7 @@ const ClineModelPicker: React.FC<ClineModelPickerProps> = ({ isPopup, currentMod
 						marginTop: 0,
 						color: "var(--vscode-descriptionForeground)",
 					}}>
-					The extension automatically fetches the latest Cline model list.
+					The extension automatically fetches the latest Lucky model list.
 				</p>
 			)}
 		</div>

@@ -16,7 +16,7 @@ const OrgClinePassRestrictionError = () => {
 			if (!(await switchOrganization())) throw new Error("Account switch not confirmed")
 			setDidSwitch(true)
 		} catch (error) {
-			console.error("Failed to switch to personal Cline account:", error)
+			console.error("Failed to switch to personal Lucky account:", error)
 			setError("Failed to switch account. Use /accounts to switch to your personal account.")
 		}
 	}

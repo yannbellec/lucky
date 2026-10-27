@@ -60,7 +60,7 @@ export class StateManager {
 
 	/**
 	 * File-backed storage context. All reads/writes to persistent state go through here.
-	 * Do NOT access VSCode's ExtensionContext for storage — use this instead.
+	 * Do NOT access VSCode's ExtensionContext for storage - use this instead.
 	 */
 	private storage: StorageContext
 	private isInitialized = false

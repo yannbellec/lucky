@@ -453,7 +453,7 @@ export function createInteractiveSessionRuntime(input: {
 		options?: { preserveSessionId?: boolean },
 	): Promise<void> => {
 		// Config-only restarts (model/mode/account changes) continue the same
-		// conversation, so they must keep the session id — otherwise each
+		// conversation, so they must keep the session id - otherwise each
 		// restart mints a new session history entry for the same conversation.
 		const reuseSessionId = options?.preserveSessionId
 			? activeSessionId || undefined

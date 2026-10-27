@@ -1,4 +1,4 @@
-// SdkCloudSessionCoordinator — starts, reopens and monitors Cline Cloud sessions.
+// SdkCloudSessionCoordinator - starts, reopens and monitors Cline Cloud sessions.
 //
 // Cloud sessions run in a hosted sandbox and keep going after the user moves on,
 // so this coordinator owns two things the local task flow does not need:

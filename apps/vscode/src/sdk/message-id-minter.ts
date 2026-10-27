@@ -8,7 +8,7 @@
 //   counter drifts behind wall-clock and can later catch up to a clock-based value minted by
 //   the interaction coordinator. A single monotonic minter makes collisions impossible.
 // - `seq` is a separate per-update freshness counter so the webview can resolve "two copies
-//   of the same id — which is newer" independent of delivery order.
+//   of the same id - which is newer" independent of delivery order.
 // - `epoch` fences off traffic from a previous task / a previous render of the same task.
 //
 // All three are pure in-memory counters. Nothing here reads the clock per message.
@@ -45,7 +45,7 @@ export class MessageIdMinter {
 
 	/**
 	 * Advance and return the freshness counter. Call synchronously at the moment a message is
-	 * created/updated AND at the moment a state snapshot is assembled — before any await — so
+	 * created/updated AND at the moment a state snapshot is assembled - before any await - so
 	 * the resulting total order matches causal order regardless of delivery timing.
 	 */
 	nextSeq(): number {
@@ -60,7 +60,7 @@ export class MessageIdMinter {
 	/**
 	 * Bump the conversation/replica fence. Called once per boundary (task start/clear, history
 	 * open, reinit/resume, mode rebuild that swaps the session, new-session follow-up, cancel)
-	 * — synchronously, BEFORE the new state is pushed. NOT on iteration_start / streaming.
+	 * - synchronously, BEFORE the new state is pushed. NOT on iteration_start / streaming.
 	 */
 	bumpEpoch(): number {
 		return ++this.epochCounter

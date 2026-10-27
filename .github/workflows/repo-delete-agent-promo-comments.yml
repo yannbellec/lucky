@@ -6,7 +6,7 @@
 # appear. Genuine agent output comments (work results, reviews) don't match the
 # promo pattern and are left alone.
 #
-# No checkout, API-calls-only — comment text is only ever handled as data inside
+# No checkout, API-calls-only - comment text is only ever handled as data inside
 # the script, never interpolated into the workflow definition.
 name: repo-delete-agent-promo-comments
 on:

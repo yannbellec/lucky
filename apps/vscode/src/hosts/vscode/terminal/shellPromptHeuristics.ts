@@ -2,7 +2,7 @@
  * Heuristics for detecting a shell prompt at the end of terminal output.
  *
  * Used to decide that a command has probably finished when shell integration
- * markers are unavailable — e.g. the user ssh'd from the terminal, so commands
+ * markers are unavailable - e.g. the user ssh'd from the terminal, so commands
  * execute in a remote shell that emits no OSC 633 sequences. Ported from
  * VS Code's `detectsCommonPromptPattern` (src/vs/workbench/contrib/
  * terminalContrib/chatAgentTools/browser/executeStrategy/executeStrategy.ts),
@@ -28,7 +28,7 @@ export function getLastLine(output: string): string {
  *   marker, bash/root's `$`/`#`, starship's `❯`) that a false positive is
  *   unlikely. Safe to trust after a single short idle period.
  * - "weak": the line merely ends in a generic prompt character (`>` or `%`)
- *   with no other structure — this also matches a still-running `ssh`/nested
+ *   with no other structure - this also matches a still-running `ssh`/nested
  *   shell printing a bare `>` continuation prompt, an HTML/XML tag, or a
  *   progress meter. Only trust this after the full markerless quiet timeout,
  *   not the first short idle period.
@@ -39,8 +39,8 @@ export type ShellPromptStrength = "strong" | "weak" | "none"
 /**
  * Classifies whether a line looks like a shell prompt awaiting input, and how
  * confidently. Callers deciding whether a markerless command has finished
- * should only act on "weak" after a long quiet period — see
- * MARKERLESS_MAX_QUIET_TIME in constants.ts — since a "weak" match returning
+ * should only act on "weak" after a long quiet period - see
+ * MARKERLESS_MAX_QUIET_TIME in constants.ts - since a "weak" match returning
  * buffered output a little early for a genuinely idle prompt is far better
  * than mistaking a still-running command's `>`/`%`-terminated output for one.
  */

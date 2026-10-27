@@ -80,7 +80,7 @@ export abstract class WebviewProvider {
 
 		// The CSS file from the React build output. The webview's own index.css
 		// @imports @vscode/codicons, so the codicon @font-face + codicon.ttf are
-		// bundled into these build assets — no separate codicons <link> needed.
+		// bundled into these build assets - no separate codicons <link> needed.
 		const stylesUrl = this.getExtensionUrl("webview-ui", "build", "assets", "index.css")
 
 		// Use a nonce to only allow a specific script to be run.

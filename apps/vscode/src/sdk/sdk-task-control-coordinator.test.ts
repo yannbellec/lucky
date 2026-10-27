@@ -292,8 +292,8 @@ describe("SdkTaskControlCoordinator", () => {
 
 	it("appends a resume ask and sets the resumable phase when showing an interrupted (cancelled) task", async () => {
 		// History rendering appends a synthetic trailing ask:"completion_result"
-		// to every reopened conversation, so the persisted session status — not
-		// the message tail — must decide the resume affordance.
+		// to every reopened conversation, so the persisted session status - not
+		// the message tail - must decide the resume affordance.
 		const sdkClineMessages: ClineMessage[] = [
 			{ ts: 1, type: "say", say: "task", text: "hello" },
 			{ ts: 2, type: "ask", ask: "completion_result", text: "" },
@@ -479,7 +479,7 @@ describe("SdkTaskControlCoordinator", () => {
 		const inFlight = coordinator.showTaskWithId("task-1")
 
 		// While getClineMessages is still pending, the new task proxy must not be
-		// installed — otherwise concurrent postStateToWebview() callers would see
+		// installed - otherwise concurrent postStateToWebview() callers would see
 		// currentTaskItem.id with an empty messageStateHandler.
 		await Promise.resolve()
 		await Promise.resolve()

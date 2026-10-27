@@ -2,8 +2,8 @@
  * Stateful, chunk-boundary-safe parser for VS Code's OSC 633 shell integration
  * sequences.
  *
- * `TerminalShellExecution.read()` yields *raw* terminal data — including escape
- * sequences — so a command's output is delimited by the OSC 633 control codes
+ * `TerminalShellExecution.read()` yields *raw* terminal data - including escape
+ * sequences - so a command's output is delimited by the OSC 633 control codes
  * that VS Code's shell integration script emits. Those markers can be split
  * arbitrarily across chunks (e.g. a chunk ending in `…\x1b]633;` and the next
  * starting with `C\x07`, or even split at the `ESC \` ST terminator). A simple
@@ -20,17 +20,17 @@
 
 /** OSC 633 event types we care about. */
 export enum Osc633EventType {
-	/** 633;A — Prompt start. Indicates shell integration is active. */
+	/** 633;A - Prompt start. Indicates shell integration is active. */
 	PromptStart = 0,
-	/** 633;B — Command start (where the user inputs their command). */
+	/** 633;B - Command start (where the user inputs their command). */
 	CommandStart = 1,
-	/** 633;C — Command executed; the command's output begins after this. */
+	/** 633;C - Command executed; the command's output begins after this. */
 	CommandExecuted = 2,
-	/** 633;D[;<exitCode>] — Command finished. */
+	/** 633;D[;<exitCode>] - Command finished. */
 	CommandFinished = 3,
-	/** 633;E;<commandLine>[;<nonce>] — Explicit command line. */
+	/** 633;E;<commandLine>[;<nonce>] - Explicit command line. */
 	CommandLine = 4,
-	/** 633;P;<Key>=<Value> — Property (e.g. Cwd). */
+	/** 633;P;<Key>=<Value> - Property (e.g. Cwd). */
 	Property = 5,
 }
 
@@ -179,7 +179,7 @@ export class Osc633Parser {
 	 * Set when the previous chunk ended with a bare ESC while scanning for the
 	 * *next* OSC introducer (i.e. not yet inside a sequence). `OSC_START` is
 	 * the two-character run `ESC ]`, so a chunk boundary that falls exactly
-	 * between them — `…ESC` | `]633;C\x07…` — is otherwise invisible to a
+	 * between them - `…ESC` | `]633;C\x07…` - is otherwise invisible to a
 	 * plain `indexOf(OSC_START)` search on either chunk alone.
 	 */
 	private _pendingEscBeforeOsc = false
@@ -266,7 +266,7 @@ export class Osc633Parser {
 					this._pendingOsc = ""
 					handle(payload, result.terminator)
 				} else if (result.abandoned) {
-					// Buffer grew past MAX_PENDING_OSC_SIZE with no terminator —
+					// Buffer grew past MAX_PENDING_OSC_SIZE with no terminator -
 					// treat as malformed: flush what was buffered as plain text
 					// (recovering the ESC ] introducer that was stripped when
 					// OSC body parsing began) and stop trying to parse it as OSC.
@@ -283,8 +283,8 @@ export class Osc633Parser {
 			// Look for the next ESC ] which starts an OSC sequence.
 			const escIdx = data.indexOf(OSC_START, i)
 			if (escIdx === -1) {
-				// A trailing bare ESC is ambiguous — it may be the start of an
-				// OSC_START split across this chunk boundary — so hold it back
+				// A trailing bare ESC is ambiguous - it may be the start of an
+				// OSC_START split across this chunk boundary - so hold it back
 				// the same way the fast path above does.
 				if (data[data.length - 1] === ESC) {
 					this._pendingEscBeforeOsc = true

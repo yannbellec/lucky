@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 /**
  * Shown on the welcome screen when no model provider has credentials yet.
  * Without it the composer looks fully functional and the first prompt dies
- * with an opaque failure — the single worst moment of the first-run flow.
+ * with an opaque failure - the single worst moment of the first-run flow.
  */
 export function WelcomeSetupNotice({
 	onOpenSetup,
@@ -28,7 +28,7 @@ export function WelcomeSetupNotice({
 						Connect a model to start building
 					</p>
 					<p className="mt-0.5 text-[13px] text-muted-foreground">
-						Sign in with Cline or add an API key — it takes under a minute.
+						Sign in with Cline or add an API key - it takes under a minute.
 					</p>
 				</div>
 			</div>

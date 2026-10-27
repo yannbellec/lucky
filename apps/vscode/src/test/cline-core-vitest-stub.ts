@@ -131,7 +131,7 @@ export { augmentMcpTimeoutError } from "../../../../sdk/packages/core/src/extens
 export { createShellTool } from "../../../../sdk/packages/core/src/extensions/tools/definitions"
 // Real (dependency-light) edit-executor implementations, re-exported from the sdk source so
 // the diff-edit coordinator and its tests exercise the actual content/parse semantics. These
-// modules only pull in node:fs/node:path and the patch parser — not the heavy core runtime.
+// modules only pull in node:fs/node:path and the patch parser - not the heavy core runtime.
 export {
 	computePatchChanges,
 	createApplyPatchExecutor,
@@ -322,7 +322,7 @@ interface ProviderSettingsState {
 	lastUsedProvider?: string
 }
 
-// State is keyed by dataDir so that — like the real file-backed manager —
+// State is keyed by dataDir so that - like the real file-backed manager -
 // two managers constructed for the same directory observe the same providers.
 // (Tests isolate by using a unique dataDir per test.)
 const providerSettingsStores = new Map<string, ProviderSettingsState>()

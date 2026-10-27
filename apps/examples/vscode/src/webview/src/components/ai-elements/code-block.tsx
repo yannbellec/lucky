@@ -382,13 +382,13 @@ export const CodeBlockContent = ({
 	// Memoized raw tokens for immediate display
 	const rawTokens = useMemo(() => createRawTokens(code), [code]);
 
-	// Synchronous cache lookup — avoids setState in effect for cached results
+	// Synchronous cache lookup - avoids setState in effect for cached results
 	const syncTokens = useMemo(
 		() => highlightCode(code, language) ?? rawTokens,
 		[code, language, rawTokens],
 	);
 
-	// Async highlighting — keyed by identity-stable memo so stale tokens are
+	// Async highlighting - keyed by identity-stable memo so stale tokens are
 	// discarded without reading a ref during render or setState in effect body.
 	const asyncKey = useMemo(() => ({ code, language }), [code, language]);
 	const [asyncState, setAsyncState] = useState<{

@@ -350,7 +350,7 @@ export async function applyRemoteConfig(
 	const syncedSkillToggles = synchronizeRemoteRuleToggles(validatedSkillEntries, currentSkillToggles)
 
 	// Enforce alwaysEnabled: override any stale false toggles for skills the admin has locked on.
-	// This ensures the toggle store is the single source of truth — both the UI and handler agree.
+	// This ensures the toggle store is the single source of truth - both the UI and handler agree.
 	for (const entry of validatedSkillEntries) {
 		if (entry.alwaysEnabled && syncedSkillToggles[entry.name] === false) {
 			syncedSkillToggles[entry.name] = true

@@ -118,7 +118,7 @@ export function useMessageHandlers(messages: ClineMessage[], chatState: ChatStat
 				if (errorRecoveryAvailable) {
 					return
 				}
-				// Clear the input before awaiting the RPC — condense resolves only
+				// Clear the input before awaiting the RPC - condense resolves only
 				// after compaction finishes, and the typed command lingering in the
 				// field the whole time reads as if the send didn't register.
 				setInputValue("")
@@ -315,7 +315,7 @@ export function useMessageHandlers(messages: ClineMessage[], chatState: ChatStat
 					if (clineAsk === "resume_task" || clineAsk === "resume_completed_task") {
 						// Resuming a task opened from history rebuilds the SDK session before the
 						// extension echoes say:user_feedback, so without an optimistic bubble the
-						// user's message would not appear until the (slow) resume finishes — the
+						// user's message would not appear until the (slow) resume finishes - the
 						// chat would show only the Thinking loader in the meantime.
 						await sendAskResponseWithPendingState(
 							AskResponseRequest.create({
@@ -371,7 +371,7 @@ export function useMessageHandlers(messages: ClineMessage[], chatState: ChatStat
 					// No clineAsk set, but there is an existing conversation. Route this to the
 					// active session as a follow-up when either:
 					//
-					//   1. The authoritative turnState says the conversation is continuable —
+					//   1. The authoritative turnState says the conversation is continuable -
 					//      phases "completed" / "awaiting_followup" (the agent finished or is
 					//      waiting for the user) or "streaming" (interrupt with feedback). The SDK
 					//      does not emit a trailing ask:"completion_result", so clineAsk is

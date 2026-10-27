@@ -61,11 +61,11 @@ Otherwise, if you have not completed the task and do not need additional informa
 				: ""
 
 		if (consecutiveFailures >= 3) {
-			// After 3+ failures, be very directive — stop trying write_to_file entirely
+			// After 3+ failures, be very directive - stop trying write_to_file entirely
 			return (
 				`${baseError}${contextWarning}\n\n` +
-				`CRITICAL: You have failed to write this file ${consecutiveFailures} times in a row. You MUST change your approach — do NOT retry write_to_file for this file again.\n\n` +
-				`Required action — choose ONE of these strategies:\n` +
+				`CRITICAL: You have failed to write this file ${consecutiveFailures} times in a row. You MUST change your approach - do NOT retry write_to_file for this file again.\n\n` +
+				`Required action - choose ONE of these strategies:\n` +
 				`1. **Create an empty file first, then use replace_in_file** to add content in small sections (recommended)\n` +
 				`2. **Break the file into multiple smaller files** if architecturally appropriate\n` +
 				`3. **Write a minimal skeleton** using write_to_file (just imports, class/function signatures, no implementations), then use replace_in_file to fill in each section one at a time\n\n` +
@@ -78,13 +78,13 @@ Otherwise, if you have not completed the task and do not need additional informa
 				`${baseError}${contextWarning}\n\n` +
 				`This is your ${consecutiveFailures}${consecutiveFailures === 2 ? "nd" : "rd"} failed attempt. The file content is likely too large to generate in one response. You must use a different strategy:\n\n` +
 				`Recommended approaches:\n` +
-				`1. **Use write_to_file with a minimal skeleton** (just the structure — imports, class/function signatures, no implementations), then use replace_in_file to fill in each section incrementally\n` +
-				`2. **Use replace_in_file with smaller chunks** — if the file already exists, make targeted edits instead of rewriting the entire file\n` +
-				`3. **Break the task into smaller steps** — write one function or section at a time\n\n` +
+				`1. **Use write_to_file with a minimal skeleton** (just the structure - imports, class/function signatures, no implementations), then use replace_in_file to fill in each section incrementally\n` +
+				`2. **Use replace_in_file with smaller chunks** - if the file already exists, make targeted edits instead of rewriting the entire file\n` +
+				`3. **Break the task into smaller steps** - write one function or section at a time\n\n` +
 				`Do NOT attempt to write the full file content in a single write_to_file call again.`
 			)
 		}
-		// First failure — provide helpful guidance
+		// First failure - provide helpful guidance
 		return (
 			`${baseError}${contextWarning}\n\n` +
 			`Suggestions:\n` +

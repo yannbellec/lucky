@@ -22,12 +22,12 @@ import { scopedContext } from "./scoped-context";
  * Cline rollout loader.
  *
  * The VSIX ships two complete, independently built extension bundles:
- *   next/    — the SDK-based extension (built from main's apps/vscode)
- *   legacy/  — the pre-SDK extension (built from the legacy-extension branch)
+ *   next/    - the SDK-based extension (built from main's apps/vscode)
+ *   legacy/  - the pre-SDK extension (built from the legacy-extension branch)
  *
- * This entrypoint picks exactly one per window — from state cached by the
+ * This entrypoint picks exactly one per window - from state cached by the
  * previous window's background flag refresh, never from a blocking network
- * call — activates it with a context whose install-root paths point into its
+ * call - activates it with a context whose install-root paths point into its
  * subdirectory, and delegates everything else to it. If the next bundle throws
  * during activation, the loader disposes whatever it half-registered, pins
  * this VSIX version back to legacy, and activates legacy instead.
@@ -136,7 +136,7 @@ async function activateBundle(
 		}
 		// Authoritative activation event, captured by the bundle's own telemetry
 		// (built with CLINE_ROLLOUT_VARIANT). On fallback this runs in the legacy
-		// bundle — next's pipeline is the thing that just crashed.
+		// bundle - next's pipeline is the thing that just crashed.
 		if (typeof module.reportRolloutActivation === "function") {
 			void module
 				.reportRolloutActivation({
@@ -161,7 +161,7 @@ async function activateBundle(
 		if (bundle === "legacy") {
 			// Nothing left to fall back to; let VS Code surface the failure. When
 			// this was already the crash fallback, no bundle telemetry pipeline is
-			// alive — the loader's direct event is the only record.
+			// alive - the loader's direct event is the only record.
 			void reportLoaderDecision(context, "legacy", {
 				...meta,
 				attemptedBundle: fallbackFrom?.attempted ?? "legacy",
@@ -207,7 +207,7 @@ function formatActivationError(error: unknown): string {
 /**
  * Nightly-only visible indicator of which bundle this window is running.
  * The stable combined VSIX (and any ordinary build) never shows it: the
- * prefix is derived from the packaged manifest name. Best-effort — the
+ * prefix is derived from the packaged manifest name. Best-effort - the
  * indicator must never take down an otherwise successful activation.
  */
 function showNightlyBundleIndicator(
@@ -249,7 +249,7 @@ function disposeSubscriptionsAddedAfter(
 		try {
 			disposable.dispose();
 		} catch {
-			// best effort — a broken disposable must not block the fallback
+			// best effort - a broken disposable must not block the fallback
 		}
 	}
 }

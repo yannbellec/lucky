@@ -15,7 +15,7 @@ export type ConnectorsRequestContext = ClineAuthTelemetryContext & {
  * Client for the Cline API connectors proxy (`/api/v1/connectors/*`).
  *
  * The proxy holds the Composio project API key server-side and derives the
- * Composio `user_id` from the authenticated Cline account on every call —
+ * Composio `user_id` from the authenticated Cline account on every call -
  * the reason this proxy exists: Composio project keys cannot be user-scoped,
  * so any client-held key (however permission-scoped) would allow executing
  * tools as other users. See the backend contract notes on each function.
@@ -172,7 +172,7 @@ export async function fetchConnectableToolkits(
 }
 
 /**
- * `POST /api/v1/connectors/connections` — initiate an OAuth connection.
+ * `POST /api/v1/connectors/connections` - initiate an OAuth connection.
  * The server selects or creates an auth config and derives `user_id`
  * from the authenticated account, never accepting it from the client.
  */
@@ -188,7 +188,7 @@ export async function initiateConnection(
 }
 
 /**
- * `GET /api/v1/connectors/connections` — the caller's connected
+ * `GET /api/v1/connectors/connections` - the caller's connected
  * accounts only. Backend contract: the server scopes to the caller's derived
  * user_id. Fetch every page before returning: reconciliation treats absence
  * from this complete list as "revoked remotely". Failed or malformed pages
@@ -242,7 +242,7 @@ async function requestConnectorPage<T>(
 }
 
 /**
- * `DELETE /api/v1/connectors/connections/{id}` — delete AND revoke.
+ * `DELETE /api/v1/connectors/connections/{id}` - delete AND revoke.
  * Backend contract: ownership-checked against the caller's derived user_id,
  * then deleted with `revoke_on_delete=true` so the upstream OAuth grant (the
  * actual Gmail/Calendar/GitHub token) is revoked, not just the Composio
@@ -266,7 +266,7 @@ export async function deleteConnection(
  * external browser (which cannot navigate the app back). Resolves when the
  * account is ACTIVE; throws on timeout or when `shouldContinue` reports the
  * attempt no longer owns its slot (cancelled/superseded). Transient poll
- * failures are retried until the deadline — auth refresh happens per poll
+ * failures are retried until the deadline - auth refresh happens per poll
  * through the shared resolver, so a token expiring mid-wait heals itself.
  */
 export async function waitForConnectionActive(
@@ -299,7 +299,7 @@ export async function waitForConnectionActive(
 			}
 		} catch (error) {
 			// Transient (network, token refresh in flight): keep polling until
-			// the deadline. A definitive 401 also lands here — retrying is
+			// the deadline. A definitive 401 also lands here - retrying is
 			// harmless and sign-in mid-wait then completes the flow.
 			options.logger?.log?.(
 				`composio connect wait poll failed: ${error instanceof Error ? error.message : String(error)}`,

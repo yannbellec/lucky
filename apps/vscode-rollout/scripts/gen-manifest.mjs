@@ -9,13 +9,13 @@
  * - commands / menus / keybindings / activationEvents / icons are unioned.
  *   Menu entries and keybindings present in only ONE manifest get their
  *   `when` clause AND-ed with the `<prefix>.sdkBundle` context key (set by the
- *   loader before activation; prefix follows the manifest identity — see
+ *   loader before activation; prefix follows the manifest identity - see
  *   src/cohort.ts idPrefix), so a cohort never sees a button whose handler
- *   its bundle doesn't register — and shared buttons that moved position
+ *   its bundle doesn't register - and shared buttons that moved position
  *   don't show up twice. Commands exclusive to one bundle are likewise hidden
  *   from the other cohort's command palette.
  * - views / viewsContainers / configuration / engines MUST be
- *   identical in both manifests — they can't be safely gated at runtime, so
+ *   identical in both manifests - they can't be safely gated at runtime, so
  *   divergence is a hard error.
  *
  * Usage: node gen-manifest.mjs --next <pkg.json> --legacy <pkg.json> --version <x.y.z> [--out <file>]
@@ -40,7 +40,7 @@ export function generateManifest(nextPkg, legacyPkg, version) {
 			);
 		} catch {
 			throw new Error(
-				`contributes.${field} diverged between bundles — it cannot be gated at runtime; reconcile the branches`,
+				`contributes.${field} diverged between bundles - it cannot be gated at runtime; reconcile the branches`,
 			);
 		}
 	}
@@ -118,7 +118,7 @@ export function generateManifest(nextPkg, legacyPkg, version) {
 /**
  * The loader's own user-visible escape hatch, keyed by the manifest identity.
  * Neither bundle knows about it; only the loader reads it (src/cohort.ts
- * settingSection/SETTING_BUNDLE_OVERRIDE — keep the key and values in sync).
+ * settingSection/SETTING_BUNDLE_OVERRIDE - keep the key and values in sync).
  * Injected after the configuration-equality invariant so it can't mask real
  * drift between the bundles.
  */
@@ -155,9 +155,9 @@ function injectLoaderConfiguration(configuration, prefix) {
 
 /**
  * Walkthroughs can't be gated per cohort, and their markdown at the VSIX root
- * always comes from the next checkout — so requiring byte-identical manifests
+ * always comes from the next checkout - so requiring byte-identical manifests
  * here would brick releases over copy tweaks while protecting nothing. Only
- * STRUCTURE must match (walkthrough/step ids, media paths, completion events —
+ * STRUCTURE must match (walkthrough/step ids, media paths, completion events -
  * the parts code and the manifest reference); when titles/descriptions
  * diverge, next's copy ships for everyone and the build says so.
  */
@@ -176,7 +176,7 @@ function assertWalkthroughsCompatible(next = [], legacy = []) {
 		deepStrictEqual(structure(next), structure(legacy));
 	} catch {
 		throw new Error(
-			"contributes.walkthroughs diverged structurally (ids/media/completionEvents) — reconcile the branches",
+			"contributes.walkthroughs diverged structurally (ids/media/completionEvents) - reconcile the branches",
 		);
 	}
 	try {
@@ -192,7 +192,7 @@ function assertWalkthroughsCompatible(next = [], legacy = []) {
  * Engines can safely diverge in ONE direction: the union requires whichever
  * bundle needs the NEWER host, which necessarily satisfies the other bundle's
  * older requirement too. (main routinely bumps the VS Code engine ahead of the
- * legacy branch — an equality assertion here would brick every combined build
+ * legacy branch - an equality assertion here would brick every combined build
  * over that.) Non-caret/complex ranges we can't compare fail hard rather than
  * guessing.
  */
@@ -350,7 +350,7 @@ function unionIcons(a = {}, b = {}) {
 	for (const id of Object.keys(icons)) {
 		if (a[id] && b[id] && JSON.stringify(a[id]) !== JSON.stringify(b[id])) {
 			throw new Error(
-				`contributes.icons["${id}"] diverged between bundles — icon fonts resolve from the VSIX root`,
+				`contributes.icons["${id}"] diverged between bundles - icon fonts resolve from the VSIX root`,
 			);
 		}
 	}

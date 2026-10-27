@@ -1,7 +1,7 @@
 /**
  * Settings navigation constants, split from settings-view.tsx so the sidebar
  * (always mounted) can reference section names without pulling the entire
- * settings module graph — providers, MCP, marketplace, schedules — into the
+ * settings module graph - providers, MCP, marketplace, schedules - into the
  * initial chat bundle. The heavy views load on demand via next/dynamic.
  */
 
@@ -17,7 +17,7 @@ const ALL_SETTINGS_SECTIONS = [
 	"About",
 ] as const;
 
-// Customize is the unified hub for everything that extends Cline — skills,
+// Customize is the unified hub for everything that extends Cline - skills,
 // MCP servers, plugins, rules, hooks, and tools. "Customize" is the installed
 // inventory (labeled "Installed" in the sidebar group); "Marketplace" is the
 // dedicated browse-and-install directory.
@@ -37,7 +37,7 @@ export type SettingsSection =
 	| (typeof ALL_SETTINGS_SECTIONS)[number]
 	| (typeof ALL_CUSTOMIZATION_SECTIONS)[number];
 
-// Temporarily hidden from the sidebar. The views and routes still exist —
+// Temporarily hidden from the sidebar. The views and routes still exist -
 // remove a section from this set to surface it again.
 const HIDDEN_SECTIONS: ReadonlySet<SettingsSection> = new Set(["Channels"]);
 

@@ -21,9 +21,9 @@ export const BaseConfigSchema = z.object({
 	// Marker for servers that were added by remote config sync.
 	// Used to identify which servers should be removed when they are no longer in the remote config.
 	remoteConfigured: z.boolean().optional(),
-	// OAuth state written by the CLI — preserved as-is (VSCode doesn't implement OAuth flows yet)
+	// OAuth state written by the CLI - preserved as-is (VSCode doesn't implement OAuth flows yet)
 	oauth: z.unknown().optional(),
-	// Arbitrary metadata written by the CLI — preserved as-is
+	// Arbitrary metadata written by the CLI - preserved as-is
 	metadata: z.unknown().optional(),
 })
 

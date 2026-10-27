@@ -116,7 +116,7 @@ export const VertexProvider = ({ showModelOptions, isPopup, currentMode }: Verte
 	// Stored overrides live per (provider, modelId) in models.json and round-
 	// trip through committedSelection.overrides, so `undefined` here proves
 	// nothing is stored. The seed commit writes non-empty overrides, making
-	// this condition false on the next round-trip — no loop. The pending-
+	// this condition false on the next round-trip - no loop. The pending-
 	// commit guard keeps it from racing an in-flight user edit.
 	useEffect(() => {
 		if (

@@ -22,7 +22,7 @@ describe("getFsInfo", () => {
 
 	it("never throws on a non-existent path", async () => {
 		// The picker must never break because of telemetry. Result classification
-		// itself is unspecified — on macOS we'd resolve up the mount tree to the
+		// itself is unspecified - on macOS we'd resolve up the mount tree to the
 		// nearest existing parent (often the root, "apfs"); on Linux behaviour
 		// depends on `stat -f`. What matters is that we get a defined FsInfo
 		// object back, never an exception.
@@ -30,14 +30,14 @@ describe("getFsInfo", () => {
 		;(["local", "network", "unknown"] as const).should.containEql(info.fsClass)
 	})
 
-	// macOS/Linux only — Windows currently returns the unknown sentinel
+	// macOS/Linux only - Windows currently returns the unknown sentinel
 	// unconditionally (see fs-info.ts: detection is unimplemented there).
 	const detectPlatforms: NodeJS.Platform[] = ["darwin", "linux"]
 	if (detectPlatforms.includes(process.platform)) {
 		it("classifies the OS temp directory as a local filesystem", async () => {
 			const info = await getFsInfo(os.tmpdir())
 			// We don't assert on the exact fsType because it varies (apfs on
-			// macOS, tmpfs/ext4 on Linux containers, etc.) — what we care
+			// macOS, tmpfs/ext4 on Linux containers, etc.) - what we care
 			// about is that it lands in the "local" bucket, not "network".
 			info.fsClass.should.equal("local")
 			info.fsType.should.not.equal("unknown")

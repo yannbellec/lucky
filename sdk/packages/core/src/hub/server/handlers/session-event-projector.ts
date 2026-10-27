@@ -383,7 +383,7 @@ async function projectAgentEvent(
  * `finishReason: "error"` result instead of emitting `done`. RPC-driven turns
  * (`run.start`) report that failure themselves: the awaiting handler publishes
  * `run.failed` with the full result. Turns drained from the pending-prompt
- * queue have no awaiting handler — their errored result is discarded — so
+ * queue have no awaiting handler - their errored result is discarded - so
  * without this projection the failure never reaches any client and
  * interactive UIs hang on a running state. Publish `run.failed` here for
  * exactly those unreported turns.

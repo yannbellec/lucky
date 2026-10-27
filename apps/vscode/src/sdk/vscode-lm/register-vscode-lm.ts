@@ -1,8 +1,8 @@
 // Registers the VS Code Language Model handler with the Cline SDK.
 //
 // The SDK's `@cline/llms` factory registry (registerHandler) exists for
-// providers that need host-only dependencies — here, the `vscode` module /
-// `vscode.lm` API — which cannot live in the SDK package. Once registered,
+// providers that need host-only dependencies - here, the `vscode` module /
+// `vscode.lm` API - which cannot live in the SDK package. Once registered,
 // `createHandler({ providerId: "vscode-lm", ... })` returns this handler, and
 // the agent runtime resolves "vscode-lm" through the same registry, so both the
 // main task loop and standalone utility calls use the VS Code LM API.
@@ -19,8 +19,8 @@ import { VsCodeLmHandler } from "./vscode-lm-handler"
 export const VSCODE_LM_PROVIDER_ID = "vscode-lm"
 
 // Catalog entry so the provider shows up in `listProviders` (and therefore the
-// settings dropdown). The SDK's builtin catalog cannot ship this provider —
-// it depends on the host-only `vscode.lm` API — so the extension registers it
+// settings dropdown). The SDK's builtin catalog cannot ship this provider -
+// it depends on the host-only `vscode.lm` API - so the extension registers it
 // as an out-of-the-box host provider at activation, mirroring how the handler
 // itself is registered.
 //
@@ -35,10 +35,10 @@ export const VSCODE_LM_PROVIDER_ID = "vscode-lm"
 // - `defaultModelId` is empty on purpose. The handler parses modelId as a
 //   `vendor/family` selector string, and an empty string parses to an empty
 //   selector, which `vscode.lm.selectChatModels` treats as "any available
-//   model" — the only safe default for a catalog whose models are dynamic.
+//   model" - the only safe default for a catalog whose models are dynamic.
 //   Any non-empty placeholder here (e.g. "vscode-lm") would parse to a vendor
 //   filter that matches nothing if a fallback path ever commits it.
-// - `client: "custom"` — inference is routed through the host handler
+// - `client: "custom"` - inference is routed through the host handler
 //   registered below, never through an SDK gateway client.
 export const VSCODE_LM_PROVIDER_COLLECTION: ModelCollection = {
 	provider: {

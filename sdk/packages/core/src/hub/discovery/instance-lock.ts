@@ -6,11 +6,11 @@
  * build arbitration: the lock is a SQLite database held inside a
  * never-committed `BEGIN EXCLUSIVE` transaction, which SQLite maps onto OS
  * file locks. The kernel releases the lock the instant the holding process
- * dies — crashed holders cannot leak ownership, and a live holder cannot be
+ * dies - crashed holders cannot leak ownership, and a live holder cannot be
  * displaced by deleting a file.
  *
  * A process that fails to acquire the lock must connect to the running Hub
- * or diagnose — never kill it and never bind another endpoint on its own.
+ * or diagnose - never kill it and never bind another endpoint on its own.
  * This makes the historical mutual-retire loop (two installs SIGTERMing each
  * other's daemon, #13145/#13230) structurally impossible: at most one live
  * Hub can exist per owner context, enforced by the OS before either process
@@ -18,7 +18,7 @@
  *
  * The startup-lock directory (`<discoveryPath>.lock`, see `withHubLock`)
  * remains a short-lived mutex around discovery reads/writes; this lock is a
- * different thing — it is held for the entire lifetime of the serving Hub.
+ * different thing - it is held for the entire lifetime of the serving Hub.
  */
 
 import { chmodSync, existsSync, mkdirSync } from "node:fs";
@@ -84,8 +84,8 @@ export class HubInstanceLock {
 	 * `HubLockHeldError` when another live process holds it.
 	 *
 	 * Only a positively held lock (SQLITE_BUSY/LOCKED) refuses startup. Any
-	 * other failure — SQLite unavailable in this runtime, an unwritable lock
-	 * directory — degrades to an unheld lock (`held === false`) and the Hub
+	 * other failure - SQLite unavailable in this runtime, an unwritable lock
+	 * directory - degrades to an unheld lock (`held === false`) and the Hub
 	 * starts without singleton enforcement, matching how the event log and
 	 * run queue already degrade rather than making SQLite a hard requirement.
 	 */

@@ -250,7 +250,7 @@ describe("Shell Detection Tests", () => {
 			expect(getShell()).to.equal("C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe")
 		})
 
-		it("ignores userInfo() and COMSPEC — VS Code's default terminal ignores them too", () => {
+		it("ignores userInfo() and COMSPEC - VS Code's default terminal ignores them too", () => {
 			vscode.workspace.getConfiguration = () => ({ get: () => undefined }) as any
 			userInfoImpl = () => ({ shell: "C:\\Custom\\OtherShell.exe" }) as any
 			process.env.COMSPEC = "D:\\CustomCmd\\cmd.exe"

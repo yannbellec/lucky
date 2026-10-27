@@ -74,7 +74,7 @@ describe("classifyShellPrompt", () => {
 	})
 
 	// These are the false-positive shapes a still-running command can produce
-	// that end in a generic prompt character — they must not be trusted as a
+	// that end in a generic prompt character - they must not be trusted as a
 	// "strong" match, since a hung ssh session's continuation prompt, an
 	// unterminated HTML/XML tag, or a progress meter should not short-circuit
 	// the markerless completion check the same way a real shell prompt does.

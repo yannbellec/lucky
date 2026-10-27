@@ -176,7 +176,7 @@ export async function checkForUpdateAndNotify(): Promise<void> {
  * Watches the Tauri shell's auto-updater. Updates are checked, downloaded, and
  * installed in the background by the Rust side; once one is staged this hook
  * surfaces a persistent toast offering a one-click restart into the new
- * version. Dismissing the toast is fine too — the staged update stays
+ * version. Dismissing the toast is fine too - the staged update stays
  * reachable from the sidebar update indicator and takes effect on the next
  * launch regardless. No-op in web/sidecar mode where there is no app bundle
  * to update.

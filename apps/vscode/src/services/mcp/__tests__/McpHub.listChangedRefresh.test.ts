@@ -277,7 +277,7 @@ describe("McpHub list_changed notification refresh", () => {
 	it("treats method-not-found and undeclared capabilities as authoritatively empty lists", async () => {
 		// Exercises the real fetch helpers (not the stubbed ones) with a fake
 		// client: a permanent "this server doesn't do that" answer must come
-		// back as [] — publishable, no retry — not as a failure (undefined)
+		// back as [] - publishable, no retry - not as a failure (undefined)
 		const makeHubWithClient = (client: any) => {
 			const hub = Object.create(McpHub.prototype) as McpHub
 			;(hub as any).connections = [
@@ -356,7 +356,7 @@ describe("McpHub list_changed notification refresh", () => {
 		;(hub as any).scheduleListChangedRefresh("test-server", "tools")
 
 		// First attempt: fetch succeeds and updates the cache, but consumers
-		// never saw it because the publish failed — so it must retry
+		// never saw it because the publish failed - so it must retry
 		await clock.tickAsync(300)
 		connection.server.tools.should.deepEqual([{ name: "tool1" }])
 		notifyWebviewOfServerChanges.calledOnce.should.be.true()

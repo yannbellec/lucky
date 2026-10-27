@@ -7,7 +7,7 @@ import { AuthHandler } from "@/hosts/external/AuthHandler"
  *
  * These tests verify that:
  * 1. getCallbackUrl accepts a path parameter and includes it in the returned URL
- * 2. VS Code Web callback URLs do NOT use 127.0.0.1 (loopback) — they must use
+ * 2. VS Code Web callback URLs do NOT use 127.0.0.1 (loopback) - they must use
  *    vscode.env.asExternalUri so that browser-hosted remote setups (Codespaces, code serve-web)
  *    get a web-reachable callback URL instead of a loopback address.
  *

@@ -255,8 +255,8 @@ const providerCatalogInvalidationListeners =
 
 /**
  * Notifies when the provider catalog cache is invalidated (credentials
- * saved, providers toggled, OAuth completed) so long-lived consumers — e.g.
- * the chat pane's "connect a model" notice — can refetch instead of showing
+ * saved, providers toggled, OAuth completed) so long-lived consumers - e.g.
+ * the chat pane's "connect a model" notice - can refetch instead of showing
  * stale connection state until they happen to remount.
  */
 export function subscribeToProviderCatalogInvalidation(

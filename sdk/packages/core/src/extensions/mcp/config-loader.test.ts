@@ -761,7 +761,7 @@ describe("updateMcpSettingsFile (async acquisition)", () => {
 		});
 
 		// The mutator (a synchronous, pure function) ran, the write landed, and the
-		// lock directory is gone — i.e. the lock is never left held after resolution.
+		// lock directory is gone - i.e. the lock is never left held after resolution.
 		// (That the lock is never held *across* an await is covered by the contended
 		// test below, which asserts serialization without any Atomics.wait.)
 		expect(mutatorRan).toBe(true);

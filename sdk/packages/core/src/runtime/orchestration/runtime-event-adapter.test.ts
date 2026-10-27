@@ -7,7 +7,7 @@
  * text/reasoning-delta correction documented at the top of
  * `runtime-event-adapter.ts`).
  *
- * @see PLAN.md §3.3.2 — variant-by-variant OLD → NEW mapping.
+ * @see PLAN.md §3.3.2 - variant-by-variant OLD → NEW mapping.
  * @see packages/core/src/runtime/runtime-event-adapter.ts
  *
  * Landed with PLAN.md Step 8a.
@@ -101,7 +101,7 @@ function makeResult(overrides: Partial<AgentRunResult> = {}): AgentRunResult {
 	};
 }
 
-describe("RuntimeEventAdapter — model tools", () => {
+describe("RuntimeEventAdapter - model tools", () => {
 	it("streams model tools as observational content events", () => {
 		const adapter = new RuntimeEventAdapter();
 		const toolCall = {
@@ -163,7 +163,7 @@ describe("RuntimeEventAdapter — model tools", () => {
 // Suppressed events
 // ---------------------------------------------------------------------------
 
-describe("RuntimeEventAdapter — suppressed events", () => {
+describe("RuntimeEventAdapter - suppressed events", () => {
 	let adapter: RuntimeEventAdapter;
 	beforeEach(() => {
 		adapter = new RuntimeEventAdapter();
@@ -186,7 +186,7 @@ describe("RuntimeEventAdapter — suppressed events", () => {
 	});
 });
 
-describe("RuntimeEventAdapter — status notices", () => {
+describe("RuntimeEventAdapter - status notices", () => {
 	let adapter: RuntimeEventAdapter;
 	beforeEach(() => {
 		adapter = new RuntimeEventAdapter();
@@ -239,7 +239,7 @@ describe("RuntimeEventAdapter — status notices", () => {
 // Iteration lifecycle
 // ---------------------------------------------------------------------------
 
-describe("RuntimeEventAdapter — iteration lifecycle", () => {
+describe("RuntimeEventAdapter - iteration lifecycle", () => {
 	let adapter: RuntimeEventAdapter;
 	beforeEach(() => {
 		adapter = new RuntimeEventAdapter();
@@ -294,13 +294,13 @@ describe("RuntimeEventAdapter — iteration lifecycle", () => {
 // ---------------------------------------------------------------------------
 //
 // PLAN §3.3.2 suggested "first delta → content_start, subsequent →
-// content_update". The legacy-emitter shape makes that impossible —
+// content_update". The legacy-emitter shape makes that impossible -
 // AgentContentUpdateEvent.contentType is strictly "tool"
 // (shared/agents/types.ts:87). The adapter preserves the legacy
 // per-delta content_start behavior
 // (turn-processor.ts:82-87,113-118).
 
-describe("RuntimeEventAdapter — streaming content deltas", () => {
+describe("RuntimeEventAdapter - streaming content deltas", () => {
 	let adapter: RuntimeEventAdapter;
 	beforeEach(() => {
 		adapter = new RuntimeEventAdapter();
@@ -378,7 +378,7 @@ describe("RuntimeEventAdapter — streaming content deltas", () => {
 // Assistant-message → content_end synthesis
 // ---------------------------------------------------------------------------
 
-describe("RuntimeEventAdapter — assistant-message → content_end", () => {
+describe("RuntimeEventAdapter - assistant-message → content_end", () => {
 	let adapter: RuntimeEventAdapter;
 	beforeEach(() => {
 		adapter = new RuntimeEventAdapter();
@@ -505,7 +505,7 @@ describe("RuntimeEventAdapter — assistant-message → content_end", () => {
 // Tool lifecycle + durationMs bookkeeping
 // ---------------------------------------------------------------------------
 
-describe("RuntimeEventAdapter — tool lifecycle", () => {
+describe("RuntimeEventAdapter - tool lifecycle", () => {
 	let adapter: RuntimeEventAdapter;
 	beforeEach(() => {
 		adapter = new RuntimeEventAdapter();
@@ -665,7 +665,7 @@ describe("RuntimeEventAdapter — tool lifecycle", () => {
 // Usage rolling totals
 // ---------------------------------------------------------------------------
 
-describe("RuntimeEventAdapter — usage rolling totals", () => {
+describe("RuntimeEventAdapter - usage rolling totals", () => {
 	let adapter: RuntimeEventAdapter;
 	beforeEach(() => {
 		adapter = new RuntimeEventAdapter();
@@ -811,7 +811,7 @@ describe("RuntimeEventAdapter — usage rolling totals", () => {
 // Run lifecycle
 // ---------------------------------------------------------------------------
 
-describe("RuntimeEventAdapter — run lifecycle", () => {
+describe("RuntimeEventAdapter - run lifecycle", () => {
 	let adapter: RuntimeEventAdapter;
 	beforeEach(() => {
 		adapter = new RuntimeEventAdapter();
@@ -885,7 +885,7 @@ describe("RuntimeEventAdapter — run lifecycle", () => {
 // Stateless helper
 // ---------------------------------------------------------------------------
 
-describe("toLegacyAgentEvent — stateless helper", () => {
+describe("toLegacyAgentEvent - stateless helper", () => {
 	it("returns undefined for suppressed events", () => {
 		expect(
 			toLegacyAgentEvent({ type: "run-started", snapshot: makeSnapshot() }),
@@ -968,10 +968,10 @@ describe("toLegacyAgentEvent — stateless helper", () => {
 });
 
 // ---------------------------------------------------------------------------
-// Exhaustiveness — AgentRuntimeEvent variants
+// Exhaustiveness - AgentRuntimeEvent variants
 // ---------------------------------------------------------------------------
 
-describe("RuntimeEventAdapter — exhaustiveness", () => {
+describe("RuntimeEventAdapter - exhaustiveness", () => {
 	it("handles every one of the 13 AgentRuntimeEvent variants without throwing", () => {
 		const adapter = new RuntimeEventAdapter();
 		const variants: AgentRuntimeEvent[] = [

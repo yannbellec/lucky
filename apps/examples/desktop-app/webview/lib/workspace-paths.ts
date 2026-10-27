@@ -77,7 +77,7 @@ export function isAbsoluteFilePath(path: string): boolean {
 }
 
 /**
- * Diff tool outputs carry paths as the agent wrote them — sometimes absolute,
+ * Diff tool outputs carry paths as the agent wrote them - sometimes absolute,
  * sometimes relative to the session cwd. The webview has no `node:path`, so
  * relative paths are joined against the cwd with the separator style the cwd
  * already uses.

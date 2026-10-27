@@ -911,7 +911,7 @@ interface RepairableToolCall {
 
 /**
  * Last-chance repair for tool calls whose arguments are not valid JSON
- * (truncated payloads, single quotes, unescaped newlines — common with
+ * (truncated payloads, single quotes, unescaped newlines - common with
  * weaker models). Runs the raw argument text through the shared jsonrepair
  * strategies; unknown tool names and already-valid JSON are not repairable
  * here, and returning null preserves the AI SDK's original error behavior.
@@ -936,7 +936,7 @@ export async function repairMalformedToolCall<T extends RepairableToolCall>({
 		// schemas; there is nothing to repair here.
 		return null;
 	} catch {
-		// Not valid JSON — attempt repair below.
+		// Not valid JSON - attempt repair below.
 	}
 	const repaired = parseJsonStream(toolCall.input);
 	if (repaired === toolCall.input || typeof repaired === "string") {
@@ -1357,7 +1357,7 @@ export function normalizeUsage(
 		// Providers report reasoning tokens as a subset of outputTokens (e.g.
 		// OpenAI's completion_tokens_details.reasoning_tokens), not additional
 		// to it. Strip them back out here so outputTokens reflects the actual
-		// non-reasoning output, with reasoningTokenCount tracked separately —
+		// non-reasoning output, with reasoningTokenCount tracked separately -
 		// otherwise every downstream consumer (session totals, telemetry,
 		// Harbor's n_output_tokens) double-books reasoning as both its own
 		// count and part of "output". Cost above is computed from the
@@ -2137,9 +2137,9 @@ async function createProviderModule(
  * returned empty response"), so a single transient flake kills the task.
  * The same telemetry shows mid-stream network deaths (UND_ERR_SOCKET,
  * body/headers timeouts, ECONNRESET) as the dominant network-class run
- * killer — the AI SDK's own retry covers only request initiation, so once a
- * stream has started nothing else retries. Retrying here — the one
- * composition point every AI SDK vendor flows through — turns those flakes
+ * killer - the AI SDK's own retry covers only request initiation, so once a
+ * stream has started nothing else retries. Retrying here - the one
+ * composition point every AI SDK vendor flows through - turns those flakes
  * into non-events while leaving the runtime's loud failure in place for
  * models that are persistently empty or connections that are truly down.
  *

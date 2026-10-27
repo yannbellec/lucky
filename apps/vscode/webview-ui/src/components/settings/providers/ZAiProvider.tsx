@@ -38,7 +38,7 @@ interface ZAiProviderProps {
  *
  * Model catalog and default come from the `@cline/llms` SDK via gRPC.
  * The SDK consumes `apiLine` from the effective provider config so the
- * international vs. mainland catalog selection happens upstream — the
+ * international vs. mainland catalog selection happens upstream - the
  * webview sees a single catalog per render.
  */
 export const ZAiProvider = ({ showModelOptions, isPopup, currentMode }: ZAiProviderProps) => {

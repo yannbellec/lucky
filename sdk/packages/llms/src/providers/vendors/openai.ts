@@ -32,8 +32,8 @@ export async function createOpenAIProviderModule(
 	});
 	// The ChatGPT OAuth Codex backend rejects `max_output_tokens`, and the
 	// OpenAI Responses API applies its own defaults, so gateway-synthesized
-	// caps are never forwarded. Explicit caps — whether resolved by the
-	// gateway from a caller request or passed straight to this provider —
+	// caps are never forwarded. Explicit caps - whether resolved by the
+	// gateway from a caller request or passed straight to this provider -
 	// are honored for API-key usage because that endpoint supports output
 	// limits.
 	const isChatGptOAuth = isChatGptOAuthBaseUrl(config.baseUrl);

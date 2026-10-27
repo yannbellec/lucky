@@ -234,7 +234,7 @@ describe("SdkTaskHistory", () => {
 		expect(result).toMatchObject([
 			// The <user_input mode="..."> wrapper is stripped for display but its mode
 			// styles the final turn's inferred completion row. Mid-transcript turns stay
-			// plain — history has no per-turn outcome to trust.
+			// plain - history has no per-turn outcome to trust.
 			{ type: "say", say: "task", text: "plan the feature" },
 			{ type: "say", say: "text", text: "Here is the plan." },
 			{ type: "say", say: "user_feedback", text: "looks good, do it" },
@@ -319,7 +319,7 @@ describe("SdkTaskHistory", () => {
 
 	it("does not retag the terminal text of a session that did not end cleanly", async () => {
 		// "failed"/"cancelled" runs ended on a dangling response. Non-terminal statuses at
-		// rest mean the process died without recording an outcome — "idle" is also the state
+		// rest mean the process died without recording an outcome - "idle" is also the state
 		// after an aborted turn (markTurnIdle runs for every finish reason), so it cannot be
 		// trusted as a clean ending.
 		for (const status of ["failed", "cancelled", "running", "pending", "idle"] as const) {
@@ -363,7 +363,7 @@ describe("SdkTaskHistory", () => {
 			},
 		])
 
-		// The aborted turn's text stays a plain text row — no inferred completion box.
+		// The aborted turn's text stays a plain text row - no inferred completion box.
 		expect(result.filter((m) => m.say === "completion_result" || m.say === "plan_completion_result")).toHaveLength(0)
 		expect(result).toContainEqual(expect.objectContaining({ type: "say", say: "text", text: "Reading the file first." }))
 	})
@@ -766,7 +766,7 @@ describe("SdkTaskHistory", () => {
 		// Update task-1
 		await history.updateTaskHistoryItem(makeHistoryItem("task-1", { task: "new title" }))
 
-		// Read again — should use cache, not re-list from host
+		// Read again - should use cache, not re-list from host
 		const result = await history.listHistory({ hydrate: false })
 		expect(listHistory).toHaveBeenCalledTimes(1)
 
@@ -784,7 +784,7 @@ describe("SdkTaskHistory", () => {
 			makeSessionRecord("task-2", { updatedAt: "2026-01-02T00:00:00.000Z" }),
 		])
 
-		// Populate cache — task-2 (newer) should be first
+		// Populate cache - task-2 (newer) should be first
 		const initial = await history.listHistory({ hydrate: false })
 		expect(initial[0].sessionId).toBe("task-2")
 		expect(initial[1].sessionId).toBe("task-1")
@@ -817,7 +817,7 @@ describe("SdkTaskHistory", () => {
 			totalCost: 0.03,
 		})
 
-		// Read again — should use cache, not re-list from host
+		// Read again - should use cache, not re-list from host
 		const result = await history.listHistory({ hydrate: false })
 		expect(listHistory).toHaveBeenCalledTimes(1)
 
@@ -836,7 +836,7 @@ describe("SdkTaskHistory", () => {
 		// (with its original, possibly old, `ts`) to flip just `isFavorited`. The
 		// persistence adapter always stamps `updatedAt` with the wall-clock write
 		// time (nowIso()), so the cache patch must do the same rather than
-		// deriving `updatedAt` from the stale `item.ts` — otherwise the cached
+		// deriving `updatedAt` from the stale `item.ts` - otherwise the cached
 		// ordering would diverge from what's on disk until the TTL expires.
 		const { history } = makeHistory([
 			makeSessionRecord("task-1", { updatedAt: "2020-01-01T00:00:00.000Z" }),

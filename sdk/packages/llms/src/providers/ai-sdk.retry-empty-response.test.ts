@@ -25,7 +25,7 @@ import {
  *
  * Production telemetry (2026-08-02→03) showed `Model returned empty response`
  * hard failures on openrouter, cline, and generic OpenAI-compatible
- * endpoints — 46 tasks / 120 events in 24h on the SDK extension. These tests
+ * endpoints - 46 tasks / 120 events in 24h on the SDK extension. These tests
  * drive the real adapter + real `ai` package with fake wire responses (SSE
  * for the OpenAI-compatible and Anthropic wire formats) so the vendor's
  * actual stream-part shapes are exercised, guarding against a vendor whose
@@ -538,7 +538,7 @@ describe("full path: model output classes through emitAiSdkEvents", () => {
 
 		// The model responded; retrying would re-bill for the same output.
 		// The adapter does not convert custom parts (explicitly unsupported),
-		// so no content events are emitted — the downstream empty-message
+		// so no content events are emitted - the downstream empty-message
 		// failure, if it happens, is honest rather than masked by retries.
 		expect(ollamaDoStreamMock).toHaveBeenCalledTimes(1);
 		expect(events.some((event) => event.type === "text-delta")).toBe(false);

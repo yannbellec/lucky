@@ -228,7 +228,7 @@ async function compactSession(
  * typed whenever the session registers the runtime's `skills` tool (its
  * description requires the model to invoke it on slash-command references),
  * so the instructions reach the model as a tool result instead of being
- * pasted into the user message — where the transcript would render them as
+ * pasted into the user message - where the transcript would render them as
  * if the user had typed the whole skill body. Workflows, and skills in
  * configurations without the tool (e.g. yolo mode), keep textual expansion.
  * Returns the prompt unchanged when it is not a slash command, the token is
@@ -1847,7 +1847,7 @@ async function handleSend(
 				sessionId,
 				ok: true,
 				queued: true,
-				// Response snapshot only — deliberately not routed through
+				// Response snapshot only - deliberately not routed through
 				// applyPendingPrompts. The list was taken at enqueue time and
 				// can already be stale when this response is written (the
 				// runtime may have drained the prompt meanwhile, e.g. the
@@ -1910,7 +1910,7 @@ async function handleSend(
 		}
 		if (result === undefined) {
 			// The runtime queued or steered the prompt instead of running it
-			// (busy interactive session / steer delivery) — track the files so
+			// (busy interactive session / steer delivery) - track the files so
 			// they are deleted once the prompt is consumed or discarded.
 			if (userFiles?.length) {
 				trackQueuedAttachments(

@@ -21,7 +21,7 @@ import { validateCronSchedule } from "../schedule/scheduler";
  * themselves live in @cline/shared so other packages can consume them
  * without pulling in a YAML parser.
  *
- * The parser never throws for a single bad file — it produces a
+ * The parser never throws for a single bad file - it produces a
  * `CronSpecParseResult` with an `error` message so the reconciler can record
  * `parse_status='invalid'` durably instead of dropping state.
  */

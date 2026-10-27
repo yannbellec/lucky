@@ -51,8 +51,8 @@ import { cn } from "@/lib/utils";
 import { AudioModelBadges } from "./audio-model-badges";
 
 // Inputs nested inside a composed bordered box (icon + input + buttons in
-// one rounded frame) must strip the Input component's own chrome — border,
-// dark-mode bg tint, shadow, focus ring — or the inner field reads as a
+// one rounded frame) must strip the Input component's own chrome - border,
+// dark-mode bg tint, shadow, focus ring - or the inner field reads as a
 // mismatched second box inside the frame.
 const EMBEDDED_INPUT_CLASS =
 	"h-7 flex-1 border-0 bg-transparent px-0 text-sm shadow-none outline-none placeholder:text-muted-foreground dark:bg-transparent focus-visible:ring-0";
@@ -627,7 +627,7 @@ export function ProviderDetailContent({
 	// is scoped to the provider AND the modelList revision it was fetched
 	// for: an unscoped copy kept shadowing the next provider's models after
 	// a switch (even when its own request failed) and masked membership
-	// updates — adding a model would then submit the stale list as the
+	// updates - adding a model would then submit the stale list as the
 	// complete configuration and drop earlier additions.
 	const [featuredModelList, setFeaturedModelList] = useState<{
 		providerId: string;
@@ -816,7 +816,7 @@ export function ProviderDetailContent({
 								Signed in via browser
 							</p>
 							<p className="text-xs text-muted-foreground">
-								This provider authenticates with your account — no API key
+								This provider authenticates with your account - no API key
 								needed.
 							</p>
 						</div>
@@ -901,7 +901,7 @@ export function ProviderDetailContent({
 							Uses your local CLI sign-in
 						</p>
 						<p className="text-xs text-muted-foreground">
-							Credentials come from the provider's own CLI on this machine — no
+							Credentials come from the provider's own CLI on this machine - no
 							API key needed.
 						</p>
 					</div>

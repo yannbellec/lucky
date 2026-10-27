@@ -1,8 +1,8 @@
 /**
  * Per-session conversation transcript store.
  *
- * @see PLAN.md §3.1 — moved from `packages/agents/src/runtime/conversation-store.ts`.
- * @see PLAN.md §3.2.3 — public surface of `ConversationStore`.
+ * @see PLAN.md §3.1 - moved from `packages/agents/src/runtime/conversation-store.ts`.
+ * @see PLAN.md §3.2.3 - public surface of `ConversationStore`.
  *
  * Pure port of the old agents implementation. Owns the message list,
  * conversation id, and "session started" gate that today's `Agent`

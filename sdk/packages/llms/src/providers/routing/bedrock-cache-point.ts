@@ -61,7 +61,7 @@ export function createBedrockCachePointProviderOptions() {
  * Attach a message-level cache-point marker to the last user message. The
  * Bedrock message converter appends the `cachePoint` block after that
  * message's content, caching the whole prefix (tools, system, and history)
- * up to it — mirroring the Anthropic writer's checkpoint placement.
+ * up to it - mirroring the Anthropic writer's checkpoint placement.
  */
 export function applyBedrockCachePointToLastUserMessage(
 	messages: Array<Record<string, unknown>>,

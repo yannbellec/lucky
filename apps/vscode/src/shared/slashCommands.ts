@@ -23,7 +23,7 @@ export const BASE_SLASH_COMMANDS: SlashCommand[] = [
 		cliCompatible: true,
 	},
 	// NOTE: legacy's /newrule and /reportbug are hidden until their prompt
-	// expansions are ported to the SDK runtime — without expansion the literal
+	// expansions are ported to the SDK runtime - without expansion the literal
 	// command text reaches the model, which silently degrades to plain chat.
 	{
 		name: "compact",

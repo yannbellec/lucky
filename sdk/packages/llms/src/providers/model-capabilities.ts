@@ -11,7 +11,7 @@ import type {
  * gateway draws no distinction and the capability implies nothing beyond plain
  * text generation. Because the key type derives from `ModelCapabilitySchema`,
  * extending that schema without deciding the mapping is a type error rather
- * than a silent omission — which is how the hand-written `switch` statements
+ * than a silent omission - which is how the hand-written `switch` statements
  * this replaces drifted apart.
  *
  * The gateway's `audio` capability has no counterpart here on purpose: no

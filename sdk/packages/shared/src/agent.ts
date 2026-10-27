@@ -298,7 +298,7 @@ export type AgentModelFinishReason =
  * runtime's recovery policy and telemetry (`error_class`). Extend with new
  * classes (rate_limit, billing, ...) as consumers need them.
  *
- * `auth`: the provider rejected the request's credentials (HTTP 401/403) —
+ * `auth`: the provider rejected the request's credentials (HTTP 401/403) -
  * hosts should point the user at their API key configuration.
  */
 export type ProviderErrorClass = "context_window_exceeded" | "auth" | "unknown";

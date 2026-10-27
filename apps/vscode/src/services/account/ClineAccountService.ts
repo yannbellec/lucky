@@ -266,7 +266,7 @@ export class ClineAccountService {
 	/**
 	 * Submits a spend limit increase request to the user's org admin.
 	 * Called when the user hits a SPEND_LIMIT_EXCEEDED (429) error and clicks "Request Increase".
-	 * @returns void — the backend records the request; errors are logged and swallowed
+	 * @returns void - the backend records the request; errors are logged and swallowed
 	 */
 	async submitLimitIncreaseRequestRPC(): Promise<void> {
 		try {

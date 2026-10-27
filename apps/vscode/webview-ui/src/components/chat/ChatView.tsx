@@ -101,7 +101,7 @@ const ChatView = ({ isHidden, showAnnouncement, hideAnnouncement, showHistoryVie
 	}, [messages.length, pendingResponse, setPendingResponse, turnState])
 
 	//const task = messages.length > 0 ? (messages[0].say === "task" ? messages[0] : undefined) : undefined) : undefined
-	const task = useMemo(() => displayMessages.at(0), [displayMessages]) // leaving this less safe version here since if the first message is not a task, then the extension is in a bad state and needs to be debugged (see Cline.abort)
+	const task = useMemo(() => displayMessages.at(0), [displayMessages]) // leaving this less safe version here since if the first message is not a task, then the extension is in a bad state and needs to be debugged (see Lucky.abort)
 	const modifiedMessages = useMemo(() => {
 		const slicedMessages = displayMessages.slice(1)
 		// Only combine hook sequences if hooks are enabled
@@ -355,7 +355,7 @@ const ChatView = ({ isHidden, showAnnouncement, hideAnnouncement, showHistoryVie
 
 	// When a prompt gets queued, the queue banner mounts (or grows) in the footer, which
 	// shrinks the messages area and visually covers the bottom of the conversation. No new
-	// chat row is added, so the list-length-based auto-scroll never fires — re-pin to the
+	// chat row is added, so the list-length-based auto-scroll never fires - re-pin to the
 	// bottom here so the latest content stays visible.
 	const queuedPromptCount = queuedPrompts?.length ?? 0
 	const taskTs = task?.ts
@@ -367,7 +367,7 @@ const ChatView = ({ isHidden, showAnnouncement, hideAnnouncement, showHistoryVie
 		prevQueuedPromptCountRef.current = queuedPromptCount
 		prevQueuedPromptTaskTsRef.current = taskTs
 		// A task switch can grow the count without a send from this webview (the newly
-		// displayed task may already have queued prompts) — don't hijack its scroll position.
+		// displayed task may already have queued prompts) - don't hijack its scroll position.
 		if (taskTs !== previousTaskTs || queuedPromptCount <= previousCount) {
 			return
 		}

@@ -5,7 +5,7 @@
 // Background: AI SDK's `LanguageModelV4ToolResultOutput` of type `'content'`
 // may contain `image-data`, `image-url`, `file-data`, `file-url`, or
 // `image-file-id` parts. The OpenAI Chat Completions wire format does NOT
-// support multimodal tool messages — `role:"tool"` content must be a single
+// support multimodal tool messages - `role:"tool"` content must be a single
 // string. The `@ai-sdk/openai-compatible` chat-messages converter therefore
 // just `JSON.stringify`s the parts array. The image bytes survive as escaped
 // base64 inside a string, which the model treats as ~50KB of opaque text and
@@ -18,13 +18,13 @@
 //
 //   1. Replaces the media parts inside the tool-result with placeholder
 //      text parts: `(see following user message for image)`. The
-//      tool-result then carries only text — safe for any wire format.
+//      tool-result then carries only text - safe for any wire format.
 //   2. Inserts a synthetic `role:"user"` message right after the tool
 //      message, carrying the media parts as `LanguageModelV4FilePart`s.
 //
 // Because the synthetic user message is typed (not raw JSON), every
-// downstream converter — Chat Completions, Mistral, Anthropic, Bedrock,
-// etc. — translates it to its own native multimodal user-content shape
+// downstream converter - Chat Completions, Mistral, Anthropic, Bedrock,
+// etc. - translates it to its own native multimodal user-content shape
 // without further help.
 //
 // This pattern is documented in the OpenAI Chat Completions spec
@@ -38,7 +38,7 @@
 // middleware approach is preferred because:
 //   * No JSON parse / restringify round-trip on every chat-completions
 //     request.
-//   * Works equally for any converter — `@ai-sdk/mistral` (which has its
+//   * Works equally for any converter - `@ai-sdk/mistral` (which has its
 //     own chat-messages converter) was previously uncovered.
 //   * Decoupled from the AI SDK's wire-output shape: if the SDK ever
 //     changes how it serialises content arrays, this layer doesn't care.
@@ -81,7 +81,7 @@ function isMediaContentPart(
  * Convert a media content-part from a `ToolResultOutput` of type `'content'`
  * into the equivalent `LanguageModelV4FilePart` for use in a user message.
  * Returns `null` for `image-file-id` parts because `LanguageModelV4FilePart`
- * has no provider-file-id slot — those parts are left in place inside the
+ * has no provider-file-id slot - those parts are left in place inside the
  * tool-result and pass through to the converter as-is. (Image-file-id is
  * an OpenAI-specific reference; if a caller is using it they are already
  * on a multimodal-aware path and don't need this rewrite.)
@@ -313,7 +313,7 @@ function splitContentOutputMedia(
 		}
 		const filePart = mediaPartToFilePart(currentPart);
 		if (!filePart) {
-			// Unhandled media kind (image-file-id) — pass through unchanged.
+			// Unhandled media kind (image-file-id) - pass through unchanged.
 			newValue.push(currentPart);
 			continue;
 		}
@@ -400,7 +400,7 @@ export function rewritePromptToolImages(prompt: LanguageModelV4Message[]): {
  * `@ai-sdk/mistral`).
  *
  * Anthropic's converter natively renders content arrays on tool-result
- * messages and should NOT use this middleware — it would replace
+ * messages and should NOT use this middleware - it would replace
  * structurally-faithful tool-results with the placeholder text + sibling
  * user message pattern unnecessarily.
  */

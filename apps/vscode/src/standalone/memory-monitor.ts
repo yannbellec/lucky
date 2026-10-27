@@ -44,7 +44,7 @@ export function startMemoryMonitoring(): void {
 
 	memoryMonitorInterval = setInterval(logMemoryUsage, MEMORY_LOG_INTERVAL_MS)
 
-	// IMPORTANT: unref() tells Node.js that this timer is "optional" — it
+	// IMPORTANT: unref() tells Node.js that this timer is "optional" - it
 	// should not keep the event loop alive by itself. Without this call,
 	// the process could never exit cleanly because it would always be
 	// waiting for the next 5-minute interval tick. Node.js exits when

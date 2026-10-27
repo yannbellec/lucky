@@ -115,7 +115,7 @@ export async function executeRipgrepForFiles(
 		rl.on("close", () => resolveOutputClosed())
 
 		Promise.all([outputClosed, exited]).then(() => {
-			// A non-zero exit with results is normal — we proactively SIGTERM
+			// A non-zero exit with results is normal - we proactively SIGTERM
 			// after hitting the limit. Only reject when we have nothing to return.
 			if (fileResults.length === 0 && (errorOutput || (exitCode !== null && exitCode !== 0))) {
 				reject(
@@ -187,7 +187,7 @@ async function getActiveFiles(): Promise<Set<string>> {
 // ranked by fzf in core, so we want a comfortably wider net than `limit`.
 const HOST_INDEX_CANDIDATE_LIMIT = 5000
 
-// gRPC status code 12 — the standalone host returns this when the RPC isn't
+// gRPC status code 12 - the standalone host returns this when the RPC isn't
 // registered (the in-process VS Code stub throws a plain Error, matched on
 // message instead). Treat both as silent steady-state, not failure.
 const GRPC_STATUS_UNIMPLEMENTED = 12
@@ -195,7 +195,7 @@ const GRPC_STATUS_UNIMPLEMENTED = 12
 /**
  * Returns candidates from the host's native index, or `null` when the host
  * doesn't implement the RPC / the index is unavailable. Returning `[]` is
- * authoritative — caller does not fall back to ripgrep.
+ * authoritative - caller does not fall back to ripgrep.
  */
 async function executeHostIndexForFiles(
 	query: string,
@@ -252,8 +252,8 @@ async function executeHostIndexForFiles(
 		}))
 		return [...fileResults, ...dirResults]
 	} catch (err) {
-		// "Unimplemented" is the steady state on VS Code/CLI/ACP — every
-		// keystroke trips it — so log at debug to keep the noise floor flat.
+		// "Unimplemented" is the steady state on VS Code/CLI/ACP - every
+		// keystroke trips it - so log at debug to keep the noise floor flat.
 		// Anything else (UNAVAILABLE during indexing, INTERNAL, transport
 		// errors) is a real degradation we want visible to operators, since
 		// the caller is about to silently fall back to a much slower path.

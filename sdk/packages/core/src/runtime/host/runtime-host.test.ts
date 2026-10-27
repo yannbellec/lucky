@@ -28,7 +28,7 @@ describe("isUnusableSessionError", () => {
 
 	it("matches the wedged-run error by message once the code is gone", () => {
 		// Errors reaching a connector have crossed the hub's JSON boundary, which
-		// leaves only the message — and hub and CLI are often different versions.
+		// leaves only the message - and hub and CLI are often different versions.
 		expect(
 			isUnusableSessionError(
 				new Error(

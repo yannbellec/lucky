@@ -3,7 +3,7 @@
  * setting (`vscodeTerminalExecutionMode` global state).
  *
  * `vscodeTerminal` mode requires a real VS Code terminal (`vscode.window.createTerminal`
- * with shell integration). It is meaningless — and silently a no-op — on the
+ * with shell integration). It is meaningless - and silently a no-op - on the
  * standalone (JetBrains/CLI) build, where `vscode.window.createTerminal` is a stub
  * (see standalone/runtime-files/vscode/vscode-impls.js).
  *

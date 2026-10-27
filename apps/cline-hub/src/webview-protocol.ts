@@ -283,7 +283,7 @@ export type WebviewOutboundMessage =
 	| { type: "status"; text: string }
 	/**
 	 * `recoverable: true` marks an in-run notice (e.g. a MistakeTracker
-	 * mistake such as a plan-mode guard-blocked command) — the run continues,
+	 * mistake such as a plan-mode guard-blocked command) - the run continues,
 	 * so peers should not treat it as the turn's outcome. Absent/false means
 	 * a genuine failure.
 	 */

@@ -117,7 +117,7 @@ export class SdkSessionEventCoordinator {
 				if (!activeSession.isRunning && this.options.getTurnPhase?.() === "resumable") {
 					Logger.debug("[SdkController] turn-complete straggler after cancel; preserving resumable phase")
 				} else if (this.options.messageTranslatorState.wasErrorSeen()) {
-					// The turn surfaced a provider error (ask:"api_req_failed" was emitted) —
+					// The turn surfaced a provider error (ask:"api_req_failed" was emitted) -
 					// offer error recovery (Retry / Start New Task), not the followup state.
 					this.options.setTurnPhase?.("error")
 				} else if (this.options.messageTranslatorState.wasAttemptCompletionSeen()) {
@@ -169,7 +169,7 @@ export class SdkSessionEventCoordinator {
 				return undefined
 			}
 			// Only terminal failures are provider failures. `recoverable: true`
-			// error events are in-run notices — the MistakeTracker emits one for
+			// error events are in-run notices - the MistakeTracker emits one for
 			// EVERY recorded mistake (with the tool/mistake details as the
 			// message, e.g. "2 tool call(s) failed: [shell] ...") and hook
 			// failures surface the same way. Counting those here misclassified
@@ -257,7 +257,7 @@ export class SdkSessionEventCoordinator {
 			const apiConfig = stateManager.getApiConfiguration()
 			const mode = stateManager.getGlobalSettingsKey("mode") === "plan" ? "plan" : "act"
 			const provider = mode === "plan" ? apiConfig.planModeApiProvider : apiConfig.actModeApiProvider
-			// Free models are also selectable on ClinePass — they ride usage billing at $0
+			// Free models are also selectable on ClinePass - they ride usage billing at $0
 			if (!isClineManagedProvider(provider)) {
 				return false
 			}

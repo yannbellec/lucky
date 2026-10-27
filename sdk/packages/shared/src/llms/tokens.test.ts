@@ -98,7 +98,7 @@ describe("estimateRequestInputTokens", () => {
 
 	it("does not bill an AgentImagePart's base64 payload at CHARS_PER_TOKEN", () => {
 		// AgentMessage (sdk/packages/shared/src/agent.ts) carries its image
-		// payload under `image`, not `data` — this is the shape gateway.ts
+		// payload under `image`, not `data` - this is the shape gateway.ts
 		// builds (agent-message-codec.ts) and passes to
 		// estimateRequestInputTokens on every streamed request, distinct
 		// from the ImageContent `{ data }` shape compaction uses.

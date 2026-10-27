@@ -338,7 +338,7 @@ describe("AgentRuntime", () => {
 
 	it("keeps a turn that is only provider-executed tool activity", async () => {
 		// No trailing text: the whole turn is observational activity. The
-		// empty-content guard must not reject it — the transcript would lose
+		// empty-content guard must not reject it - the transcript would lose
 		// the activity, which lives in metadata rather than content.
 		const model = new ScriptedModel([
 			() => [
@@ -893,7 +893,7 @@ describe("AgentRuntime", () => {
 		expect(statusNotices).toContainEqual(
 			expect.objectContaining({
 				message:
-					"response hit the output token limit — compacting and retrying",
+					"response hit the output token limit - compacting and retrying",
 				metadata: expect.objectContaining({
 					kind: "max_tokens_compaction",
 					phase: "started",
@@ -1622,7 +1622,7 @@ describe("AgentRuntime", () => {
 		expect(model.requests[1]?.messages).toEqual(compactedMessages);
 		expect(statusNotices).toContainEqual(
 			expect.objectContaining({
-				message: "context window exceeded — compacting and retrying",
+				message: "context window exceeded - compacting and retrying",
 				metadata: expect.objectContaining({
 					kind: "context_overflow_recovery",
 				}),
@@ -1934,7 +1934,7 @@ describe("AgentRuntime", () => {
 	it("treats a media-only model turn as content", async () => {
 		// A model that answers with only a generated file (e.g. an
 		// image-output model) must not fail as "Model returned empty
-		// response" — the file event is assembled into the assistant message.
+		// response" - the file event is assembled into the assistant message.
 		const model = new ScriptedModel([
 			() => [
 				{
@@ -4674,7 +4674,7 @@ describe("AgentRuntime sdk.error reporting", () => {
 		// Turn 1 finishes normally with "tool-calls"; turn 2 dies in the
 		// gateway before the stream reports any finish reason. Carrying turn
 		// 1's reason onto turn 2's failure would put a confident, wrong cause
-		// on the event — worse than reporting none at all.
+		// on the event - worse than reporting none at all.
 		const model = new ScriptedModel([
 			() => [
 				{
@@ -4829,8 +4829,8 @@ describe("AgentRuntime sdk.error reporting", () => {
 		expect(result.status).toBe("failed");
 		const events = sdkErrorEvents(capture);
 		expect(events).toHaveLength(1);
-		// The overflow is still reported — via error_class, which is where it
-		// belongs — but it must not masquerade as this failure's finish reason.
+		// The overflow is still reported - via error_class, which is where it
+		// belongs - but it must not masquerade as this failure's finish reason.
 		expect(events[0]?.properties).not.toHaveProperty("finishReason", "error");
 	});
 

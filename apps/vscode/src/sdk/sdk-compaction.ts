@@ -75,7 +75,7 @@ export async function compactSessionMessages(input: CompactSessionMessagesInput)
 			providerId: input.config.providerId,
 			modelId: input.config.modelId,
 			// Force-enable compaction for this manual request even when
-			// auto-condense is off — the user explicitly asked for it.
+			// auto-condense is off - the user explicitly asked for it.
 			compaction: {
 				...input.config.compaction,
 				enabled: true,

@@ -29,7 +29,7 @@
  *   `major.minor.<unix-timestamp>`, the most recently published build
  *   wins. When this script is used for a manual pre-release publish, the
  *   scheduled release nightly workflow will eventually publish a newer
- *   timestamp and pull pre-release users forward onto release — which is
+ *   timestamp and pull pre-release users forward onto release - which is
  *   the desired behavior once an experimental branch is abandoned, but
  *   means ongoing previews require re-publishing from the branch at
  *   least as often as the scheduled release nightly runs.

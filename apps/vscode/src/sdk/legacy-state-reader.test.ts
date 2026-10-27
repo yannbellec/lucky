@@ -400,7 +400,7 @@ describe("listTaskIds", () => {
 	it("lists task directories", () => {
 		fs.mkdirSync(path.join(tempDir, "tasks", "task-1"), { recursive: true })
 		fs.mkdirSync(path.join(tempDir, "tasks", "task-2"), { recursive: true })
-		// Create a file — should not be listed
+		// Create a file - should not be listed
 		fs.writeFileSync(path.join(tempDir, "tasks", "not-a-dir.txt"), "test")
 
 		const ids = listTaskIds(tempDir)

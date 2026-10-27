@@ -49,8 +49,8 @@ export interface SdkSessionLifecycleOptions {
 	onSendError: (error: unknown, sessionId: string) => Promise<void> | void
 	/**
 	 * Returns (and clears) a pending user-initiated plan/act switch recorded by
-	 * SdkModeCoordinator for this session, so fireAndForgetSend — the single
-	 * funnel for outbound turn sends — can stamp a <mode_notice> onto the next
+	 * SdkModeCoordinator for this session, so fireAndForgetSend - the single
+	 * funnel for outbound turn sends - can stamp a <mode_notice> onto the next
 	 * message. Consumed exactly once; null when no switch is pending.
 	 */
 	consumeModeSwitchNotice?: (sessionId: string) => ModeSwitchNotice | null

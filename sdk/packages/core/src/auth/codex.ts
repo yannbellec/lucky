@@ -477,7 +477,7 @@ export async function getValidOpenAICodexCredentials(
 		}
 		// Rethrow instead of returning null. A null from this function means the
 		// refresh token was REJECTED (re-auth required); a network blip or server
-		// error that happens to land after expiry must not be mistaken for that —
+		// error that happens to land after expiry must not be mistaken for that -
 		// callers turn null into a forced "requires re-authentication" stop even
 		// though the very next refresh attempt would likely succeed.
 		throw error;

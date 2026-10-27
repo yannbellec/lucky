@@ -104,7 +104,7 @@ export function SearchCombobox({
 	const containerRef = useRef<HTMLDivElement>(null);
 	const triggerRef = useRef<HTMLButtonElement>(null);
 	// How to follow the active row: center it when the panel opens, keep it
-	// just in view for keyboard navigation, and never scroll for mouse hover —
+	// just in view for keyboard navigation, and never scroll for mouse hover -
 	// scrolling under the cursor re-triggers hover and makes the list jump.
 	const scrollModeRef = useRef<"center" | "nearest" | "none">("center");
 	const listboxId = useId();

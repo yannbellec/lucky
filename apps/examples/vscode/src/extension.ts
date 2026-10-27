@@ -1636,7 +1636,7 @@ class CoreChatWebviewController implements vscode.Disposable {
  * restart is needed when the webview sends a new config.
  *
  * For extensionContext, only the identity fields (client name and user
- * distinctId) are compared — logger and telemetry are object references that
+ * distinctId) are compared - logger and telemetry are object references that
  * are never meaningfully different between two calls for the same user, and
  * JSON.stringify is unsafe here because those objects contain functions and
  * may have circular references.

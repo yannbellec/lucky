@@ -8,7 +8,7 @@ type FileReadExecutor = NonNullable<ToolExecutors["readFile"]>
  * root before delegating to the SDK's built-in file reader.
  *
  * The built-in executor resolves relative paths against `process.cwd()`, which in a
- * VS Code extension host is usually "/" — not the workspace — so every relative-path
+ * VS Code extension host is usually "/" - not the workspace - so every relative-path
  * read failed with ENOENT and pushed the model into terminal fallbacks. The terminal
  * and editor tools already run against the workspace root; this makes reads match.
  */

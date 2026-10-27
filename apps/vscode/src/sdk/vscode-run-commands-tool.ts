@@ -74,14 +74,14 @@ export interface VscodeRunCommandsToolOptions {
 	 * Registry of in-flight foreground executions, owned by SdkController.
 	 * When provided, each foreground command can be detached via the
 	 * "Proceed While Running" button. Foreground-only: background (SDK
-	 * child_process) executions cannot be detached — their abort signal
+	 * child_process) executions cannot be detached - their abort signal
 	 * kills the process tree.
 	 */
 	foregroundCommands?: SdkForegroundCommandCoordinator
 }
 
 // ---------------------------------------------------------------------------
-// Foreground execution — VscodeTerminalManager
+// Foreground execution - VscodeTerminalManager
 // ---------------------------------------------------------------------------
 
 function quoteShellArg(arg: string): string {
@@ -240,7 +240,7 @@ export async function executeForeground(
 	// Registered BEFORE terminal acquisition so every command in a parallel
 	// run_commands batch is registered before the user can click the button.
 	// A command still awaiting its terminal when the user detaches records the
-	// request and applies it the moment its process starts — otherwise that
+	// request and applies it the moment its process starts - otherwise that
 	// late command would re-block the turn the button just released.
 	const state: { phase: "waiting" | "started" | "detached" | "aborted" } = { phase: "waiting" }
 	let detachedLog: DetachedCommandLog | undefined
@@ -362,10 +362,10 @@ export async function executeForeground(
 		// The chat shows command output at completion, not incrementally.
 		//
 		// This is a second buffer on top of the process's own `fullOutput` (capped at
-		// MAX_FULL_OUTPUT_SIZE — see VscodeTerminalProcess), so it needs its own cap:
+		// MAX_FULL_OUTPUT_SIZE - see VscodeTerminalProcess), so it needs its own cap:
 		// a long-running command emitting many lines must not accumulate them here
-		// without bound. Once the cap is hit, keep only the head and tail — matching
-		// truncateCommandOutput's own head/tail strategy below — since build/test
+		// without bound. Once the cap is hit, keep only the head and tail - matching
+		// truncateCommandOutput's own head/tail strategy below - since build/test
 		// failures usually appear at the end of output.
 		const maxBufferedLines = MAX_UNRETRIEVED_LINES
 		const bufferLine = (line: string): void => {
@@ -440,7 +440,7 @@ export async function executeForeground(
 
 			const completionDetails = process.getCompletionDetails?.()
 
-			// A terminal closed mid-command has no exit code and no reliable output —
+			// A terminal closed mid-command has no exit code and no reliable output -
 			// whatever the command was doing (e.g. running a test suite) was interrupted,
 			// so this must never look like success to the agent.
 			if (completionDetails?.terminalClosed) {
@@ -467,7 +467,7 @@ export async function executeForeground(
 			// Plumb the exit code from onDidEndTerminalShellExecution through to the tool
 			// result. When shell integration reports a non-zero exit code, throw
 			// CommandExitError so the SDK's shell tool wrapper marks the result as
-			// `success: false` and includes the exit code in the error message —
+			// `success: false` and includes the exit code in the error message -
 			// matching the background (child_process) executor's behavior.
 			// If no exit code was captured after an observed completion, return the
 			// output as-is. Unobserved completion is handled explicitly above.
@@ -545,7 +545,7 @@ function createVscodeShellExecutor(options: VscodeRunCommandsToolOptions, state:
 	const executionMode = options.vscodeTerminalExecutionMode ?? "vscodeTerminal"
 	const terminalType = isStandaloneHost() ? "standalone" : "vscode"
 
-	// Lazy-init background executor — recreated when the snapshotted shell changes.
+	// Lazy-init background executor - recreated when the snapshotted shell changes.
 	let bgExecutor: ShellExecutor | undefined
 	let bgExecutorShell: string | undefined
 
@@ -560,7 +560,7 @@ function createVscodeShellExecutor(options: VscodeRunCommandsToolOptions, state:
 		const { profileId, shell } = state.snapshot
 
 		if (executionMode === "backgroundExec") {
-			// Background path — use SDK's createShellExecutor.
+			// Background path - use SDK's createShellExecutor.
 			// Recreate the executor if the shell has changed
 			if (!bgExecutor || bgExecutorShell !== shell) {
 				bgExecutorShell = shell
@@ -590,7 +590,7 @@ function createVscodeShellExecutor(options: VscodeRunCommandsToolOptions, state:
 			}
 		}
 
-		// Foreground path — use VscodeTerminalManager
+		// Foreground path - use VscodeTerminalManager
 		if (!terminalManager) {
 			terminalManager = getTerminalManager()
 		}

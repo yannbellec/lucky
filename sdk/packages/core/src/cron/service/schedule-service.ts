@@ -93,7 +93,7 @@ export interface HubScheduleServiceOptions {
 	dbPath?: string;
 	/**
 	 * Cron spec source/report location forwarded to the runner. Defaults to
-	 * the global `~/.cline/cron` directory — tests must override this so run
+	 * the global `~/.cline/cron` directory - tests must override this so run
 	 * reports land in a temp directory instead of the user's real one.
 	 */
 	specs?: ResolveCronSpecsDirOptions;

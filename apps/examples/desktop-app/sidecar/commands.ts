@@ -1783,7 +1783,7 @@ async function listAvailableCodeEditors(): Promise<
 /** Launches `executable filePath` detached; false if the CLI is unusable. */
 function launchEditorCli(executable: string, filePath: string): boolean {
 	// Windows `where` resolves editor CLIs to .cmd/.bat shims, which
-	// spawn() cannot launch directly — route those through cmd.exe.
+	// spawn() cannot launch directly - route those through cmd.exe.
 	const isWindowsShim =
 		process.platform === "win32" && /\.(cmd|bat)$/i.test(executable);
 	if (isWindowsShim && WINDOWS_CMD_UNSAFE_PATTERN.test(executable)) {
@@ -2782,7 +2782,7 @@ export async function handleCommand(
 		// would be captured as error telemetry and shown raw to the user.
 		const authToken = await resolveFreshClineAuthToken(manager, ctx);
 		if (!authToken) {
-			// Backstop for credentials that go away without a settings write —
+			// Backstop for credentials that go away without a settings write -
 			// an expired or server-revoked token. Explicit sign-out is handled
 			// at its source in `save_provider_settings`; this catches the rest
 			// so a stale account never keeps serving its rollout cohort.
@@ -3093,7 +3093,7 @@ export async function handleCommand(
 		}
 		// Sign-out is a `save_provider_settings` that blanks the cline auth block
 		// (see signOut in webview settings/account-view.tsx), so this is the
-		// authoritative signal — it fires the moment credentials are cleared
+		// authoritative signal - it fires the moment credentials are cleared
 		// rather than waiting for the next account fetch.
 		if (saved.providerId === "cline" || saved.providerId === "cline-pass") {
 			syncAccountContextFromSettings(ctx, manager);

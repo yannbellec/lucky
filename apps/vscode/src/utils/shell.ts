@@ -419,7 +419,7 @@ function getInstalledWindowsPwsh(): string | undefined {
 /**
  * The shell VS Code launches on Windows when the user has not configured a
  * default terminal profile: its built-in default is PowerShell (pwsh when
- * installed, Windows PowerShell otherwise) — never cmd.exe. Mirroring that
+ * installed, Windows PowerShell otherwise) - never cmd.exe. Mirroring that
  * here keeps the "default" profile meaning the same shell whether commands
  * run in a visible VS Code terminal or a background child process.
  */
@@ -435,7 +435,7 @@ export function getShell(): string {
 		if (windowsShell) {
 			return windowsShell
 		}
-		// No profile configured — match the shell VS Code's default terminal
+		// No profile configured - match the shell VS Code's default terminal
 		// would launch. userInfo()/COMSPEC are not consulted: VS Code's own
 		// terminal ignores them too, and they would resolve to cmd.exe.
 		return getWindowsDefaultShell()

@@ -1176,7 +1176,7 @@ function neutralizeWithPatterns(svg: string): string {
  * schemes, but still renders `click <node> "https://…"` directives as live
  * `<a xlink:href>` anchors inside the SVG. Streamdown injects that SVG with
  * `dangerouslySetInnerHTML`, so those anchors never pass through a product's
- * React link component — bypassing whatever link policy the host applies to
+ * React link component - bypassing whatever link policy the host applies to
  * ordinary Markdown links (confirmation prompts, external-open routing), and in
  * a desktop webview letting a click navigate the app away from itself.
  *

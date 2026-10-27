@@ -501,7 +501,7 @@ describe("sdk-gateway", () => {
 
 	it("never lowers the default below the flat cap for a model with a small output budget", () => {
 		// The catalog fraction (30% of 8,000 = 2,400) is smaller than the flat
-		// default, so the flat default applies here instead — the model's own
+		// default, so the flat default applies here instead - the model's own
 		// output-budget cap (pushed separately below) is what then clamps the
 		// result down to what this model can actually emit (8,000), not the
 		// fraction shrinking the default further on top of that.

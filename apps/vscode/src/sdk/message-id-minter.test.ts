@@ -13,7 +13,7 @@ describe("MessageIdMinter", () => {
 		expect(new Set(ids).size).toBe(ids.length)
 	})
 
-	it("never reads the clock — ids are deterministic from the seed", () => {
+	it("never reads the clock - ids are deterministic from the seed", () => {
 		const a = new MessageIdMinter(0)
 		const b = new MessageIdMinter(0)
 		expect([a.nextId(), a.nextId(), a.nextId()]).toEqual([b.nextId(), b.nextId(), b.nextId()])
@@ -56,7 +56,7 @@ describe("MessageIdMinter", () => {
 		minter.nextId()
 		minter.bumpEpoch()
 		minter.nextSeq()
-		// id advanced by 2, seq by 1, epoch by 1 — no cross-contamination
+		// id advanced by 2, seq by 1, epoch by 1 - no cross-contamination
 		expect(minter.nextId()).toBe(3)
 		expect(minter.nextSeq()).toBe(2)
 		expect(minter.bumpEpoch()).toBe(2)

@@ -164,7 +164,7 @@ async function mergeKnownModels(
 	// For providers with a registered public model source (Ollama, LM Studio),
 	// the live response is the authoritative list of what the user has
 	// actually installed. Skip the bundled catalog so the picker doesn't
-	// show models that aren't downloaded — even when the live fetch fails or
+	// show models that aren't downloaded - even when the live fetch fails or
 	// returns nothing. Falling back to the bundled (cloud) catalog here would
 	// auto-select a model the user never installed (e.g. Ollama silently
 	// defaulting to a cloud nemotron model when the local server is down).
@@ -209,7 +209,7 @@ async function mergeKnownModels(
 		// models are temporarily unavailable through Cline's inference backend,
 		// so filter them only at the Cline catalog boundary. buildClineModels
 		// applies the same restriction to the bundled catalog. User overrides are
-		// also subject to this filter — the backend rejects image output
+		// also subject to this filter - the backend rejects image output
 		// regardless of where the model was configured. Remove both filter call
 		// sites together when the backend gains image-output support.
 		return Llms.sortModelsByReleaseDate(
@@ -955,7 +955,7 @@ export async function resolveProviderConfig(
 				? await getPrivateProviderModels(providerId, modelCatalog, config)
 				: {};
 		// Live model sources (optionally authenticated) run whenever `modelsSourceUrl` is
-		// registered for the provider — even if the caller didn't pass a
+		// registered for the provider - even if the caller didn't pass a
 		// `config`. Falls back to the spec's default base URL so a fresh install
 		// still hits the default local model endpoint. Unless the caller opted
 		// into `failOnError`, failures are swallowed below so an unreachable

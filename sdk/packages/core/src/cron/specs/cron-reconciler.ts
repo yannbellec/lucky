@@ -67,7 +67,7 @@ function walk(dir: string): string[] {
 		for (const entry of entries) {
 			const full = `${current}/${entry.name}`;
 			if (entry.isDirectory()) {
-				// Skip the generated reports subdirectory — not spec sources.
+				// Skip the generated reports subdirectory - not spec sources.
 				if (entry.name === "reports") continue;
 				stack.push(full);
 				continue;
@@ -133,7 +133,7 @@ export class CronReconciler {
 		for (const spec of existing) {
 			// Hub-managed schedules live only in cron.db with a virtual
 			// sourcePath (`hub/schedules/<id>.cron.md`) that never exists on
-			// disk — they must not be treated as deleted spec files.
+			// disk - they must not be treated as deleted spec files.
 			if (isHubManagedSpec(spec)) continue;
 			if (!seenPaths.has(spec.sourcePath)) {
 				this.handleFileDeleted(spec);
@@ -239,7 +239,7 @@ export class CronReconciler {
 				this.store.updateSpecNextRunAt(spec.specId, nextIso);
 			}
 		} catch {
-			// Invalid cron pattern — leave next_run_at as is; the upsert's
+			// Invalid cron pattern - leave next_run_at as is; the upsert's
 			// parse_status already reflects the spec correctness.
 		}
 	}

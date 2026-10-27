@@ -716,7 +716,7 @@ describe("handleConnectorUserTurn", () => {
 		runtime.sendRuntimeSession.mockImplementation(async (sessionId: string) => {
 			if (sessionId === "wedged-session") {
 				// Crossing the hub's JSON boundary strips the error class, so only the
-				// message survives — which is exactly what the connector sees.
+				// message survives - which is exactly what the connector sees.
 				throw new Error(
 					"SessionRuntime.shutdown called while a run is in progress (agentId=agent_123)",
 				);

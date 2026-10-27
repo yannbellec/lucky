@@ -133,9 +133,9 @@ export class MessageTranslatorState {
 	private streamingReasoningText = ""
 	/** Current streaming tool message timestamp */
 	private streamingToolTs: number | undefined
-	/** Stored tool input from content_start — used at content_end which doesn't carry input */
+	/** Stored tool input from content_start - used at content_end which doesn't carry input */
 	private streamingToolInput: unknown | undefined
-	/** Stored tool name from content_start — used at content_end for consistency */
+	/** Stored tool name from content_start - used at content_end for consistency */
 	private streamingToolName: string | undefined
 	/** Output snapshot for the active command tool's partial row. */
 	private streamingCommandOutput: { toolCallId: string | undefined; text: string; totalChars: number } | undefined
@@ -393,13 +393,13 @@ export class MessageTranslatorState {
 		this.errorSeen = true
 	}
 
-	/** Check if this turn surfaced an error — drives the "error" turn phase (Retry / New Task) */
+	/** Check if this turn surfaced an error - drives the "error" turn phase (Retry / New Task) */
 	wasErrorSeen(): boolean {
 		return this.errorSeen
 	}
 
 	// -----------------------------------------------------------------------
-	// Turn-final text tracking — the SDK agent usually ends a turn with a plain
+	// Turn-final text tracking - the SDK agent usually ends a turn with a plain
 	// text response instead of a completion tool. When a turn ends cleanly with
 	// text as its last content, that text row is retagged in place (same ts) to
 	// say:"completion_result" (act) or say:"plan_completion_result" (plan) so
@@ -434,7 +434,7 @@ export class MessageTranslatorState {
 	}
 
 	// -----------------------------------------------------------------------
-	// spawn_agent tracking — aggregates parallel spawn_agent tool calls into
+	// spawn_agent tracking - aggregates parallel spawn_agent tool calls into
 	// the rich SubagentStatusRow UI (use_subagents + subagent messages).
 	// -----------------------------------------------------------------------
 
@@ -540,7 +540,7 @@ export class MessageTranslatorState {
 	 * Reset per-iteration STREAMING state: the open text/reasoning/tool stream pointers and the
 	 * spawn-agent aggregation. Called on each `iteration_start`, which is mid-turn within the same
 	 * conversation, so it deliberately does NOT touch turn-outcome signals such as
-	 * `attemptCompletionSeen` — those are scoped to the whole turn and survive its iterations.
+	 * `attemptCompletionSeen` - those are scoped to the whole turn and survive its iterations.
 	 */
 	reset(): void {
 		this.streamingTextTs = undefined
@@ -592,7 +592,7 @@ const FILESYSTEM_PATH_TOOLS: ReadonlySet<ClineSayTool["tool"]> = new Set([
  * Relativize a ClineSayTool's filesystem paths against the task cwd before it
  * is shown in the chat view, restoring the classic extension's getReadablePath
  * display behavior that was lost in the SDK migration (the SDK works with
- * absolute paths). Display-only — executors receive the raw tool input.
+ * absolute paths). Display-only - executors receive the raw tool input.
  */
 function toDisplaySayTool(sayTool: ClineSayTool, cwd: string | undefined): ClineSayTool {
 	if (!cwd || !FILESYSTEM_PATH_TOOLS.has(sayTool.tool)) {
@@ -601,7 +601,7 @@ function toDisplaySayTool(sayTool: ClineSayTool, cwd: string | undefined): Cline
 	if (sayTool.tool === "readFile") {
 		// The webview's readFile card opens `content` in the editor on click, so it
 		// carries the absolute path (classic-extension behavior). Already-absolute
-		// paths pass through untouched — path.resolve would rewrite a drive-less
+		// paths pass through untouched - path.resolve would rewrite a drive-less
 		// absolute path onto the current drive on Windows.
 		const openTarget = sayTool.path
 			? path.isAbsolute(sayTool.path)
@@ -643,7 +643,7 @@ function toDisplayPath(rawPath: string | undefined, cwd: string): string | undef
 	if (relative === "") {
 		return path.basename(rawPath).replace(/\\/g, "/")
 	}
-	// Outside the cwd (or on another drive on Windows) — keep the absolute path.
+	// Outside the cwd (or on another drive on Windows) - keep the absolute path.
 	// Match ".." only as a whole segment so an in-cwd entry literally named
 	// "..config" is not misclassified as outside.
 	if (relative === ".." || relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative)) {
@@ -691,8 +691,8 @@ function relativizePatchPaths(patch: string | undefined, cwd: string): string | 
  *   fetch_web_content/web_fetch        → webFetch
  *   web_search                         → webSearch
  *   skills/use_skill                   → useSkill
- *   ask_question/ask_followup_question → (not a visual tool — handled by askQuestion executor in SdkController)
- *   MCP tools (serverName__toolName)   → (handled before reaching sdkToolToClineSayTool — emitted as say="use_mcp_server")
+ *   ask_question/ask_followup_question → (not a visual tool - handled by askQuestion executor in SdkController)
+ *   MCP tools (serverName__toolName)   → (handled before reaching sdkToolToClineSayTool - emitted as say="use_mcp_server")
  */
 function sdkToolToClineSayTool(toolName: string, input?: unknown): ClineSayTool {
 	// Parse input if it's a string (some SDK tools pass stringified JSON)
@@ -736,7 +736,7 @@ function sdkToolToClineSayTool(toolName: string, input?: unknown): ClineSayTool 
 			const patch = getStringField(parsedInput, "patch") ?? getStringField(parsedInput, "diff")
 			const oldText = getStringField(parsedInput, "old_text") ?? getStringField(parsedInput, "old_str")
 			// `insert_line` inserts into an existing file (the SDK editor executor requires
-			// the file to already exist), so it is an edit — not a new-file creation. Without
+			// the file to already exist), so it is an edit - not a new-file creation. Without
 			// this the card mislabels a prepend/insert as "Cline wants to create a new file".
 			const insertLine = getNumberField(parsedInput, "insert_line")
 			const isEdit = toolName === "replace_in_file" || !!oldText || insertLine != null
@@ -786,10 +786,10 @@ function sdkToolToClineSayTool(toolName: string, input?: unknown): ClineSayTool 
 		case "search_codebase":
 		case "search_files": {
 			// The SDK's SearchCodebaseUnionInputSchema accepts multiple formats:
-			//   1. { queries: string[] }  — standard object (parsedInput handles this)
-			//   2. { queries: string }    — queries as single string
-			//   3. string[]               — bare array (parseToolInput returns undefined for arrays)
-			//   4. string                 — bare string (parseToolInput tries JSON.parse, returns undefined if not an object)
+			//   1. { queries: string[] }  - standard object (parsedInput handles this)
+			//   2. { queries: string }    - queries as single string
+			//   3. string[]               - bare array (parseToolInput returns undefined for arrays)
+			//   4. string                 - bare string (parseToolInput tries JSON.parse, returns undefined if not an object)
 			// We must handle all four to avoid showing empty regex in the UI.
 			let regex = ""
 			if (parsedInput) {
@@ -858,7 +858,7 @@ function sdkToolToClineSayTool(toolName: string, input?: unknown): ClineSayTool 
 		}
 
 		default: {
-			// MCP tools and unknown tools — pass through with the raw tool name.
+			// MCP tools and unknown tools - pass through with the raw tool name.
 			const filePath =
 				getStringField(parsedInput, "path") ??
 				getStringField(parsedInput, "url") ??
@@ -887,14 +887,14 @@ function parseToolInput(input: unknown): Record<string, unknown> | undefined {
 				return parsed
 			}
 		} catch {
-			// Not JSON — return undefined
+			// Not JSON - return undefined
 		}
 	}
 	return undefined
 }
 
 /**
- * Whether a tool name is the agent's completion tool — the one that declares the task done and
+ * Whether a tool name is the agent's completion tool - the one that declares the task done and
  * drives the green completion box plus the `completed` turn phase. Two names are accepted:
  * the legacy VSCode extra tool `attempt_completion` (no longer registered for new sessions,
  * but still present in persisted transcripts) and the SDK's built-in `submit_and_exit`
@@ -953,7 +953,7 @@ function extractFileReads(input: Record<string, unknown> | undefined): FileReadR
 /**
  * Map a read request's line range onto ClineSayTool fields. An omitted start_line with an
  * explicit end_line means the read began at line 1; an omitted end_line stays undefined
- * (open-ended read — the UI renders it as "start+").
+ * (open-ended read - the UI renders it as "start+").
  */
 function readLineRangeFields(read: FileReadRequest | undefined): Pick<ClineSayTool, "readLineStart" | "readLineEnd"> {
 	if (!read || (read.startLine == null && read.endLine == null)) {
@@ -992,7 +992,7 @@ function getApplyPatchString(input: unknown): string | undefined {
  * "Cline wants to edit this file" row renders only that file's diff (cline#9904).
  *
  * Returns [] for single-file (or unparseable) patches so callers keep the existing
- * single-message behavior — only genuinely multi-file patches are split.
+ * single-message behavior - only genuinely multi-file patches are split.
  */
 function splitApplyPatchByFile(patch: string): ClineSayTool[] {
 	const lines = patch.split("\n")
@@ -1024,7 +1024,7 @@ function splitApplyPatchByFile(patch: string): ClineSayTool[] {
 	}
 
 	// Only split genuine multi-file patches. Bail out (→ single whole-patch
-	// message) if fewer than two files, or if any block has an empty path — a
+	// message) if fewer than two files, or if any block has an empty path - a
 	// pathless row can't route to the per-file diff view (cline#9904).
 	if (blocks.length < 2 || blocks.some((block) => block.path === "")) {
 		return []
@@ -1278,7 +1278,7 @@ function asFiniteNumber(value: unknown): number | undefined {
 }
 
 /**
- * Status notices that are internal diagnostics with no user-facing copy — their
+ * Status notices that are internal diagnostics with no user-facing copy - their
  * `message` is a slug, not prose. Only these are suppressed; an unlisted status
  * notice renders as an info row so it doesn't vanish silently. Keep in sync
  * with the `emitStatusNotice` call sites in
@@ -1304,7 +1304,7 @@ export function buildCompactionMessage(info: ClineCompactionInfo, ts: number): C
  *
  * This covers auto compaction (driven by turn events). Manual compaction runs
  * outside a turn, so SdkCompactionCoordinator.runCompaction finalizes its own
- * dangling divider in its catch block — if the terminal-state rules change
+ * dangling divider in its catch block - if the terminal-state rules change
  * here, change them there too.
  */
 function finalizeDanglingCompaction(
@@ -1388,7 +1388,7 @@ function translateAgentEvent(event: AgentEvent, state: MessageTranslatorState): 
 					const input = event.input
 
 					// Tool activity after a text block means that text wasn't the
-					// turn-final response — drop the retag candidate.
+					// turn-final response - drop the retag candidate.
 					state.clearTurnFinalText()
 
 					if (state.isToolApprovalDenied(event.toolCallId)) {
@@ -1576,7 +1576,7 @@ function translateAgentEvent(event: AgentEvent, state: MessageTranslatorState): 
 				break
 			}
 
-			// For all other tools, content_update is ignored — the
+			// For all other tools, content_update is ignored - the
 			// content_start message with partial=true is sufficient until
 			// content_end finalizes it.
 			break
@@ -1636,7 +1636,7 @@ function translateAgentEvent(event: AgentEvent, state: MessageTranslatorState): 
 					}
 
 					// A completed tool call after a text block means that text wasn't the
-					// turn-final response — drop the retag candidate.
+					// turn-final response - drop the retag candidate.
 					state.clearTurnFinalText()
 
 					if (state.checkDeniedToolApproval(event.toolCallId) || isKnownToolApprovalDenial(event.error)) {
@@ -1676,7 +1676,7 @@ function translateAgentEvent(event: AgentEvent, state: MessageTranslatorState): 
 							}
 						}
 
-						// Determine overall status — all done when every entry is completed/failed
+						// Determine overall status - all done when every entry is completed/failed
 						const items = state.getSpawnAgentItems()
 						const allDone = items.every((e) => e.status === "completed" || e.status === "failed")
 						const hasFailed = items.some((e) => e.status === "failed")
@@ -1714,7 +1714,7 @@ function translateAgentEvent(event: AgentEvent, state: MessageTranslatorState): 
 							})
 						}
 
-						// Don't clear the generic streaming tool — spawn_agent
+						// Don't clear the generic streaming tool - spawn_agent
 						// didn't use it (we cleared it at content_start)
 						break
 					}
@@ -1736,7 +1736,7 @@ function translateAgentEvent(event: AgentEvent, state: MessageTranslatorState): 
 							partial: false,
 						})
 						// Only the say:"completion_result" is emitted (the green box). No
-						// ask:"completion_result" is produced — the webview's footer/buttons read
+						// ask:"completion_result" is produced - the webview's footer/buttons read
 						// the authoritative TurnState (phase "completed") rather than the message
 						// tail, so the completion UI is immune to trailing bookkeeping events such as
 						// the usage say:"api_req_started" that arrives between content_end and done.
@@ -1887,7 +1887,7 @@ function translateAgentEvent(event: AgentEvent, state: MessageTranslatorState): 
 		}
 
 		case "iteration_start": {
-			// New iteration — reset streaming state for the new turn
+			// New iteration - reset streaming state for the new turn
 			state.reset()
 
 			// Emit an api_req_started message before each API request so the
@@ -1905,7 +1905,7 @@ function translateAgentEvent(event: AgentEvent, state: MessageTranslatorState): 
 		}
 
 		case "iteration_end": {
-			// Iteration ended — no specific message needed
+			// Iteration ended - no specific message needed
 			break
 		}
 
@@ -1967,7 +1967,7 @@ function translateAgentEvent(event: AgentEvent, state: MessageTranslatorState): 
 		case "done": {
 			// Agent turn is complete. Footer/buttons come from the authoritative TurnState the
 			// session-event coordinator sets on turn end (completed when the completion tool was
-			// used this turn, otherwise awaiting_followup) — never from the message tail.
+			// used this turn, otherwise awaiting_followup) - never from the message tail.
 			// A compaction divider still open here means the turn was aborted mid-compaction.
 			finalizeDanglingCompaction(state, messages, "cancelled")
 
@@ -2016,7 +2016,7 @@ function translateAgentEvent(event: AgentEvent, state: MessageTranslatorState): 
 			// guard-blocked command was the turn's only tool call) and the run
 			// keeps going. Treating them as terminal put turns that afterwards
 			// completed cleanly into the "error" phase (Retry / Start New Task)
-			// and cleared the pending completion retag — which broke the
+			// and cleared the pending completion retag - which broke the
 			// plan→act toggle's auto-continue on a presented plan. The turn's
 			// outcome is decided by how it actually ends (done/error), so keep
 			// these out of the chat: any tool failure involved is already shown
@@ -2028,7 +2028,7 @@ function translateAgentEvent(event: AgentEvent, state: MessageTranslatorState): 
 			}
 
 			finalizeDanglingCompaction(state, messages, "failed")
-			// An errored turn didn't end on its text response — no completion retag.
+			// An errored turn didn't end on its text response - no completion retag.
 			state.clearTurnFinalText()
 			if (state.isSuppressedToolApprovalDenial(event.error)) {
 				break
@@ -2113,7 +2113,7 @@ export function translateSessionEvent(event: CoreSessionEvent, state: MessageTra
 			if (agentEvent.type === "done") {
 				result.turnComplete = true
 			}
-			// Recoverable errors don't end the turn — the run continues (see the
+			// Recoverable errors don't end the turn - the run continues (see the
 			// translator's "error" case), so they must not resolve the turn phase.
 			if (
 				agentEvent.type === "error" &&
@@ -2125,7 +2125,7 @@ export function translateSessionEvent(event: CoreSessionEvent, state: MessageTra
 
 			// Track tool success/error for consecutive mistake counting.
 			// A content_end event with contentType "tool" signals a completed
-			// tool call — if event.error is set, the tool failed.
+			// tool call - if event.error is set, the tool failed.
 			if (agentEvent.type === "content_end" && agentEvent.contentType === "tool") {
 				if (
 					agentEvent.error &&
@@ -2159,7 +2159,7 @@ export function translateSessionEvent(event: CoreSessionEvent, state: MessageTra
 				break
 			}
 
-			// Tool hook events — translate to hook_status messages
+			// Tool hook events - translate to hook_status messages
 			const payload = event.payload
 			const hookName = payload.hookEventName
 			const toolName = payload.toolName
@@ -2185,7 +2185,7 @@ export function translateSessionEvent(event: CoreSessionEvent, state: MessageTra
 		}
 
 		case "status": {
-			// Status updates — informational
+			// Status updates - informational
 			Logger.log(`[MessageTranslator] Session status: ${event.payload.status}`)
 			break
 		}
@@ -2360,8 +2360,8 @@ function finalizePersistedToolUse(
 export interface SdkMessagesToClineMessagesOptions {
 	/**
 	 * Whether the transcript's LAST agent turn ended cleanly (per the session record's status).
-	 * Only that final turn is ever retagged into the inferred completion row — persisted
-	 * transcripts carry no per-turn outcome, so earlier turns always render as plain text —
+	 * Only that final turn is ever retagged into the inferred completion row - persisted
+	 * transcripts carry no per-turn outcome, so earlier turns always render as plain text -
 	 * and the terminal text of a session that failed, was cancelled, or died mid-run must not
 	 * be retagged either, or a reopened broken task would render its dangling response as a
 	 * green/plan "done" box. Defaults to true.
@@ -2406,7 +2406,7 @@ export function sdkMessagesToClineMessages(
 		pendingToolUses.clear()
 	}
 
-	// Add or update by ts — the synthesized turn-end `done` below retags an already-emitted
+	// Add or update by ts - the synthesized turn-end `done` below retags an already-emitted
 	// text row in place (same ts), mirroring the live path's upsert-by-ts message store.
 	const upsertClineMessages = (updates: ClineMessage[]) => {
 		for (const update of updates) {
@@ -2424,7 +2424,7 @@ export function sdkMessagesToClineMessages(
 	// retag (green box in act mode, yellow plan box in plan mode) when rehydrated from SDK
 	// history. Only the final turn is eligible: persisted transcripts carry no per-turn
 	// outcome, so an earlier turn that the user cancelled mid-response and then followed up on
-	// is indistinguishable from one that ended cleanly — retagging it would present an
+	// is indistinguishable from one that ended cleanly - retagging it would present an
 	// interrupted response as a deliberate turn end. The final turn's outcome IS known (the
 	// caller gates it on the session record's status via `finalTurnCompleted`).
 	const endFinalTurn = () => {
@@ -2525,7 +2525,7 @@ export function sdkMessagesToClineMessages(
 					case "tool_use":
 						// Tool activity after a text block means that text wasn't the
 						// turn-final response (also covers dangling tool_use blocks whose
-						// results never arrived — an aborted turn must not retag).
+						// results never arrived - an aborted turn must not retag).
 						state.clearTurnFinalText()
 						pendingToolUses.set(block.id, block)
 						break
@@ -2556,7 +2556,7 @@ export function sdkMessagesToClineMessages(
 			const text = message.content.trim()
 			if (text) {
 				// User text marks a turn boundary: drop the preceding turn's outcome
-				// signals (its text is NOT retagged — see endFinalTurn) and pick up the mode
+				// signals (its text is NOT retagged - see endFinalTurn) and pick up the mode
 				// of the NEW turn from this message's wrapper. Synthetic runtime prompts
 				// (task resumption, plan -> act auto-continue) still advance the turn/mode
 				// state but never had a visible bubble live, so don't emit one here either.
@@ -2696,8 +2696,8 @@ function describeModelNotFoundError(rawMessage: string): string | undefined {
 /**
  * Rewrite a Vertex "model not available on the global endpoint" rejection into
  * recovery guidance, or undefined for anything else. The picker intentionally
- * no longer filters the catalog by endpoint capability — endpoint support
- * changes faster than any host-maintained allowlist — so an unsupported pick
+ * no longer filters the catalog by endpoint capability - endpoint support
+ * changes faster than any host-maintained allowlist - so an unsupported pick
  * under `vertexRegion: "global"` surfaces here, loud and actionable, instead
  * of hiding models from the picker.
  *
@@ -2765,8 +2765,8 @@ export function reshapeErrorForWebview(
 
 	// A BYOK provider rejected the configured credentials (llms classified the
 	// HTTP 401/403 while the typed error was still available). Raw provider
-	// bodies here are dead ends — e.g. Mistral's `{"detail":"Invalid API Key"}`
-	// is identical for a wrong, empty, or wrong-scope key — so point the user
+	// bodies here are dead ends - e.g. Mistral's `{"detail":"Invalid API Key"}`
+	// is identical for a wrong, empty, or wrong-scope key - so point the user
 	// at the key configuration instead. Cline-account providers keep the JSON
 	// path below (the webview renders their auth failures as a sign-in card),
 	// and so does an *unknown* provider id: rewriting without knowing the
@@ -2781,7 +2781,7 @@ export function reshapeErrorForWebview(
 	try {
 		parsed = JSON.parse(rawMessage)
 	} catch {
-		// Not JSON — try to find JSON embedded in the message
+		// Not JSON - try to find JSON embedded in the message
 		// (e.g. "Error: {\"code\":\"insufficient_credits\",...}")
 		const jsonMatch = rawMessage.match(/\{[\s\S]*"code"[\s\S]*\}/)
 		if (jsonMatch) {
@@ -2794,7 +2794,7 @@ export function reshapeErrorForWebview(
 	}
 
 	if (!parsed) {
-		// Plain-text error — the SDK sometimes strips structured API error JSON
+		// Plain-text error - the SDK sometimes strips structured API error JSON
 		// and delivers only a human-readable string such as
 		// "Not enough credits available" or "Your daily spend limit of $20.00
 		// has been reached." Detect these by keyword and synthesize the
@@ -2843,7 +2843,7 @@ export function reshapeErrorForWebview(
 		return rawMessage
 	}
 
-	// Detect insufficient credits (402) — needs code + current_balance for
+	// Detect insufficient credits (402) - needs code + current_balance for
 	// ClineError.getErrorType() to return ClineErrorType.Balance
 	const code = (parsed.code as string) ?? error.code
 	if (code === "insufficient_credits" && typeof parsed.current_balance === "number") {

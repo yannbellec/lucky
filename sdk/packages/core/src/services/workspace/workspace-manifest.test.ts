@@ -200,7 +200,7 @@ describe("generateWorkspaceInfoWithDiagnostics", () => {
 		await simpleGit({ baseDir: dir }).init();
 		const result = await generateWorkspaceInfoWithDiagnostics(dir);
 		expect(result.vcsType).toBe("git");
-		// `git rev-parse HEAD` fails on an empty repo — that is a normal
+		// `git rev-parse HEAD` fails on an empty repo - that is a normal
 		// repository state, not a workspace init error.
 		expect(result.error).toBeUndefined();
 		expect(result.info.latestGitCommitHash).toBeUndefined();
@@ -242,7 +242,7 @@ describe("generateWorkspaceInfoWithDiagnostics", () => {
 
 	test("filesystem root omits the hint and passes manifest validation", async () => {
 		// basename of a root path ("/", "C:\\") is "", which WorkspaceInfoSchema
-		// rejects — the hint must be omitted, not empty, or upsertWorkspaceInfo
+		// rejects - the hint must be omitted, not empty, or upsertWorkspaceInfo
 		// throws for every session rooted there.
 		const root = parse(tmpdir()).root;
 		const { info } = await generateWorkspaceInfoWithDiagnostics(root);

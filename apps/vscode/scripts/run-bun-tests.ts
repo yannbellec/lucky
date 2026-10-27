@@ -15,7 +15,7 @@ import path from "node:path"
  *     need, so we resolve the globs ourselves with bun's `Glob`.
  *
  *  2. One process per file. `bun test` runs all files in a single process by
- *     default, so `mock.module(...)` registrations leak between files — suites
+ *     default, so `mock.module(...)` registrations leak between files - suites
  *     mocking the same specifier with different shapes (e.g.
  *     `@/core/storage/StateManager`, `@cline/core`) clobber each other.
  *     `--parallel` runs each file in its own worker process, giving each a fresh

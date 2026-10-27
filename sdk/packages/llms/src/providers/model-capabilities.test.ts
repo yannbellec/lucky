@@ -7,7 +7,7 @@
  * carry their own hand-written `switch`, and they drifted: the pass-through
  * capabilities were handled three different ways, one producer mapped an
  * `audio` capability the catalog schema does not define, and one emitted
- * `["text"]` where the others emitted `undefined` — which gateway gates read
+ * `["text"]` where the others emitted `undefined` - which gateway gates read
  * as an authoritative denial rather than "unknown".
  *
  * So instead of asserting a handful of interesting inputs, the suite walks the

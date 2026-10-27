@@ -260,7 +260,7 @@ async function getUntrackedFilesDiff(cwd: string): Promise<string> {
 		// Pass the filename as a separate argv entry (no shell) so names containing
 		// quotes, `$`, backticks, or spaces can't be interpreted as shell syntax.
 		// `git diff --no-index` exits 1 when the files differ (the normal case here),
-		// which rejects the promise — capture stdout from that. Exit 2 is a real git
+		// which rejects the promise - capture stdout from that. Exit 2 is a real git
 		// error (unreadable file, bad install), so re-throw it instead of swallowing.
 		const { stdout } = await execFileAsync(
 			"git",

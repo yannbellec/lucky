@@ -12,7 +12,7 @@ import { ModelsServiceClient } from "@/services/grpc-client"
  * Neutral placeholder returned while the catalog has not yet produced a
  * concrete `ModelInfo`. Callers that gate behavior on capabilities
  * (TaskHeader cost display, context-window meter, prompt-cache reasoning
- * surfaces) read these defaults as "we don't know yet" — see the field
+ * surfaces) read these defaults as "we don't know yet" - see the field
  * comments at consumers.
  */
 const unknownModelInfo: ModelInfo = {
@@ -82,7 +82,7 @@ function getActiveProviderAndModelId(apiConfiguration: ReturnType<typeof useExte
  * The returned `selectedModelInfo` may be `unknownModelInfo` for a few
  * render frames while the gRPC call is in flight, especially the first
  * time a provider is selected after a config change. UI callers must
- * treat `unknownModelInfo` as "no data yet" — render placeholders, do
+ * treat `unknownModelInfo` as "no data yet" - render placeholders, do
  * not assume features are unsupported.
  */
 export function useNormalizedApiConfiguration(mode: Mode): NormalizedApiConfig {

@@ -1,7 +1,7 @@
 /**
  * Wire-level proof of the durable-event upgrade: a client that was never
  * connected while a run streamed can subscribe later with a cursor and
- * receive the whole history over a real WebSocket — the Hub no longer
+ * receive the whole history over a real WebSocket - the Hub no longer
  * requires a witness for events to survive.
  */
 
@@ -175,7 +175,7 @@ describe("hub event replay over the wire", () => {
 		servers.add(server);
 
 		// Writer connection: create a session and run a turn with NO event
-		// subscription anywhere — the pre-upgrade Hub dropped these events.
+		// subscription anywhere - the pre-upgrade Hub dropped these events.
 		const writer = await openSocket(server.url, server.authToken);
 		const writerEvents: HubEventEnvelope[] = [];
 		await commandOverSocket(writer, writerEvents, {
@@ -227,7 +227,7 @@ describe("hub event replay over the wire", () => {
 		expect(new Set(sequences).size).toBe(sequences.length);
 
 		// A live-only subscriber (legacy frame, no cursor) gets nothing from
-		// history — the legacy contract is untouched.
+		// history - the legacy contract is untouched.
 		const legacy = await openSocket(server.url, server.authToken);
 		const legacyEvents: HubEventEnvelope[] = [];
 		legacy.on("message", (raw) => {

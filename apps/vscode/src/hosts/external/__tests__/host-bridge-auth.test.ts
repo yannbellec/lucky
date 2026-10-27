@@ -14,7 +14,7 @@ const originalToken = process.env.CLINE_CORE_CONNECTION_TOKEN
  * Runs the same bootstrap step a spawned core does: the host puts the token in
  * the environment, startup captures it and scrubs the environment. Tests that
  * bypassed this and read env directly missed that the header must come from
- * the retained copy — after bootstrap the variable is gone.
+ * the retained copy - after bootstrap the variable is gone.
  */
 function setToken(token: string | undefined) {
 	if (token === undefined) {

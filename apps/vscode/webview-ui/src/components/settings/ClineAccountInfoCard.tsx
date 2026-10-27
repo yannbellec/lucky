@@ -44,7 +44,7 @@ export const ClineAccountInfoCard = ({ usageLink }: { usageLink?: string }) => {
 			) : (
 				<div className="flex flex-col gap-3">
 					<VSCodeButton className="mt-0" disabled={isLoginLoading} onClick={handleLogin}>
-						Sign Up with Cline
+						Sign Up with Lucky
 						{isLoginLoading && (
 							<span className="ml-1 animate-spin">
 								<span className="codicon codicon-refresh" />

@@ -64,7 +64,7 @@ export class OpencodeImportAdapter implements SessionImportAdapter {
 	/**
 	 * opencode keeps its database open in WAL mode while the app runs.
 	 * Snapshot the db (+ WAL/SHM) into a temp dir and read the copy so we
-	 * never contend with — or corrupt — the live store. The snapshot is kept
+	 * never contend with - or corrupt - the live store. The snapshot is kept
 	 * for the batch (a large db copied once per imported session was the
 	 * dominant cost) and released by dispose().
 	 */

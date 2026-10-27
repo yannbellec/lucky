@@ -291,7 +291,7 @@ export class PendingPromptsController {
 
 	/**
 	 * Drops every queued prompt. Only called when the user aborts a
-	 * queue-initiated turn — that gesture means "stop the queued work", not
+	 * queue-initiated turn - that gesture means "stop the queued work", not
 	 * just "stop this response", so the remainder must not auto-run.
 	 */
 	discardQueue(session: ActiveSession): void {
@@ -349,7 +349,7 @@ export class PendingPromptsController {
 			});
 			// A turn that resolves with an error finish ran (the prompt is in
 			// the conversation and the error is surfaced), so the entry is not
-			// requeued — but stop draining instead of firing the remaining
+			// requeued - but stop draining instead of firing the remaining
 			// queue into a failing provider. The rest stays queued and drains
 			// on the next enqueue/update or successful turn.
 			if (isErrorFinish(result)) {

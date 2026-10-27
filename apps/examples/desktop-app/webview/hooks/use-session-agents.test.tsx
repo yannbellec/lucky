@@ -93,7 +93,7 @@ describe("useSessionAgents", () => {
 		// Regression: the read used to be gated on the header tally, which is
 		// derived from the newest messages only. A session whose spawn calls had
 		// aged out of that window reported zero agents, so the roster was never
-		// queried, so the tally stayed zero — the pill could never appear and the
+		// queried, so the tally stayed zero - the pill could never appear and the
 		// popover that would have triggered the read could never be opened.
 		invokeMock.mockResolvedValue([agentRow("a", "aged-out")]);
 		await render({ sessionId: "a", panelOpen: false, sessionActive: false });
@@ -228,7 +228,7 @@ describe("useSessionAgents", () => {
 	it("ignores an older overlapping read that resolves last", async () => {
 		// Two reads for the SAME session can overlap: a poll tick alongside an
 		// on-open or turn-finished read. A session-id-only guard admits both, so
-		// arrival order decides — and an older snapshot landing last would revert
+		// arrival order decides - and an older snapshot landing last would revert
 		// what the newer one already reported.
 		let resolveOlder: ((value: unknown) => void) | undefined;
 		let resolveNewer: ((value: unknown) => void) | undefined;

@@ -9,7 +9,7 @@
  * Fields that do **not** round-trip into `AgentRuntimeConfig`
  * (e.g. `execution.maxConsecutiveMistakes`, `execution.loopDetection`) are
  * consumed by `SessionRuntime` / `MistakeTracker` /
- * `LoopDetectionTracker` — not passed through here.
+ * `LoopDetectionTracker` - not passed through here.
  */
 
 import type {
@@ -75,7 +75,7 @@ export interface CreateAgentRuntimeConfigInput {
 	 */
 	readonly completionPolicy?: AgentRuntimeConfig["completionPolicy"] | null;
 	/**
-	 * Override for `AgentRuntimeConfig.systemPrompt` — useful when
+	 * Override for `AgentRuntimeConfig.systemPrompt` - useful when
 	 * the caller has composed additional guidance (e.g. via
 	 * `LocalRuntimeHost.composeSystemPrompt`). Defaults to
 	 * `agentConfig.systemPrompt`.

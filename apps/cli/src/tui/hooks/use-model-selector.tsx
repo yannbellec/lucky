@@ -443,7 +443,7 @@ export function useModelSelector(opts: {
 					config.providerId === "cline-pass"
 				) {
 					// ClinePass gets the same sectioned picker with Subscribed/Free
-					// sections — free models are selectable while staying on ClinePass
+					// sections - free models are selectable while staying on ClinePass
 					const featuredProviderId = config.providerId;
 					const clineResult = await dialog.choice<string>({
 						style: { maxHeight: termHeight - 2 },

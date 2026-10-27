@@ -9,7 +9,7 @@
 //   1. an unset thinking setting must be *omitted* from the request (not sent
 //      as `think: false`), so the Ollama server default applies;
 //   2. a mid-stream `{"error": ...}` object must surface as an error stream
-//      part with an `error` finish reason — not be dropped and reported as a
+//      part with an `error` finish reason - not be dropped and reported as a
 //      clean finish;
 //   3. an attachment-only user turn must serialize `content` as a string
 //      (Ollama declares `Message.content` as a string), never `[]`;

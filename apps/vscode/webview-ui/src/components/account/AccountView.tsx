@@ -249,7 +249,7 @@ const ClineAccountView = ({ clineUser, userOrganizations, activeOrganization, cl
 				{isClineTester && environment !== "selfHosted" && (
 					<div className="w-full gap-1 items-end">
 						<VSCodeDivider className="w-full my-3" />
-						<div className="text-sm font-semibold">Cline Environment</div>
+						<div className="text-sm font-semibold">Lucky Environment</div>
 						<VSCodeDropdown
 							className="w-full mt-1"
 							currentValue={clineEnv}

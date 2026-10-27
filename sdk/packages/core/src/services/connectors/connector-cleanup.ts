@@ -16,8 +16,8 @@ export interface CleanupConnectorInstanceOptions {
 /**
  * Reap one dead connector instance through the CLI.
  *
- * What has to be cleaned up — the process state file, thread→session bindings,
- * and the hub sessions the connector owned — is all connector-specific knowledge
+ * What has to be cleaned up - the process state file, thread→session bindings,
+ * and the hub sessions the connector owned - is all connector-specific knowledge
  * that lives in the CLI's adapters. Rather than duplicate those conventions in
  * the hub, the supervisor shells back into the CLI's own stop path, which
  * already does exactly this for a process that is no longer running.

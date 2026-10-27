@@ -123849,7 +123849,7 @@ export const GENERATED_PROVIDER_MODELS: {
     },
     "gemini-2.5-flash-lite-preview-09-2025-thinking": {
       "id": "gemini-2.5-flash-lite-preview-09-2025-thinking",
-      "name": "Gemini 2.5 Flash Lite Preview (09/2025) – Thinking",
+      "name": "Gemini 2.5 Flash Lite Preview (09/2025) - Thinking",
       "contextWindow": 1048576,
       "maxInputTokens": 1048576,
       "maxTokens": 65536,
@@ -123937,7 +123937,7 @@ export const GENERATED_PROVIDER_MODELS: {
     },
     "gemini-2.5-flash-preview-09-2025-thinking": {
       "id": "gemini-2.5-flash-preview-09-2025-thinking",
-      "name": "Gemini 2.5 Flash Preview (09/2025) – Thinking",
+      "name": "Gemini 2.5 Flash Preview (09/2025) - Thinking",
       "contextWindow": 1048576,
       "maxInputTokens": 1048576,
       "maxTokens": 65536,

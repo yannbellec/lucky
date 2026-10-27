@@ -534,7 +534,7 @@ describe("ChatMessages tool disclosures", () => {
 
 		await renderMessages(tools);
 
-		// One row per call — the multi-file read keeps its own count, and each
+		// One row per call - the multi-file read keeps its own count, and each
 		// edit stands alone; nothing merges across calls.
 		expect(container.querySelectorAll(".cline-chat-tool")).toHaveLength(5);
 		expect(container.textContent).toContain("Read 2 files");
@@ -1167,7 +1167,7 @@ describe("ChatMessages tool disclosures", () => {
 			},
 		]);
 
-		// Steering nudges are machinery talking to the model — not rendered
+		// Steering nudges are machinery talking to the model - not rendered
 		// at all, and never as a user bubble.
 		expect(container.textContent).toContain("tell me the current time");
 		expect(container.textContent).not.toContain("[SYSTEM]");

@@ -438,7 +438,7 @@ describe("UnifiedSessionPersistenceService", () => {
 				"completed",
 				"[done] completed",
 				{
-					text: "Classes wrap the world\nWrite once, run on every machine —\nVerbose, yet it soars",
+					text: "Classes wrap the world\nWrite once, run on every machine -\nVerbose, yet it soars",
 					usage: {
 						inputTokens: 42,
 						outputTokens: 17,
@@ -456,7 +456,7 @@ describe("UnifiedSessionPersistenceService", () => {
 							content: [
 								{
 									type: "text",
-									text: "Classes wrap the world\nWrite once, run on every machine —\nVerbose, yet it soars",
+									text: "Classes wrap the world\nWrite once, run on every machine -\nVerbose, yet it soars",
 								},
 							],
 						},

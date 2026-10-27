@@ -47,7 +47,7 @@ jobs:
         run: bun install --frozen-lockfile
 
       # @cline/ui imports @cline/shared/browser (generated-media), which
-      # resolves to dist output — build it before anything typechecks or
+      # resolves to dist output - build it before anything typechecks or
       # builds the ui package.
       - name: Build shared package
         run: bun -F @cline/shared build

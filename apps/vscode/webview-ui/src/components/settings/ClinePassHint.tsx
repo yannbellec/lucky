@@ -57,7 +57,7 @@ export const ClinePassHint = ({ selectedProvider, currentMode }: ClinePassHintPr
 			data-testid="cline-pass-settings-hint">
 			<Sparkles className="size-3.5 shrink-0 mt-0.5 text-[var(--vscode-charts-yellow)]" />
 			<div className="grow text-xs text-description">
-				<span className="font-semibold text-foreground">ClinePass</span> — a low-cost subscription for the latest
+				<span className="font-semibold text-foreground">ClinePass</span> - a low-cost subscription for the latest
 				open-weights models.{" "}
 				<button
 					className="cursor-pointer border-0 bg-transparent p-0 text-xs text-[var(--vscode-textLink-foreground)] underline hover:text-[var(--vscode-textLink-activeForeground,var(--vscode-textLink-foreground))]"

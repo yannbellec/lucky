@@ -27,7 +27,7 @@ function consumedFilesMap(session: LiveSession): Map<string, string[]> {
 // written to `<session-data>/<sessionId>/user-attachments/` so the SDK can
 // load them by path at turn start. The sidecar owns these files and must
 // delete them once consumed (turn completed) or discarded (queued prompt
-// removed / session ended) — otherwise user data accumulates on disk.
+// removed / session ended) - otherwise user data accumulates on disk.
 // ---------------------------------------------------------------------------
 
 export function sessionAttachmentsDir(sessionId: string): string {
@@ -114,7 +114,7 @@ export function markQueuedAttachmentsSubmitted(
 
 /**
  * A prompt id reappearing in the queue means a submitted prompt was requeued
- * (e.g. the drain send failed) — move its files back to the queued bucket so
+ * (e.g. the drain send failed) - move its files back to the queued bucket so
  * the turn-end flush does not delete files still pending consumption.
  */
 export function reconcileQueuedAttachments(

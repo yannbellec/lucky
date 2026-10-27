@@ -15,7 +15,7 @@ import { EXIT_CODE_TIMEOUT } from "./constants.js";
 const maxTimeoutMs = 10_000;
 
 /**
- * Internal helper – asserts visibility (or not) for one or more patterns.
+ * Internal helper - asserts visibility (or not) for one or more patterns.
  */
 async function expectTextVisibility(
 	terminal: Terminal,

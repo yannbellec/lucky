@@ -38,8 +38,8 @@ const ClinePassLimitError = ({ message }: ClinePassLimitErrorProps) => {
 			)
 			setDidSwitch(true)
 		} catch (error) {
-			console.error("Failed to switch to Cline usage-based billing:", error)
-			setError("Failed to switch provider. Select Cline Usage-Billing in API Configuration settings.")
+			console.error("Failed to switch to Lucky usage-based billing:", error)
+			setError("Failed to switch provider. Select Lucky Usage-Billing in API Configuration settings.")
 		} finally {
 			setIsSwitching(false)
 		}
@@ -52,7 +52,7 @@ const ClinePassLimitError = ({ message }: ClinePassLimitErrorProps) => {
 			<div className="text-error mb-2">ClinePass limit reached</div>
 			<div className="text-(--vscode-descriptionForeground) text-xs wrap-anywhere">{message}</div>
 			<div className="text-(--vscode-descriptionForeground) text-xs mt-2">
-				Would you like to switch to Usage-Based billing and retry with the Cline provider?
+				Would you like to switch to Usage-Based billing and retry with the Lucky provider?
 			</div>
 			<VSCodeButton
 				appearance="primary"

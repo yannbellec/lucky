@@ -426,7 +426,7 @@ describe("SdkInteractionCoordinator", () => {
 			setTurnPhase,
 		})
 
-		// CLI parity: the decision resolves right away as a stop — no pending
+		// CLI parity: the decision resolves right away as a stop - no pending
 		// prompt that would leave the agent loop running against the provider.
 		await expect(
 			coordinator.handleConsecutiveMistakeLimitReached({

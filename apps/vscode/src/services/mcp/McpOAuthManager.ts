@@ -15,7 +15,7 @@
 //    window is picked up without restarting.
 //  - The interactive authorization flow is HTTP-based token collection via
 //    @cline/core's authorizeMcpServerOAuth, which binds a local loopback
-//    callback server — the same flow the CLI uses.
+//    callback server - the same flow the CLI uses.
 
 import {
 	authorizeMcpServerOAuth,
@@ -34,7 +34,7 @@ import { getServerAuthHash } from "@/utils/mcpAuth"
 
 /**
  * Fallback redirect URL advertised in client metadata for connection-time
- * providers. Matches @cline/core's DEFAULT_HTTP_MCP_REDIRECT_URL — the actual
+ * providers. Matches @cline/core's DEFAULT_HTTP_MCP_REDIRECT_URL - the actual
  * redirect URL used during an interactive flow is chosen by
  * authorizeMcpServerOAuth when it binds its local callback server.
  */
@@ -52,7 +52,7 @@ const MCP_OAUTH_FLOW_TIMEOUT_MS = 10 * 60 * 1000 // 10 minutes
 
 /**
  * Read a server's OAuth state fresh from the shared settings file.
- * Never throws — a missing/unreadable file simply means "no state".
+ * Never throws - a missing/unreadable file simply means "no state".
  */
 function readOAuthState(serverName: string, settingsPath: string): McpServerOAuthState {
 	try {
@@ -89,7 +89,7 @@ async function patchOAuthState(
  * can read tokens (and auto-refresh them with the stored refresh_token). It
  * reads/writes the shared settings file in @cline/core's format.
  *
- * Note: `redirectToAuthorization` here is a no-op signal — connection attempts
+ * Note: `redirectToAuthorization` here is a no-op signal - connection attempts
  * never open a browser. The interactive flow (Authenticate button) goes
  * through McpOAuthManager.startOAuthFlow → authorizeMcpServerOAuth, which
  * runs its own provider with a live local callback server.
@@ -134,7 +134,7 @@ class ClineOAuthClientProvider implements OAuthClientProvider {
 	async tokens(): Promise<OAuthTokens | undefined> {
 		// Always read fresh from disk: tokens may have just been written by the
 		// CLI, another extension window, or the interactive authorize flow.
-		// Expired access tokens are still returned when a refresh_token exists —
+		// Expired access tokens are still returned when a refresh_token exists -
 		// the MCP SDK refreshes them automatically and calls saveTokens().
 		const state = readOAuthState(this.serverName, this.settingsPath)
 		return state.tokens as OAuthTokens | undefined

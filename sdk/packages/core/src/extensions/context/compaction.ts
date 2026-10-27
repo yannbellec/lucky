@@ -48,7 +48,7 @@ export interface ContextPipelinePrepareTurnInput {
 	 * Set by the runtime when the provider rejected the previous request as
 	 * exceeding the model's context window. Forces a compaction regardless of
 	 * the token-estimate trigger (the estimate just proved wrong) and uses the
-	 * deterministic basic strategy — recovery must not depend on another
+	 * deterministic basic strategy - recovery must not depend on another
 	 * successful LLM request.
 	 */
 	overflowRecovery?: boolean;
@@ -331,8 +331,8 @@ export function createContextCompactionPrepareTurn(
 		// PREVIOUS request already exceeds our estimate for the (larger) current
 		// transcript, the estimator is demonstrably under-counting, so scale the
 		// whole budget down by that ratio. Scaling the budget rather than just the
-		// trigger keeps every downstream number — trigger, target and the
-		// projection's message costs — in the same estimate units while still
+		// trigger keeps every downstream number - trigger, target and the
+		// projection's message costs - in the same estimate units while still
 		// corresponding to the provider's real limit; raising only the trigger
 		// would start a compaction that then retains too much and still overflows.
 		//
@@ -482,8 +482,8 @@ export function createContextCompactionPrepareTurn(
 			// deterministically: the agentic strategy's own summarizer call could
 			// overflow the same window (its input budgeting trusts the same
 			// estimator that just undercounted). A custom compactor gets first
-			// shot — it sees mode "overflow_recovery" and owns its transcript
-			// invariants — but its result is held to the same bar basic
+			// shot - it sees mode "overflow_recovery" and owns its transcript
+			// invariants - but its result is held to the same bar basic
 			// compaction aims for: strictly smaller than the input (the runtime
 			// refuses to retry with a request that is not smaller) AND within
 			// the recovery token target. A marginal shrink would spend the

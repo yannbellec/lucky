@@ -84,7 +84,7 @@ export function appendLegacyResumeWarning<T extends { role: string; content: unk
  * api_conversation_history from every API request: it kept the first
  * user-assistant pair, dropped everything up to and including the range end,
  * and stripped orphaned tool_results from the first kept message
- * (ContextManager.getTruncatedMessages — see origin/main). The range was
+ * (ContextManager.getTruncatedMessages - see origin/main). The range was
  * persisted on the history item while the full history stayed on disk.
  *
  * Migration must replay that truncation: converting the full file hands the

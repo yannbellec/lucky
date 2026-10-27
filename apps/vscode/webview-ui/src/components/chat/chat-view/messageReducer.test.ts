@@ -14,7 +14,7 @@ function tsList(state: ReplicaState): number[] {
 	return state.messages.map((m) => m.ts)
 }
 
-describe("messageReducer — deterministic", () => {
+describe("messageReducer - deterministic", () => {
 	it("partial -> final with same ts updates in place (length stays 1, partial ends false)", () => {
 		let s = createReplicaState()
 		s = applyMessage(s, msg(1, 1, 1, true, "Hel"))
@@ -111,7 +111,7 @@ describe("messageReducer — deterministic", () => {
 			.map((m) => ({ ts: m.ts, text: m.text ?? "", partial: m.partial ?? false, ask: m.ask }))
 	}
 
-	describe("messageReducer — order independence", () => {
+	describe("messageReducer - order independence", () => {
 		// A causal log for one epoch: task, streamed text (partial then final, same ts), tool,
 		// and a trailing ask. seq reflects causal mint order.
 		const log: ClineMessage[] = [
@@ -172,7 +172,7 @@ describe("messageReducer — deterministic", () => {
 	// The footer/buttons read turnState; these cover the invariants that keep it correct
 	// under out-of-order delivery and that keep a live transcript from being emptied.
 
-	describe("messageReducer — turnState seq gate", () => {
+	describe("messageReducer - turnState seq gate", () => {
 		it("a snapshot carrying a newer-seq turnState advances the replica's turnState", () => {
 			let s = createReplicaState()
 			s = applyStateSnapshot(s, [msg(1, 1, 1, false, "task")], 1, 1, { phase: "streaming", seq: 5 })
@@ -211,7 +211,7 @@ describe("messageReducer — deterministic", () => {
 		})
 	})
 
-	describe("messageReducer — transcript is never emptied for a live conversation", () => {
+	describe("messageReducer - transcript is never emptied for a live conversation", () => {
 		it("a same-epoch snapshot with an empty transcript does NOT clear an existing one", () => {
 			// A bookkeeping/empty snapshot must not wipe a populated transcript and strand the
 			// webview at messages.length === 0 (which routes Enter to newTask()).

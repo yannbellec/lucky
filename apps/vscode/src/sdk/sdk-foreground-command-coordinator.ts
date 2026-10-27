@@ -6,7 +6,7 @@
  *
  * Owned by SdkController so it outlives session rebuilds (which recreate the
  * tool set and its reused executor closure). Handles are registered per tool
- * invocation — never on the reused executor — so parallel commands in one
+ * invocation - never on the reused executor - so parallel commands in one
  * tool call each get their own handle and log file.
  */
 
@@ -39,7 +39,7 @@ export class SdkForegroundCommandCoordinator {
 	/**
 	 * Track one in-flight foreground execution. Returns an unregister
 	 * function the caller must invoke when the execution settles (completes,
-	 * fails, aborts, or detaches) — typically from a `finally` block.
+	 * fails, aborts, or detaches) - typically from a `finally` block.
 	 */
 	register(handle: ForegroundCommandHandle): () => void {
 		const wasRunning = this.isRunning

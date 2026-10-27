@@ -145,7 +145,7 @@
 		color: var(--muted-foreground);
 	}
 
-	/* Actions appear and vanish instantly — a fade on hover chrome reads as
+	/* Actions appear and vanish instantly - a fade on hover chrome reads as
 	 * lag, not polish. They float as a quiet self-backed rectangle OVER
 	 * whatever follows, so the transcript reserves no blank space for them. */
 	.cline-chat-message-actions {
@@ -331,7 +331,7 @@
 	}
 
 	/* The reveal rule below is `.cline-chat-message:hover`, so hovering anywhere
-	 * in the message pops the action row — including the reasoning disclosure
+	 * in the message pops the action row - including the reasoning disclosure
 	 * nested in the message content. The actions act on the message body, so
 	 * suppress the reveal while the pointer is inside the thinking panel.
 	 * `[data-visible]` still wins, keeping pending/error states pinned open. */
@@ -364,7 +364,7 @@
 	}
 
 	/* Running rows share the thinking indicator's muted gray (the base trigger
-	 * color above) — the spinner alone signals activity. Errors go red; hover
+	 * color above) - the spinner alone signals activity. Errors go red; hover
 	 * brightens without shifting hue. */
 	.cline-chat-tool-trigger[data-status="error"] {
 		color: var(--error-text);
@@ -385,7 +385,7 @@
 	}
 
 	/* Row labels stay on one line, take the full available width, and
-	 * ellipsize at the container edge — the data layer never truncates. */
+	 * ellipsize at the container edge - the data layer never truncates. */
 	.cline-chat-tool-label {
 		min-width: 0;
 		overflow: hidden;

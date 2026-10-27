@@ -353,7 +353,7 @@ export class CodexImportAdapter implements SessionImportAdapter {
 					});
 				} else if (payload.type === "token_count") {
 					// Stamp the latest per-turn usage on the most recent assistant
-					// message — which may still be accumulating in assistantBlocks.
+					// message - which may still be accumulating in assistantBlocks.
 					const info = isRecord(payload.info) ? payload.info : undefined;
 					const usage = isRecord(info?.last_token_usage)
 						? info.last_token_usage

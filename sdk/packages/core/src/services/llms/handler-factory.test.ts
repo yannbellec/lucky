@@ -723,7 +723,7 @@ describe("createAgentModelFromConfig", () => {
 		expect(gatewayMock.createGateway).not.toHaveBeenCalled();
 		expect(typeof result.stream).toBe("function");
 
-		// The handler is resolved lazily — only once the stream is consumed.
+		// The handler is resolved lazily - only once the stream is consumed.
 		expect(gatewayMock.createHandlerAsync).not.toHaveBeenCalled();
 		for await (const _ of await result.stream({
 			systemPrompt: "",

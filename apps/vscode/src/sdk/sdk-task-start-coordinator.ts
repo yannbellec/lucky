@@ -96,7 +96,7 @@ export class SdkTaskStartCoordinator {
 
 			if (usesClineAccountAuth(config.providerId) && !config.apiKey) {
 				Logger.warn(
-					`[SdkController] ${config.providerId} provider selected but no Cline auth token — emitting auth error`,
+					`[SdkController] ${config.providerId} provider selected but no Cline auth token - emitting auth error`,
 				)
 				// No task/session id exists yet, so this preflight auth UI path is
 				// intentionally not recorded as task-joinable provider error telemetry.
@@ -185,7 +185,7 @@ export class SdkTaskStartCoordinator {
 			}
 
 			// A task's stored cwd may have been deleted/moved since the task ran
-			// (or migrated from another machine) — feeding a stale path into the
+			// (or migrated from another machine) - feeding a stale path into the
 			// session bootstrap makes workspace init fail. Fall back to the live
 			// workspace root instead.
 			const storedCwd = historyItem.cwdOnTaskInitialization

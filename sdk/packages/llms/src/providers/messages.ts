@@ -1,5 +1,5 @@
 /**
- * Message Types — re-exported from @cline/shared
+ * Message Types - re-exported from @cline/shared
  */
 export type {
 	ContentBlock,

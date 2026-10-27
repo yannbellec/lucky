@@ -11,7 +11,7 @@
 		},
 		{
 			"id": "sdk-session-lifecycle-telemetry",
-			"rule": "New session start, end, or state-transition code paths in packages/core/src must call the appropriate typed helper from packages/core/src/services/telemetry/core-events.ts (captureTaskCreated, captureTaskCompleted, captureConversationTurnEvent, captureTokenUsage, etc.). Do not inline raw telemetry.capture() calls for session lifecycle events — always use the typed helper, which guarantees a consistent payload shape.",
+			"rule": "New session start, end, or state-transition code paths in packages/core/src must call the appropriate typed helper from packages/core/src/services/telemetry/core-events.ts (captureTaskCreated, captureTaskCompleted, captureConversationTurnEvent, captureTokenUsage, etc.). Do not inline raw telemetry.capture() calls for session lifecycle events - always use the typed helper, which guarantees a consistent payload shape.",
 			"scope": [
 				"sdk/packages/core/src/cline-core/**",
 				"sdk/packages/core/src/runtime/**"

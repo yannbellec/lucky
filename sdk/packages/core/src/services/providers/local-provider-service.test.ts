@@ -458,7 +458,7 @@ describe("models registry parsing", () => {
 // extractModelIdsFromPayload is tested indirectly via addLocalProvider
 // ===========================================================================
 
-describe("addLocalProvider – model ID parsing via modelsSourceUrl", () => {
+describe("addLocalProvider - model ID parsing via modelsSourceUrl", () => {
 	let manager: ProviderSettingsManager;
 	let cleanup: () => void;
 
@@ -1233,10 +1233,10 @@ describe("addLocalProvider – model ID parsing via modelsSourceUrl", () => {
 });
 
 // ===========================================================================
-// addLocalProvider – validation guards
+// addLocalProvider - validation guards
 // ===========================================================================
 
-describe("addLocalProvider – validation", () => {
+describe("addLocalProvider - validation", () => {
 	let manager: ProviderSettingsManager;
 	let cleanup: () => void;
 
@@ -1312,10 +1312,10 @@ describe("addLocalProvider – validation", () => {
 });
 
 // ===========================================================================
-// addLocalProvider – delete compatibility path
+// addLocalProvider - delete compatibility path
 // ===========================================================================
 
-describe("addLocalProvider – delete compatibility", () => {
+describe("addLocalProvider - delete compatibility", () => {
 	let manager: ProviderSettingsManager;
 	let cleanup: () => void;
 
@@ -1377,10 +1377,10 @@ describe("addLocalProvider – delete compatibility", () => {
 });
 
 // ===========================================================================
-// addLocalProvider – defaultModelId selection
+// addLocalProvider - defaultModelId selection
 // ===========================================================================
 
-describe("addLocalProvider – defaultModelId selection", () => {
+describe("addLocalProvider - defaultModelId selection", () => {
 	let manager: ProviderSettingsManager;
 	let cleanup: () => void;
 
@@ -1418,10 +1418,10 @@ describe("addLocalProvider – defaultModelId selection", () => {
 });
 
 // ===========================================================================
-// addLocalProvider – capabilities → vision / reasoning flags
+// addLocalProvider - capabilities → vision / reasoning flags
 // ===========================================================================
 
-describe("addLocalProvider – capabilities", () => {
+describe("addLocalProvider - capabilities", () => {
 	let manager: ProviderSettingsManager;
 	let cleanup: () => void;
 
@@ -1810,7 +1810,7 @@ describe("audio transcription", () => {
 });
 
 // ===========================================================================
-// models.json – built-in provider model overlays
+// models.json - built-in provider model overlays
 // ===========================================================================
 
 describe("authoritative voice model validation", () => {

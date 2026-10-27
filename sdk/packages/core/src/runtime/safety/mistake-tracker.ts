@@ -1,9 +1,9 @@
 /**
  * Per-session consecutive-mistake tracker.
  *
- * @see PLAN.md §3.1 — wrapped around `recordMistake` moved from
- *                    `packages/agents/src/api/error-handling.ts` lines 147–311.
- * @see PLAN.md §3.2.3 — public surface of `MistakeTracker`.
+ * @see PLAN.md §3.1 - wrapped around `recordMistake` moved from
+ *                    `packages/agents/src/api/error-handling.ts` lines 147-311.
+ * @see PLAN.md §3.2.3 - public surface of `MistakeTracker`.
  *
  * The pure procedural `recordMistake(input, deps)` becomes `record(input)`
  * on the class; `consecutiveMistakes` is internal state. Other deps flow
@@ -62,7 +62,7 @@ export interface MistakeTrackerOptions {
 		| ConsecutiveMistakeLimitDecision;
 	/**
 	 * Observability hook fired exactly once per limit hit, right before the
-	 * limit decision is resolved — regardless of whether `onLimitReached` is
+	 * limit decision is resolved - regardless of whether `onLimitReached` is
 	 * configured or what it decides. Used for telemetry.
 	 */
 	readonly onLimitTelemetry?: (ctx: ConsecutiveMistakeLimitContext) => void;
@@ -159,7 +159,7 @@ export class MistakeTracker {
 }
 
 // =============================================================================
-// Mistake Limit Stop Message (pure helper — ported verbatim)
+// Mistake Limit Stop Message (pure helper - ported verbatim)
 // =============================================================================
 
 export function buildMistakeLimitStopMessage(input: {
@@ -192,7 +192,7 @@ export function buildMistakeLimitStopMessage(input: {
 }
 
 // =============================================================================
-// Consecutive Mistake Decision Resolution (pure helper — ported verbatim)
+// Consecutive Mistake Decision Resolution (pure helper - ported verbatim)
 // =============================================================================
 
 async function resolveConsecutiveMistakeDecision(

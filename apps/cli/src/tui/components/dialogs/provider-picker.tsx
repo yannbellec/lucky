@@ -966,7 +966,7 @@ export function OAuthLoginContent(
 }
 
 /**
- * Manual API key entry for OAuth-capable providers — the escape hatch for
+ * Manual API key entry for OAuth-capable providers - the escape hatch for
  * when OAuth login isn't working. Saving clears any stored OAuth tokens so
  * the manual key takes effect (see saveManualProviderApiKey).
  */

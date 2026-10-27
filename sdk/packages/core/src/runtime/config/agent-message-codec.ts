@@ -83,7 +83,7 @@ export function messageToAgentMessages(
 	}
 
 	// A message that is already a single tool result needs no id
-	// disambiguation — the suffix only distinguishes the parts of a split
+	// disambiguation - the suffix only distinguishes the parts of a split
 	// message. Keeping the id verbatim makes restore/persist round-trips
 	// byte-stable; ids feed the compaction source-prefix hash, and a
 	// re-suffixed id silently invalidates saved compaction state (and grows

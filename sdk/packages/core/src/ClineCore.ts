@@ -548,7 +548,7 @@ export class ClineCore {
 	 *
 	 * The persisted transcript only catches up at assistant-message/turn
 	 * boundaries, so `readMessages` can miss an in-flight (or just-aborted)
-	 * turn. Use this when the current conversation matters — e.g. seeding a
+	 * turn. Use this when the current conversation matters - e.g. seeding a
 	 * replacement session during a plan/act mode switch. Falls back to the
 	 * persisted transcript when the session is not resident or the host does
 	 * not track live sessions.

@@ -2,12 +2,12 @@
  * Durable FIFO run queue with immediate acknowledgement.
  *
  * `run.enqueue` admits a prompt into this queue and acks immediately with
- * `{runId, acceptedAt, queuePosition}` — acceptance is decoupled from
+ * `{runId, acceptedAt, queuePosition}` - acceptance is decoupled from
  * execution, so the reply never blocks on the turn and never dies with the
  * socket. One run executes at a time per session, in admission order.
  *
  * Runs are durable: a daemon crash leaves `queued` rows to re-admit in FIFO
- * order at the next startup, and `running` rows are marked `interrupted` —
+ * order at the next startup, and `running` rows are marked `interrupted` -
  * never silently resumed, never left dangling as ghost "running" state.
  *
  * Admission applies backpressure: a full per-session queue rejects with a
@@ -239,7 +239,7 @@ export class HubRunQueue {
 	/**
 	 * Crash recovery, run once at daemon startup, before any new admission:
 	 * runs left `running` by a dead daemon are marked `interrupted` (never
-	 * auto-resumed — a resumed half-turn is worse than an honest interrupt),
+	 * auto-resumed - a resumed half-turn is worse than an honest interrupt),
 	 * and committed `queued` runs are returned for FIFO re-admission.
 	 */
 	recoverOnStartup(): {

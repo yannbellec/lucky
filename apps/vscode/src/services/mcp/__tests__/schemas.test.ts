@@ -150,7 +150,7 @@ describe("McpSettingsSchema", () => {
 			const input = {
 				mcpServers: {
 					bad: {
-						transport: { type: "stdio", command: "" }, // empty — min(1) fails
+						transport: { type: "stdio", command: "" }, // empty - min(1) fails
 					},
 				},
 			}
@@ -228,7 +228,7 @@ describe("McpSettingsSchema", () => {
 	})
 
 	// -------------------------------------------------------------------------
-	// Mixed format — CLI and extension servers in the same file
+	// Mixed format - CLI and extension servers in the same file
 	// -------------------------------------------------------------------------
 
 	describe("mixed format (CLI and extension servers in the same file)", () => {
@@ -276,7 +276,7 @@ describe("McpSettingsSchema", () => {
 	})
 
 	// -------------------------------------------------------------------------
-	// ServerConfigSchema – direct usage
+	// ServerConfigSchema - direct usage
 	// -------------------------------------------------------------------------
 
 	describe("ServerConfigSchema direct parse", () => {

@@ -87,7 +87,7 @@ describe("open wrapper (linux)", () => {
 		});
 	});
 
-	it("rejects without calling open() when no xdg-open exists anywhere — the uncatchable-crash case", async () => {
+	it("rejects without calling open() when no xdg-open exists anywhere - the uncatchable-crash case", async () => {
 		// A missing opener binary surfaces as an async `error` event on the
 		// detached, listenerless child that open() returns; under Bun it fires
 		// before the microtask queue drains, so no try/catch or .catch around

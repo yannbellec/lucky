@@ -1,7 +1,7 @@
 name: ext-vscode-publish-nightly
 
 # Publishes saoudrizwan.cline-nightly as the COMBINED A/B VSIX: the rollout
-# loader plus two complete extension bundles — `next/` from this ref's
+# loader plus two complete extension bundles - `next/` from this ref's
 # apps/vscode (SDK-based) and `legacy/` from the legacy-extension branch.
 # Cohort selection happens at runtime via PostHog flags; see
 # apps/vscode-rollout/README.md for the design and rollout runbook.
@@ -186,7 +186,7 @@ jobs:
           ERROR_SERVICE_API_KEY: ${{ secrets.ERROR_SERVICE_API_KEY }}
           CLINE_ROLLOUT_VARIANT: legacy
           # Legacy's esbuild inlines these too (its own publish workflow passes
-          # them) — omitting them here would ship the legacy bundle with the
+          # them) - omitting them here would ship the legacy bundle with the
           # OTel pipeline dead, unlike what legacy users get today.
           OTEL_TELEMETRY_ENABLED: ${{ secrets.OTEL_TELEMETRY_ENABLED }}
           OTEL_LOGS_EXPORTER: otlp
@@ -285,7 +285,7 @@ jobs:
         # Best-effort bookkeeping: the default GITHUB_TOKEN cannot create a ref
         # whose commit modifies workflow files (no workflows permission exists
         # for it), so this step fails whenever HEAD touched .github/workflows.
-        # The publish already succeeded by this point — don't mark the run red;
+        # The publish already succeeded by this point - don't mark the run red;
         # push the tag manually with user credentials when it matters.
         continue-on-error: true
         working-directory: next-src

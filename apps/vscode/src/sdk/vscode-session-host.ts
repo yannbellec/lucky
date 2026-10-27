@@ -1,4 +1,4 @@
-// VscodeSessionHost — wraps ClineCore with VSCode-specific customizations
+// VscodeSessionHost - wraps ClineCore with VSCode-specific customizations
 //
 // Uses ClineCore.create() so the SDK owns session input normalization,
 // lifecycle bootstrapping, and host selection while the VSCode extension
@@ -113,7 +113,7 @@ export class VscodeSessionHost implements SdkSessionHost {
 	}
 
 	static async create(options: VscodeSessionHostOptions): Promise<VscodeSessionHost> {
-		// Build tool executor capabilities from options — only include keys that are provided.
+		// Build tool executor capabilities from options - only include keys that are provided.
 		// When a terminal manager is available, suppress the SDK's built-in run_commands
 		// tool by setting bash to undefined. Our custom run_commands (provided via
 		// extraTools) replaces it with foreground/background terminal support.
@@ -132,7 +132,7 @@ export class VscodeSessionHost implements SdkSessionHost {
 		}
 		if (options.getTerminalManager) {
 			// Setting bash to undefined suppresses the SDK's createShellTool():
-			// createDefaultTools() checks `enableBash && executors.bash` — falsy
+			// createDefaultTools() checks `enableBash && executors.bash` - falsy
 			// bash means no built-in run_commands tool is created.
 			;(toolExecutors as Record<string, unknown>).bash = undefined
 		}
@@ -233,7 +233,7 @@ export class VscodeSessionHost implements SdkSessionHost {
 		try {
 			return await this.inner.abort(sessionId, reason)
 		} catch (error) {
-			// AbortError is expected when cancelling a running task —
+			// AbortError is expected when cancelling a running task -
 			// AbortController.abort() fires synchronously and may cause
 			// listeners to throw. Suppress it here so callers don't
 			// need to handle it.

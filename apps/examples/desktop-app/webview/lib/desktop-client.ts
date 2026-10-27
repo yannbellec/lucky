@@ -40,12 +40,12 @@ let resolvedEndpointCache: string | null = null;
  * Resolve the backend WebSocket endpoint.
  *
  * Priority order:
- * 1. `window.__SIDECAR_WS_ENDPOINT__` — injected by the sidecar's HTML scaffold
+ * 1. `window.__SIDECAR_WS_ENDPOINT__` - injected by the sidecar's HTML scaffold
  *    or an integration test harness.
- * 2. Tauri `get_desktop_backend_endpoint` command — used when running inside
+ * 2. Tauri `get_desktop_backend_endpoint` command - used when running inside
  *    the full Tauri app shell.
  * 3. `NEXT_PUBLIC_SIDECAR_WS_ENDPOINT` (inlined at build time), then fallback
- *    to `ws://127.0.0.1:3126/transport` — the sidecar's default port when
+ *    to `ws://127.0.0.1:3126/transport` - the sidecar's default port when
  *    running in plain web/dev mode (`bun run dev:sidecar` + `bun run dev:web`).
  */
 export async function resolveDesktopBackendWsEndpoint(): Promise<string> {
@@ -202,7 +202,7 @@ const CONNECT_RETRY_DELAY_MS = 500;
 const WS_HANDSHAKE_TIMEOUT_MS = 15_000;
 const DESKTOP_DEBUG_LOG_EVENT = "desktop_debug_log";
 // Commands that should be routed to Tauri's native invoke bridge instead of
-// the WebSocket transport — only applicable in the full Tauri app shell.
+// the WebSocket transport - only applicable in the full Tauri app shell.
 // In sidecar/web mode these commands are handled by the sidecar over WebSocket.
 export function isTauriAvailable(): boolean {
 	return typeof window !== "undefined" && "__TAURI_INTERNALS__" in window;

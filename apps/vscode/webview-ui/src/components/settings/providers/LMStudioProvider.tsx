@@ -111,7 +111,7 @@ export const LMStudioProvider = ({ currentMode }: LMStudioProviderProps) => {
 	)
 
 	// Fetch LM Studio models on mount, whenever the endpoint changes, and when
-	// the model control gains focus (no interval polling — the endpoint is
+	// the model control gains focus (no interval polling - the endpoint is
 	// user-configurable, see ENG-2344), so a server started after mount is
 	// still discovered.
 	const requestLmStudioModels = useCallback(async () => {
@@ -215,7 +215,7 @@ export const LMStudioProvider = ({ currentMode }: LMStudioProviderProps) => {
 				</VSCodeLink>{" "}
 				feature with <code>lms server start</code> to use it with this extension.{" "}
 				<div className="text-error">
-					<span className="font-semibold">Note:</span> Cline uses complex prompts, so behavior can vary across models.
+					<span className="font-semibold">Note:</span> Lucky uses complex prompts, so behavior can vary across models.
 					Less capable models may not work as expected.
 				</div>
 			</div>

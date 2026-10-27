@@ -13,7 +13,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 /**
  * The sidecar reaches Composio only through the Cline API connectors proxy
  * (`./cline-connectors-api`). Tests mock that module and drive its behavior
- * per test, so no network — and no Composio key — is involved. `ConnectorsApiError`
+ * per test, so no network - and no Composio key - is involved. `ConnectorsApiError`
  * is kept real so status-code handling (401/403/404) is exercised faithfully.
  */
 const identity = vi.hoisted(() => ({

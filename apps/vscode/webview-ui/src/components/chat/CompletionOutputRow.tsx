@@ -18,7 +18,7 @@ interface CompletionOutputRowProps {
 	 * (taken when the user's last message started the run) and the current
 	 * working tree. Only meaningful on the latest, finalized completion row.
 	 * The button stays hidden until the host confirms there are changes to
-	 * show — no changes (or no checkpoint at all, e.g. a non-git workspace)
+	 * show - no changes (or no checkpoint at all, e.g. a non-git workspace)
 	 * simply renders no button.
 	 */
 	showViewChanges?: boolean
@@ -37,7 +37,7 @@ export const CompletionOutputRow = memo(
 		// undefined = still checking; the button stays hidden until the host
 		// confirms the latest run actually changed files. A count of 0 also
 		// covers "no checkpoint to compare against" (non-git workspace, no
-		// commits yet, or a comparison failure) — in all of those cases there
+		// commits yet, or a comparison failure) - in all of those cases there
 		// is nothing to view, so no button is rendered.
 		const [hasChanges, setHasChanges] = useState<boolean | undefined>(undefined)
 

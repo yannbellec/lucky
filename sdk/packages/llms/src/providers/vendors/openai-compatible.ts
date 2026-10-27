@@ -144,7 +144,7 @@ function createResponseErrorFetch(input: {
  * for model ids that require it: OpenAI, Azure OpenAI, and the major
  * OpenAI-compatible gateways (OpenRouter, LiteLLM) all accept
  * `max_completion_tokens`, while older third-party servers that only know
- * `max_tokens` do not serve o-series/gpt-5 model ids — so every other
+ * `max_tokens` do not serve o-series/gpt-5 model ids - so every other
  * request keeps its exact current wire format.
  */
 export function withMaxCompletionTokensForReasoningModels(
@@ -285,7 +285,7 @@ export async function createOpenAICompatibleProviderModule(
 		// `JSON.stringify`s the parts array, losing image bytes). The
 		// middleware operates on the typed `LanguageModelV4Prompt` BEFORE
 		// the converter runs, so the converter sees only text-only tool
-		// messages with adjacent multimodal user messages — the wire
+		// messages with adjacent multimodal user messages - the wire
 		// pattern that classic Cline used in production for years (see
 		// `convertToOpenAiMessages` in `src/core/api/transform/openai-format.ts`
 		// on origin/main).

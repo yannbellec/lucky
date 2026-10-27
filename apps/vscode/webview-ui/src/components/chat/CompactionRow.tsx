@@ -53,7 +53,7 @@ function formatCompactionLabel(info: ClineCompactionInfo): string {
 }
 
 /**
- * Divider row for context compaction progress and results — the webview
+ * Divider row for context compaction progress and results - the webview
  * counterpart of the CLI's CompactionDividerRow. Shows a spinner while a
  * compaction is running; the same message (same ts) is updated in place to
  * its terminal state when it finishes.

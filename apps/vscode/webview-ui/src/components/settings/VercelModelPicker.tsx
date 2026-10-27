@@ -169,7 +169,7 @@ const VercelModelPicker: React.FC<VercelModelPickerProps> = ({ isPopup, currentM
 	)
 	// Reasoning support comes from the SDK catalog (models.dev), not model-id
 	// heuristics: any reasoning-capable model gets the effort selector. Prefer
-	// the live catalog entry over the committed legacy snapshot — the snapshot
+	// the live catalog entry over the committed legacy snapshot - the snapshot
 	// can be cleared by provider-config writes (fallback-source resolutions).
 	const showReasoningEffort =
 		showAdaptiveThinkingEffort || (vercelAiGatewayModels[selectedModelId] ?? selectedModelInfo)?.supportsReasoning === true

@@ -40,10 +40,10 @@ export interface ProviderFactoryResult {
 	 * model is wrapped with `createRetryEmptyResponseMiddleware` at the
 	 * central composition point in `ai-sdk.ts`, which retries two transient
 	 * failure modes within one attempt budget: an all-empty turn (no text,
-	 * no reasoning, no tool call — otherwise hard-fails the task with
+	 * no reasoning, no tool call - otherwise hard-fails the task with
 	 * "Model returned empty response") and a mid-stream network
 	 * interruption before any model output (socket closed, body/headers
-	 * timeout, ECONNRESET — otherwise kills the run; the AI SDK's own retry
+	 * timeout, ECONNRESET - otherwise kills the run; the AI SDK's own retry
 	 * covers only request initiation). Set `false` to opt a vendor out, or
 	 * provide options to tune attempts/delays without forking the
 	 * middleware. Leave unset for the defaults.

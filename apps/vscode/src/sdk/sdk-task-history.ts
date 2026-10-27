@@ -516,12 +516,12 @@ export class SdkTaskHistory {
 			this.options.getMinter?.(),
 			{
 				// Only retag the transcript's terminal text as an inferred completion when the
-				// session record says its last turn ended cleanly — status "completed", written
+				// session record says its last turn ended cleanly - status "completed", written
 				// by the SDK runtime host's resolveInteractiveStopStatus when the session is
 				// released (task switch, clear, extension dispose). Everything else stays a
 				// plain text row: "failed"/"cancelled" runs ended on a dangling response, and
 				// non-terminal statuses at rest ("idle"/"running"/"pending") mean the process
-				// died without recording an outcome — "idle" in particular is also the state
+				// died without recording an outcome - "idle" in particular is also the state
 				// after an aborted turn (markTurnIdle runs for every finish reason), so it
 				// cannot be trusted as a clean ending. A missing record is likewise an unknown
 				// outcome, so it gets no completion styling either.

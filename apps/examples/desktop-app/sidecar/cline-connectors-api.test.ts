@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 /**
  * Exercises `requestConnectorsApi`'s own parsing against the real backend's
  * observed envelope shapes: success as `{"data": ..., "success": true}`,
- * errors as `{"error": "..."}`. Mocks auth resolution and `fetch` directly —
+ * errors as `{"error": "..."}`. Mocks auth resolution and `fetch` directly -
  * one level below `composio.test.ts`, which mocks this module instead.
  */
 const identity = vi.hoisted(() => ({

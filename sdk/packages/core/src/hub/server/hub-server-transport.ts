@@ -1083,7 +1083,7 @@ export class HubServerTransport implements NativeHubTransport {
 
 	/**
 	 * Explicit drain: refuse new mutating work while accepted runs finish.
-	 * This is the graceful half of an upgrade — replacement happens at a
+	 * This is the graceful half of an upgrade - replacement happens at a
 	 * boundary an operator chose, never as an ambush under a live turn.
 	 */
 	private handleHubDrain(envelope: HubCommandEnvelope): HubReplyEnvelope {
@@ -1160,7 +1160,7 @@ export class HubServerTransport implements NativeHubTransport {
 		return this.draining;
 	}
 
-	/** Durable events after a cursor — the adapter's replay source. */
+	/** Durable events after a cursor - the adapter's replay source. */
 	replayEventsAfter(
 		sinceSequence: number,
 		options: { sessionId?: string; limit: number },

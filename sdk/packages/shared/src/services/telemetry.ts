@@ -171,7 +171,7 @@ export const SDK_ERROR_TELEMETRY_EVENT = "sdk.error";
 // same failure thousands of times and drown the signal. Identical failures
 // are therefore capped per process: the first few per hour emit normally,
 // the rest are only counted, and the count surfaces as `suppressed_count` on
-// the next emission once the window rolls over — a hot loop stays visible
+// the next emission once the window rolls over - a hot loop stays visible
 // without flooding. State is in-memory only and the cap never throws.
 
 /** Identical `sdk.error` emissions allowed per key per window. */
@@ -204,7 +204,7 @@ export function resetSdkErrorRateLimiterForTests(): void {
  * `error_code`) participate in the key so an HTTP 429 and an HTTP 401 never
  * share a budget, while the message is normalized (digit runs collapsed,
  * whitespace folded, case-insensitive, bounded) so messages that differ only
- * by counters or ids — `"iteration 14"` vs `"iteration 99"` — coalesce
+ * by counters or ids - `"iteration 14"` vs `"iteration 99"` - coalesce
  * instead of each getting a fresh budget.
  */
 function sdkErrorRateLimitKey(
@@ -311,8 +311,8 @@ export function captureTaskLifecycleEvent(
  * Report an SDK error, subject to the per-process volume cap on identical
  * failures described above.
  *
- * Returns `true` when the failure is recorded — emitted, or counted toward
- * `suppressed_count` by the volume cap — and `false` when telemetry is
+ * Returns `true` when the failure is recorded - emitted, or counted toward
+ * `suppressed_count` by the volume cap - and `false` when telemetry is
  * unavailable. Reporters that sit on a layer boundary forward the return
  * value (see `errorReported` on the model stream's `finish` event) so outer
  * layers know the failure is already accounted for and one underlying
@@ -350,7 +350,7 @@ export function captureSdkError(
 export function buildSdkErrorProperties(
 	input: CaptureSdkErrorInput,
 ): TelemetryProperties {
-	// Strip undefined values (matching the other capture helpers here) — the
+	// Strip undefined values (matching the other capture helpers here) - the
 	// OTel adapter would otherwise export them as literal "undefined" strings.
 	return stripUndefinedTelemetryProperties({
 		...(input.context ?? {}),
@@ -479,7 +479,7 @@ function numberValue(value: unknown): number | undefined {
 
 /**
  * Marker property stamped onto a tracer provider whose span processors
- * include a real OTLP exporter — the collector relay. Trace decisions must
+ * include a real OTLP exporter - the collector relay. Trace decisions must
  * identify the relay explicitly instead of inferring it from "some recording
  * tracer exists": a console-only tracer would otherwise be misclassified as
  * a relay. A property on the provider instance (reached through the OTel API
@@ -526,7 +526,7 @@ export interface OpenTelemetryClientConfig {
 
 	/**
 	 * OTel resource `service.name` (default "cline"). Distinguishes processes
-	 * that ship in the same binary — e.g. the CLI vs the detached hub daemon.
+	 * that ship in the same binary - e.g. the CLI vs the detached hub daemon.
 	 */
 	serviceName?: string;
 

@@ -11,19 +11,19 @@ import { type ProviderCatalogController, parseProviderIdRequest } from "./provid
  *
  * Resolution order:
  *
- *   1. Committed selection — the user's most-recently-chosen plan/act
+ *   1. Committed selection - the user's most-recently-chosen plan/act
  *      model ID resolved against SDK catalog metadata, the picker's state
  *      snapshot, and stored overrides by the provider config store. A
  *      selection whose metadata is pure fallback fabrication (no catalog or
  *      state base, no overrides) is deferred behind the catalog steps below
  *      and only returned as a last resort.
  *
- *   2. Catalog peek — a non-fetching look-up of the catalog cache for
+ *   2. Catalog peek - a non-fetching look-up of the catalog cache for
  *      the provider's current effective config fingerprint. Hits when
  *      the catalog has been populated for the current config, either
  *      by the settings UI opening or by a prior call to this handler.
  *
- *   3. Awaited catalog resolve — if the peek misses, awaits
+ *   3. Awaited catalog resolve - if the peek misses, awaits
  *      `catalog.resolveModels(providerId)` so the response carries
  *      authoritative data the first time it is asked. The catalog has
  *      in-flight dedup and a per-fingerprint cache, so subsequent
@@ -67,7 +67,7 @@ export async function resolveModelInfo(
 		// No explicit model id. This is the state immediately after the SDK
 		// provider migration, which records the committed model in
 		// providers.json but not in the mode-specific globalState fields the
-		// settings picker reads — so the webview asks "what model?" with no id.
+		// settings picker reads - so the webview asks "what model?" with no id.
 		// Honor the user's committed selection (readSelection falls through to
 		// providers.json when the state field is empty) before substituting a
 		// catalog default, so the settings UI reflects the model that will
@@ -77,7 +77,7 @@ export async function resolveModelInfo(
 		// misattribute a mode-specific selection: the request only omits the id
 		// when the asking mode has no committed state field, and in that state
 		// readSelection falls through to the single provider-level entry in
-		// providers.json — the same answer for both modes.
+		// providers.json - the same answer for both modes.
 		for (const mode of ["act", "plan"] as const) {
 			const selection = store.readSelection(providerId, mode)
 			if (selection) {
@@ -155,7 +155,7 @@ function pickFromCatalog(
 	const matchedRequested = Boolean(requestedModelId) && result.models.has(requestedModelId)
 
 	// For custom-model-id providers, never substitute the catalog default for an
-	// unrecognized requested id — the user's id is authoritative.
+	// unrecognized requested id - the user's id is authoritative.
 	if (allowCustomModelIds && requestedModelId && !matchedRequested) {
 		return undefined
 	}

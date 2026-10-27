@@ -87,8 +87,8 @@ function assertBoundaryRole(role: MessageWithMetadata["role"]): void {
 // just-appended user turn has no id/ts yet, and consolidated parallel tool
 // results are re-split with freshly minted ids on resume). Hashing them made
 // projection fail for semantically identical prefixes, so persistence was
-// silently rejected every turn. The fingerprint covers what was said — role,
-// content, and durable metadata — not the envelope.
+// silently rejected every turn. The fingerprint covers what was said - role,
+// content, and durable metadata - not the envelope.
 function sourceMessageHashInput(message: MessageWithMetadata): unknown[] {
 	const normalized = normalizeMessageForSourceHash(message);
 	assertBoundaryRole(normalized.role);

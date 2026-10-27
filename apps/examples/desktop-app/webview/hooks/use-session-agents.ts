@@ -77,7 +77,7 @@ function parseAgentEntries(value: unknown): SessionAgentEntry[] {
  * Read once per displayed session and then polled while that session or one of
  * its children is active. Deliberately *not* gated on whether the header shows
  * any agents: that tally is derived from the newest messages only, so gating on
- * it would deadlock — a session whose spawn calls have aged out of the message
+ * it would deadlock - a session whose spawn calls have aged out of the message
  * window would report zero agents, never query the database that still
  * remembers them, and so never have anything to display. Polling is the only
  * part worth gating, since it is the only part that costs anything repeatedly.
@@ -96,7 +96,7 @@ export function useSessionAgents({
 }) {
 	const [roster, setRoster] = useState<RosterState>(EMPTY_ROSTER);
 	// Only the newest read may write. Comparing session ids is not enough: two
-	// reads for the *same* session can overlap — a poll tick alongside an
+	// reads for the *same* session can overlap - a poll tick alongside an
 	// on-open or turn-finished read, and `list_session_agents` opens one
 	// transcript per child, so it can outlast the poll interval. Both would pass
 	// a session-id check, letting whichever arrives last win regardless of which
@@ -146,7 +146,7 @@ export function useSessionAgents({
 				setRoster((prev) => ({
 					environmentId,
 					sessionId: targetSessionId,
-					// A failed read means this attempt learned nothing — not that the
+					// A failed read means this attempt learned nothing - not that the
 					// agents are gone. Discarding them would blank a list that had
 					// loaded fine, and because the sequence guard drops any older
 					// in-flight response there would be nothing left to restore it: on
@@ -170,7 +170,7 @@ export function useSessionAgents({
 	);
 
 	// A roster is only ever read back for the session it was fetched for, so
-	// switching sessions cannot surface the previous one's agents — there is no
+	// switching sessions cannot surface the previous one's agents - there is no
 	// reset to forget and no window where stale rows are clickable. That matters
 	// because mergeAgentActivity prefers a non-empty roster over the
 	// message-derived tally, so a leaked one would render as phantom agents
@@ -187,7 +187,7 @@ export function useSessionAgents({
 	);
 
 	// One read per displayed session, repeated when the session starts or stops
-	// running — a turn can finish up to a poll interval after the last read, so
+	// running - a turn can finish up to a poll interval after the last read, so
 	// this is what settles the final statuses. A read for a session mid-turn is
 	// quiet because its list is already on screen; the first read of a session
 	// that is sitting idle is the one worth showing a spinner for.

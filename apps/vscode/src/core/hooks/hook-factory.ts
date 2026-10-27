@@ -779,7 +779,7 @@ export class HookFactory {
 	/**
 	 * Create a hook runner without streaming support (backwards compatible).
 	 * Check the returned runner's isNoOp to learn whether any hook scripts
-	 * exist — creation is the single point where workspace roots and hook
+	 * exist - creation is the single point where workspace roots and hook
 	 * discovery are resolved, so there is no separate existence check that
 	 * could disagree with what the runner will execute.
 	 */

@@ -190,8 +190,8 @@ export async function generateWorkspaceInfo(
 }
 
 /**
- * Git failures that reflect a normal repository state — e.g. a freshly
- * initialized repo with no commits, where `git rev-parse HEAD` fails —
+ * Git failures that reflect a normal repository state - e.g. a freshly
+ * initialized repo with no commits, where `git rev-parse HEAD` fails -
  * rather than a broken workspace. These must not be reported as
  * workspace init errors.
  */
@@ -224,7 +224,7 @@ export async function generateWorkspaceInfoWithDiagnostics(
 	const info: WorkspaceInfo = {
 		rootPath,
 		// basename("/") and basename("C:\\") are "", which WorkspaceInfoSchema
-		// rejects — omit the hint for root paths instead.
+		// rejects - omit the hint for root paths instead.
 		hint: basename(rootPath) || undefined,
 	};
 	const gitState: GitWorkspaceState = {};

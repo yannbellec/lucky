@@ -8,7 +8,7 @@ import { whatsappConnector } from "./whatsapp";
 
 /**
  * Every connector runs with tools enabled unless the operator opts out, so this
- * has to hold for all of them at once rather than per adapter — the whole point
+ * has to hold for all of them at once rather than per adapter - the whole point
  * is that there is no adapter where the default is different.
  */
 const connectors: Array<{

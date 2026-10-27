@@ -193,7 +193,7 @@ describe("provider settings edits made before config loads", () => {
 		})
 
 		// The write's read-back reports the new key's length, so the field
-		// shows the saved-key mask for the key just typed — not the stale
+		// shows the saved-key mask for the key just typed - not the stale
 		// stored key's mask.
 		expect(screen.getByPlaceholderText("Enter API Key...")).toHaveValue("•".repeat("early-secret".length))
 	})

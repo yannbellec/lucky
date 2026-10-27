@@ -185,7 +185,7 @@ const OcaModelPicker: React.FC<OcaModelPickerProps> = ({
 			 * OCA's reasoning control is this API-driven effort dropdown: the OCA
 			 * endpoint reports per-model `reasoningEffortOptions`, and the selected
 			 * effort (plan/actModeOcaReasoningEffort) is what the session factory
-			 * forwards. The legacy thinking-budget slider was removed deliberately —
+			 * forwards. The legacy thinking-budget slider was removed deliberately -
 			 * it wrote budget state that no OCA request path consumed.
 			 */}
 			{!loading && selectedModelInfo && selectedModelInfo.supportsReasoning && reasoningEffortOptions.length > 0 && (

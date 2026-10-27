@@ -79,8 +79,8 @@ let claimedSupervisedConnectorProcess: boolean | undefined;
  * Take the supervised-connector marker out of the environment, remembering it.
  *
  * Same hazard as {@link claimHubDaemonProcess}: a supervised connector hosts
- * agent sessions, and everything they spawn — shell commands, MCP servers, hooks
- * — inherits its environment. An inherited marker makes a nested `cline connect`
+ * agent sessions, and everything they spawn - shell commands, MCP servers, hooks
+ * - inherits its environment. An inherited marker makes a nested `cline connect`
  * think it is the process the hub is tracking, so it runs the connector in the
  * foreground of that shell command instead of handing it to the hub.
  *
@@ -101,7 +101,7 @@ export function claimSupervisedConnectorProcess(
  * True in a connector process the hub supervisor launched.
  *
  * Such a process must run the connector itself rather than doing what a
- * user-invoked background `connect` does — asking the hub to start it (which
+ * user-invoked background `connect` does - asking the hub to start it (which
  * would loop straight back here) or spawning its own detached child and exiting
  * (which would leave the supervisor holding a handle to a process that is
  * already gone).

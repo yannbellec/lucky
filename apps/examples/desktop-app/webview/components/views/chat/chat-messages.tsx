@@ -225,8 +225,8 @@ function ChatMessagesImpl({
 	const showIdleDetails =
 		!hasMessages && !isSessionSwitching && !showSwitchTransition;
 	// The live run keeps rendering its rows while the session is active, and an
-	// interrupted run (cancelled/failed/error) keeps them too — even when Stop
-	// landed mid-answer and left partial trailing text — so the user can see
+	// interrupted run (cancelled/failed/error) keeps them too - even when Stop
+	// landed mid-answer and left partial trailing text - so the user can see
 	// where it stopped. Only a run the agent finished folds into a summary row.
 	const collapseTrailingRun = status === "completed" || status === "idle";
 	const renderItems = useMemo(
@@ -571,7 +571,7 @@ function ChatMessagesImpl({
 									</MessageScrollerItem>
 								) : null}
 								{renderItems.map((item, itemIndex) => {
-									// Working rows — live (`run`) or folded (`work`) — render
+									// Working rows - live (`run`) or folded (`work`) - render
 									// through one child renderer so a row keeps its exact look
 									// and position when the run collapses. Those rows keep
 									// copy/expand but drop the session-versioning actions
@@ -650,7 +650,7 @@ function ChatMessagesImpl({
 									}
 									const { agentRole, message, reasoningMessages } = item;
 									// An answer directly under its run's working rows belongs
-									// to them — pull it closer than the full transcript gap.
+									// to them - pull it closer than the full transcript gap.
 									const previousItem = renderItems[itemIndex - 1];
 									const followsWorkingRows =
 										message.role === "assistant" &&

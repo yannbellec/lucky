@@ -8,7 +8,7 @@ import { isToolGroup } from "../utils/messageUtils"
  * "waiting on the model's next content block / API request" (loader wanted), but at the end of
  * a turn it arrives via the fast partial-message stream moments before the `done` event flips
  * turnState out of "streaming" via a full state post. Showing instantly in that window makes
- * the loader flash in and out on every turn completion, so hold off briefly — a real wait
+ * the loader flash in and out on every turn completion, so hold off briefly - a real wait
  * outlives the grace period, while the turn-end phase change cancels it.
  */
 export const THINKING_LOADER_GRACE_MS = 500
@@ -26,9 +26,9 @@ export interface ThinkingLoaderInputs {
 	/**
 	 * Optimistic override: a turn-starting response RPC (new task or a follow-up sent outside a
 	 * streaming phase) was submitted before the backend published its next TurnState, so the
-	 * replica's turnState is stale (idle/completed/awaiting_*). Shows the loader immediately —
+	 * replica's turnState is stale (idle/completed/awaiting_*). Shows the loader immediately -
 	 * bypassing the phase gate and the turn-end completion_result guard, both of which describe
-	 * the PREVIOUS turn at this moment — but never while a visible content row is actively
+	 * the PREVIOUS turn at this moment - but never while a visible content row is actively
 	 * streaming (no duplicate loaders if the marker briefly overlaps live output). The owner
 	 * clears it once a fresher TurnState arrives.
 	 */
@@ -54,7 +54,7 @@ export function computeIsWaitingForResponse({
 
 	// AUTHORITATIVE PATH: when the backend provides a TurnState, the agent is only "thinking"
 	// while phase === "streaming". Any other phase (awaiting_approval/followup, completed,
-	// error, resumable, idle) is never a thinking state — this is what makes the footer
+	// error, resumable, idle) is never a thinking state - this is what makes the footer
 	// immune to trailing bookkeeping messages and prevents the stuck-"Thinking" bug (RC1).
 	// During streaming we still suppress the footer loader once a partial content row is
 	// actually rendering, to avoid a duplicate spinner (handled by the legacy sub-logic
@@ -84,7 +84,7 @@ export function computeIsWaitingForResponse({
 		return lastVisibleMessage.partial !== true
 	}
 
-	// LEGACY PATH (no TurnState — classic/older state): infer from the message tail.
+	// LEGACY PATH (no TurnState - classic/older state): infer from the message tail.
 	// Never show thinking while waiting on user input (any ask state).
 	// This includes completion_result, tool approvals, followups, and resume asks.
 	if (lastRawMessage?.type === "ask") {
@@ -163,7 +163,7 @@ export function computeIsWaitingForResponse({
  * - the loader is already visible (e.g. below a streaming tool group, where the tail
  *   finalizing used to blink the visible loader off and back on), or
  * - `tailCannotEndTurn` is set: the finalized tail is a message kind that never coincides
- *   with turn end (reasoning — the model always emits content after thinking), so the
+ *   with turn end (reasoning - the model always emits content after thinking), so the
  *   turn-end ambiguity the grace protects against does not apply. Without this, a mid-turn
  *   reasoning -> tool-call handoff flickered: the reasoning shimmer collapsed, the loader
  *   stayed hidden for the grace period, popped in, then hid again when the tool row landed.

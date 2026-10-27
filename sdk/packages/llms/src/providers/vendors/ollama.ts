@@ -54,7 +54,7 @@ export function normalizeOllamaBaseUrl(
  * large model (or a large `num_ctx`, which this vendor requests) the first
  * request of a session routinely takes minutes before the stream starts.
  * A tight budget here turns every cold load into a user-facing timeout error
- * (see cline/cline#12829 — the legacy handler's 30s default was only
+ * (see cline/cline#12829 - the legacy handler's 30s default was only
  * tolerable because its retry decorator silently re-issued the request until
  * the model was loaded). Unreachable servers are not this timeout's job:
  * connection-level failures (refused, DNS) reject on their own immediately,
@@ -84,7 +84,7 @@ export function readOllamaTimeoutMs(
 
 /**
  * Wrap a fetch so the *response* must start within `timeoutMs`. Once headers
- * arrive the timer is cleared — streaming the body is never interrupted.
+ * arrive the timer is cleared - streaming the body is never interrupted.
  * Mirrors the legacy handler, which raced the chat call (stream start)
  * against a timeout rather than bounding the whole generation.
  */
@@ -105,7 +105,7 @@ export function withOllamaResponseTimeout(
 		);
 		// AbortSignal.any keeps upstream cancellation live for the entire
 		// request (including body streaming after the timer is cleared) and
-		// cleans up its own listeners — no manual listener management.
+		// cleans up its own listeners - no manual listener management.
 		const upstreamSignal = init?.signal;
 		const signal = upstreamSignal
 			? AbortSignal.any([upstreamSignal, timeoutController.signal])

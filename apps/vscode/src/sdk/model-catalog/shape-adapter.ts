@@ -1,6 +1,6 @@
 /**
  * Shape adapter: translates SDK-shaped model metadata into the extension's
- * {@link ModelInfo} shape. This is a boundary translation layer — it does
+ * {@link ModelInfo} shape. This is a boundary translation layer - it does
  * NOT import any SDK runtime (no `@cline/core` imports). It validates
  * unknown input and maps documented SDK fields onto `ModelInfo` fields.
  *
@@ -17,7 +17,7 @@
  *   modalities?: { input: string[], output: string[] },
  *   pricing?: { input?, output?, cacheRead?, cacheWrite? },
  *   description?: string,
- *   releaseDate?: string,        // not mapped — see "Unmapped SDK fields" below
+ *   releaseDate?: string,        // not mapped - see "Unmapped SDK fields" below
  *   family?: string,             // not mapped
  *   status?: string,             // not mapped
  * }

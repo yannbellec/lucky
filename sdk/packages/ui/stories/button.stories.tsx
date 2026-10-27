@@ -9,10 +9,10 @@ const meta: Meta = {
 		docs: {
 			description: {
 				component:
-					"Two components — `Button` (text, with optional icon children) and `IconButton` (square, icon-only) — sharing the same `variant × tone × size` design tokens.\n\n" +
-					"**variant** `fill | surface | ghost` — fill is solid-colored, surface has a soft tinted background, ghost only shows a background on hover.\n\n" +
-					"**tone** `accent | neutral | destructive` — applies to all three variants.\n\n" +
-					"**size** `xs | sm | md | lg` — same names for both Button and IconButton.",
+					"Two components - `Button` (text, with optional icon children) and `IconButton` (square, icon-only) - sharing the same `variant × tone × size` design tokens.\n\n" +
+					"**variant** `fill | surface | ghost` - fill is solid-colored, surface has a soft tinted background, ghost only shows a background on hover.\n\n" +
+					"**tone** `accent | neutral | destructive` - applies to all three variants.\n\n" +
+					"**size** `xs | sm | md | lg` - same names for both Button and IconButton.",
 			},
 		},
 	},
@@ -77,7 +77,7 @@ function TrashIcon() {
 export const VariantMatrix = () => (
 	<div className="space-y-8 p-8">
 		<div>
-			<h2 className="mb-4 text-sm font-semibold">Button — variant × tone</h2>
+			<h2 className="mb-4 text-sm font-semibold">Button - variant × tone</h2>
 			<div
 				className="grid gap-3"
 				style={{ gridTemplateColumns: "auto repeat(3, auto)" }}
@@ -110,7 +110,7 @@ export const VariantMatrix = () => (
 
 		<div>
 			<h2 className="mb-4 text-sm font-semibold">
-				IconButton — variant × tone
+				IconButton - variant × tone
 			</h2>
 			<div
 				className="grid gap-3"
@@ -185,7 +185,7 @@ export const Sizes = () => (
 export const WithIcons = () => (
 	<div className="space-y-4 p-8">
 		<h2 className="text-sm font-semibold">
-			Button — with leading and trailing icons
+			Button - with leading and trailing icons
 		</h2>
 		<div className="flex flex-wrap items-center gap-3">
 			<Button tone="accent" variant="fill">

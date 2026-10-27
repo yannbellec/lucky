@@ -126,7 +126,7 @@ export { formatThoughtLabel } from "@cline/ui/components/agent-chat";
 export type CollapseWorkOptions = {
 	/**
 	 * Whether the run after the last user message may collapse too. Pass true
-	 * only once the session stopped running — the live run must keep rendering
+	 * only once the session stopped running - the live run must keep rendering
 	 * its rows as they stream in.
 	 */
 	collapseTrailingRun: boolean;
@@ -178,7 +178,7 @@ function maxFiniteTimestamp(
 /**
  * A `submit_and_exit` call carries the run's final report (scheduled tasks
  * end with it), so a run that ends on one treats that row as its deliverable
- * — it must stay visible when the working rows fold into a work summary.
+ * - it must stay visible when the working rows fold into a work summary.
  */
 function isSubmitAndExitMessage(message: ChatMessage): boolean {
 	if (message.role !== "tool") return false;
@@ -198,8 +198,8 @@ function firstMessageId(item: ChatRenderItem): string | undefined {
 /**
  * Folds each finished run's working rows (tool calls, thinking traces,
  * intermediate narration) into a single expandable `work` item, keeping the
- * run's final answer — the assistant text or submit_and_exit report the run
- * ended on — visible after it.
+ * run's final answer - the assistant text or submit_and_exit report the run
+ * ended on - visible after it.
  * Working rows that stay visible (live stream, tool-less runs, tails that
  * never produced an answer) are grouped into a `run` item instead, so they
  * share one tight rhythm and hold their position when the collapse happens.
@@ -258,7 +258,7 @@ export function collapseCompletedWork(
 		}
 		// A span is settled once a later user message exists. The trailing span
 		// settles only when the session stopped running AND the run actually
-		// ended on an answer — a cancelled or failed tail keeps its rows
+		// ended on an answer - a cancelled or failed tail keeps its rows
 		// visible so the user can see where the run stopped.
 		const complete =
 			nextIndex <= lastUserIndex ||
@@ -275,7 +275,7 @@ export function collapseCompletedWork(
 			// answer-looking message) so they render with the tight in-run
 			// rhythm instead of full transcript spacing. Pure prose spans have
 			// no tool work to group and keep normal spacing. A trailing submit
-			// row stays inside the group here — it only pops out once the run
+			// row stays inside the group here - it only pops out once the run
 			// actually collapses.
 			const messageAnswer = answer?.type === "message" ? answer : undefined;
 			const body = messageAnswer ? span.slice(0, -1) : span;
@@ -297,7 +297,7 @@ export function collapseCompletedWork(
 			const startTimestamp =
 				runStartTimestamp ?? firstTimestamp(firstCollapsed);
 			const lastCollapsed = collapsed[collapsed.length - 1];
-			// The work span ends where the run's answer begins — anchored on the
+			// The work span ends where the run's answer begins - anchored on the
 			// answer row's own timestamp, not its earliest attached reasoning
 			// row: canonical history projects a thinking-only message that
 			// issued a tool call as a reasoning row stamped before the tool

@@ -286,7 +286,7 @@ export const AgentHeader = memo(AgentHeaderImpl);
  * header slot the "new session" button occupies elsewhere.
  *
  * Child sessions are deliberately absent from the sidebar, so this is the only
- * route back — without it the user would have to hunt for the main session.
+ * route back - without it the user would have to hunt for the main session.
  * The parent's own title goes in the tooltip rather than the label, which stays
  * fixed so the control reads the same on every child run.
  */
@@ -480,13 +480,13 @@ function AgentRoster({
 				</ul>
 			</div>
 			{/* A failed refresh keeps the last good list rather than blanking it, so
-			    say so — otherwise stale rows would pass for current ones. */}
+			    say so - otherwise stale rows would pass for current ones. */}
 			{error ? (
 				<div
 					className="border-t border-border/70 px-3 py-2 text-[11px] text-muted-foreground"
 					id="agent-roster-stale"
 				>
-					Could not refresh — showing the last known agents. {error}
+					Could not refresh - showing the last known agents. {error}
 				</div>
 			) : null}
 		</>
@@ -510,7 +510,7 @@ const AGENT_STATE_CLASS: Record<SessionAgentRunState, string> = {
 };
 
 /**
- * One agent, identified by the task it was given rather than its generated id —
+ * One agent, identified by the task it was given rather than its generated id -
  * `agent_1784837087669_01o5io` tells the reader nothing. The second line tracks
  * the most recent step so a running agent shows progress, and selecting the row
  * opens that agent's own session.

@@ -1,7 +1,7 @@
 name: ext-vscode-ab-package
 
 # Build (and optionally publish) the combined A/B VSIX: a tiny loader plus two
-# complete extension bundles — `next/` from the SDK-based apps/vscode on main,
+# complete extension bundles - `next/` from the SDK-based apps/vscode on main,
 # `legacy/` from the legacy-extension branch. Cohort selection happens at
 # runtime via PostHog flags; see apps/vscode-rollout/README.md for the design
 # and the rollout runbook.
@@ -9,13 +9,13 @@ name: ext-vscode-ab-package
 # Job layout: cheap input gates (preflight) and the two bundle test suites run
 # ungated; the build job packages the VSIX with no environment attached, so
 # publish=false rehearsals complete without any approval; only the publish job
-# — Marketplace + Open VSX + bookkeeping — waits on the `publish` environment.
+# - Marketplace + Open VSX + bookkeeping - waits on the `publish` environment.
 
 on:
     workflow_dispatch:
         inputs:
             version:
-                description: "Combined VSIX version — must exceed every previously published version (e.g. 4.1.0)"
+                description: "Combined VSIX version - must exceed every previously published version (e.g. 4.1.0)"
                 required: true
                 type: string
             next-ref:
@@ -37,8 +37,8 @@ concurrency:
     cancel-in-progress: false
 
 jobs:
-    # Input gates that need no checkout: fail in seconds — before the test
-    # suites, the ~20-minute build, and the environment approval — instead of
+    # Input gates that need no checkout: fail in seconds - before the test
+    # suites, the ~20-minute build, and the environment approval - instead of
     # at publish time.
     preflight:
         name: Validate inputs
@@ -68,13 +68,13 @@ jobs:
             - name: Refuse to publish an untested next-ref
               if: ${{ github.event.inputs.publish == 'true' && github.event.inputs.next-ref != 'main' }}
               run: |
-                  echo "Error: publish=true requires next-ref=main — the test gate only covers main."
+                  echo "Error: publish=true requires next-ref=main - the test gate only covers main."
                   exit 1
 
             # Marketplace versions are monotonic and cannot be unpublished:
             # every publish must exceed the highest version ever published to
             # the claude-dev listing FROM ANY BRANCH (combined stable or legacy
-            # hotfix). The publish job re-checks right before publishing — the
+            # hotfix). The publish job re-checks right before publishing - the
             # environment-approval wait can last days and a legacy hotfix can
             # land in between. Keep both copies of this check in sync.
             - name: Verify version exceeds the live Marketplace version
@@ -106,8 +106,8 @@ jobs:
     # reusable workflow; the legacy publish inlines the npm suite).
     #
     # Caveat (shared with the nightly workflow): the reusable bun suite tests the
-    # DISPATCH revision — main's tip at dispatch, since this workflow is only
-    # dispatched from main — not `next-ref`. The build job therefore pins the
+    # DISPATCH revision - main's tip at dispatch, since this workflow is only
+    # dispatched from main - not `next-ref`. The build job therefore pins the
     # default next-ref checkout to that same revision (tested == built) and
     # preflight refuses publish=true for any other next-ref; build-only artifact
     # runs may still build untested refs.
@@ -126,7 +126,7 @@ jobs:
         runs-on: ubuntu-latest
         # The tested revision, exported so the build job builds EXACTLY what
         # this suite ran against. legacy-extension is a mutable branch name and
-        # the build job starts later — re-resolving the name there could pick
+        # the build job starts later - re-resolving the name there could pick
         # up commits this gate never saw.
         outputs:
             tested-sha: ${{ steps.rev.outputs.sha }}
@@ -134,7 +134,7 @@ jobs:
             run:
                 working-directory: apps/vscode
         steps:
-            # Always the protected legacy-extension branch — deliberately not
+            # Always the protected legacy-extension branch - deliberately not
             # an input. An arbitrary ref here would be built into the published
             # VSIX by the environment-less build job, and the publish
             # environment approver only ever sees an opaque prebuilt artifact:
@@ -204,7 +204,7 @@ jobs:
                   lfs: true
 
             # Fail fast (before the ~20-min build) if a real publish is missing
-            # its changelog entry — same contract the standalone publish
+            # its changelog entry - same contract the standalone publish
             # workflows enforce. Build-only rehearsals are exempt.
             - name: Verify changelog entry
               if: ${{ github.event.inputs.publish == 'true' }}
@@ -219,7 +219,7 @@ jobs:
                   echo "Found changelog entry for ${{ github.event.inputs.version }}"
 
             # Pin to the revision test-legacy actually tested (see that job's
-            # outputs comment) — never re-resolve the mutable branch name here.
+            # outputs comment) - never re-resolve the mutable branch name here.
             - name: Checkout legacy source
               uses: actions/checkout@v4
               with:
@@ -238,7 +238,7 @@ jobs:
 
             # --frozen-lockfile so the built bundle resolves the exact
             # dependency set the test-next gate ran against (the reusable suite
-            # installs frozen too) — a bare install could silently re-resolve.
+            # installs frozen too) - a bare install could silently re-resolve.
             - name: Install next workspace dependencies
               working-directory: next-src
               run: bun install --frozen-lockfile
@@ -392,7 +392,7 @@ jobs:
         steps:
             # The built next revision: preflight refused publish=true for any
             # next-ref other than main, and the build job pinned main to the
-            # dispatch SHA — so github.sha IS the published commit. Used for the
+            # dispatch SHA - so github.sha IS the published commit. Used for the
             # changelog, the release tag, and the previous-tag lookup.
             - uses: actions/checkout@v4
               with:
@@ -443,7 +443,7 @@ jobs:
             # missing Open VSX token can't strand us half-published. The two
             # registries are separate steps: if Open VSX fails after the
             # Marketplace accepted the VSIX, the run goes red (so the operator
-            # notices Open VSX lagged) but the bookkeeping below still runs —
+            # notices Open VSX lagged) but the bookkeeping below still runs -
             # it is keyed off the Marketplace outcome, which is what "shipped"
             # means for this listing.
             - name: Publish to Marketplace
@@ -476,7 +476,7 @@ jobs:
             # happened, so bookkeeping must still run when only the Open VSX
             # step failed, and a red run after a successful publish is exactly
             # the confusion the nightly workflow taught us to avoid (tag pushes
-            # fail whenever the built commit touches .github/workflows/** — no
+            # fail whenever the built commit touches .github/workflows/** - no
             # grantable permission fixes that; push the tag manually in that
             # case, see the publish-extension skill).
 

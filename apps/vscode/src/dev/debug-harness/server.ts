@@ -1222,7 +1222,7 @@ class DebugHarness {
 	/**
 	 * Simulate an OAuth callback by constructing a vscode:// URI and
 	 * injecting it into the debugee's extension host. This bypasses the
-	 * browser entirely — use with oauth.captured_urls to get the redirect
+	 * browser entirely - use with oauth.captured_urls to get the redirect
 	 * parameters from the captured authorization URL.
 	 *
 	 * For Cline OAuth: the SDK's local callback server captures the code
@@ -1296,7 +1296,7 @@ class DebugHarness {
 					"URI constructed. For callbacks that use the vscode:// scheme, " +
 					"you need to trigger the extension's URI handler. Options:\n" +
 					"1. For Cline OAuth (SDK local callback): the SDK captures the code " +
-					"automatically from its local HTTP server — no simulation needed.\n" +
+					"automatically from its local HTTP server - no simulation needed.\n" +
 					"2. For MCP/provider OAuth: use 'ext.evaluate' to call " +
 					"SharedUriHandler.handleUri() directly, or use the command palette.",
 			}

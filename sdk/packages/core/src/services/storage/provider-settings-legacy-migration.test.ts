@@ -1476,7 +1476,7 @@ describe("migrateLegacyProviderSettings", () => {
 });
 
 // =============================================================================
-// resolveLegacyClineAuth – pure in-memory tests
+// resolveLegacyClineAuth - pure in-memory tests
 // =============================================================================
 
 /** Builds a realistic LegacyClineUserInfo JSON string. */

@@ -344,7 +344,7 @@ export function readSessionMessagesSync(
 		? (sourceMessages as MessageWithMetadata[])
 		: (readPersistedChatMessages(sessionId) ??
 			// A child agent's transcript is not stored under its own session
-			// directory — it lives beside the root session's artifacts — so opening a
+			// directory - it lives beside the root session's artifacts - so opening a
 			// subagent session has to resolve the path recorded on its row.
 			readChildSessionMessages(sessionId));
 	const messages =
@@ -562,8 +562,8 @@ export function readSessionMessagesSync(
 			const blockType = typeof record.type === "string" ? record.type : "";
 			if (blockType === "tool_use") {
 				flushTextParts();
-				// Everything the model emitted in this message — thinking
-				// included — happened before the tool executed. Flushing the
+				// Everything the model emitted in this message - thinking
+				// included - happened before the tool executed. Flushing the
 				// reasoning here keeps the thinking row ahead of the tool row
 				// (matching the live-stream order) so the webview never attaches
 				// pre-tool reasoning to a later answer, which would drag the

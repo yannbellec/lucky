@@ -32,10 +32,10 @@ function normalizeToolInputSchema(
 		if (key === "allOf") {
 			// allOf means the input must satisfy ALL branches simultaneously.
 			// A single branch explicitly typed as an object is sufficient to
-			// constrain the top-level shape — other branches are free to add
+			// constrain the top-level shape - other branches are free to add
 			// required, minProperties, etc. without repeating type: "object".
 			// If no branch asserts type: "object" we cannot verify the schema
-			// is object-shaped, so fail loudly just as we do for anyOf/oneOf —
+			// is object-shaped, so fail loudly just as we do for anyOf/oneOf -
 			// the developer should make the object constraint explicit.
 			const hasObjectBranch = branches.some(
 				(branch) =>
@@ -55,7 +55,7 @@ function normalizeToolInputSchema(
 		}
 
 		// oneOf / anyOf: the input matches ONE (or at least one) branch.
-		// Every branch must be object-shaped — a single non-object branch means
+		// Every branch must be object-shaped - a single non-object branch means
 		// the top-level input can be a string, array, etc., which providers
 		// reject.  Fail loudly at registration time so the bug surfaces
 		// immediately rather than at inference time.

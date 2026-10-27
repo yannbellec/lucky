@@ -9,8 +9,8 @@ import {
 import { runHookCommand } from "./hook";
 
 // The command must go through the real shared hook parser (that is the
-// contract under regression here); only its process effects — stdin reads,
-// the audit log, stdout JSON, and session fan-out — are mocked.
+// contract under regression here); only its process effects - stdin reads,
+// the audit log, stdout JSON, and session fan-out - are mocked.
 vi.mock("../utils/helpers", async (importOriginal) => {
 	const actual = await importOriginal<typeof import("../utils/helpers")>();
 	return {

@@ -526,7 +526,7 @@ describe("MemoizedMarkdown interactions", () => {
 	//
 	// Mermaid renders `click <node> "https://…"` directives as live anchors
 	// inside the SVG, and Streamdown injects that SVG with
-	// `dangerouslySetInnerHTML` — so those anchors never pass through
+	// `dangerouslySetInnerHTML` - so those anchors never pass through
 	// SafeMarkdownLink. @cline/ui strips the navigable href; these assert the
 	// desktop surface reattaches them to the confirmation flow instead of
 	// letting a diagram click navigate the webview away from the app.

@@ -106,7 +106,7 @@ async function fetchRemoteConfigForOrganization(organizationId: string): Promise
 			}
 		}
 		// A transient failure with no usable cache must NOT be reported as "no
-		// config" — the caller would clear the org's policy and report success.
+		// config" - the caller would clear the org's policy and report success.
 		// Rethrow so the refresh preserves the last known-good state instead.
 		throw error
 	}
@@ -242,8 +242,8 @@ export class SdkRemoteConfigControlPlane {
 			// failed offline), not an org without config. The persisted marker
 			// covers the offline cold start where identity restore fails and BOTH
 			// token and org come back null: this install last ran under org
-			// policy, so reporting no-config here would wipe the policy — and the
-			// marker itself — permanently disarming the fail-closed session gate.
+			// policy, so reporting no-config here would wipe the policy - and the
+			// marker itself - permanently disarming the fail-closed session gate.
 			// A real sign-out clears the marker directly, so it never gets stuck.
 			if (activeOrganizationId || this.controller.stateManager.getGlobalStateKey("lastManagedOrganizationId")) {
 				throw new Error("Remote config discovery returned no response for a managed install")

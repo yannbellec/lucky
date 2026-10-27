@@ -13,7 +13,7 @@
  * command word of each part is compared against the lists below; output
  * redirection to files is also rejected. It will not catch every possible
  * mutation (e.g. `python -c "open(..., 'w')"` or commands hidden inside a
- * quoted `bash -c` string) — it exists to stop the common ways models edit
+ * quoted `bash -c` string) - it exists to stop the common ways models edit
  * files from the shell, and entries are easy to add.
  */
 
@@ -514,7 +514,7 @@ export function findFileEditingCommand(
 export function formatPlanModeBlockedCommandError(reason: string): string {
 	return (
 		`Command not executed: ${reason} can modify files, and file modifications are blocked in plan mode. ` +
-		"You are in PLAN MODE — explore, analyze, and present a plan; do not make changes. " +
+		"You are in PLAN MODE - explore, analyze, and present a plan; do not make changes. " +
 		"Use read-only commands to inspect the project (redirecting output to /tmp, or %TEMP% on Windows, is allowed), " +
 		"and if this change is part of the task, put it in your plan so it can run after the user approves switching to act mode."
 	);

@@ -232,7 +232,7 @@ export class SdkInteractionCoordinator {
 		// On rejection the agent receives the denial and continues; the SDK drives the next phase.
 		this.options.setTurnPhase?.("streaming")
 		// The reason must state the operation did NOT happen (for edits: the file is
-		// unchanged) — raw feedback alone reads like iteration on an applied change.
+		// unchanged) - raw feedback alone reads like iteration on an applied change.
 		const denialReason = buildToolApprovalDenialReason(pendingMessage?.toolName, prompt)
 		if (!approved && (prompt?.trim() || images?.length || files?.length)) {
 			const userMessage: ClineMessage = {
@@ -286,7 +286,7 @@ export class SdkInteractionCoordinator {
 			})
 		}
 
-		// User answered the follow-up — the agent resumes its turn.
+		// User answered the follow-up - the agent resumes its turn.
 		this.options.setTurnPhase?.("streaming")
 		if (!hasAttachments) {
 			resolve(responseText)

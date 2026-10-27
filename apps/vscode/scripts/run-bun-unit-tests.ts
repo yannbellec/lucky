@@ -121,7 +121,7 @@ async function runOne(file: string): Promise<FileResult> {
 		proc.exited,
 	])
 	clearTimeout(timer)
-	const output = stdout + stderr + (timedOut ? `\n[runner] TIMEOUT after ${PER_FILE_TIMEOUT_MS}ms — killed\n` : "")
+	const output = stdout + stderr + (timedOut ? `\n[runner] TIMEOUT after ${PER_FILE_TIMEOUT_MS}ms - killed\n` : "")
 	const { pass, fail } = parseCounts(output)
 	// A nonzero exit with no parsed counts (load/parse error, timeout) must count
 	// as a failure so the gate cannot pass silently.

@@ -148,8 +148,8 @@ export class SessionVersioningService {
 	): Promise<SessionCheckpointRestoreResult<TStartResult>> {
 		const restoreMessages = input.restore?.messages !== false;
 		const restoreWorkspace = input.restore?.workspace !== false;
-		// Declared before any throwing setup so validation and lookup failures —
-		// the most common restore failures — are counted too. The checkpoint kind
+		// Declared before any throwing setup so validation and lookup failures -
+		// the most common restore failures - are counted too. The checkpoint kind
 		// is only known once the plan exists.
 		const restoreStartedAt = Date.now();
 		let plannedCheckpoint: CheckpointEntry | undefined;

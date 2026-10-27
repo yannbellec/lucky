@@ -3,7 +3,7 @@ import { type Channel, type ClientMiddleware, type CompatServiceDefinition, crea
 
 /**
  * Request header carrying the per-spawn token that identifies this core to the
- * host that started it. The name is part of the host<->core contract — keep it
+ * host that started it. The name is part of the host<->core contract - keep it
  * in sync with the host-side interceptor (JetBrains: SessionTokenInterceptor).
  */
 export const HOST_BRIDGE_TOKEN_HEADER = "cline-hostbridge-token"
@@ -13,7 +13,7 @@ export const HOST_BRIDGE_TOKEN_HEADER = "cline-hostbridge-token"
  * pins *where* it listens but cannot prove *who* is calling: any local process
  * or OS user can dial the port and drive the IDE. Echoing the token the host
  * generated for this spawn lets the host tell its own core apart from an
- * orphaned/foreign one — or from unrelated local code.
+ * orphaned/foreign one - or from unrelated local code.
  *
  * This reuses the token already issued for the core connection stream
  * (CLINE_CORE_CONNECTION_TOKEN) rather than introducing a second secret, so
@@ -30,7 +30,7 @@ let hostBridgeToken: string | undefined
  * Captures the per-spawn token from the environment and removes it from
  * `process.env`, retaining it only in process memory for the bridge clients.
  *
- * Call once, first thing at startup — before anything logs the environment or
+ * Call once, first thing at startup - before anything logs the environment or
  * can spawn a child process. Returns the token so bootstrap can also use it for
  * the core connection hello. A core spawned without a token (standalone dev
  * runs, older hosts) gets `undefined` and sends no header.
@@ -68,7 +68,7 @@ export const hostBridgeAuthMiddleware: ClientMiddleware = async function* (call,
 
 /**
  * Creates an authenticated Host Bridge client. Used by the generated clients in
- * place of nice-grpc's `createClient` — see scripts/generate-host-bridge-client.mjs.
+ * place of nice-grpc's `createClient` - see scripts/generate-host-bridge-client.mjs.
  */
 export function createHostBridgeClient<Service extends CompatServiceDefinition>(definition: Service, channel: Channel) {
 	return createClientFactory().use(hostBridgeAuthMiddleware).create(definition, channel)

@@ -495,7 +495,7 @@ function collapsePathSegments(path: string, separator: string): string {
 }
 
 /**
- * Tool calls address the same file inconsistently across a session — one
+ * Tool calls address the same file inconsistently across a session - one
  * edit uses "journal.txt", a later one "/tmp/workspace/journal.txt". Keying
  * diffs by the raw string would list that file twice with split counts, so
  * paths are canonicalized against the session cwd first: resolved against

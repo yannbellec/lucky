@@ -2,7 +2,7 @@
  * Build-time inlining of the telemetry configuration, mirroring the CLI
  * bundle (`apps/cli/bun.mts`). `getTelemetryBuildTimeConfig` in
  * `@cline/shared` reads `process.env.OTEL_*` at runtime, which is always
- * empty for a packaged app launched from Finder/the Dock — so the packaged
+ * empty for a packaged app launched from Finder/the Dock - so the packaged
  * sidecar binary must have these values substituted into the bundle at
  * build time. Vars that are unset at build time inline as "" (telemetry
  * stays disabled), which keeps local/dev builds opted out without any

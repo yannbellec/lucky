@@ -373,8 +373,8 @@ function hubScheduleSourcePath(scheduleId: string): string {
 /**
  * DB-native hub schedules (created via the schedule tools/UI) live only in
  * cron.db under a virtual sourcePath that never exists on disk. File-backed
- * specs can spoof `source: hub-schedule` in frontmatter — even inside a
- * physical `hub/schedules/` directory — but reconciliation always records
+ * specs can spoof `source: hub-schedule` in frontmatter - even inside a
+ * physical `hub/schedules/` directory - but reconciliation always records
  * their source file's mtime, which DB-native rows never have. All three
  * markers are required to identify a DB-native hub schedule.
  */

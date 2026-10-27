@@ -43,6 +43,24 @@ export const OllamaProvider = ({ showModelOptions, isPopup, currentMode }: Ollam
 			...(Number.isFinite(ollamaNumCtx) && ollamaNumCtx > 0 ? { contextWindow: ollamaNumCtx } : {}),
 		}
 	}, [ollamaNumCtx])
+	// Lucky : slider crante pour le contexte du modele, crans standards de 2k a 256k.
+	const CTX_STEPS = [2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144]
+	const nearestCtxIdx = (v: number) => {
+		if (!Number.isFinite(v) || v <= 0) {
+			return 4
+		}
+		let best = 0
+		for (let i = 1; i < CTX_STEPS.length; i++) {
+			if (Math.abs(CTX_STEPS[i] - v) < Math.abs(CTX_STEPS[best] - v)) {
+				best = i
+			}
+		}
+		return best
+	}
+	const [ctxIdx, setCtxIdx] = useState<number>(4)
+	useEffect(() => {
+		setCtxIdx(nearestCtxIdx(ollamaNumCtx))
+	}, [ollamaNumCtx])
 	const ollamaModelInfoById = useMemo(
 		() => Object.fromEntries(ollamaModels.map((modelId) => [modelId, { ...ollamaModelInfo, name: modelId }])),
 		[ollamaModelInfo, ollamaModels],
@@ -76,7 +94,7 @@ export const OllamaProvider = ({ showModelOptions, isPopup, currentMode }: Ollam
 	}, [write])
 
 	// Fetch ollama models on mount and whenever the base URL changes. The
-	// picker also refetches on focus — do NOT poll on an interval: the base
+	// picker also refetches on focus - do NOT poll on an interval: the base
 	// URL is user-configurable, so an unbounded poll can hammer a remote or
 	// metered endpoint for as long as the settings pane is open (ENG-2344).
 	const requestOllamaModels = useCallback(async () => {
@@ -159,7 +177,7 @@ export const OllamaProvider = ({ showModelOptions, isPopup, currentMode }: Ollam
 						const contextWindow = Number.parseInt(v, 10)
 						const numCtx = Number.isFinite(contextWindow) && contextWindow > 0 ? contextWindow : undefined
 						// The debounced input also fires for its initial value and
-						// external prop syncs — only persist actual changes.
+						// external prop syncs - only persist actual changes.
 						const currentNumCtx = Number.isFinite(ollamaNumCtx) && ollamaNumCtx > 0 ? ollamaNumCtx : undefined
 						if (numCtx === currentNumCtx) {
 							return
@@ -186,6 +204,62 @@ export const OllamaProvider = ({ showModelOptions, isPopup, currentMode }: Ollam
 					style={{ width: "100%" }}>
 					<span className="font-semibold">Model Context Window</span>
 				</DebouncedTextField>
+			)}
+
+			{config !== undefined && (
+				<div style={{ marginTop: 8 }}>
+					<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+						<span className="font-semibold">Contexte du modele (crante)</span>
+						<span className="text-description">{CTX_STEPS[ctxIdx].toLocaleString()} tok</span>
+					</div>
+					<input
+						list="lucky-ctx-steps"
+							max={CTX_STEPS.length - 1}
+						min={0}
+						onChange={(e) => setCtxIdx(Number.parseInt(e.target.value, 10))}
+						onKeyUp={() => {
+							void write({ contextWindow: CTX_STEPS[ctxIdx] }).catch((error) =>
+								console.error("Failed to update Ollama context window:", error),
+							)
+						}}
+						onMouseUp={() => {
+							const numCtx = CTX_STEPS[ctxIdx]
+							void write({ contextWindow: numCtx }).catch((error) =>
+								console.error("Failed to update Ollama context window:", error),
+							)
+							if (selectedModel.modelId) {
+								void commitModelSelection({
+									modelId: selectedModel.modelId,
+									modelInfo: {
+										...openAiModelInfoSafeDefaults,
+										name: selectedModel.modelId,
+										contextWindow: numCtx,
+									},
+								}).catch((error) => console.error("Failed to update Ollama context window:", error))
+							}
+						}}
+						step={1}
+						style={{ width: "100%" }}
+						type="range"
+						value={ctxIdx}
+					/>
+						<datalist id="lucky-ctx-steps">
+							{CTX_STEPS.map((_, i) => (
+								<option key={i} value={i} />
+							))}
+						</datalist>
+						<div
+							className="text-description"
+							style={{ display: "flex", justifyContent: "space-between", fontSize: 10, marginTop: 2 }}>
+							<span>2k</span>
+							<span>16k</span>
+							<span>64k</span>
+							<span>256k</span>
+						</div>
+						<p className="text-xs mt-0 text-description">
+							Crans : 2k, 4k, 8k, 16k, 32k, 64k, 128k, 256k. Plus haut = plus de memoire. Au-dela de ~64k sur une machine de 64 Go, risque de plantage. 32k est le reglage sur.
+						</p>
+				</div>
 			)}
 
 			{showModelOptions && (
@@ -222,7 +296,7 @@ export const OllamaProvider = ({ showModelOptions, isPopup, currentMode }: Ollam
 					quickstart guide.
 				</VSCodeLink>{" "}
 				<span style={{ color: "var(--vscode-errorForeground)" }}>
-					(<span style={{ fontWeight: 500 }}>Note:</span> Cline uses complex prompts, so behavior can vary across
+					(<span style={{ fontWeight: 500 }}>Note:</span> Lucky uses complex prompts, so behavior can vary across
 					models. Less capable models may not work as expected.)
 				</span>
 			</p>

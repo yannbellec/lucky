@@ -47,7 +47,7 @@ const HistoryViewItem = ({
 		() => pendingFavoriteToggles[item.id] ?? item.isFavorited,
 		[item.id, item.isFavorited, pendingFavoriteToggles],
 	)
-	// Cloud sessions are owned by Cline Cloud; favorites are a local-history concept.
+	// Cloud sessions are owned by Lucky Cloud; favorites are a local-history concept.
 	const isCloud = item.executionTarget === "cloud"
 
 	const handleShowTaskWithId = useCallback((id: string) => {

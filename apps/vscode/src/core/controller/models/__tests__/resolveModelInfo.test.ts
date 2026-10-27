@@ -254,7 +254,7 @@ describe("resolveModelInfo", () => {
 		const store = makeStore({ providerId: parseProviderId("openai") })
 		const catalog = makeCatalog()
 		// The openai-compatible catalog only knows gpt-4o. A user-entered custom
-		// model id must NOT be replaced with that default — the requested id is
+		// model id must NOT be replaced with that default - the requested id is
 		// authoritative for custom-model-id providers.
 		vi.mocked(catalog.peekModels).mockReturnValue(
 			peekResult("openai", [["gpt-4o", { name: "GPT-4o", supportsPromptCache: false, contextWindow: 128_000 }]], "gpt-4o"),

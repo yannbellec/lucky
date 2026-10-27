@@ -34,8 +34,8 @@ import { getProviderSettingsManager } from "./provider-migration"
  *
  * Delegates to the same `resolveProviderRequestHeaders` policy the session path
  * uses (see `local-runtime-bootstrap.ts` in `@cline/core`), so the Cline surface
- * identity headers — `X-CLIENT-TYPE`, `X-CLIENT-VERSION`, `X-PLATFORM`,
- * `User-Agent`, … — are identical whether a request comes from a task or from a
+ * identity headers - `X-CLIENT-TYPE`, `X-CLIENT-VERSION`, `X-PLATFORM`,
+ * `User-Agent`, … - are identical whether a request comes from a task or from a
  * one-shot utility caller. Without them the Cline gateway rejects requests for
  * models restricted to Cline product surfaces (free models) with HTTP 403.
  *
@@ -59,7 +59,7 @@ function resolveRequestHeaders(
 			isMultiRoot: client?.isMultiRoot,
 		},
 		// The core's own build version, which is what a session from
-		// `local-runtime-bootstrap` sends as `X-CORE-VERSION` — not the
+		// `local-runtime-bootstrap` sends as `X-CORE-VERSION` - not the
 		// extension's version, so the two paths agree by construction.
 		coreVersion: CORE_BUILD_VERSION,
 		headers: {

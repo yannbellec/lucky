@@ -32,7 +32,7 @@ function classifyError(error: unknown): { errorReason: string; errorMessage: str
 }
 
 // Fire-and-forget the FS-class lookup + telemetry capture. The picker awaits
-// the searchFiles response, so we must not block it on a slow/hung mount —
+// the searchFiles response, so we must not block it on a slow/hung mount -
 // `getFsInfo` does a `realpath` and a `mount`/`stat -f` that, even with the
 // outer timeout in fs-info, can still cost seconds on a stale network FS.
 function captureWithFsContext(fsContextPath: string | undefined, capture: (fsContext: FsInfo) => void | Promise<void>): void {
@@ -72,7 +72,7 @@ export async function searchFiles(controller: Controller, request: FileSearchReq
 		let searchResult: SearchWorkspaceFilesResult
 
 		if (hasMultirootSupport) {
-			// Tag the actually-searched root, not always the primary —
+			// Tag the actually-searched root, not always the primary -
 			// otherwise an SSHFS secondary root looks like a fast primary
 			// in dashboards. searchWorkspaceFilesMultiroot resolves the hint
 			// the same way (by name).

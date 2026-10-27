@@ -17,7 +17,7 @@ import { McpServersContent } from "./mcp-view";
 
 /**
  * Unified Customize hub: the installed inventory of everything that extends
- * Cline — skills, MCP servers, plugins, rules, hooks, and tools — as sub-tabs
+ * Cline - skills, MCP servers, plugins, rules, hooks, and tools - as sub-tabs
  * with live counts. Browsing happens on the dedicated Marketplace page,
  * reached from the sidebar or the header button here.
  */

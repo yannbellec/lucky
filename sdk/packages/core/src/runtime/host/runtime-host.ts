@@ -68,7 +68,7 @@ function errorMessageOf(error: unknown): string {
  * Two distinct causes, one remedy: the session is gone (`session_not_found`,
  * after a hub restart, a deletion, or retention cleanup), or its runtime is stuck
  * with a run that never drained (`session_run_in_progress`). A caller holding a
- * long-lived mapping to that session — a connector thread, for instance — has to
+ * long-lived mapping to that session - a connector thread, for instance - has to
  * replace the session rather than keep retrying against it.
  *
  * Errors reaching a connector have crossed the hub's JSON boundary, so the code
@@ -417,7 +417,7 @@ export interface RuntimeHost {
 	 * in-memory conversation over the persisted transcript. Disk persistence
 	 * happens at assistant-message/turn boundaries (and abort() does not
 	 * flush), so this is the accurate read for callers that need the
-	 * conversation of an in-flight or just-aborted turn — e.g. rebuilding a
+	 * conversation of an in-flight or just-aborted turn - e.g. rebuilding a
 	 * session for a mode switch. Optional: hosts without live-session access
 	 * (e.g. hub clients) fall back to the persisted transcript.
 	 */

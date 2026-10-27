@@ -302,7 +302,7 @@ let feedGeneration = 0;
 /**
  * `fetchClineRecommendedModels` with a shared in-memory cache, for callers on
  * the model-list path (every picker open) where a per-call network round-trip
- * — or its 5s offline timeout — is unacceptable. The bundled offline fallback
+ * - or its 5s offline timeout - is unacceptable. The bundled offline fallback
  * is cached too: paying the timeout once per TTL beats paying it on every
  * model list while offline, and a recovered network is picked up within the
  * TTL.
@@ -386,7 +386,7 @@ export function idSlug(modelId: string): string {
  * instead of fetching and joining the feed themselves. Feed ids are matched
  * through the Vercel/OpenRouter alias rules (the feed can spell a model
  * differently from the catalog), with a fallback on the id's slug after "/"
- * when that slug is unambiguous — the feed and the catalog can carry
+ * when that slug is unambiguous - the feed and the catalog can carry
  * different vendor prefixes for the same model (`kwaipilot/kat-coder-pro`
  * vs `cline-free/kat-coder-pro`), most visibly when the bundled fallback
  * feed is stamped against a live-fetched catalog. Models the feed does not
@@ -432,7 +432,7 @@ export function applyClineFeaturedModels(
 	}
 	// Two passes so the slug fallback cannot duplicate a tier: a feed entry
 	// that matched a catalog model exactly (or via alias) is consumed, and a
-	// remaining entry stamps at most one slug-matched model — otherwise a
+	// remaining entry stamps at most one slug-matched model - otherwise a
 	// catalog carrying both spellings (`kwaipilot/x` from OpenRouter plus
 	// `cline-free/x` from the free overlay) would render the model twice
 	// inside its tier.

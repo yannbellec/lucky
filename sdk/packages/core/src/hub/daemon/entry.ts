@@ -70,7 +70,7 @@ async function startHubWebSocketServerWithBindRetry(
 		try {
 			return await startHubWebSocketServer(options);
 		} catch (error) {
-			// A retiring predecessor can hold the port — or the instance lock —
+			// A retiring predecessor can hold the port - or the instance lock -
 			// for a couple of seconds after acking shutdown. Wait either out
 			// within the deadline; a lock still held past it means a live Hub
 			// owns this context, and the rule is connect or diagnose, never
@@ -141,7 +141,7 @@ function parseArgs(argv: string[]): {
  * floating promise after the run has already settled (DOMException
  * "AbortError" from fetch/undici, Node ABORT_ERR, or the runtime's own
  * AgentRuntimeAbortError). Exiting on those kills every resident session in
- * the daemon — the next message from any connected client then lands on
+ * the daemon - the next message from any connected client then lands on
  * `session_not_found` and forces a rebuild from disk.
  */
 export function isAbortRejection(reason: unknown): boolean {

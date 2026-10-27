@@ -303,7 +303,7 @@ describe("resolveBedrockModelId", () => {
 
 	it("covers future tier-first Claude ids once the catalog carries their variants", () => {
 		// Tier-first naming is matched generically, so a future tier needs no
-		// pattern-list update — only the regenerated catalog entry.
+		// pattern-list update - only the regenerated catalog entry.
 		const hasCatalogModel = (id: string) =>
 			id === "us.anthropic.claude-newtier-6";
 		expect(

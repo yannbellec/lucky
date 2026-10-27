@@ -46,7 +46,7 @@ function agentErrorEvent(
 	};
 }
 
-describe("handleSessionEvent — agent error events", () => {
+describe("handleSessionEvent - agent error events", () => {
 	it("forwards recoverable errors flagged as in-run notices, not turn outcomes", () => {
 		const { ctx, sent } = makeContextWithPeer("session-1");
 

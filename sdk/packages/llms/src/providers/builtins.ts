@@ -96,7 +96,7 @@ const OPENROUTER_STICKY_SESSION_METADATA: GatewayProviderMetadata = {
  * Context window requested from Ollama when neither the resolved model nor
  * the user's configuration supplies one. Matches the pre-SDK-migration
  * handler default; deliberately larger than Ollama's 4096 server default,
- * which cannot fit Cline's agentic prompts. Single source of truth — the
+ * which cannot fit Cline's agentic prompts. Single source of truth - the
  * vendor, the VS Code session factory, and the settings UI all import this.
  */
 export const OLLAMA_DEFAULT_CONTEXT_WINDOW = 32768;
@@ -535,7 +535,7 @@ function buildVertexModels(): Record<string, ModelInfo> {
 	// the displayed and recorded cost. Omitting it degrades cost display to
 	// "unknown" instead of wrong.
 	if (vertexModels["claude-fable-5"]) {
-		// Upstream now carries the model — its record wins.
+		// Upstream now carries the model - its record wins.
 		return vertexModels;
 	}
 	const anthropicFable = generatedModels("anthropic")["claude-fable-5"];
@@ -1213,7 +1213,7 @@ const BUILTIN_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 		// (Read/Write/Bash/...) inside the spawned agent session and cannot
 		// bridge externally-executed AI SDK tools. Without this capability the
 		// gateway sends Cline's tool definitions (which the provider drops)
-		// while the CLI's own tools stay enabled with no approval plumbing —
+		// while the CLI's own tools stay enabled with no approval plumbing -
 		// every write is refused and no prompt can appear (#13146).
 		// local-auth: the spawned CLI authenticates from its own credential
 		// store (the Claude Pro/Max subscription login), so no API key is

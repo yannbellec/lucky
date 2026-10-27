@@ -225,7 +225,7 @@ export const OpenAICompatibleProvider = ({
 
 			try {
 				// providerId lets the host back the request with this provider's
-				// stored API key and headers — the webview only sees a masked key
+				// stored API key and headers - the webview only sees a masked key
 				// for custom providers, so it can't send the credential itself.
 				const response = await ModelsServiceClient.refreshOpenAiModels(
 					OpenAiModelsRequest.create({
@@ -628,7 +628,7 @@ export const OpenAICompatibleProvider = ({
 					color: "var(--vscode-descriptionForeground)",
 				}}>
 				<span style={{ color: "var(--vscode-errorForeground)" }}>
-					(<span style={{ fontWeight: 500 }}>Note:</span> Cline uses complex prompts, so behavior can vary across
+					(<span style={{ fontWeight: 500 }}>Note:</span> Lucky uses complex prompts, so behavior can vary across
 					models. Less capable models may not work as expected.)
 				</span>
 			</p>

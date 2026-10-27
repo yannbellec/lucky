@@ -3345,7 +3345,7 @@ describe("LocalRuntimeHost", () => {
 			markRunStarted?.();
 			return new Promise<AgentResult>((resolve) => {
 				// The run resolves with finishReason "aborted" without
-				// manager.abort() ever being called — this is how an internal
+				// manager.abort() ever being called - this is how an internal
 				// safety stop (loop detector / mistake limit) ends a run.
 				finishRun = () => {
 					activeRun = false;
@@ -3461,7 +3461,7 @@ describe("LocalRuntimeHost", () => {
 			run,
 			continue: continueTurn,
 			// A user abort tears the in-flight stream down, which surfaces to
-			// runTurn() as a rejection — the completeAbortedInteractiveTurn path.
+			// runTurn() as a rejection - the completeAbortedInteractiveTurn path.
 			abort: vi.fn().mockImplementation(() => {
 				rejectRun?.(new Error("aborted by user"));
 			}),
@@ -3506,7 +3506,7 @@ describe("LocalRuntimeHost", () => {
 			finishReason: "aborted",
 		});
 
-		// The queued prompt must survive the abort and run once it settles —
+		// The queued prompt must survive the abort and run once it settles -
 		// aborting only stops the in-flight turn, it must never eat input the
 		// user already typed and queued.
 		await vi.waitFor(async () => {
@@ -3617,7 +3617,7 @@ describe("LocalRuntimeHost", () => {
 		).toEqual(["queued two"]);
 
 		// Second abort lands on a queue-initiated turn: that means "stop the
-		// queued work too" — the remainder is dropped so repeated aborts
+		// queued work too" - the remainder is dropped so repeated aborts
 		// reliably bring the session to a full stop instead of consuming one
 		// queued prompt (and one provider call) per abort.
 		await manager.abort(sessionId, new Error("second abort"));
@@ -6343,7 +6343,7 @@ describe("LocalRuntimeHost", () => {
 
 	// Manual /compact persists a sidecar regardless of the auto-compaction
 	// setting, so the projection must stay wired even when compaction is
-	// disabled — otherwise a manual compaction would silently never reach the
+	// disabled - otherwise a manual compaction would silently never reach the
 	// model. Without a sidecar the prepareTurn is a no-op.
 	it("projects compaction state even when compaction is disabled", async () => {
 		const sessionId = "sess-compaction-disabled";
@@ -7737,7 +7737,7 @@ describe("LocalRuntimeHost", () => {
 				}),
 			};
 			const agent = {
-				// No `submit_and_exit` in toolCalls — represents a non-interactive
+				// No `submit_and_exit` in toolCalls - represents a non-interactive
 				// run that finished cleanly without invoking the completion tool.
 				run: vi.fn().mockResolvedValue(createResult({ toolCalls: [] })),
 				continue: vi.fn(),
@@ -7954,7 +7954,7 @@ describe("LocalRuntimeHost", () => {
 				}),
 			};
 			const agent = {
-				// Clean final turn without submit_and_exit — records
+				// Clean final turn without submit_and_exit - records
 				// lastInteractiveTurnFinishReason === "completed".
 				run: vi.fn().mockResolvedValue(createResult({ toolCalls: [] })),
 				continue: vi.fn(),
@@ -7990,7 +7990,7 @@ describe("LocalRuntimeHost", () => {
 			const statusWritesBeforeStop =
 				sessionService.updateSessionStatus.mock.calls.length;
 			await manager.stopSession(sessionId);
-			// The release branch never writes a session status — this proves the
+			// The release branch never writes a session status - this proves the
 			// stop really took the path that used to drop the emission.
 			expect(sessionService.updateSessionStatus.mock.calls.length).toBe(
 				statusWritesBeforeStop,
@@ -8074,7 +8074,7 @@ describe("LocalRuntimeHost", () => {
 				}),
 			};
 			const agent = {
-				// First turn completes cleanly, second turn throws — the errored
+				// First turn completes cleanly, second turn throws - the errored
 				// turn is the session's final turn, so no task.completed may be
 				// emitted from the stale "completed" of the first turn.
 				run: vi.fn().mockResolvedValue(createResult({ toolCalls: [] })),

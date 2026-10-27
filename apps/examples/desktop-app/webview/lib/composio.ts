@@ -7,12 +7,12 @@ import type {
 import { desktopClient } from "./desktop-client";
 
 /**
- * Webview client for the sidecar's `composio_integrations` command — the
+ * Webview client for the sidecar's `composio_integrations` command - the
  * management plane for the Gmail / Google Calendar / GitHub integrations.
  */
 
 /** `connect` performs a round-trip to Composio (create auth config, initiate
- * the connection) before it can return the OAuth URL — give it headroom. */
+ * the connection) before it can return the OAuth URL - give it headroom. */
 const CONNECT_TIMEOUT_MS = 60_000;
 
 // Availability is UI state, not authorization. Retain it across page mounts;

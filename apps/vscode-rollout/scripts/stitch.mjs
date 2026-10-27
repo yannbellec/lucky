@@ -72,7 +72,7 @@ function copyInto(sourceRoot, relPaths, destRoot, { optional = [] } = {}) {
 				continue;
 			}
 			throw new Error(
-				`required payload missing: ${source} — did the bundle build run?`,
+				`required payload missing: ${source} - did the bundle build run?`,
 			);
 		}
 		cpSync(source, path.join(destRoot, rel), {
@@ -152,7 +152,7 @@ export function stitch({ next, legacy, loader, version, out }) {
 
 	// vsce packages everything in the staging dir; only strip sourcemaps and
 	// junk. The codicons files under legacy/node_modules must survive, so no
-	// blanket node_modules ignore here — staging only ever contains what this
+	// blanket node_modules ignore here - staging only ever contains what this
 	// script copied.
 	writeFileSync(
 		path.join(out, ".vscodeignore"),

@@ -62,7 +62,7 @@ export async function requestToolApproval(
 /**
  * Pending `approval.requested` events, optionally scoped to one session.
  * Re-issued to a (re)subscribing client so an approval raised while nobody
- * was connected — or while this client was disconnected — is neither lost
+ * was connected - or while this client was disconnected - is neither lost
  * nor implicitly answered.
  */
 export function pendingApprovalEvents(

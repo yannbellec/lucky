@@ -279,7 +279,7 @@ export function convertProtoToClineMessage(protoMessage: ProtoClineMessage): App
 		]
 	}
 
-	// Convergent-replica fields. 0 means unstamped (classic/legacy path) — leave undefined so
+	// Convergent-replica fields. 0 means unstamped (classic/legacy path) - leave undefined so
 	// the webview reducer treats such messages as always-applicable rather than epoch 0.
 	if (protoMessage.seq && protoMessage.seq !== 0) {
 		message.seq = protoMessage.seq

@@ -81,10 +81,10 @@ export const CLOUD_SESSION_SYSTEM_PROMPT =
 	"An egress proxy transparently injects credentials into all GitHub traffic. " +
 	"You do NOT need to set up, configure, or manage any tokens, API keys, or credentials, " +
 	"and you must never run `gh auth login` or attempt to authenticate manually. " +
-	"The GitHub CLI (`gh`) is installed and already authenticated — prefer it for GitHub work " +
+	"The GitHub CLI (`gh`) is installed and already authenticated - prefer it for GitHub work " +
 	"(`gh pr create`, `gh pr diff`, `gh issue list`, `gh api`, ...). " +
 	"`git` push and pull are authenticated the same way. " +
-	"Simply run the commands normally — credentials are injected transparently.";
+	"Simply run the commands normally - credentials are injected transparently.";
 
 /** The prompt a new cloud task starts with: GitHub access plus its work-branch rules. */
 export function buildCloudSessionSystemPrompt(

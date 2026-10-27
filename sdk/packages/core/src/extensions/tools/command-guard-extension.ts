@@ -4,9 +4,9 @@
  * Runtime extension that enforces the plan-mode command blacklist
  * (./command-guard.ts) as a `beforeTool` hook. The runtime builder registers
  * it for plan-mode sessions, making command blocking session policy in one
- * shared place: the hook fires for every `run_commands` tool in the runtime —
+ * shared place: the hook fires for every `run_commands` tool in the runtime -
  * the SDK built-in and host-provided replacements like the VS Code
- * extension's terminal-backed tool — without threading a flag through each
+ * extension's terminal-backed tool - without threading a flag through each
  * layer.
  *
  * Because `beforeTool` hooks run before tool policies and user approval,

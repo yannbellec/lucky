@@ -542,7 +542,7 @@ function summarizeSessionUsage(
 }
 
 // ---------------------------------------------------------------------------
-// Core log dispatcher — avoids repeated if/else chains
+// Core log dispatcher - avoids repeated if/else chains
 // ---------------------------------------------------------------------------
 
 const LOG_DISPATCH: Record<string, typeof console.info> = {
@@ -649,7 +649,7 @@ export function useChatSession(environmentId: string) {
 	const liveToolMessageIdsRef = useRef<Record<string, string>>({});
 	const pendingToolOutputRef = useRef(new Map<string, PendingToolOutput>());
 	// Optimistic user bubbles whose prompt is still in flight, by message id.
-	// A chat_queued_prompt_start event may only re-key one of these — never a
+	// A chat_queued_prompt_start event may only re-key one of these - never a
 	// same-content message left over from an earlier turn (see the handler).
 	const outstandingOptimisticUserIdsRef = useRef<Set<string>>(new Set());
 	const cloudOptimisticStatesRef = useRef<Map<string, CloudOptimisticState>>(
@@ -1010,7 +1010,7 @@ export function useChatSession(environmentId: string) {
 	// session, which the runtime routes through its queue) resolve their send()
 	// RPC early with { queued: true }, so nothing else clears the streaming
 	// shimmer or reconciles the live-streamed content against the persisted
-	// transcript — without this, a turn whose deltas were incomplete stays
+	// transcript - without this, a turn whose deltas were incomplete stays
 	// visually "streaming" forever and only heals when a later non-queued send
 	// happens to rehydrate history.
 	const turnEndReconcileTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
@@ -1218,7 +1218,7 @@ export function useChatSession(environmentId: string) {
 		// `index` counts up inside one sidecar process. When the sidecar is
 		// replaced under a live webview the counter restarts at 1, and without
 		// this the high-water mark below would silently discard the whole
-		// stream — user messages and tool rows included — until the new
+		// stream - user messages and tool rows included - until the new
 		// process counted past the old run.
 		const boot = payload.boot;
 		if (boot !== undefined) {
@@ -1954,7 +1954,7 @@ export function useChatSession(environmentId: string) {
 						// routes that prompt through its queue, this event describes
 						// the same prompt. Re-key the optimistic bubble instead of
 						// rendering the message a second time. Only bubbles whose
-						// prompt is still in flight are eligible — a same-content
+						// prompt is still in flight are eligible - a same-content
 						// message left over from an earlier (e.g. cancelled) turn
 						// must stay distinct from the new submission.
 						// The first run of this updater consumes the outstanding id, so
@@ -2221,7 +2221,7 @@ export function useChatSession(environmentId: string) {
 						// A tool that streamed its output through chat_tool_call_update
 						// may finish without repeating it in `output`. Writing the absent
 						// value would leave the payload result null, which
-						// buildToolPresentation reads as "still running" — the finished
+						// buildToolPresentation reads as "still running" - the finished
 						// tool would go back to spinning. Fall back to the streamed
 						// output, which flushPendingStream folded into meta.toolOutput
 						// before this non-delta event was handled.
@@ -2494,7 +2494,7 @@ export function useChatSession(environmentId: string) {
 	// not projected through the hub's live pipeline (and with several hub
 	// daemons sharing cron.db, a different daemon can claim the run
 	// entirely), so an attached session can sit at "running" with a dead
-	// event stream — stuck on the thinking shimmer until a remount re-reads
+	// event stream - stuck on the thinking shimmer until a remount re-reads
 	// history. While an attached session is busy and the stream is quiet,
 	// poll canonical history and the session record so the transcript and
 	// status heal in place. A locally driven turn keeps chunks flowing, so
@@ -2526,7 +2526,7 @@ export function useChatSession(environmentId: string) {
 			// user_input envelope, so replacing state mid-turn desyncs the
 			// rekey bookkeeping and the stream then appends a duplicate
 			// bubble. The fallback exists for externally driven runs
-			// (schedules, other clients) — stay inert until the local turn
+			// (schedules, other clients) - stay inert until the local turn
 			// settles.
 			if (
 				turnEpochRef.current !== turnSettledEpochRef.current ||
@@ -2687,7 +2687,7 @@ export function useChatSession(environmentId: string) {
 			for (const warning of payload.pluginWarnings ?? []) {
 				addMessage(makePluginIssueMessage(id, warning));
 			}
-			// Mark idle — not running — so the first sendPrompt is not queued.
+			// Mark idle - not running - so the first sendPrompt is not queued.
 			// The status transitions to "starting"/"running" once a prompt is
 			// actually dispatched.
 			if (!options.preserveStatus) {
@@ -3173,7 +3173,7 @@ export function useChatSession(environmentId: string) {
 						// dequeue and its "still queued" status is obsolete.
 						// Applying them would resurrect a phantom queue entry and
 						// could flip a turn that already completed via chat_done
-						// back to "running" — wedging the composer forever. The
+						// back to "running" - wedging the composer forever. The
 						// stream (chat_queued_prompt_start/chat_done and
 						// prompts_in_queue_state) is authoritative from here on.
 						return true;
@@ -3198,7 +3198,7 @@ export function useChatSession(environmentId: string) {
 				applyPromptsInQueue(payload.promptsInQueue);
 				if (settleAbortedSend()) return true;
 				// On a failed run the runtime reports the error string in
-				// result.text — it is not assistant content and must not be
+				// result.text - it is not assistant content and must not be
 				// rendered as an assistant bubble (canonical rehydration would
 				// silently wipe it, leaving the user with a blank chat).
 				const isErrorResult = result?.finishReason === "error";
@@ -3538,7 +3538,7 @@ export function useChatSession(environmentId: string) {
 					}
 				} else if (result?.finishReason === "error") {
 					// On a failed run result.text is the runtime's error string
-					// (never assistant content — see isErrorResult above), so it
+					// (never assistant content - see isErrorResult above), so it
 					// is the best failure detail available. The reporter dedupes
 					// against the chat_done stream path.
 					const runError = (result?.text ?? "").trim();
@@ -3559,8 +3559,8 @@ export function useChatSession(environmentId: string) {
 					// A run that fails mid-turn always carries `messages` (the
 					// user turn is persisted). The sidecar synthesizes a
 					// messages-less error result when the runtime threw before
-					// the turn began — e.g. the provider switch or OAuth refresh
-					// failed — so the prompt never entered the session.
+					// the turn began - e.g. the provider switch or OAuth refresh
+					// failed - so the prompt never entered the session.
 					if (!result.messages) {
 						promptTaken = withdrawPrompt();
 					}

@@ -9,8 +9,8 @@ import { useDebounceEffect } from "@/utils/useDebounceEffect"
  * edits). It must not fire on mount or when `initialValue` resyncs
  * externally: fields often mount with a placeholder (e.g. an empty API key
  * mask) while their backing config is still loading asynchronously, and
- * echoing that placeholder back to the backend would overwrite — or, for
- * secret fields, silently delete — the stored value.
+ * echoing that placeholder back to the backend would overwrite - or, for
+ * secret fields, silently delete - the stored value.
  *
  * @param initialValue - The initial value for the input
  * @param onChange - Callback function to save the value (e.g., to backend)

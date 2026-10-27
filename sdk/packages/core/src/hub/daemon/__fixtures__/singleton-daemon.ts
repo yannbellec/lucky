@@ -1,7 +1,7 @@
 /**
  * E2E fixture for the OS-backed singleton lock: starts a minimal hub server
  * for the owner context named by the environment and, like the production
- * daemon entry, exits with code 3 when a live Hub already holds the lock —
+ * daemon entry, exits with code 3 when a live Hub already holds the lock -
  * never touching the incumbent.
  */
 

@@ -118,7 +118,7 @@ describe("withOllamaResponseTimeout", () => {
 		await vi.advanceTimersByTimeAsync(5000);
 
 		expect(response.ok).toBe(true);
-		// Timer was cleared on response start — streaming continues unaborted.
+		// Timer was cleared on response start - streaming continues unaborted.
 		expect(requestSignal?.aborted).toBe(false);
 	});
 

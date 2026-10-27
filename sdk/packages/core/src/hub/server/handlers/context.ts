@@ -189,7 +189,7 @@ export async function readHubSessionRecord(
 
 /**
  * Builds the snapshot that rides on hub events and command replies. It is a
- * state notification — status, usage, model, workspace, checkpoint — and
+ * state notification - status, usage, model, workspace, checkpoint - and
  * deliberately does NOT read the transcript: `snapshot.messages` here would
  * put the entire conversation on every status flip, for every subscriber,
  * and into the durable event log (observed in the wild as a 25GB hub process

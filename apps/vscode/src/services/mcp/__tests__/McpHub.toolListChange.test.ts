@@ -186,7 +186,7 @@ describe("McpHub tool list change detection", () => {
 			tracker.setCallback(callback, [])
 			callback.called.should.be.false()
 
-			// Add a server with tools — fingerprint changes
+			// Add a server with tools - fingerprint changes
 			const connections = [makeConnection("server-a", "connected", ["tool1"])]
 			tracker.check(connections)
 			callback.calledOnce.should.be.true()
@@ -199,7 +199,7 @@ describe("McpHub tool list change detection", () => {
 
 			tracker.setCallback(callback, connections)
 
-			// Check again with same state — should not fire
+			// Check again with same state - should not fire
 			tracker.check(connections)
 			callback.called.should.be.false()
 		})
@@ -247,7 +247,7 @@ describe("McpHub tool list change detection", () => {
 			const tracker = createToolListChangeTracker()
 			const connections = [makeConnection("server-a", "connected", ["tool1"])]
 
-			// No callback set — should not throw
+			// No callback set - should not throw
 			tracker.check(connections)
 		})
 

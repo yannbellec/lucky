@@ -1,5 +1,5 @@
 /**
- * UserMessage – IME composition Enter test
+ * UserMessage - IME composition Enter test
  * --------------------------------------------------
  * Confirm that sendMessageFromChatRow is not called
  * even if you confirm the IME conversion (Enter) in message re-edit mode.
@@ -34,7 +34,7 @@ vi.mock("@/services/grpc-client", () => ({
 import { CheckpointsServiceClient, TaskServiceClient } from "@/services/grpc-client"
 import UserMessage from "../UserMessage"
 
-describe("UserMessage – IME composition handling", () => {
+describe("UserMessage - IME composition handling", () => {
 	beforeEach(() => {
 		vi.clearAllMocks()
 		enableCheckpointsSetting = true
